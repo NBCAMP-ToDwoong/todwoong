@@ -52,13 +52,53 @@
 		1BD2FACB2B88ACB00097694E /* ToDwoong */ = {
 			isa = PBXGroup;
 			children = (
-				1BD2FACC2B88ACB00097694E /* AppDelegate.swift */,
-				1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */,
-				1BD2FAD02B88ACB00097694E /* ViewController.swift */,
-				1BD2FAD52B88ACB20097694E /* Assets.xcassets */,
 				1BD2FADA2B88ACB20097694E /* Info.plist */,
+				1BD2FAE02B88AE320097694E /* Global */,
+				1BD2FAE12B88AE3B0097694E /* Presentation */,
 			);
 			path = ToDwoong;
+			sourceTree = "<group>";
+		};
+		1BD2FAE02B88AE320097694E /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				1BD2FAE22B88AE470097694E /* App */,
+				1BD2FAE32B88AE540097694E /* Support */,
+				1BD2FAE42B88AECF0097694E /* Extensions */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				1BD2FAD02B88ACB00097694E /* ViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		1BD2FAE22B88AE470097694E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1BD2FACC2B88ACB00097694E /* AppDelegate.swift */,
+				1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1BD2FAE32B88AE540097694E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1BD2FAD52B88ACB20097694E /* Assets.xcassets */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		1BD2FAE42B88AECF0097694E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
