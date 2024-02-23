@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: 기능 추가 이슈 템플릿
 title: "[기능 라벨] 기능 1줄 요약"
 labels: ''
 assignees: yenny42

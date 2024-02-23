@@ -1,6 +1,6 @@
 ---
-name: 버그 이슈 템플릿
-about: Suggest an idea for this project
+name: Bug report
+about: 버그 리포트 이슈 템플릿
 title: "[Bug] 버그 1줄 요약"
 labels: Bug
 assignees: yenny42
