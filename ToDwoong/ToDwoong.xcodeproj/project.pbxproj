@@ -33,6 +33,63 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BA63ACD2B8E8CF8008F49CE /* TodoList */ = {
+			isa = PBXGroup;
+			children = (
+				1BD2FAD02B88ACB00097694E /* ViewController.swift */,
+			);
+			path = TodoList;
+			sourceTree = "<group>";
+		};
+		1BA63ACE2B8E8D07008F49CE /* AddTodo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddTodo;
+			sourceTree = "<group>";
+		};
+		1BA63ACF2B8E8D0F008F49CE /* GroupList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = GroupList;
+			sourceTree = "<group>";
+		};
+		1BA63AD02B8E8D1B008F49CE /* AddGroup */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddGroup;
+			sourceTree = "<group>";
+		};
+		1BA63AD12B8E8D20008F49CE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		1BA63AD22B8E8D42008F49CE /* Calander */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Calander;
+			sourceTree = "<group>";
+		};
+		1BA63AD32B8E8D55008F49CE /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		1BA63AD42B8E8D81008F49CE /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
 		1BD2FAC02B88ACB00097694E = {
 			isa = PBXGroup;
 			children = (
@@ -64,7 +121,6 @@
 			children = (
 				1BD2FAE22B88AE470097694E /* App */,
 				1BD2FAE32B88AE540097694E /* Support */,
-				1BD2FAE42B88AECF0097694E /* Extensions */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -72,7 +128,14 @@
 		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				1BD2FAD02B88ACB00097694E /* ViewController.swift */,
+				1BA63AD42B8E8D81008F49CE /* LaunchScreen */,
+				1BA63ACD2B8E8CF8008F49CE /* TodoList */,
+				1BA63ACE2B8E8D07008F49CE /* AddTodo */,
+				1BA63ACF2B8E8D0F008F49CE /* GroupList */,
+				1BA63AD02B8E8D1B008F49CE /* AddGroup */,
+				1BA63AD22B8E8D42008F49CE /* Calander */,
+				1BA63AD12B8E8D20008F49CE /* Map */,
+				1BA63AD32B8E8D55008F49CE /* Preferences */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -92,13 +155,6 @@
 				1BD2FAD52B88ACB20097694E /* Assets.xcassets */,
 			);
 			path = Support;
-			sourceTree = "<group>";
-		};
-		1BD2FAE42B88AECF0097694E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
