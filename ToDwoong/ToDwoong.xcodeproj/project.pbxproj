@@ -9,13 +9,32 @@
 /* Begin PBXBuildFile section */
 		1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD62B8E8EDB008F49CE /* SnapKit */; };
 		1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; };
+		1BC7A5F22B8EC6FB00B9F6A8 /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */; };
+		1BC7A5FA2B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACC2B88ACB00097694E /* AppDelegate.swift */; };
 		1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */; };
 		1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* ViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		1BC7A5F32B8EC6FB00B9F6A8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				1BC7A5F22B8EC6FB00B9F6A8 /* SnapKit-Dynamic in Embed Frameworks */,
+				1BC7A5FA2B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ToDwoongDesign.framework; sourceTree = "<group>"; };
 		1BD2FAC92B88ACB00097694E /* ToDwoong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDwoong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD2FACC2B88ACB00097694E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -31,6 +50,7 @@
 			files = (
 				1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */,
 				1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */,
+				1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +114,14 @@
 			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
+		1BC7A5F62B8EC72D00B9F6A8 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
 		1BD2FAC02B88ACB00097694E = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +151,7 @@
 		1BD2FAE02B88AE320097694E /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				1BC7A5F62B8EC72D00B9F6A8 /* DesignSystem */,
 				1BD2FAE22B88AE470097694E /* App */,
 				1BD2FAE32B88AE540097694E /* Support */,
 			);
@@ -171,6 +200,7 @@
 				1BD2FAC52B88ACB00097694E /* Sources */,
 				1BD2FAC62B88ACB00097694E /* Frameworks */,
 				1BD2FAC72B88ACB00097694E /* Resources */,
+				1BC7A5F32B8EC6FB00B9F6A8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -372,6 +402,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ToDwoong/Global/DesignSystem",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -401,6 +435,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/ToDwoong/Global/DesignSystem",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
