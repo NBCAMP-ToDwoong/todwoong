@@ -50,7 +50,7 @@ final class OnboardingView: UIView {
 //MARK: Extension
 
 extension OnboardingView {
-    func setUI() {
+    private func setUI() {
         self.backgroundColor = .white
         
         [

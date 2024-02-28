@@ -12,8 +12,8 @@ import UserNotifications
 final class OnboardingViewController: UIViewController {
     
     //MARK: Properties
-    let LocationManager = CLLocationManager()
-    let center = UNUserNotificationCenter.current()
+    private let LocationManager = CLLocationManager()
+    private let center = UNUserNotificationCenter.current()
     
     //MARK: UI Properties
     
@@ -41,7 +41,7 @@ extension OnboardingViewController {
         onboardingView.requestButton.addTarget(self, action: #selector(requestButtonTapped), for: .touchUpInside)
     }
     
-    @objc func requestButtonTapped() {
+    @objc private func requestButtonTapped() {
         requestAuthorization()
     }
 }
@@ -74,7 +74,7 @@ extension OnboardingViewController {
 
 extension OnboardingViewController: CLLocationManagerDelegate {
     
-    func setDelegate() {
+    private func setDelegate() {
         LocationManager.delegate = self
     }
     
