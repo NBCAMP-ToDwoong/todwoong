@@ -10,8 +10,6 @@ import SnapKit
 
 final class OnboardingView: UIView {
     
-    //MARK: Properties
-    
     //MARK: UI Properties
     
     private lazy var locationImageView: UIImageView = {
@@ -46,7 +44,6 @@ final class OnboardingView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
     }
 }
 
