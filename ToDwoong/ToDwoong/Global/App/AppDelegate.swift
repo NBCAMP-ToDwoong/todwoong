@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,5 +23,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) { }
 
+    // MARK: Core Data stack
 
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error  = error as NSError? {
+                fatalError("데이터를 불러오는 중 오류가 발생 했습니다. \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+        
+    // MARK: Core Data Saving support
+        
+    func saveContext() {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("데이터를 저장하는 단계에서 문제가 발생 하였습니다. \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
 }
