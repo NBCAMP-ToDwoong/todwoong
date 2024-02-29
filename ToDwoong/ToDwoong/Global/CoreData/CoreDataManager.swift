@@ -5,8 +5,8 @@
 //  Created by t2023-m0041 on 2/28/24.
 //
 
-import UIKit
 import CoreData
+import UIKit
 
 final class CoreDataManager {
     
@@ -32,7 +32,13 @@ final class CoreDataManager {
     
     // MARK: Todo Methods
     
-    func createTodo(title: String, place: String?, dueDate: Date?, dueTime: Date, isCompleted: Bool, timeAlarm: Bool, placeAlarm: Bool, category: Category?) {
+    func createTodo(title: String, 
+                    place: String?,
+                    dueDate: Date?, dueTime: Date,
+                    isCompleted: Bool,
+                    timeAlarm: Bool, placeAlarm: Bool,
+                    category: Category?
+    ) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
         newTodo.title = title
@@ -57,7 +63,13 @@ final class CoreDataManager {
         }
     }
     
-    func updateTodo(todo: Todo, newTitle: String, newPlace: String, newDate: Date?, newTime: Date, newCompleted: Bool, newTimeAlarm: Bool, newPlaceAlarm: Bool, newCategory: Category?) {
+    func updateTodo(todo: Todo, 
+                    newTitle: String, newPlace: String,
+                    newDate: Date?, newTime: Date,
+                    newCompleted: Bool,
+                    newTimeAlarm: Bool, newPlaceAlarm: Bool,
+                    newCategory: Category?
+    ) {
         todo.title = newTitle
         todo.place = newPlace
         todo.dueDate = newDate
