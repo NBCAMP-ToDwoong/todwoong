@@ -148,4 +148,33 @@ final class CoreDataManager {
             print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
+    
+    // Sorted Todos Logic
+    
+    func sortTodos(_ todos: [Todo]) -> [Todo] {
+        let sortedTodos = todos.sorted { (current, next) -> Bool in
+            if current.dueDate != nil && next.dueDate == nil {
+                return true
+            } else if current.dueDate == nil && next.dueDate != nil {
+                return false
+            } else {
+                if let currentDueDate = current.dueDate, let nextDueDate = next.dueDate {
+                    if currentDueDate < nextDueDate {
+                        return true
+                    } else if currentDueDate > nextDueDate {
+                        return false
+                    }
+                }
+                
+                if let currentTitle = current.title, let nextTitle = next.title {
+                    return currentTitle.localizedCaseInsensitiveCompare(nextTitle) == .orderedAscending
+                }
+            }
+            
+            return false
+        }
+        
+        return sortedTodos
+    }
+
 }
