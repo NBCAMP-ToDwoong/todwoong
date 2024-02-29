@@ -11,16 +11,16 @@ import UserNotifications
 
 final class OnboardingViewController: UIViewController {
     
-    //MARK: Properties
+    // MARK: Properties
     
-    private let LocationManager = CLLocationManager()
+    private let locationManager = CLLocationManager()
     private let center = UNUserNotificationCenter.current()
     
-    //MARK: UI Properties
+    // MARK: UI Properties
     
     private var onboardingView = OnboardingView()
     
-    //MARK: Life Cycle
+    // MARK: Life Cycle
     
     override func loadView() {
         view = onboardingView
@@ -34,7 +34,7 @@ final class OnboardingViewController: UIViewController {
     }
 }
 
-//MARK: Action
+// MARK: Action
 
 extension OnboardingViewController {
     
@@ -47,7 +47,7 @@ extension OnboardingViewController {
     }
 }
 
-//MARK: Requset Method
+// MARK: Requset Method
 
 extension OnboardingViewController {
     private func requestAuthorization() {
@@ -56,7 +56,7 @@ extension OnboardingViewController {
     }
     
     private func requestLocationAuthorization() {
-        LocationManager.requestWhenInUseAuthorization()
+        locationManager.requestWhenInUseAuthorization()
     }
     
     private func requestNotificationAuthorization() {
@@ -70,18 +70,18 @@ extension OnboardingViewController {
     }
 }
 
-//MARK: LocationDelegate
+// MARK: LocationDelegate
 
 extension OnboardingViewController: CLLocationManagerDelegate {
     
     private func setDelegate() {
-        LocationManager.delegate = self
+        locationManager.delegate = self
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus {
         case .authorizedWhenInUse:
-            LocationManager.requestAlwaysAuthorization()
+            locationManager.requestAlwaysAuthorization()
         default:
             break
         }

@@ -8,11 +8,10 @@
 import UIKit
 
 import SnapKit
-import TodwoongDesign
 
 final class OnboardingView: UIView {
     
-    //MARK: UI Properties
+    // MARK: UI Properties
     
     private lazy var locationImageView: UIImageView = {
         let imageView = UIImageView()
@@ -36,7 +35,7 @@ final class OnboardingView: UIView {
         return button
     }()
     
-    //MARK: Life Cycle
+    // MARK: Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +48,7 @@ final class OnboardingView: UIView {
     }
 }
 
-//MARK: Extension
+// MARK: Extension
 
 extension OnboardingView {
     private func setUI() {
