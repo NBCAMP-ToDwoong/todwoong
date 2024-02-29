@@ -6,7 +6,9 @@
 //
 
 import UIKit
+
 import SnapKit
+import TodwoongDesign
 
 final class OnboardingView: UIView {
     

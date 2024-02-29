@@ -5,13 +5,14 @@
 //  Created by 홍희곤 on 2/28/24.
 //
 
-import UIKit
 import CoreLocation
+import UIKit
 import UserNotifications
 
 final class OnboardingViewController: UIViewController {
     
     //MARK: Properties
+    
     private let LocationManager = CLLocationManager()
     private let center = UNUserNotificationCenter.current()
     
@@ -56,7 +57,6 @@ extension OnboardingViewController {
     
     private func requestLocationAuthorization() {
         LocationManager.requestWhenInUseAuthorization()
-//        LocationManager.requestAlwaysAuthorization()
     }
     
     private func requestNotificationAuthorization() {
