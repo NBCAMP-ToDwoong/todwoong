@@ -140,23 +140,29 @@ final class CoreDataManager {
     // Sorted Todos Logic
     
     func sortTodos(_ todos: [Todo]) -> [Todo] {
-        let sortedTodos = todos.sorted { (todo1, todo2) -> Bool in
-            if let title1 = todo1.title, let title2 = todo2.title {
-                if title1.localizedCaseInsensitiveCompare(title2) == .orderedAscending {
-                    return true
-                } else if title1.localizedCaseInsensitiveCompare(title2) == .orderedDescending {
-                    return false
+        let sortedTodos = todos.sorted { (current, next) -> Bool in
+            if current.dueDate != nil && next.dueDate == nil {
+                return true
+            } else if current.dueDate == nil && next.dueDate != nil {
+                return false
+            } else {
+                if let currentDueDate = current.dueDate, let nextDueDate = next.dueDate {
+                    if currentDueDate < nextDueDate {
+                        return true
+                    } else if currentDueDate > nextDueDate {
+                        return false
+                    }
+                }
+                
+                if let currentTitle = current.title, let nextTitle = next.title {
+                    return currentTitle.localizedCaseInsensitiveCompare(nextTitle) == .orderedAscending
                 }
             }
             
-            if todo1.dueDate != nil && todo2.dueDate == nil {
-                return true
-            } else if todo1.dueDate == nil && todo2.dueDate != nil {
-                return false
-            } else {
-                return false
-            }
+            return false
         }
+        
         return sortedTodos
     }
+
 }
