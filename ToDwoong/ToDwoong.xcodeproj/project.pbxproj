@@ -20,6 +20,8 @@
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
+		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
+		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +50,8 @@
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
+		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 		1BA63AD42B8E8D81008F49CE /* LaunchScreen */ = {
 			isa = PBXGroup;
 			children = (
+				E0EACB5C2B8F7FF900BBEB0B /* View */,
+				E0EACB592B8F7FCD00BBEB0B /* ViewController */,
 			);
 			path = LaunchScreen;
 			sourceTree = "<group>";
@@ -207,6 +213,22 @@
 				7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		E0EACB592B8F7FCD00BBEB0B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E0EACB5C2B8F7FF900BBEB0B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,10 +335,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
+				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +480,8 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -490,6 +516,8 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
