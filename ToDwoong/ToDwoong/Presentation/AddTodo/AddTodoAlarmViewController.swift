@@ -18,7 +18,11 @@ final class AddTodoAlarmViewController: UIViewController {
         case locationSelect
     }
 
-    var selectedButton: SelectedType = .timeSelect
+    var selectedButton: SelectedType = .timeSelect {
+        didSet {
+            updateButtonStyles()
+        }
+    }
 
     let timeList = ["직접 설정",
                     "5분 전",
@@ -73,7 +77,7 @@ final class AddTodoAlarmViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
-        tableView.backgroundColor = .systemBlue
+        tableView.backgroundColor = .white
         tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
 
         return tableView
@@ -115,6 +119,8 @@ extension AddTodoAlarmViewController {
 
 extension AddTodoAlarmViewController {
     private func setUI() {
+        updateButtonStyles()
+        
         [
             timeNotificationButton,
             locationNotificationButton,
@@ -124,7 +130,7 @@ extension AddTodoAlarmViewController {
             view.addSubview($0)
         }
         
-        view.backgroundColor = TDStyle.color.lightGray
+        view.backgroundColor = .white
     }
     
     private func setLayout() {
@@ -155,6 +161,27 @@ extension AddTodoAlarmViewController {
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "timeTableViewCellIdentifier")
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "locationTableViewCellIdentifier")
+    }
+    
+    private func updateButtonStyles() {
+        updateButtonStyle(button: timeNotificationButton, isBold: selectedButton == .timeSelect)
+        updateButtonStyle(button: locationNotificationButton, isBold: selectedButton == .locationSelect)
+    }
+
+    private func updateButtonStyle(button: UIButton, isBold: Bool) {
+        var currentConfig = button.configuration ?? UIButton.Configuration.plain()
+        let style: TDFont.FontStyle = isBold ? .bold : .regular
+        let font = TDStyle.font.body(style: style)
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: font
+        ]
+        currentConfig.attributedTitle = AttributedString(currentConfig.title ?? "",
+                                                         attributes: AttributeContainer(attributes))
+        
+        currentConfig.baseForegroundColor = isBold ? TDStyle.color.mainDarkTheme : TDStyle.color.primaryLabel
+        
+        button.configuration = currentConfig
     }
 }
 
@@ -209,5 +236,9 @@ extension AddTodoAlarmViewController: UITableViewDelegate {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .none
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
 }
