@@ -12,6 +12,8 @@ import TodwoongDesign
 
 final class NormalGroupListTableViewCell: UITableViewCell {
     
+    // MARK: - Properties
+    
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         let imageSize = CGSize(width: 40, height: 40)
