@@ -67,8 +67,13 @@ class DatePickerCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configure(for mode: UIDatePicker.Mode) {
+    func configure(for mode: UIDatePicker.Mode, selectedDate: Date? = nil) {
         datePicker.datePickerMode = mode
+        if let selectedDate = selectedDate {
+            datePicker.date = selectedDate
+        } else {
+            datePicker.date = Date() // 없으면 현재 날짜와 시간으로 설정
+        }
         if #available(iOS 14, *) {
             datePicker.preferredDatePickerStyle = mode == .date ? .inline : .wheels
         }

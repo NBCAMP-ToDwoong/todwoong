@@ -39,6 +39,7 @@ class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         }
         layer.borderWidth = 0.2
         layer.borderColor = UIColor.black.cgColor
+        layer.masksToBounds = true
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {

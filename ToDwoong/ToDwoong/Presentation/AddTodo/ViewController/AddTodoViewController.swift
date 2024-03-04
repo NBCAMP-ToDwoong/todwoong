@@ -38,17 +38,32 @@ class AddTodoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBarButton()
+        setTestButton()
         setNavigationBar()
         setTapGesture()
         setCollectionView()
     }
+    
     // FIXME: - 테스트용 추후삭제
-    func setBarButton() {
-        let doneButton = UIButton(type: .system)
-        doneButton.setTitle("완료", for: .normal)
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: doneButton)
+    private let testButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("테스트 버튼", for: .normal)
+        button.backgroundColor = .blue
+        button.setTitleColor(.white, for: .normal)
+        return button
+    }()
+    private func setTestButton() {
+        view.addSubview(testButton)
+        testButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            testButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            testButton.heightAnchor.constraint(equalToConstant: 50),
+            testButton.widthAnchor.constraint(equalToConstant: 200)
+        ])
+        
+        // 버튼 액션 추가
+        testButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
     }
     
     func setNavigationBar() {
@@ -68,7 +83,7 @@ class AddTodoViewController: UIViewController {
     
     // TODO: - 완료 버튼 액션 구현
     @objc func doneButtonTapped() {
-        let title = "투두 제목" // 예시 제목
+        let title = selectedTitle // 예시 제목
         let place = selectedPlace // 선택한 장소
         let dueDate = selectedDueDate // 선택한 기한 날짜
         let dueTime = selectedDueTime // 선택한 기한 시간
@@ -76,11 +91,10 @@ class AddTodoViewController: UIViewController {
         let timeAlarm = false // 시간 알람 설정, 초기값으로 false 설정
         let placeAlarm = false // 장소 알람 설정, 초기값으로 false 설정
         let category: Category? = nil // 카테고리 설정, 예시로는 nil로 설정
-
-        // 얼럿으로 값 확인
+        
         let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-
+        
         let message = """
         title: \(title)
         place: \(place)
@@ -94,15 +108,18 @@ class AddTodoViewController: UIViewController {
         alert.message = message
         present(alert, animated: true, completion: nil)
         
-        CoreDataManager.shared.createTodo(title: title,
-                                          place: place,
-                                          dueDate: dueDate,
-                                          dueTime: dueTime!,
-                                          isCompleted: isCompleted,
-                                          timeAlarm: timeAlarm,
-                                          placeAlarm: placeAlarm,
-                                          category: category)
-        
+//        if let dueTime = selectedDueTime {
+//            CoreDataManager.shared.createTodo(title: title!,
+//                                              place: place,
+//                                              dueDate: dueDate,
+//                                              dueTime: dueTime,
+//                                              isCompleted: isCompleted,
+//                                              timeAlarm: timeAlarm,
+//                                              placeAlarm: placeAlarm,
+//                                              category: category)
+//        } else {
+//            print("is nil")
+//        }
     }
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
@@ -120,29 +137,41 @@ class AddTodoViewController: UIViewController {
                     self.todoView.collectionView.deleteSections(IndexSet(integer: existingDatePickerIndexPath.section))
                     self.datePickerIndexPath = nil
                 }, completion: { _ in
-                    self.addDatePickerSection(below: cellIndexPath.section, with: newItem)
+                    self.addDatePickerSection(below: cellIndexPath.section, with: newItem, mode: mode)
                 })
             } else {
-                addDatePickerSection(below: cellIndexPath.section, with: newItem)
+                addDatePickerSection(below: cellIndexPath.section, with: newItem, mode: mode)
             }
         }
     }
     
-    func addDatePickerSection(below section: Int, with item: Int) {
+    func addDatePickerSection(below section: Int, with item: Int, mode: UIDatePicker.Mode) {
         let newSection = section + 1
         datePickerIndexPath = IndexPath(item: item, section: newSection)
         todoView.collectionView.performBatchUpdates({
             self.todoView.collectionView.insertSections(IndexSet(integer: newSection))
         }, completion: nil)
+        
+        if mode == .date {
+            selectedDueDate = Date()
+        } else if mode == .time {
+            selectedDueDate = Date()
+            selectedDueTime = Date()
+        }
     }
     
     private func presentMapViewController() {
         let mapViewController = AddTodoLocationPickerViewController()
+        mapViewController.delegate = self
         mapViewController.modalPresentationStyle = .fullScreen
-        self.present(mapViewController, animated: true, completion: nil)
+        present(mapViewController, animated: true, completion: nil)
     }
     
-    
+    @objc func deleteAddress() {
+        self.selectedPlace = nil
+        let indexPath = IndexPath(item: 1, section: 2)
+        todoView.collectionView.reloadItems(at: [indexPath])
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -234,6 +263,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             ) as? TitleCollectionViewCell else {
                 fatalError("TitleCollectionViewCell dequeuing failed.")
             }
+            cell.delegate = self
             return cell
             
         } else {
@@ -243,7 +273,28 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             ) as? InfoCollectionViewCell else {
                 fatalError("InfoCollectionViewCell dequeuing failed.")
             }
-            cell.label.text = ["그룹", "위치", "알람"][indexPath.item]
+            switch indexPath.section {
+                case 2:
+                    switch indexPath.item {
+                    case 0:
+                        cell.configureCell(title: "그룹")
+                    case 1:
+                        guard let cell = collectionView.dequeueReusableCell(
+                            withReuseIdentifier: "InfoCell",
+                            for: indexPath) as? InfoCollectionViewCell else {
+                            fatalError("Unable to dequeue InfoCollectionViewCell")
+                        }
+                        cell.configureCell(title: "위치", detail: selectedPlace, showDeleteButton: selectedPlace != nil)
+                        cell.deleteButton.removeTarget(nil, action: nil, for: .allEvents)
+                        cell.deleteButton.addTarget(self, action: #selector(deleteAddress), for: .touchUpInside)
+                        
+                        return cell
+                    case 2:
+                        cell.configureCell(title: "알람")
+                    default: break
+                    }
+                default: break
+                }
             return cell
             
         }
@@ -260,7 +311,6 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             default:
                 break
             }
-            
         case 1:
             if let datePickerIndexPath = datePickerIndexPath {
                 self.datePickerIndexPath = nil
@@ -274,7 +324,6 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
                     collectionView.insertSections(IndexSet(integer: newSection))
                 }, completion: nil)
             }
-            
         case 2:
             switch indexPath.item {
             case 0:
@@ -286,7 +335,6 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             default:
                 break
             }
-            
         default:
             break
         }
@@ -331,34 +379,25 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
         } else {
             return UIEdgeInsets.zero
         }
-        
     }
     
 }
 
+// MARK: - DateTimePickerDelegate
+
 extension AddTodoViewController: DateTimePickerDelegate {
     func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode) {
-        print("didPickDateOrTime : \(date), \(mode.rawValue)")
-        print("selectedDueDate : \(selectedDueDate)")
-        print("selectedDueTime : \(selectedDueTime)")
-        print("-------------------------------------------")
-        
         if mode.rawValue == 1 {
-            selectedDueDate = date
-            print("Selected Date1: \(selectedDueDate)")
+            self.selectedDueDate = date
             if selectedDueTime != nil {
-                selectedDueTime = nil
-                print("Selected Time1: \(selectedDueTime)")
+                self.selectedDueTime = nil
             }
         } else {
-            selectedDueTime = date
-            print("Selected Time2: \(selectedDueTime)")
+            self.selectedDueTime = date
             if selectedDueDate == nil {
-                selectedDueDate = Calendar.current.startOfDay(for: Date())
-                print("Selected Date2: \(selectedDueDate)")
+                self.selectedDueDate = Calendar.current.startOfDay(for: Date())
             }
         }
-        
         updateSelectedDueDateTime()
     }
     
@@ -369,7 +408,24 @@ extension AddTodoViewController: DateTimePickerDelegate {
         }
         dateTimePickerContainerCell = cell
         cell.configure(withDate: selectedDueDate, withTime: selectedDueTime)
-        print("updateSelectedDueDateTime : \(selectedDueDate), \(selectedDueTime)")
-        print("-------------------------------------------")
+    }
+}
+
+// MARK: - AddTodoLocationPickerDelegate
+
+extension AddTodoViewController: AddTodoLocationPickerDelegate {
+    func didPickLocation(_ address: String) {
+        self.selectedPlace = address
+        
+        let indexPath = IndexPath(item: 1, section: 2)
+        todoView.collectionView.reloadItems(at: [indexPath])
+    }
+}
+
+// MARK: - TitleCollectionViewCellDelegate
+
+extension AddTodoViewController: TitleCollectionViewCellDelegate {
+    func titleCellDidEndEditing(_ text: String?) {
+        self.selectedTitle = text
     }
 }

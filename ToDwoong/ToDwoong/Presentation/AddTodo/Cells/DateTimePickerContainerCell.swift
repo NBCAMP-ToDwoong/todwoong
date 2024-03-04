@@ -12,6 +12,7 @@ import SnapKit
 class DateTimePickerContainerCell: UICollectionViewCell {
     
     // MARK: - Properties
+    
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var collectionView: UICollectionView!
@@ -58,6 +59,9 @@ class DateTimePickerContainerCell: UICollectionViewCell {
             } else {
                 self?.selectedDueTime = nil
             }
+            self?.parentViewController?.selectedDueDate = self?.selectedDueDate
+            self?.parentViewController?.selectedDueTime = self?.selectedDueTime
+            
             if let parentViewController = self?.parentViewController,
                let indexPath = parentViewController.datePickerIndexPath,
                indexPath.section == 2 {
@@ -66,6 +70,7 @@ class DateTimePickerContainerCell: UICollectionViewCell {
             self?.collectionView.reloadData()
         }
     }
+    
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource

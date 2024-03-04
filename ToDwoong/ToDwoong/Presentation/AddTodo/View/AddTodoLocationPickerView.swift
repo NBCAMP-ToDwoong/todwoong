@@ -11,8 +11,8 @@ import MapKit
 import SnapKit
 import TodwoongDesign
 
-protocol AddTodoLocationPickerDelegate: AnyObject {
-    func confirmAddressButtonTapped(with address: String?)
+protocol AddTodoLocationPickerViewDelegate: AnyObject {
+    func didConfirmAddress(_ address: String)
 }
 
 class AddTodoLocationPickerView: UIView {
@@ -20,7 +20,7 @@ class AddTodoLocationPickerView: UIView {
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchBar = UISearchBar()
     
-    var delegate: AddTodoLocationPickerDelegate?
+    weak var delegate: AddTodoLocationPickerViewDelegate?
     
     let addressLabel: UILabel = {
         let label = UILabel()
@@ -117,6 +117,6 @@ class AddTodoLocationPickerView: UIView {
     
     @objc private func confirmAddressButtonTapped() {
         let address = addressLabel.text
-        delegate?.confirmAddressButtonTapped(with: address)
+        delegate?.didConfirmAddress(address ?? "") // 'with' 키워드 제거
     }
 }

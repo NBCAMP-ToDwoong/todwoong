@@ -10,6 +10,10 @@ import UIKit
 
 import MapKit
 
+protocol AddTodoLocationPickerDelegate: AnyObject {
+    func didPickLocation(_ address: String)
+}
+
 class AddTodoLocationPickerViewController: UIViewController {
     var addressString: String = ""
     var selectedPlace: String?
@@ -150,10 +154,10 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     }
 }
 
-extension AddTodoLocationPickerViewController: AddTodoLocationPickerDelegate {
-    func confirmAddressButtonTapped(with address: String?) {
-        selectedPlace = address
+extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
+    func didConfirmAddress(_ address: String) {
+        self.selectedPlace = address
+        delegate?.didPickLocation(address)
         dismiss(animated: true, completion: nil)
-        print("Controller 전달 : \(selectedPlace)")
     }
 }

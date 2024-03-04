@@ -26,8 +26,8 @@
 		2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */; };
 		2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */; };
 		2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */; };
-		2EF9C4E12B94D195005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E02B94D195005F8B76 /* AddTodoLocationPickerView.swift */; };
 		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
+		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
@@ -66,8 +66,8 @@
 		2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeOptionCell.swift; sourceTree = "<group>"; };
 		2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
-		2EF9C4E02B94D195005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
 		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
+		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -262,8 +262,8 @@
 		2EF9C4DD2B9497D7005F8B76 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2EF9C4E02B94D195005F8B76 /* AddTodoLocationPickerView.swift */,
 				2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */,
+				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -411,6 +411,7 @@
 				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,
 				2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
