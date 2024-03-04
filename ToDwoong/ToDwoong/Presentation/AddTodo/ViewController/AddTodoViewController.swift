@@ -136,7 +136,9 @@ class AddTodoViewController: UIViewController {
 //        }
     }
     
-    func handleDateOrTimeCellSelected(at indexPath: IndexPath, in cell: DateTimePickerContainerCell, mode: UIDatePicker.Mode) {
+    func handleDateOrTimeCellSelected(at indexPath: IndexPath, 
+                                      in cell: DateTimePickerContainerCell, 
+                                      mode: UIDatePicker.Mode) {
         guard let cellIndexPath = todoView.collectionView.indexPath(for: cell) else { return }
 
         if mode == .time && selectedDueDate == nil {
@@ -177,7 +179,9 @@ class AddTodoViewController: UIViewController {
             // 날짜 부분은 고정된 날짜(예: 1970-01-01)를 사용하거나 무시합니다.
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
-            selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!, minute: currentTime.minute!, second: 0, of: fixedDate)
+            selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!, 
+                                                    minute: currentTime.minute!,
+                                                    second: 0, of: fixedDate)
         }
     }
     
@@ -415,7 +419,9 @@ extension AddTodoViewController: DateTimePickerDelegate {
             // 고정된 날짜와 선택된 시간을 결합하여 selectedDueTime을 설정합니다.
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
-            selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!, minute: timeComponents.minute!, second: 0, of: fixedDate)
+            selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!, 
+                                                    minute: timeComponents.minute!,
+                                                    second: 0, of: fixedDate)
         }
         updateSelectedDueDateTime()
     }
