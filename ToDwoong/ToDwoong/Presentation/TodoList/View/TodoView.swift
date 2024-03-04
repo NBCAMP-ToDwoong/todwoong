@@ -26,7 +26,8 @@ final class TodoView: UIView {
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.identifier)
+        collectionView.register(GroupCollectionViewCell.self,
+                                forCellWithReuseIdentifier: GroupCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
@@ -46,6 +47,23 @@ final class TodoView: UIView {
         tableView.separatorStyle = .none
         
         return tableView
+    }()
+    
+    lazy var emptyImageView: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(systemName: "photo")    // FIXME: 이미지 정해지면 수정 예정
+        imageView.image = image
+        
+        return imageView
+    }()
+    
+    lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "오늘의 투두를 추가해보세요!"
+        label.textColor = TDStyle.color.mainTheme
+        label.font = TDStyle.font.body(style: .regular)
+        
+        return label
     }()
     
     // MARK: Life Cycle
@@ -71,8 +89,10 @@ extension TodoView {
         [
             groupListButton,
             groupCollectionView,
-            todoListFrameView
-        ].forEach{self.addSubview($0)}
+            todoListFrameView,
+            emptyImageView,
+            emptyLabel
+        ].forEach { self.addSubview($0) }
         
         todoListFrameView.addSubview(todoTableView)
     
@@ -94,6 +114,15 @@ extension TodoView {
             make.top.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.bottom.lessThanOrEqualToSuperview()
+        }
+        emptyImageView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.width.equalTo(self.snp.width).dividedBy(2.5)
+            make.height.equalTo(emptyImageView.snp.width)
+        }
+        emptyLabel.snp.makeConstraints { make in
+            make.top.equalTo(emptyImageView)
+            make.centerX.equalToSuperview()
         }
     }
 }

@@ -17,11 +17,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     
     // MARK: UI Properties
     
-    var groupButton: TDCustomButton = {
-        let button = TDButton.chip(title: "Test", backgroundColor: .yellow)
-
-        return button
-    }()
+    var groupButton = TDButton.chip(title: "Test", backgroundColor: TDStyle.color.mainTheme)
     
     // MARK: Life Cycle
     
@@ -54,7 +50,7 @@ extension GroupCollectionViewCell {
     func setUI() {
         contentView.addSubview(groupButton)
         
-        groupButton.snp.makeConstraints {make in
+        groupButton.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
         }
     }

@@ -69,7 +69,7 @@ extension TodoViewController {
     }
 }
 
-// MARK: CollectionView DataSource
+// MARK: CollectionViewDataSource
 
 extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -77,8 +77,11 @@ extension TodoViewController: UICollectionViewDataSource {
         return groupList.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier,
+                                                            for: indexPath) as? GroupCollectionViewCell else 
+        { return UICollectionViewCell() }
         
         cell.configure(data: groupList[indexPath.row])
         
@@ -97,29 +100,45 @@ extension TodoViewController: UICollectionViewDelegate {
 }
 
 extension TodoViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
-        let buttonSize = buttonText.size(withAttributes: [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
+        let buttonSize = buttonText.size(withAttributes: 
+                                            [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
         let buttonWidth = buttonSize.width
         let buttonHeight = buttonSize.height
         
         return CGSize(width: buttonWidth + 24, height: buttonHeight + 10)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
     }
 }
 
-// MARK: TableView DataSource
+// MARK: TableViewDataSource
 
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if todoList.isEmpty {
+            todoView.emptyImageView.isHidden = false
+            todoView.emptyLabel.isHidden = false
+        } else {
+            todoView.emptyImageView.isHidden = true
+            todoView.emptyLabel.isHidden = true
+        }
+        
         return todoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else { return UITableViewCell() }
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: TDTableViewCell.identifier,
+            for: indexPath) as? TDTableViewCell else
+        { return UITableViewCell() }
         
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
@@ -130,7 +149,7 @@ extension TodoViewController: UITableViewDataSource {
     }
 }
 
-// MARK: TableView Delegate
+// MARK: TableViewDelegate
 
 extension TodoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -139,8 +158,12 @@ extension TodoViewController: UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let topFixedAction = UIContextualAction(style: .normal, title: "고정", handler: {(action, view, completionHandler) in
+    func tableView(_ tableView: UITableView, 
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let topFixedAction = UIContextualAction(style: .normal, 
+                                                title: "고정",
+                                                handler: {(action, view, completionHandler) in
             // FIXME: 기능 Feature에서 구현 예정
         })
         
@@ -152,11 +175,17 @@ extension TodoViewController: UITableViewDelegate {
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, title: "편집", handler: {(action, view, completionHandler) in
+    func tableView(_ tableView: UITableView, 
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal, 
+                                            title: "편집",
+                                            handler: {(action, view, completionHandler) in
             // FIXME: 기능 Feature에서 구현 예정
         })
-        let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .normal,
+                                              title: "삭제",
+                                              handler: {(action, view, completionHandler) in
             // FIXME: 기능 Feature에서 구현 예정
         })
         
@@ -182,7 +211,9 @@ extension TodoViewController {
         
         if let id = todo.id?.uuidString {
             if let title = todo.title {
-                var convertedTodo = TodoModel(id: id, title: title, isCompleted: todo.isCompleted, placeAlarm: todo.placeAlarm, timeAlarm: todo.timeAlarm)
+                var convertedTodo = TodoModel(id: id, title: title, 
+                                              isCompleted: todo.isCompleted, placeAlarm: todo.placeAlarm,
+                                              timeAlarm: todo.timeAlarm)
                 convertedTodo.dueDate = todo.dueDate
                 convertedTodo.dueTime = todo.dueTime
                 convertedTodo.place = todo.place
