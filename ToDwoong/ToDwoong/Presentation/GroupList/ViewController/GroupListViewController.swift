@@ -2,16 +2,18 @@
 //  GroupListViewController.swift
 //  ToDwoong
 //
-//  Created by t2023-m0041 on 2/29/24.
+//  Created by t2023-m0041 on 3/4/24.
 //
 
 import UIKit
 
 import SnapKit
+import TodwoongDesign
 
 final class GroupListViewController: UIViewController {
     
     private let groupListView = GroupListView()
+    private var isEditingMode = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +23,7 @@ final class GroupListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        title = "카테고리"
+        title = "그룹"
         
         let leftBarButtonItem = UIBarButtonItem(
             title: "< Back",
@@ -38,6 +40,12 @@ final class GroupListViewController: UIViewController {
             action: #selector(didTapEditButton)
         )
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        // 네비게이션 색상 설정
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = .white
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     private func setupGroupListView() {
@@ -45,16 +53,22 @@ final class GroupListViewController: UIViewController {
         groupListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
-        groupListView.backgroundColor = .white
+    
+        groupListView.backgroundColor = TDStyle.color.lightGray
     }
+    
+    // MARK: Objc
     
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
     }
     
     @objc private func didTapEditButton() {
-        // 테이블뷰의 셀을 편집 할 수 있게 변경
+        isEditingMode.toggle()
+        groupListView.setEditingMode(isEditingMode)
     }
 
+    @objc private func addCategoryButtonTapped() {
+        // 추가 버튼 메서드 구현
+    }
 }

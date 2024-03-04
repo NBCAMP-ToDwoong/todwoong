@@ -21,8 +21,10 @@
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
-		7FE316352B90750E004ED878 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316342B90750E004ED878 /* GroupListViewController.swift */; };
-		7FE3163B2B907620004ED878 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3163A2B907620004ED878 /* GroupListView.swift */; };
+		7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316442B9571F6004ED878 /* GroupListViewController.swift */; };
+		7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316462B957227004ED878 /* GroupListTableViewCell.swift */; };
+		7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */; };
+		7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3164A2B957275004ED878 /* GroupListView.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
@@ -54,8 +56,10 @@
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		7FE316342B90750E004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GroupListViewController.swift; path = ToDwoong/Presentation/GroupList/ViewController/GroupListViewController.swift; sourceTree = SOURCE_ROOT; };
-		7FE3163A2B907620004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		7FE316442B9571F6004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
+		7FE316462B957227004ED878 /* GroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTableViewCell.swift; sourceTree = "<group>"; };
+		7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedViewCell.swift; sourceTree = "<group>"; };
+		7FE3164A2B957275004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -235,7 +239,9 @@
 		7FE316382B90754A004ED878 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				7FE3163A2B907620004ED878 /* GroupListView.swift */,
+				7FE316462B957227004ED878 /* GroupListTableViewCell.swift */,
+				7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */,
+				7FE3164A2B957275004ED878 /* GroupListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -243,7 +249,7 @@
 		7FE316392B907554004ED878 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				7FE316342B90750E004ED878 /* GroupListViewController.swift */,
+				7FE316442B9571F6004ED878 /* GroupListViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -367,13 +373,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
+				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
 				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
+				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
