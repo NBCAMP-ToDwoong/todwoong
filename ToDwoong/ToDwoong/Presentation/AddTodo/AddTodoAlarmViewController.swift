@@ -117,6 +117,8 @@ extension AddTodoAlarmViewController {
     }
 }
 
+// MARK: - UI Method
+
 extension AddTodoAlarmViewController {
     private func setUI() {
         updateButtonStyles()
@@ -169,19 +171,17 @@ extension AddTodoAlarmViewController {
     }
 
     private func updateButtonStyle(button: UIButton, isBold: Bool) {
-        var currentConfig = button.configuration ?? UIButton.Configuration.plain()
-        let style: TDFont.FontStyle = isBold ? .bold : .regular
-        let font = TDStyle.font.body(style: style)
-        
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font
-        ]
-        currentConfig.attributedTitle = AttributedString(currentConfig.title ?? "",
-                                                         attributes: AttributeContainer(attributes))
-        
-        currentConfig.baseForegroundColor = isBold ? TDStyle.color.mainDarkTheme : TDStyle.color.primaryLabel
-        
-        button.configuration = currentConfig
+        if var currentConfig = button.configuration {
+            let style: TDFont.FontStyle = isBold ? .bold : .regular
+            let font = TDStyle.font.body(style: style)
+            let attributes: [NSAttributedString.Key: Any] = [ .font: font ]
+            
+            currentConfig.attributedTitle = AttributedString(currentConfig.title!,
+                                                             attributes: AttributeContainer(attributes))
+            currentConfig.baseForegroundColor = isBold ? TDStyle.color.mainDarkTheme : TDStyle.color.primaryLabel
+            
+            button.configuration = currentConfig
+        }
     }
 }
 
