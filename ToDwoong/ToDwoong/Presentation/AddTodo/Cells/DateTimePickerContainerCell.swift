@@ -30,6 +30,11 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: setView
+
+extension DateTimePickerContainerCell {
     private func setView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -46,13 +51,11 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
         }
 
     }
-    
-    func configure(withDate date: Date?, withTime time: Date?) {
-        self.selectedDueDate = date
-        self.selectedDueTime = time
-        collectionView.reloadData()
-    }
-    
+}
+
+// MARK: configureDateTimeOptionCell
+
+extension DateTimePickerContainerCell {
     private func configureDateTimeOptionCell(_ cell: DateTimeOptionCell, isDateCell: Bool) {
         cell.removeButtonAction = { [weak self] in
             if isDateCell {
@@ -71,6 +74,12 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
             }
             self?.collectionView.reloadData()
         }
+    }
+    
+    func configure(withDate date: Date?, withTime time: Date?) {
+        self.selectedDueDate = date
+        self.selectedDueTime = time
+        collectionView.reloadData()
     }
     
 }

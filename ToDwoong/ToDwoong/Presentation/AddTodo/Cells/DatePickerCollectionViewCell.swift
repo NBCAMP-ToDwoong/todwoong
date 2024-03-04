@@ -28,8 +28,13 @@ class DatePickerCollectionViewCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setDatePicker()
-    }
+    } 
     
+}
+
+// MARK: setDatePicker
+
+extension DatePickerCollectionViewCell {
     private func setDatePicker() {
         addSubview(datePicker)
         datePicker.translatesAutoresizingMaskIntoConstraints = false
@@ -38,19 +43,26 @@ class DatePickerCollectionViewCell: UICollectionViewCell {
         }
         datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
     }
-    
-    @objc func datePickerValueChanged(_ datePicker: UIDatePicker) {
-        let mode = datePicker.datePickerMode
-        let selectedDate = datePicker.date
+}
 
-        delegate?.didPickDateOrTime(date: selectedDate, mode: mode)
-    }
-    
+// MARK: configure
+
+extension DatePickerCollectionViewCell {
     func configure(for mode: UIDatePicker.Mode) {
         datePicker.datePickerMode = mode
         if #available(iOS 14, *) {
             datePicker.preferredDatePickerStyle = mode == .date ? .inline : .wheels
         }
     }
-    
+}
+
+// MARK: @objc
+
+extension DatePickerCollectionViewCell {
+    @objc func datePickerValueChanged(_ datePicker: UIDatePicker) {
+        let mode = datePicker.datePickerMode
+        let selectedDate = datePicker.date
+
+        delegate?.didPickDateOrTime(date: selectedDate, mode: mode)
+    }
 }

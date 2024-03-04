@@ -17,13 +17,13 @@ final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     // MARK: UI Properties
     
-    weak var delegate: TitleCollectionViewCellDelegate?
-    
     var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
         return textField
     }()
+    
+    weak var delegate: TitleCollectionViewCellDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -35,6 +35,11 @@ final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: setView
+
+extension TitleCollectionViewCell {
     func setView() {
         addSubview(textField)
         textField.snp.makeConstraints { make in
@@ -44,9 +49,12 @@ final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         layer.borderColor = UIColor.black.cgColor
         layer.masksToBounds = true
     }
+}
 
+// MARK: textFieldDidEndEditing
+
+extension TitleCollectionViewCell {
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.titleCellDidEndEditing(textField.text)
     }
-    
 }

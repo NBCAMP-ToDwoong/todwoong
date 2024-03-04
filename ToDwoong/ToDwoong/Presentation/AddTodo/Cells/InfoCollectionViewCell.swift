@@ -44,6 +44,8 @@ final class InfoCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        setUI()
         setView()
     }
     
@@ -51,15 +53,22 @@ final class InfoCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setUI() {
+        [titleLabel, detailLabel, removeButton, symbolImageView].forEach { subview in
+            addSubview(subview)
+        }
+    }
+    
+}
+
+// MARK: setView
+
+extension InfoCollectionViewCell {
     private func setView() {
         layer.borderWidth = 0.2
         layer.borderColor = UIColor.black.cgColor
         layer.masksToBounds = true
         
-        addSubview(titleLabel)
-        addSubview(detailLabel)
-        addSubview(removeButton)
-        addSubview(symbolImageView)
         
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -85,6 +94,11 @@ final class InfoCollectionViewCell: UICollectionViewCell {
         }
     }
     
+}
+
+// MARK: configureCell
+
+extension InfoCollectionViewCell {
     func configureCell(title: String, detail: String? = nil, showremoveButton: Bool = false) {
         titleLabel.text = title
         detailLabel.text = detail

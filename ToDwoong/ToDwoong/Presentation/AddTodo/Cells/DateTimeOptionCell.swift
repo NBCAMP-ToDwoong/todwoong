@@ -34,7 +34,7 @@ final class DateTimeOptionCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = TDStyle.font.body(style: .regular)
         return label
     }()
     
@@ -48,6 +48,7 @@ final class DateTimeOptionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setView()
         setInfo(labelText: "Title", infoText: nil)
     }
@@ -56,17 +57,24 @@ final class DateTimeOptionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+}
+
+// MARK: setView
+
+extension DateTimeOptionCell {
     private func setView() {
         layer.borderWidth = 0.2
         layer.borderColor = UIColor.black.cgColor
         
-        addSubview(titleLabel)
+        [titleLabel, infoLabelContainer, removeButton].forEach { subview in
+            addSubview(subview)
+        }
+        
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.top.equalToSuperview().offset(10)
         }
         
-        addSubview(infoLabelContainer)
         infoLabelContainer.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
@@ -85,7 +93,26 @@ final class DateTimeOptionCell: UICollectionViewCell {
             make.width.height.equalTo(20)
         }
     }
-    
+}
+
+// MARK: setInfo
+
+extension DateTimeOptionCell {
+    func setInfo(labelText: String, infoText: String?) {
+        titleLabel.text = labelText
+        
+        if let infoText = infoText, !infoText.isEmpty {
+            infoLabel.text = infoText
+            showInfoAndAdjustLayout()
+        } else {
+            hideInfoAndAdjustLayout()
+        }
+    }
+}
+
+// MARK: Heper Functions
+
+extension DateTimeOptionCell {
     private func adjustLayoutForEmptyInfo() {
         titleLabel.snp.remakeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -123,22 +150,15 @@ final class DateTimeOptionCell: UICollectionViewCell {
         infoLabelContainer.isHidden = true
         removeButton.isHidden = true
         adjustLayoutForEmptyInfo()
+        
     }
-    
+}
+
+// MARK: @objc
+
+extension DateTimeOptionCell {
     @objc private func removeButtonTapped() {
         removeButtonAction?()
         hideInfoAndAdjustLayout()
     }
-    
-    func setInfo(labelText: String, infoText: String?) {
-        titleLabel.text = labelText
-        
-        if let infoText = infoText, !infoText.isEmpty {
-            infoLabel.text = infoText
-            showInfoAndAdjustLayout()
-        } else {
-            hideInfoAndAdjustLayout()
-        }
-    }
-    
 }
