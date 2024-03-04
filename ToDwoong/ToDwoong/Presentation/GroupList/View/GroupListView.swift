@@ -167,7 +167,7 @@ extension GroupListView: UITableViewDataSource {
 
 extension GroupListView {
     private func editCategory(at indexPath: IndexPath) {
-        // 스와이프 편집 버튼 누르면 호출되는 메서드
+        // FIXME: 톱니바귀 설정을 눌렀을 때의 메서드를 작성
     }
 }
 
