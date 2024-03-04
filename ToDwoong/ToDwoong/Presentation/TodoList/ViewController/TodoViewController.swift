@@ -57,6 +57,7 @@ extension TodoViewController {
 
 extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // FIXME: 카테고리 리스트 매핑 예정
         return 10
     }
     
@@ -71,7 +72,7 @@ extension TodoViewController: UICollectionViewDataSource {
 
 extension TodoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        // FIXME: 카테고리 필터 로직 구현 예정
     }
 }
 
@@ -92,12 +93,14 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // FIXME: 투두 리스트 매핑 예정
         3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else { return UITableViewCell() }
         if indexPath.row == 0 {
+            // FIXME: 데이터 매핑 예정
             cell.configure(data: test)
         }
         
@@ -108,5 +111,7 @@ extension TodoViewController: UITableViewDataSource {
 }
 
 extension TodoViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // FIXME: 화면 이동 로직 추가 예정
+    }
 }

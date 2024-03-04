@@ -31,8 +31,8 @@ final class TodoView: UIView {
     lazy var todoTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
-
-        tableView.backgroundColor = .red
+        tableView.separatorStyle = .none
+        
         return tableView
     }()
     
