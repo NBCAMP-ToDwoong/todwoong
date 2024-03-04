@@ -39,26 +39,23 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        addSubview(iconImageView)
-        addSubview(titleLabel)
-        addSubview(arrowImageView)
-        
-        iconImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(16)
-            make.width.height.equalTo(30)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(iconImageView.snp.trailing).offset(16)
-        }
-        
-        arrowImageView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-16)
-            make.width.equalTo(10)
-            make.height.equalTo(15)
+        let views: [UIView] = [iconImageView, titleLabel, arrowImageView]
+
+        views.forEach { view in
+            addSubview(view)
+            view.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                if view == iconImageView {
+                    make.leading.equalToSuperview().offset(16)
+                    make.width.height.equalTo(30)
+                } else if view == titleLabel {
+                    make.leading.equalTo(iconImageView.snp.trailing).offset(16)
+                } else if view == arrowImageView {
+                    make.trailing.equalToSuperview().offset(-16)
+                    make.width.equalTo(10)
+                    make.height.equalTo(15)
+                }
+            }
         }
     }
     
@@ -87,19 +84,20 @@ final class EditGroupListTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        addSubview(deleteButton)
-        addSubview(titleLabel)
-        
-        deleteButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(16)
-            make.width.height.equalTo(30)
-        }
-        
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(deleteButton.snp.trailing).offset(16)
+
+        let views: [UIView] = [deleteButton, titleLabel]
+
+        views.forEach { view in
+            addSubview(view)
+            view.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                if view == deleteButton {
+                    make.leading.equalToSuperview().offset(16)
+                    make.width.height.equalTo(30)
+                } else if view == titleLabel {
+                    make.leading.equalTo(deleteButton.snp.trailing).offset(16)
+                }
+            }
         }
     }
     
