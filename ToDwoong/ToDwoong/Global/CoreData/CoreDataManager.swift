@@ -34,7 +34,7 @@ final class CoreDataManager {
     
     func createTodo(title: String, 
                     place: String?,
-                    dueDate: Date?, dueTime: Date,
+                    dueDate: Date?, dueTime: Date?,
                     isCompleted: Bool,
                     timeAlarm: Bool, placeAlarm: Bool,
                     category: Category?
@@ -65,7 +65,7 @@ final class CoreDataManager {
     
     func updateTodo(todo: Todo, 
                     newTitle: String, newPlace: String,
-                    newDate: Date?, newTime: Date,
+                    newDate: Date?, newTime: Date?,
                     newCompleted: Bool,
                     newTimeAlarm: Bool, newPlaceAlarm: Bool,
                     newCategory: Category?
