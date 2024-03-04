@@ -12,6 +12,8 @@ import TodwoongDesign
 
 final class GroupListView: UIView {
     
+    // MARK: - Properties
+    
     private let tableView: ContentSizedTableView = {
         let tableView = ContentSizedTableView(frame: .zero, style: .plain)
         tableView.backgroundColor = .clear
