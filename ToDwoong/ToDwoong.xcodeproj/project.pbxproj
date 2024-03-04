@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
+		1B612E462B94AFE500DB0C1E /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B612E452B94AFE500DB0C1E /* TodwoongDesign */; };
 		1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD62B8E8EDB008F49CE /* SnapKit */; };
 		1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; };
 		1BC7A5F22B8EC6FB00B9F6A8 /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -41,6 +43,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ToDwoongDesign.framework; sourceTree = "<group>"; };
 		1BD2FAC92B88ACB00097694E /* ToDwoong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDwoong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD2FACC2B88ACB00097694E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */,
+				1B612E462B94AFE500DB0C1E /* TodwoongDesign in Frameworks */,
 				1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */,
 				1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */,
 			);
@@ -71,6 +75,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B612E412B949BCE00DB0C1E /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				1B612E422B949BDD00DB0C1E /* TabBarController.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
 		1BA63ACD2B8E8CF8008F49CE /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
@@ -180,6 +192,7 @@
 		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				1B612E412B949BCE00DB0C1E /* TabBar */,
 				1BA63AD42B8E8D81008F49CE /* LaunchScreen */,
 				1BA63ACD2B8E8CF8008F49CE /* TodoList */,
 				1BA63ACE2B8E8D07008F49CE /* AddTodo */,
@@ -272,6 +285,7 @@
 			packageProductDependencies = (
 				1BA63AD62B8E8EDB008F49CE /* SnapKit */,
 				1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */,
+				1B612E452B94AFE500DB0C1E /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -303,6 +317,7 @@
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
 				1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */,
+				1B612E442B94AFE500DB0C1E /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -354,6 +369,8 @@
 			files = (
 				1BD2FAD12B88ACB00097694E /* TodoViewController.swift in Sources */,
 				E0EACB692B907EF800BBEB0B /* CategoryCollectionViewCell.swift in Sources */,
+				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
+				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
@@ -582,6 +599,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1B612E442B94AFE500DB0C1E /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 		1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -593,6 +618,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1B612E452B94AFE500DB0C1E /* TodwoongDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B612E442B94AFE500DB0C1E /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			productName = TodwoongDesign;
+		};
 		1BA63AD62B8E8EDB008F49CE /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */;
