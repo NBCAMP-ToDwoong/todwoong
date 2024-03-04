@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class InfoCollectionViewCell: UICollectionViewCell {
+final class InfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: UI Properties
     

@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class AddTodoViewController: UIViewController {
+final class AddTodoViewController: UIViewController {
     
     // MARK: Properties
     

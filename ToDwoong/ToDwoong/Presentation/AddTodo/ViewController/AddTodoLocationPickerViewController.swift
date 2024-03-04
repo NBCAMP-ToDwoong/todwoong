@@ -14,7 +14,7 @@ protocol AddTodoLocationPickerDelegate: AnyObject {
     func didPickLocation(_ address: String)
 }
 
-class AddTodoLocationPickerViewController: UIViewController {
+final class AddTodoLocationPickerViewController: UIViewController {
     
     // MARK: Properties
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AddTodoView: UIView {
+final class AddTodoView: UIView {
     
     // MARK: UI Properties
     

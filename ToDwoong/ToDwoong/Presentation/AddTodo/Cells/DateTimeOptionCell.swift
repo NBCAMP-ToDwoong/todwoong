@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class DateTimeOptionCell: UICollectionViewCell {
+final class DateTimeOptionCell: UICollectionViewCell {
     
     // MARK: UI Properties
     

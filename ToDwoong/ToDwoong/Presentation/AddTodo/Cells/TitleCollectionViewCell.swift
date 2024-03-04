@@ -13,7 +13,7 @@ protocol TitleCollectionViewCellDelegate: AnyObject {
     func titleCellDidEndEditing(_ text: String?)
 }
 
-class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
+final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     // MARK: UI Properties
     

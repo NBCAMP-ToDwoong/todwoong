@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DateTimePickerContainerCell: UICollectionViewCell {
+final class DateTimePickerContainerCell: UICollectionViewCell {
     
     // MARK: Properties
     

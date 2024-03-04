@@ -15,7 +15,7 @@ protocol AddTodoLocationPickerViewDelegate: AnyObject {
     func didTapConfirmAddress(_ address: String)
 }
 
-class AddTodoLocationPickerView: UIView {
+final class AddTodoLocationPickerView: UIView {
     
     // MARK: UI Properties
     
