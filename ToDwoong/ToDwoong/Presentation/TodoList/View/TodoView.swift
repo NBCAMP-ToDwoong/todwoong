@@ -11,9 +11,6 @@ import TodwoongDesign
 
 final class TodoView: UIView {
     
-    // MARK: Properties
-    
-    
     // MARK: UI Properties
     
     lazy var groupListButton: UIButton = {
@@ -35,7 +32,7 @@ final class TodoView: UIView {
         return collectionView
     }()
     
-    lazy var todoListFrameView: UIView = {
+    private lazy var todoListFrameView: UIView = {
         let view = UIView()
         view.backgroundColor = TDStyle.color.lightGray
         view.layer.cornerRadius = 20
@@ -68,7 +65,7 @@ final class TodoView: UIView {
 // MARK: Extensions
 
 extension TodoView {
-    func setUI() {
+    private func setUI() {
         self.backgroundColor = .white
 
         [

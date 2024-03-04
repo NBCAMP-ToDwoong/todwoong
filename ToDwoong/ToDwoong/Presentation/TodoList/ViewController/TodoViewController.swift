@@ -32,9 +32,6 @@ class TodoViewController: UIViewController {
         setDelegates()
         setAction()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-    }
 }
 
 // MARK: Action
@@ -77,20 +74,15 @@ extension TodoViewController {
 extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        // FIXME: 그룹 리스트 매핑 예정
-        
         return groupList.count
-//        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
         
-        //FIXME: 그룹 데이터 매핑 예정
         cell.configure(data: groupList[indexPath.row])
         
         return cell
-        
     }
 }
 
@@ -123,15 +115,12 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // FIXME: 투두 리스트 매핑 예정
         return todoList.count
-//        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else { return UITableViewCell() }
         
-        // FIXME: 데이터 매핑 예정
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
         }
@@ -146,13 +135,13 @@ extension TodoViewController: UITableViewDataSource {
 extension TodoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // FIXME: 해당 투두 편집 화면으로 이동 추가 예정
+        // FIXME: 해당 투두 편집 화면으로 이동(투두 편집 화면 구현 이후 추가 예정)
         
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let topFixedAction = UIContextualAction(style: .normal, title: "고정", handler: {(action, view, completionHandler) in
-            
+            // FIXME: 기능 Feature에서 구현 예정
         })
         
         topFixedAction.backgroundColor = .systemGray
@@ -165,10 +154,10 @@ extension TodoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal, title: "편집", handler: {(action, view, completionHandler) in
-            
+            // FIXME: 기능 Feature에서 구현 예정
         })
         let deleteAction = UIContextualAction(style: .normal, title: "삭제", handler: {(action, view, completionHandler) in
-            
+            // FIXME: 기능 Feature에서 구현 예정
         })
         
         editAction.backgroundColor = .systemBlue
