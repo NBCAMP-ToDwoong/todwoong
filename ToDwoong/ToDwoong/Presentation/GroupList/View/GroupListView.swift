@@ -48,19 +48,19 @@ final class GroupListView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupTableView()
+        setTableView()
         setupAddButton()
         reloadData()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupTableView()
+        setTableView()
         setupAddButton()
         reloadData()
     }
     
-    private func setupTableView() {
+    private func setTableView() {
         addSubview(tableView)
         
         tableView.delegate = self
