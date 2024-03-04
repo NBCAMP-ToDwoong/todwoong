@@ -137,7 +137,7 @@ class AddTodoViewController: UIViewController {
     }
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath, 
-                                      in cell: DateTimePickerContainerCell, 
+                                      in cell: DateTimePickerContainerCell,
                                       mode: UIDatePicker.Mode) {
         guard let cellIndexPath = todoView.collectionView.indexPath(for: cell) else { return }
 
@@ -165,7 +165,6 @@ class AddTodoViewController: UIViewController {
     }
     
     func addDatePickerSection(below section: Int, with item: Int, mode: UIDatePicker.Mode) {
-        // 섹션 추가 로직은 그대로 유지합니다.
         let newSection = section + 1
         datePickerIndexPath = IndexPath(item: item, section: newSection)
         todoView.collectionView.performBatchUpdates({
@@ -173,23 +172,14 @@ class AddTodoViewController: UIViewController {
         }, completion: nil)
 
         if mode == .date {
-            selectedDueDate = Date()  // 날짜 셀을 선택할 때만 selectedDueDate를 업데이트합니다.
+            selectedDueDate = Date()
         } else if mode == .time {
-            // 시간 셀을 선택할 때는 selectedDueTime만 현재 시간으로 업데이트합니다.
-            // 날짜 부분은 고정된 날짜(예: 1970-01-01)를 사용하거나 무시합니다.
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
             selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!, 
                                                     minute: currentTime.minute!,
                                                     second: 0, of: fixedDate)
         }
-    }
-    
-    private func presentMapViewController() {
-        let mapViewController = AddTodoLocationPickerViewController()
-        mapViewController.delegate = self
-        mapViewController.modalPresentationStyle = .fullScreen
-        present(mapViewController, animated: true, completion: nil)
     }
     
     @objc func removeAddress() {
@@ -353,9 +343,9 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         case 2:
             switch indexPath.item {
             case 0:
-                print("Section 2, 그룹")
+                goToGroupSelectController()
             case 1:
-                presentMapViewController()
+                goToMapViewController()
             case 2:
                 print("Section 2, 알람")
             default:
@@ -364,6 +354,29 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         default:
             break
         }
+    }
+    
+}
+
+// MARK: PresentController
+
+extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
+    private func goToMapViewController() {
+        let mapViewController = AddTodoLocationPickerViewController()
+        mapViewController.delegate = self
+        mapViewController.modalPresentationStyle = .fullScreen
+        present(mapViewController, animated: true, completion: nil)
+    }
+    
+    private func goToGroupSelectController() {
+            let groupSelectController = AddTodoGroupSelectController()
+            groupSelectController.modalPresentationStyle = .custom
+            groupSelectController.delegate = self
+            present(groupSelectController, animated: true, completion: nil)
+        }
+        
+    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: String) {
+        controller.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -416,7 +429,6 @@ extension AddTodoViewController: DateTimePickerDelegate {
         if mode == .date {
             selectedDueDate = date
         } else if mode == .time {
-            // 고정된 날짜와 선택된 시간을 결합하여 selectedDueTime을 설정합니다.
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
             selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!, 

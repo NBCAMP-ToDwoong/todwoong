@@ -23,7 +23,7 @@ final class AddTodoLocationPickerView: UIView {
         label.backgroundColor = .white
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = TDStyle.font.body(style: .regular)
         return label
     }()
     
@@ -59,7 +59,7 @@ extension AddTodoLocationPickerView {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview().offset(-60)
             make.width.equalTo(30)
-            make.height.equalTo(60)
+            make.height.equalTo(30)
         }
         
         searchBar.snp.makeConstraints { make in
