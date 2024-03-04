@@ -5,4 +5,6 @@
 //  Created by mirae on 3/5/24.
 //
 
-import Foundation
+protocol AddTodoLocationPickerDelegate: AnyObject {
+    func didPickLocation(_ address: String)
+}

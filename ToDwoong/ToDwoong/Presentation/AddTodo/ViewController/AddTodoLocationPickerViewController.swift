@@ -9,10 +9,6 @@ import CoreLocation
 import MapKit
 import UIKit
 
-protocol AddTodoLocationPickerDelegate: AnyObject {
-    func didPickLocation(_ address: String)
-}
-
 final class AddTodoLocationPickerViewController: UIViewController {
     
     // MARK: Properties

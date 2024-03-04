@@ -9,10 +9,6 @@ import UIKit
 
 import SnapKit
 
-protocol TitleCollectionViewCellDelegate: AnyObject {
-    func titleCellDidEndEditing(_ text: String?)
-}
-
 final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     // MARK: UI Properties

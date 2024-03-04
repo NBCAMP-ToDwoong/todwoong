@@ -11,10 +11,6 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-protocol AddTodoLocationPickerViewDelegate: AnyObject {
-    func didTapConfirmAddress(_ address: String)
-}
-
 final class AddTodoLocationPickerView: UIView {
     
     // MARK: UI Properties

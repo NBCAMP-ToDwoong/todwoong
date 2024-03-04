@@ -9,10 +9,6 @@ import UIKit
 
 import SnapKit
 
-protocol DateTimePickerDelegate: AnyObject {
-    func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode)
-}
-
 class DatePickerCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
