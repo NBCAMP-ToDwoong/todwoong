@@ -12,9 +12,9 @@ import TodwoongDesign
 
 class DateTimeOptionCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: UI Properties
     
-    var deleteButtonAction: (() -> Void)?
+    var removeButtonAction: (() -> Void)?
     
     var titleLabel: UILabel = {
         let label = UILabel()
@@ -26,7 +26,7 @@ class DateTimeOptionCell: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
-        view.backgroundColor = TDStyle.color.bgGray
+        view.backgroundColor = .systemRed
         return view
     }()
     
@@ -38,15 +38,13 @@ class DateTimeOptionCell: UICollectionViewCell {
         return label
     }()
     
-    lazy var deleteButton: UIButton = {
+    lazy var removeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = TDStyle.color.bgRed
-        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,8 +55,6 @@ class DateTimeOptionCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Private Methods
     
     private func setView() {
         layer.borderWidth = 0.2
@@ -82,8 +78,8 @@ class DateTimeOptionCell: UICollectionViewCell {
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10))
         }
         
-        addSubview(deleteButton)
-        deleteButton.snp.makeConstraints { make in
+        addSubview(removeButton)
+        removeButton.snp.makeConstraints { make in
             make.left.equalTo(infoLabelContainer.snp.right).offset(10)
             make.centerY.equalTo(infoLabelContainer.snp.centerY)
             make.width.height.equalTo(20)
@@ -117,7 +113,7 @@ class DateTimeOptionCell: UICollectionViewCell {
     private func showInfoAndAdjustLayout() {
         infoLabel.isHidden = false
         infoLabelContainer.isHidden = false
-        deleteButton.isHidden = false
+        removeButton.isHidden = false
         adjustLayoutForInfo()
     }
     
@@ -125,19 +121,15 @@ class DateTimeOptionCell: UICollectionViewCell {
         infoLabel.text = nil
         infoLabel.isHidden = true
         infoLabelContainer.isHidden = true
-        deleteButton.isHidden = true
+        removeButton.isHidden = true
         adjustLayoutForEmptyInfo()
     }
     
-    // MARK: - Actions
-    
-    @objc private func deleteButtonTapped() {
-        deleteButtonAction?()
+    @objc private func removeButtonTapped() {
+        removeButtonAction?()
         hideInfoAndAdjustLayout()
     }
     
-    // MARK: - Public Methods
-
     func setInfo(labelText: String, infoText: String?) {
         titleLabel.text = labelText
         
@@ -148,6 +140,5 @@ class DateTimeOptionCell: UICollectionViewCell {
             hideInfoAndAdjustLayout()
         }
     }
-    
     
 }

@@ -12,7 +12,7 @@ import TodwoongDesign
 
 class AddTodoViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var selectedTitle: String?
     var selectedDueDate: Date?
@@ -33,7 +33,7 @@ class AddTodoViewController: UIViewController {
         view = AddTodoView()
     }
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +44,8 @@ class AddTodoViewController: UIViewController {
         setCollectionView()
     }
     
-    // FIXME: - 테스트용 추후삭제
+    // FIXME: 테스트용 추후삭제
+    
     private let testButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("테스트 버튼", for: .normal)
@@ -62,7 +63,6 @@ class AddTodoViewController: UIViewController {
             testButton.widthAnchor.constraint(equalToConstant: 200)
         ])
         
-        // 버튼 액션 추가
         testButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
     }
     
@@ -81,7 +81,7 @@ class AddTodoViewController: UIViewController {
         todoView.collectionView.delegate = self
     }
     
-    // TODO: - 완료 버튼 액션 구현
+    // TODO: 완료 버튼 액션 구현
     @objc func doneButtonTapped() {
         let title = selectedTitle // 예시 제목
         let place = selectedPlace // 선택한 장소
@@ -95,6 +95,7 @@ class AddTodoViewController: UIViewController {
         let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
+        // FIXME: 테스트용 추후삭제
         let message = """
         title: \(title)
         place: \(place)
@@ -167,14 +168,15 @@ class AddTodoViewController: UIViewController {
         present(mapViewController, animated: true, completion: nil)
     }
     
-    @objc func deleteAddress() {
+    @objc func removeAddress() {
         self.selectedPlace = nil
         let indexPath = IndexPath(item: 1, section: 2)
         todoView.collectionView.reloadItems(at: [indexPath])
     }
+    
 }
 
-// MARK: - UIGestureRecognizerDelegate
+// MARK: UIGestureRecognizerDelegate
 
 extension AddTodoViewController: UIGestureRecognizerDelegate {
     func setTapGesture() {
@@ -212,7 +214,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -284,9 +286,9 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
                             for: indexPath) as? InfoCollectionViewCell else {
                             fatalError("Unable to dequeue InfoCollectionViewCell")
                         }
-                        cell.configureCell(title: "위치", detail: selectedPlace, showDeleteButton: selectedPlace != nil)
-                        cell.deleteButton.removeTarget(nil, action: nil, for: .allEvents)
-                        cell.deleteButton.addTarget(self, action: #selector(deleteAddress), for: .touchUpInside)
+                        cell.configureCell(title: "위치", detail: selectedPlace, showremoveButton: selectedPlace != nil)
+                        cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
+                        cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
                         
                         return cell
                     case 2:
@@ -342,7 +344,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// MARK: UICollectionViewDelegateFlowLayout
 
 extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
@@ -383,7 +385,7 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
-// MARK: - DateTimePickerDelegate
+// MARK: DateTimePickerDelegate
 
 extension AddTodoViewController: DateTimePickerDelegate {
     func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode) {
@@ -411,7 +413,7 @@ extension AddTodoViewController: DateTimePickerDelegate {
     }
 }
 
-// MARK: - AddTodoLocationPickerDelegate
+// MARK: AddTodoLocationPickerDelegate
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
     func didPickLocation(_ address: String) {
@@ -422,7 +424,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
     }
 }
 
-// MARK: - TitleCollectionViewCellDelegate
+// MARK: TitleCollectionViewCellDelegate
 
 extension AddTodoViewController: TitleCollectionViewCellDelegate {
     func titleCellDidEndEditing(_ text: String?) {

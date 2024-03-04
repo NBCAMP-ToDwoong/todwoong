@@ -11,6 +11,9 @@ import SnapKit
 import TodwoongDesign
 
 class InfoCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: UI Properties
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -19,14 +22,14 @@ class InfoCollectionViewCell: UICollectionViewCell {
     
     var detailLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .right
+        label.textAlignment = .center
         return label
     }()
     
-    var deleteButton: UIButton = {
+    var removeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.tintColor = TDStyle.color.bgRed
+        button.tintColor = .systemRed
         button.isHidden = true
         return button
     }()
@@ -35,7 +38,7 @@ class InfoCollectionViewCell: UICollectionViewCell {
         let symbol = UIImageView()
         symbol.image = UIImage(systemName: "chevron.right")
         symbol.contentMode = .scaleAspectFit
-        symbol.tintColor = TDStyle.color.mainTheme
+        symbol.tintColor = .black
         return symbol
     }()
     
@@ -55,7 +58,7 @@ class InfoCollectionViewCell: UICollectionViewCell {
         
         addSubview(titleLabel)
         addSubview(detailLabel)
-        addSubview(deleteButton)
+        addSubview(removeButton)
         addSubview(symbolImageView)
         
         titleLabel.snp.makeConstraints { make in
@@ -69,23 +72,24 @@ class InfoCollectionViewCell: UICollectionViewCell {
             make.width.height.equalTo(20)
         }
         
-        deleteButton.snp.makeConstraints { make in
+        removeButton.snp.makeConstraints { make in
             make.right.equalTo(symbolImageView.snp.left).offset(0)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(20)
         }
         
         detailLabel.snp.makeConstraints { make in
-            make.right.equalTo(deleteButton.snp.left).offset(-5)
+            make.right.equalTo(removeButton.snp.left).offset(-5)
             make.centerY.equalToSuperview()
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(10)
         }
     }
     
-    func configureCell(title: String, detail: String? = nil, showDeleteButton: Bool = false) {
+    func configureCell(title: String, detail: String? = nil, showremoveButton: Bool = false) {
         titleLabel.text = title
         detailLabel.text = detail
-        deleteButton.isHidden = !showDeleteButton
+        removeButton.isHidden = !showremoveButton
         detailLabel.textAlignment = detail != nil ? .right : .left
     }
+    
 }

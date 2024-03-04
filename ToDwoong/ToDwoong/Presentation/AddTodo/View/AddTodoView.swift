@@ -8,6 +8,9 @@
 import UIKit
 
 class AddTodoView: UIView {
+    
+    // MARK: UI Properties
+    
     var collectionView: UICollectionView!
 
     override init(frame: CGRect) {
@@ -36,4 +39,5 @@ class AddTodoView: UIView {
             make.edges.equalToSuperview()
         }
     }
+    
 }

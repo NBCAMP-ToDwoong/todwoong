@@ -12,15 +12,16 @@ import SnapKit
 import TodwoongDesign
 
 protocol AddTodoLocationPickerViewDelegate: AnyObject {
-    func didConfirmAddress(_ address: String)
+    func didTapConfirmAddress(_ address: String)
 }
 
 class AddTodoLocationPickerView: UIView {
-    let mapView = MKMapView()
-    let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
-    let searchBar = UISearchBar()
     
-    weak var delegate: AddTodoLocationPickerViewDelegate?
+    // MARK: UI Properties
+    
+    let mapView = MKMapView()
+    let searchBar = UISearchBar()
+    let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     
     let addressLabel: UILabel = {
         let label = UILabel()
@@ -30,6 +31,8 @@ class AddTodoLocationPickerView: UIView {
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
+    
+    weak var delegate: AddTodoLocationPickerViewDelegate?
     
     private var addressContainerView: UIStackView!
 
@@ -73,15 +76,13 @@ class AddTodoLocationPickerView: UIView {
             make.height.greaterThanOrEqualTo(70)
         }
         
-        // 버튼 생성 및 설정
         let confirmAddressButton = TDButton.full(title: "저장", backgroundColor: TDStyle.color.mainTheme)
-        confirmAddressButton.addTarget(self, action: #selector(confirmAddressButtonTapped), for: .touchUpInside)
+        confirmAddressButton.addTarget(self, action: #selector(didTapConfirmAddressButton), for: .touchUpInside)
         stackView.addArrangedSubview(confirmAddressButton)
         confirmAddressButton.snp.makeConstraints { make in
-            make.height.equalTo(44) // 버튼 높이 유지
+            make.height.equalTo(44)
         }
         
-        // 흰 배경 추가
         let whiteBackgroundView = UIView()
         whiteBackgroundView.backgroundColor = .white
         addSubview(whiteBackgroundView)
@@ -110,13 +111,14 @@ class AddTodoLocationPickerView: UIView {
         }
         
         addressContainerView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview() // 좌우 여백을 0으로 조정
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5) // 하단 여백을 조정
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5)
         }
     }
     
-    @objc private func confirmAddressButtonTapped() {
+    @objc private func didTapConfirmAddressButton() {
         let address = addressLabel.text
-        delegate?.didConfirmAddress(address ?? "") // 'with' 키워드 제거
+        delegate?.didTapConfirmAddress(address ?? "")
     }
+    
 }

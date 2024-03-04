@@ -15,17 +15,22 @@ protocol AddTodoLocationPickerDelegate: AnyObject {
 }
 
 class AddTodoLocationPickerViewController: UIViewController {
+    
+    // MARK: Properties
+    
     var addressString: String = ""
     var selectedPlace: String?
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
+    
+    // MARK: UI Properties
     
     weak var delegate: AddTodoLocationPickerDelegate?
     
     private var locationPickerView: AddTodoLocationPickerView {
         return view as? AddTodoLocationPickerView ?? AddTodoLocationPickerView()
     }
-
+    
     override func loadView() {
         let locationPickerView = AddTodoLocationPickerView()
         locationPickerView.delegate = self
@@ -33,25 +38,27 @@ class AddTodoLocationPickerViewController: UIViewController {
         locationPickerView.searchBar.delegate = self
         view = locationPickerView
     }
-
+    
+    // MARK: Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegates()
         requestLocationAccess()
         centerMapOnUserLocation()
     }
-
+    
     private func setDelegates() {
         locationPickerView.searchBar.delegate = self
         locationManager.delegate = self
     }
-
+    
     private func requestLocationAccess() {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
     }
-
+    
     private func centerMapOnUserLocation() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager.startUpdatingLocation()
@@ -69,35 +76,33 @@ class AddTodoLocationPickerViewController: UIViewController {
 extension AddTodoLocationPickerViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         let center = mapView.centerCoordinate
-        getAddressFromCoordinates(center)
+        fetchAddressFromCoordinates(center)
     }
     
-    private func getAddressFromCoordinates(_ coordinates: CLLocationCoordinate2D) {
+    private func fetchAddressFromCoordinates(_ coordinates: CLLocationCoordinate2D) {
         let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
             guard let strongSelf = self else { return }
             
             if let error = error {
-                print("Error getting address: \(error)")
+                print("Error fetchting address: \(error)")
                 return
             }
+            
+            // TODO: 수정 및 테스트중
             if let placemark = placemarks?.first {
                 var addressComponents: [String] = []
                 // 시/구
                 if let locality = placemark.locality {
                     addressComponents.append(locality)
                 }
-                // 도로명 주소
-                if let street = placemark.subThoroughfare {
-                    addressComponents.append(street)
-                }
                 // 지번 주소
                 if let thoroughfare = placemark.thoroughfare {
                     addressComponents.append(thoroughfare)
                 }
-                // 우편 번호
-                if let postalCode = placemark.postalCode {
-                    addressComponents.append(postalCode)
+                // 도로명 주소
+                if let street = placemark.subThoroughfare {
+                    addressComponents.append(street)
                 }
                 
                 let addressString = addressComponents.joined(separator: " ")
@@ -111,7 +116,7 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
     }
 }
 
-// MARK: - CLLocationManagerDelegate
+// MARK: CLLocationManagerDelegate
 
 extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -124,7 +129,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error getting location: \(error)")
+        print("Error fetchting location: \(error)")
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -134,12 +139,12 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: UISearchBarDelegate
 
 extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-
+        
         geocoder.geocodeAddressString(searchBar.text ?? "") { [weak self] (placemarks, error) in
             if let error = error {
                 print("Error searching address: \(error)")
@@ -154,8 +159,10 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: AddTodoLocationPickerViewDelegate
+
 extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
-    func didConfirmAddress(_ address: String) {
+    func didTapConfirmAddress(_ address: String) {
         self.selectedPlace = address
         delegate?.didPickLocation(address)
         dismiss(animated: true, completion: nil)

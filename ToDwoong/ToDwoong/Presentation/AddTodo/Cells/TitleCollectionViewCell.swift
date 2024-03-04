@@ -14,6 +14,9 @@ protocol TitleCollectionViewCellDelegate: AnyObject {
 }
 
 class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
+    
+    // MARK: UI Properties
+    
     weak var delegate: TitleCollectionViewCellDelegate?
     
     var textField: UITextField = {
@@ -45,4 +48,5 @@ class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.titleCellDidEndEditing(textField.text)
     }
+    
 }

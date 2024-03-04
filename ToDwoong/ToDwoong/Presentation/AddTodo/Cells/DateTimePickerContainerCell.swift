@@ -11,11 +11,13 @@ import SnapKit
 
 class DateTimePickerContainerCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var collectionView: UICollectionView!
+    
+    // MARK: UI Properties
     
     weak var parentViewController: AddTodoViewController?
     
@@ -52,7 +54,7 @@ class DateTimePickerContainerCell: UICollectionViewCell {
     }
     
     private func configureDateTimeOptionCell(_ cell: DateTimeOptionCell, isDateCell: Bool) {
-        cell.deleteButtonAction = { [weak self] in
+        cell.removeButtonAction = { [weak self] in
             if isDateCell {
                 self?.selectedDueDate = nil
                 self?.selectedDueTime = nil
@@ -73,7 +75,7 @@ class DateTimePickerContainerCell: UICollectionViewCell {
     
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, 
@@ -121,14 +123,13 @@ extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionVie
         
         cell.titleLabel.text = indexPath.item == 0 ? "날짜" : "시간"
         cell.setInfo(labelText: cell.titleLabel.text!, infoText: dateString)
-        print("DateTimePickerContainerCell : \(dateString)")
-        print("-------------------------------------------")
         
         return cell
+        
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// MARK: UICollectionViewDelegateFlowLayout
 
 extension DateTimePickerContainerCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
@@ -145,5 +146,6 @@ extension DateTimePickerContainerCell: UICollectionViewDelegateFlowLayout {
         
         return CGSize(width: width, height: height)
     }
+    
 }
   
