@@ -38,7 +38,10 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        setLayout()
+    }
+    
+    private func setLayout() {
         let views: [UIView] = [iconImageView, titleLabel, arrowImageView]
 
         views.forEach { view in
@@ -84,7 +87,10 @@ final class EditGroupListTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        setLayout()
+    }
+    
+    private func setLayout() {
         let views: [UIView] = [deleteButton, titleLabel]
 
         views.forEach { view in
