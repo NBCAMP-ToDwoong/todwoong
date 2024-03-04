@@ -19,6 +19,7 @@
 		1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* ViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
+		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316442B9571F6004ED878 /* GroupListViewController.swift */; };
@@ -54,6 +55,7 @@
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7FE316442B9571F6004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 		1BD2FAE02B88AE320097694E /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				7F6C81252B963ABA002E77C4 /* Extensions */,
 				7FDE108A2B8ED7C100821D8A /* CoreData */,
 				1BC7A5F62B8EC72D00B9F6A8 /* DesignSystem */,
 				1BD2FAE22B88AE470097694E /* App */,
@@ -225,6 +228,14 @@
 				1BD2FAD52B88ACB20097694E /* Assets.xcassets */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		7F6C81252B963ABA002E77C4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
@@ -373,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
