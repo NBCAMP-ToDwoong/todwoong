@@ -15,7 +15,7 @@ final class GroupListView: UIView {
     // MARK: - Properties
     
     private let tableView: ContentSizedTableView = {
-        let tableView = ContentSizedTableView(frame: .zero, style: .plain)
+        let tableView = ContentSizedTableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .clear
         return tableView
     }()
@@ -74,8 +74,8 @@ final class GroupListView: UIView {
         
         tableView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(200)
-            make.leading.equalToSuperview().offset(20)
-            make.trailing.equalToSuperview().offset(-20)
+            make.leading.equalToSuperview().offset(0)
+            make.trailing.equalToSuperview().offset(0)
             make.bottom.lessThanOrEqualToSuperview().offset(-20)
         }
     }
