@@ -79,20 +79,18 @@ extension TodoViewController: UICollectionViewDataSource {
         
         // FIXME: 그룹 리스트 매핑 예정
         
-        //        return groupList.count
-        return 10
+        return groupList.count
+//        return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier, for: indexPath) as? GroupCollectionViewCell else {
-            
-            //FIXME: 그룹 데이터 매핑 예정
-            
-            //            cell.configure(data: <#T##Category#>)
-            
-            return UICollectionViewCell()
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier, for: indexPath) as? GroupCollectionViewCell else { return UICollectionViewCell() }
+        
+        //FIXME: 그룹 데이터 매핑 예정
+        cell.configure(data: groupList[indexPath.row])
+        
         return cell
+        
     }
 }
 
@@ -108,7 +106,7 @@ extension TodoViewController: UICollectionViewDelegate {
 
 extension TodoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let buttonText = "Test"
+        guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
         let buttonSize = buttonText.size(withAttributes: [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
         let buttonWidth = buttonSize.width
         let buttonHeight = buttonSize.height
@@ -126,8 +124,8 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // FIXME: 투두 리스트 매핑 예정
-        //        return todoList.count
-        return 5
+        return todoList.count
+//        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,7 +135,7 @@ extension TodoViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
         }
-        //            cell.configure(data: test)
+        cell.configure(data: todoList[indexPath.row])
         
         return cell
     }
