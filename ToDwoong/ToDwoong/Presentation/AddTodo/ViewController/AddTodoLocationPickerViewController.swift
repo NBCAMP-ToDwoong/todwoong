@@ -6,9 +6,8 @@
 //
 
 import CoreLocation
-import UIKit
-
 import MapKit
+import UIKit
 
 protocol AddTodoLocationPickerDelegate: AnyObject {
     func didPickLocation(_ address: String)

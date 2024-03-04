@@ -26,7 +26,7 @@ final class DateTimeOptionCell: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 15
         view.layer.masksToBounds = true
-        view.backgroundColor = .systemRed
+        view.backgroundColor = TDStyle.color.bgGray
         return view
     }()
     
@@ -41,7 +41,7 @@ final class DateTimeOptionCell: UICollectionViewCell {
     lazy var removeButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
-        button.tintColor = TDStyle.color.bgRed
+        button.tintColor = .systemRed
         button.addTarget(self, action: #selector(removeButtonTapped), for: .touchUpInside)
         return button
     }()

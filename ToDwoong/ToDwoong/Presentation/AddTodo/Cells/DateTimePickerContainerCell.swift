@@ -78,25 +78,24 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
 // MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, 
-                        didSelectItemAt indexPath: IndexPath) {
-        if indexPath.item == 0 {
-            if selectedDueDate == nil {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            if indexPath.item == 0 && selectedDueDate == nil {
                 selectedDueDate = Date()
+            } else if indexPath.item == 1 && selectedDueTime == nil {
+                let calendar = Calendar.current
+                let currentTime = calendar.dateComponents([.hour, .minute], from: Date())
+                selectedDueTime = calendar.date(bySettingHour: currentTime.hour!, 
+                                                minute: currentTime.minute!,
+                                                second: 0, of: Date())
+                if selectedDueDate == nil {
+                    selectedDueDate = Date()
+                }
             }
-        } else if indexPath.item == 1 {
-            if selectedDueTime == nil {
-                selectedDueTime = Date()
-            }
-            if selectedDueDate == nil {
-                selectedDueDate = Date()
-            }
+
+            collectionView.reloadData()
+            parentViewController?.handleDateOrTimeCellSelected(at: indexPath, in: self, 
+                                                               mode: indexPath.item == 0 ? .date : .time)
         }
-        
-        collectionView.reloadData()
-        parentViewController?.handleDateOrTimeCellSelected(at: indexPath, in: self, 
-                                                           mode: indexPath.item == 0 ? .date : .time)
-    }
     
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {

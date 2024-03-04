@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-final class AddTodoViewController: UIViewController {
+class AddTodoViewController: UIViewController {
     
     // MARK: Properties
     
@@ -81,12 +81,25 @@ final class AddTodoViewController: UIViewController {
         todoView.collectionView.delegate = self
     }
     
+    
     // TODO: 완료 버튼 액션 구현
     @objc func doneButtonTapped() {
-        let title = selectedTitle // 예시 제목
-        let place = selectedPlace // 선택한 장소
-        let dueDate = selectedDueDate // 선택한 기한 날짜
-        let dueTime = selectedDueTime // 선택한 기한 시간
+        let title = selectedTitle
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        
+        var formattedDueDate: String?
+        if let selectedDueDate = selectedDueDate {
+            formattedDueDate = dateFormatter.string(from: selectedDueDate)
+        }
+        
+        var formattedDueTime: String?
+        if let selectedDueTime = selectedDueTime {
+            formattedDueTime = dateFormatter.string(from: selectedDueTime)
+        }
+        
+        let place = selectedPlace ?? ""
         let isCompleted = false // 완료 여부, 초기값으로 false 설정
         let timeAlarm = false // 시간 알람 설정, 초기값으로 false 설정
         let placeAlarm = false // 장소 알람 설정, 초기값으로 false 설정
@@ -95,18 +108,18 @@ final class AddTodoViewController: UIViewController {
         let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         
-        // FIXME: 테스트용 추후삭제
         let message = """
         title: \(title)
         place: \(place)
-        dueDate: \(dueDate)
-        dueTime: \(dueTime)
+        dueDate: \(formattedDueDate)
+        dueTime: \(formattedDueTime)
         isCompleted: \(isCompleted)
         timeAlarm: \(timeAlarm)
         placeAlarm: \(placeAlarm)
         category: \(category)
         """
         alert.message = message
+        
         present(alert, animated: true, completion: nil)
         
 //        if let dueTime = selectedDueTime {
@@ -123,14 +136,17 @@ final class AddTodoViewController: UIViewController {
 //        }
     }
     
-    func handleDateOrTimeCellSelected(at indexPath: IndexPath,
-                                      in cell: DateTimePickerContainerCell,
-                                      mode: UIDatePicker.Mode) {
+    func handleDateOrTimeCellSelected(at indexPath: IndexPath, in cell: DateTimePickerContainerCell, mode: UIDatePicker.Mode) {
         guard let cellIndexPath = todoView.collectionView.indexPath(for: cell) else { return }
+
+        if mode == .time && selectedDueDate == nil {
+            selectedDueDate = Date()
+        }
+
         let newItem = mode == .date ? 0 : 1
         if let existingDatePickerIndexPath = datePickerIndexPath,
-            existingDatePickerIndexPath.section == cellIndexPath.section + 1,
-            existingDatePickerIndexPath.item == newItem {
+           existingDatePickerIndexPath.section == cellIndexPath.section + 1,
+           existingDatePickerIndexPath.item == newItem {
             return
         } else {
             if let existingDatePickerIndexPath = datePickerIndexPath {
@@ -147,17 +163,21 @@ final class AddTodoViewController: UIViewController {
     }
     
     func addDatePickerSection(below section: Int, with item: Int, mode: UIDatePicker.Mode) {
+        // 섹션 추가 로직은 그대로 유지합니다.
         let newSection = section + 1
         datePickerIndexPath = IndexPath(item: item, section: newSection)
         todoView.collectionView.performBatchUpdates({
             self.todoView.collectionView.insertSections(IndexSet(integer: newSection))
         }, completion: nil)
-        
+
         if mode == .date {
-            selectedDueDate = Date()
+            selectedDueDate = Date()  // 날짜 셀을 선택할 때만 selectedDueDate를 업데이트합니다.
         } else if mode == .time {
-            selectedDueDate = Date()
-            selectedDueTime = Date()
+            // 시간 셀을 선택할 때는 selectedDueTime만 현재 시간으로 업데이트합니다.
+            // 날짜 부분은 고정된 날짜(예: 1970-01-01)를 사용하거나 무시합니다.
+            let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
+            let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
+            selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!, minute: currentTime.minute!, second: 0, of: fixedDate)
         }
     }
     
@@ -389,16 +409,13 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
 
 extension AddTodoViewController: DateTimePickerDelegate {
     func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode) {
-        if mode.rawValue == 1 {
-            self.selectedDueDate = date
-            if selectedDueTime != nil {
-                self.selectedDueTime = nil
-            }
-        } else {
-            self.selectedDueTime = date
-            if selectedDueDate == nil {
-                self.selectedDueDate = Calendar.current.startOfDay(for: Date())
-            }
+        if mode == .date {
+            selectedDueDate = date
+        } else if mode == .time {
+            // 고정된 날짜와 선택된 시간을 결합하여 selectedDueTime을 설정합니다.
+            let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
+            let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
+            selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!, minute: timeComponents.minute!, second: 0, of: fixedDate)
         }
         updateSelectedDueDateTime()
     }
@@ -409,6 +426,11 @@ extension AddTodoViewController: DateTimePickerDelegate {
             return
         }
         dateTimePickerContainerCell = cell
+        
+        if selectedDueTime != nil {
+            selectedDueDate = selectedDueDate ?? Date()
+        }
+        
         cell.configure(withDate: selectedDueDate, withTime: selectedDueTime)
     }
 }
