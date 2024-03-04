@@ -9,7 +9,13 @@ import UIKit
 
 import SnapKit
 
-class TitleCollectionViewCell: UICollectionViewCell {
+protocol TitleCollectionViewCellDelegate: AnyObject {
+    func titleCellDidEndEditing(_ text: String?)
+}
+
+class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
+    weak var delegate: TitleCollectionViewCellDelegate?
+    
     var textField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
@@ -19,6 +25,7 @@ class TitleCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
+        textField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -33,5 +40,8 @@ class TitleCollectionViewCell: UICollectionViewCell {
         layer.borderWidth = 0.2
         layer.borderColor = UIColor.black.cgColor
     }
-    
+
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        delegate?.titleCellDidEndEditing(textField.text)
+    }
 }

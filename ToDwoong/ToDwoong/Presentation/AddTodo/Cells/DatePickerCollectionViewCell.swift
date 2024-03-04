@@ -9,53 +9,69 @@ import UIKit
 
 import SnapKit
 
+protocol DateTimePickerDelegate: AnyObject {
+    func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode)
+}
+
 class DatePickerCollectionViewCell: UICollectionViewCell {
-    var datePicker: UIDatePicker?
-    var onDateChanged: ((Date) -> Void)?
+    
+    // MARK: - Properties
+    
+    let datePicker = UIDatePicker()
+    weak var delegate: DateTimePickerDelegate?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupDatePicker()
+        setDatePicker()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setupDatePicker()
+        setDatePicker()
     }
-
-    private func setupDatePicker() {
-        datePicker = UIDatePicker()
-        addSubview(datePicker!)
-        datePicker!.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            datePicker!.topAnchor.constraint(equalTo: topAnchor),
-            datePicker!.bottomAnchor.constraint(equalTo: bottomAnchor),
-            datePicker!.leadingAnchor.constraint(equalTo: leadingAnchor),
-            datePicker!.trailingAnchor.constraint(equalTo: trailingAnchor)
-        ])
-        datePicker?.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
-    }
-
-    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
-        onDateChanged?(sender.date)
-        let formatter = DateFormatter()
-        formatter.dateFormat = sender.datePickerMode == .date ? "yyyy.MM.dd" : "a HH:mm"
-        let dateString = formatter.string(from: sender.date)
-        print("변경 값: \(dateString)")
-    }
-
-    func configure(for mode: UIDatePicker.Mode) {
-        datePicker?.datePickerMode = mode
-        if #available(iOS 14, *) {
-            datePicker?.preferredDatePickerStyle = mode == .date ? .inline : .wheels
+    
+    private func setDatePicker() {
+        addSubview(datePicker)
+        datePicker.translatesAutoresizingMaskIntoConstraints = false
+        datePicker.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-
-        // 셀이 화면에 나타날 때 현재 날짜와 시간(초기값)을 프린트합니다.
-        let initialDate = datePicker?.date ?? Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = mode == .date ? "yyyy.MM.dd" : "a HH:mm"
-        let initialDateString = formatter.string(from: initialDate)
-        print("초기 값: \(initialDateString)")
+        datePicker.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
+    }
+    
+    @objc func datePickerValueChanged(_ datePicker: UIDatePicker) {
+        let calendar = Calendar.current
+        var adjustedDate: Date?
+        
+        switch datePicker.datePickerMode {
+        case .time:
+            let timeComponents = calendar.dateComponents([.hour, .minute], from: datePicker.date)
+            adjustedDate = calendar.date(from: DateComponents(year: 1900, month: 1,
+                                                              day: 1, hour: timeComponents.hour,
+                                                              minute: timeComponents.minute))
+        case .date:
+            let dateComponents = calendar.dateComponents([.year, .month, .day], from: datePicker.date)
+            adjustedDate = calendar.date(from: DateComponents(year: dateComponents.year,
+                                                              month: dateComponents.month,
+                                                              day: dateComponents.day))
+        default:
+            adjustedDate = datePicker.date
+        }
+        
+        if let adjustedDate = adjustedDate {
+            delegate?.didPickDateOrTime(date: adjustedDate, mode: datePicker.datePickerMode)
+        } else {
+            print("Set current date and time if no value is selected")
+            let currentDate = Date()
+            delegate?.didPickDateOrTime(date: currentDate, mode: datePicker.datePickerMode)
+        }
+    }
+    
+    func configure(for mode: UIDatePicker.Mode) {
+        datePicker.datePickerMode = mode
+        if #available(iOS 14, *) {
+            datePicker.preferredDatePickerStyle = mode == .date ? .inline : .wheels
+        }
     }
     
 }
