@@ -11,7 +11,32 @@ import TodwoongDesign
 
 final class AddTodoAlarmViewController: UIViewController {
     
-    let dummy = ["1", "2", "3", "4", "5"]
+    // MARK: - Properties
+    
+    enum SelectedType {
+        case timeSelect
+        case locationSelect
+    }
+
+    var selectedButton: SelectedType = .timeSelect
+
+    let timeList = ["직접 설정",
+                    "5분 전",
+                    "10분 전",
+                    "15분 전",
+                    "20분 전",
+                    "25분 전",
+                    "30분 전",
+                    "1시간 전",
+                    "2시간 전",
+                    "3시간 전",
+                    "6시간 전",
+                    "12시간 전"]
+    
+    let locationList = ["100m", "200m", "300m", "400m", "500m",
+                        "1km", "2km", "3km", "4km", "5km"]
+    
+    // MARK: - UI Properties
     
     private lazy var timeNotificationButton: UIButton = {
         createNotificationButton(title: "시간 알림", method: #selector(test1))
@@ -45,30 +70,16 @@ final class AddTodoAlarmViewController: UIViewController {
         
         return button
     }
-
     
-    @objc
-    func test1() {
-        print("시간 알림")
-    }
-    
-    @objc
-    func test2() {
-        print("장소 알림")
-    }
-    
-    @objc
-    func test3() {
-        print("저장")
-    }
-    
-    private lazy var timeTableView: UITableView = {
+    private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .systemBlue
         tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
 
         return tableView
     }()
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,12 +90,35 @@ final class AddTodoAlarmViewController: UIViewController {
     }
 }
 
+// MARK: - @objc Method
+
+extension AddTodoAlarmViewController {
+    @objc
+    func test1() {
+        print("시간 알림")
+        selectedButton = .timeSelect
+        tableView.reloadData()
+    }
+    
+    @objc
+    func test2() {
+        print("장소 알림")
+        selectedButton = .locationSelect
+        tableView.reloadData()
+    }
+    
+    @objc
+    func test3() {
+        print("저장")
+    }
+}
+
 extension AddTodoAlarmViewController {
     private func setUI() {
         [
             timeNotificationButton,
             locationNotificationButton,
-            timeTableView,
+            tableView,
             saveButton
         ].forEach {
             view.addSubview($0)
@@ -109,39 +143,65 @@ extension AddTodoAlarmViewController {
             make.trailing.equalToSuperview().offset(-10)
         }
         
-        timeTableView.snp.makeConstraints { make in
+        tableView.snp.makeConstraints { make in
             make.top.equalTo(timeNotificationButton.snp.bottom).offset(16)
             make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     private func setTableView() {
-        timeTableView.dataSource = self
-        timeTableView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
         
-        timeTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "timeTableViewCellIdentifier")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "locationTableViewCellIdentifier")
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension AddTodoAlarmViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummy.count
+        switch selectedButton {
+        case .timeSelect:
+            return timeList.count
+        case .locationSelect:
+            return locationList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        
-        cell.textLabel?.text = dummy[indexPath.row]
-        
-        return cell
+        switch selectedButton {
+        case .timeSelect:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "timeTableViewCellIdentifier", for: indexPath)
+            cell.textLabel?.text = timeList[indexPath.row]
+            
+            return cell
+            
+        case .locationSelect:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "locationTableViewCellIdentifier", for: indexPath)
+            cell.textLabel?.text = locationList[indexPath.row]
+            
+            return cell
+        }
     }
 }
+
+// MARK: - UITableViewDelegate
 
 extension AddTodoAlarmViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.selectionStyle = .none
             cell.accessoryType = .checkmark
+            
+            switch selectedButton {
+            case .timeSelect:
+                print("시간 알림", timeList[indexPath.row])
+            
+            case .locationSelect:
+                print("장소 알림", locationList[indexPath.row])
+            }
         }
     }
 
