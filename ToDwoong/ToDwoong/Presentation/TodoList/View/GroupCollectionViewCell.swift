@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-final class CategoryCollectionViewCell: UICollectionViewCell {
+final class GroupCollectionViewCell: UICollectionViewCell {
     
     // MARK: Properties
     
@@ -17,7 +17,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     
     // MARK: UI Properties
     
-    var categoryButton: TDCustomButton = {
+    var groupButton: TDCustomButton = {
         let button = TDButton.chip(title: "Test", backgroundColor: .yellow)
 
         return button
@@ -38,19 +38,23 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
 
 // MARK: Configure Method
 
-extension CategoryCollectionViewCell {
-    func configure(setTitle: String) {
-        categoryButton.setTitle(setTitle, for: .normal)
+extension GroupCollectionViewCell {
+    func configure(data: Category) {
+        groupButton.setTitle(data.title, for: .normal)
+        
+        if let color = data.color {
+            groupButton.tintColor = UIColor(named: color)
+        }
     }
 }
 
 // MARK: Extensions
 
-extension CategoryCollectionViewCell {
+extension GroupCollectionViewCell {
     func setUI() {
-        contentView.addSubview(categoryButton)
+        contentView.addSubview(groupButton)
         
-        categoryButton.snp.makeConstraints {make in
+        groupButton.snp.makeConstraints {make in
             make.centerX.centerY.equalToSuperview()
         }
     }

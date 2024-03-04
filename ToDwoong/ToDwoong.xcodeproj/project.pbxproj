@@ -24,7 +24,8 @@
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 		E0EACB672B907EC700BBEB0B /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoView.swift */; };
-		E0EACB692B907EF800BBEB0B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB682B907EF800BBEB0B /* CategoryCollectionViewCell.swift */; };
+		E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */; };
+		E0EACB6B2B95A7FB00BBEB0B /* ContentSizeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6A2B95A7FB00BBEB0B /* ContentSizeTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,7 +58,8 @@
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E0EACB662B907EC700BBEB0B /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
-		E0EACB682B907EF800BBEB0B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
+		E0EACB6A2B95A7FB00BBEB0B /* ContentSizeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizeTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -259,7 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				E0EACB662B907EC700BBEB0B /* TodoView.swift */,
-				E0EACB682B907EF800BBEB0B /* CategoryCollectionViewCell.swift */,
+				E0EACB6A2B95A7FB00BBEB0B /* ContentSizeTableView.swift */,
+				E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -368,11 +371,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BD2FAD12B88ACB00097694E /* TodoViewController.swift in Sources */,
-				E0EACB692B907EF800BBEB0B /* CategoryCollectionViewCell.swift in Sources */,
+				E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
-				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
+				1BD2FAD12B88ACB00097694E /* TodoViewController.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoView.swift in Sources */,
+				E0EACB6B2B95A7FB00BBEB0B /* ContentSizeTableView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,

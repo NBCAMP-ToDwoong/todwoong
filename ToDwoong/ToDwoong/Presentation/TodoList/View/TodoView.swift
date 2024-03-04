@@ -12,24 +12,39 @@ import TodwoongDesign
 final class TodoView: UIView {
     
     // MARK: Properties
-    let buttonHeight = "Test".size(withAttributes: [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)]).height
+    
     
     // MARK: UI Properties
     
-    lazy var categoryCollectionView: UICollectionView = {
+    lazy var groupListButton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .black
+        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+        
+        return button
+    }()
+    
+    lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
+        collectionView.register(GroupCollectionViewCell.self, forCellWithReuseIdentifier: GroupCollectionViewCell.identifier)
         collectionView.showsHorizontalScrollIndicator = false
         
         return collectionView
     }()
     
-    lazy var todoTableView: UITableView = {
-        let tableView = UITableView()
+    lazy var todoListFrameView: UIView = {
+        let view = UIView()
+        view.backgroundColor = TDStyle.color.lightGray
+        view.layer.cornerRadius = 20
+        
+        return view
+    }()
+    
+    lazy var todoTableView: ContentSizeTableView = {
+        let tableView = ContentSizeTableView()
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.separatorStyle = .none
         
@@ -42,7 +57,6 @@ final class TodoView: UIView {
         super.init(frame: frame)
         
         setUI()
-        print(categoryCollectionView.collectionViewLayout.collectionViewContentSize.height)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,19 +72,31 @@ extension TodoView {
         self.backgroundColor = .white
 
         [
-            categoryCollectionView,
-            todoTableView
+            groupListButton,
+            groupCollectionView,
+            todoListFrameView
         ].forEach{self.addSubview($0)}
+        
+        todoListFrameView.addSubview(todoTableView)
     
-        categoryCollectionView.snp.makeConstraints{ make in
+        groupListButton.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalTo(groupCollectionView)
+        }
+        groupCollectionView.snp.makeConstraints{ make in
             make.top.equalTo(safeAreaLayoutGuide).offset(30)
             make.height.equalTo(30.33)
-            make.trailing.leading.equalToSuperview()
+            make.leading.equalTo(groupListButton.snp.trailing).offset(8)
+            make.trailing.equalToSuperview()
+        }
+        todoListFrameView.snp.makeConstraints { make in
+            make.top.equalTo(groupCollectionView.snp.bottom).offset(10)
+            make.trailing.leading.bottom.equalToSuperview()
         }
         todoTableView.snp.makeConstraints{ make in
-            make.top.equalTo(categoryCollectionView.snp_bottomMargin).offset(30)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(safeAreaLayoutGuide)
+            make.top.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.lessThanOrEqualToSuperview()
         }
     }
 }
