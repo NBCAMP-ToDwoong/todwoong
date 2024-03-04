@@ -17,7 +17,7 @@ protocol AddTodoLocationPickerViewDelegate: AnyObject {
 
 final class AddTodoLocationPickerView: UIView {
     
-    // MARK: - UI Properties
+    // MARK: UI Properties
     
     let mapView = MKMapView()
     let searchBar = UISearchBar()
