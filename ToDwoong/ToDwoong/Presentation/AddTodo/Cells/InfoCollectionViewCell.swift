@@ -31,6 +31,14 @@ class InfoCollectionViewCell: UICollectionViewCell {
         return button
     }()
     
+    var symbolImageView: UIImageView = {
+        let symbol = UIImageView()
+        symbol.image = UIImage(systemName: "chevron.right")
+        symbol.contentMode = .scaleAspectFit
+        symbol.tintColor = TDStyle.color.mainTheme
+        return symbol
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
@@ -41,31 +49,37 @@ class InfoCollectionViewCell: UICollectionViewCell {
     }
     
     private func setView() {
+        layer.borderWidth = 0.2
+        layer.borderColor = UIColor.black.cgColor
+        layer.masksToBounds = true
+        
         addSubview(titleLabel)
         addSubview(detailLabel)
         addSubview(deleteButton)
+        addSubview(symbolImageView)
         
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
             make.centerY.equalToSuperview()
         }
         
-        deleteButton.snp.makeConstraints { make in
+        symbolImageView.snp.makeConstraints { make in
             make.right.equalToSuperview().offset(-10)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(20)
         }
         
+        deleteButton.snp.makeConstraints { make in
+            make.right.equalTo(symbolImageView.snp.left).offset(0)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(20)
+        }
+        
         detailLabel.snp.makeConstraints { make in
-            make.right.equalTo(deleteButton.snp.left).offset(-10)
+            make.right.equalTo(deleteButton.snp.left).offset(-5)
             make.centerY.equalToSuperview()
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(10)
         }
-
-        // 테두리 설정
-        layer.borderWidth = 0.2
-        layer.borderColor = UIColor.black.cgColor
-        layer.masksToBounds = true
     }
     
     func configureCell(title: String, detail: String? = nil, showDeleteButton: Bool = false) {
