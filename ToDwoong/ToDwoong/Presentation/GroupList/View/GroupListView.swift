@@ -5,6 +5,7 @@
 //  Created by t2023-m0041 on 3/4/24.
 //
 
+import CoreData
 import UIKit
 
 import SnapKit
@@ -16,8 +17,7 @@ final class GroupListView: UIView {
     
     private let normalCellIdentifier = "NormalGroupCell"
     private let editCellIdentifier = "EditGroupCell"
-    
-    private var dummyCategories: [String] = ["밥먹기", "운동가기", "씻기", "ㅁㄴㅇ", "밥먹기", "운동가기", "씻기"]
+    private var categories: [Category] = []
     
     // MARK: - UI Properties
     
@@ -37,7 +37,7 @@ final class GroupListView: UIView {
         button.contentHorizontalAlignment = .leading
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
-        
+
         if var plusIcon = UIImage(systemName: "plus") {
             let iconSize = CGSize(width: 15, height: 15)
             UIGraphicsBeginImageContextWithOptions(iconSize, false, 0.0)
@@ -88,7 +88,7 @@ extension GroupListView {
         tableView.dataSource = self
         tableView.register(NormalGroupListTableViewCell.self, forCellReuseIdentifier: normalCellIdentifier)
         tableView.register(EditGroupListTableViewCell.self, forCellReuseIdentifier: editCellIdentifier)
-    
+        
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(addButton.snp.bottom).offset(-16)
@@ -100,9 +100,14 @@ extension GroupListView {
     private func reloadData() {
         tableView.reloadData()
     }
+    
+    func loadCategories() {
+        categories = CoreDataManager.shared.readCategories()
+        tableView.reloadData()
+    }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension GroupListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
@@ -130,22 +135,18 @@ extension GroupListView: UITableViewDelegate {
         }
         
     func tableView(_ tableView: UITableView,
-                   moveRowAt sourceIndexPath: IndexPath,
-                   to destinationIndexPath: IndexPath) {
-        let movedCategory = dummyCategories.remove(at: sourceIndexPath.row)
-        dummyCategories.insert(movedCategory, at: destinationIndexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+                       moveRowAt sourceIndexPath: IndexPath,
+                       to destinationIndexPath: IndexPath) {
+        let movedCategory = categories.remove(at: sourceIndexPath.row)
+        categories.insert(movedCategory, at: destinationIndexPath.row)
     }
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension GroupListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyCategories.count
+        return categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,8 +155,8 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? EditGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
-            let category = dummyCategories[indexPath.row]
-            cell.titleLabel.text = category
+            let category = categories[indexPath.row]
+            cell.titleLabel.text = category.title
             
             return cell
         } else {
@@ -163,8 +164,8 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? NormalGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
-            let category = dummyCategories[indexPath.row]
-            cell.titleLabel.text = category
+            let category = categories[indexPath.row]
+            cell.configureWithCategory(category)
             
             return cell
         }
@@ -181,8 +182,8 @@ extension GroupListView {
 
 extension GroupListView {
     private func deleteCategory(at indexPath: IndexPath) {
-        dummyCategories.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .automatic)
+        let categoryToDelete = categories[indexPath.row]
+        CoreDataManager.shared.deleteCategory(category: categoryToDelete)
     }
     
     func setEditingMode(_ isEditing: Bool) {
