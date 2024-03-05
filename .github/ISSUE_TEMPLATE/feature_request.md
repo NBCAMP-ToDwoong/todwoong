@@ -11,8 +11,8 @@ assignees: yenny42
 <제목 양식>
 
 [기능 라벨] 기능 1줄 요약
-ex) [feat] 프로젝트 세팅
-ex) [docs] Readme 파일 수정
+ex) [Feat] 프로젝트 세팅
+ex) [Docs] Readme 파일 수정
 
 - [Feat] : 새로운 기능 구현
 - [Fix] : 버그, 오류 해결
