@@ -32,12 +32,13 @@ final class CoreDataManager {
     
     // MARK: Todo Methods
     
-    func createTodo(title: String, 
+    func createTodo(title: String,
                     place: String?,
                     dueDate: Date?, dueTime: Date?,
                     isCompleted: Bool,
                     timeAlarm: Bool, placeAlarm: Bool,
-                    category: Category?
+                    category: Category?,
+                    fixed: Bool = false
     ) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
@@ -49,13 +50,18 @@ final class CoreDataManager {
         newTodo.timeAlarm = timeAlarm
         newTodo.placeAlarm = placeAlarm
         newTodo.category = category
-        
+        newTodo.fixed = fixed
         saveContext()
     }
     
     func readTodos() -> [Todo] {
         do {
-            let todos = try context.fetch(todoRequest) as [Todo]
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let fixedSortDescriptor = NSSortDescriptor(key: "fixed", ascending: false)
+            let dueDateSortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+            fetchRequest.sortDescriptors = [fixedSortDescriptor, dueDateSortDescriptor]
+            
+            let todos = try context.fetch(fetchRequest)
             return todos
         } catch {
             print("투두 불러오기 실패")
@@ -97,12 +103,37 @@ final class CoreDataManager {
         newCategory.color = color
         newCategory.todo = todo
         
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Category")
+        fetchRequest.resultType = .dictionaryResultType
+        let calculateDesc = NSExpressionDescription()
+        calculateDesc.name = "maxIndexNumber"
+        calculateDesc.expression = NSExpression(forFunction: "max:", arguments: [NSExpression(forKeyPath: "indexNumber")])
+        calculateDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.propertiesToFetch = [calculateDesc]
+
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let maxIndexNumberDict = results.first as? [String: Int64],
+               let maxIndexNumber = maxIndexNumberDict["maxIndexNumber"] {
+                newCategory.indexNumber = Int32(maxIndexNumber + 1)
+            } else {
+                newCategory.indexNumber = 0
+            }
+        } catch let error as NSError {
+            print("Could not fetch maxIndexNumber: \(error), \(error.userInfo)")
+            newCategory.indexNumber = 0
+        }
+        
         saveContext()
     }
     
     func readCategories() -> [Category] {
         do {
-            let categories = try context.fetch(categoryRequest) as [Category]
+            let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+            let sortDescriptor = NSSortDescriptor(key: "indexNumber", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            
+            let categories = try context.fetch(fetchRequest)
             return categories
         } catch {
             print("카테고리 불러오기 실패")
@@ -148,33 +179,4 @@ final class CoreDataManager {
             print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
-    
-    // Sorted Todos Logic
-    
-    func sortTodos(_ todos: [Todo]) -> [Todo] {
-        let sortedTodos = todos.sorted { (current, next) -> Bool in
-            if current.dueDate != nil && next.dueDate == nil {
-                return true
-            } else if current.dueDate == nil && next.dueDate != nil {
-                return false
-            } else {
-                if let currentDueDate = current.dueDate, let nextDueDate = next.dueDate {
-                    if currentDueDate < nextDueDate {
-                        return true
-                    } else if currentDueDate > nextDueDate {
-                        return false
-                    }
-                }
-                
-                if let currentTitle = current.title, let nextTitle = next.title {
-                    return currentTitle.localizedCaseInsensitiveCompare(nextTitle) == .orderedAscending
-                }
-            }
-            
-            return false
-        }
-        
-        return sortedTodos
-    }
-
 }
