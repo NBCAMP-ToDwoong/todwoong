@@ -93,7 +93,7 @@
 		2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerDelegate.swift; sourceTree = "<group>"; };
 		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
 		2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectControllerDelegate.swift; sourceTree = "<group>"; };
-		2EF9C5152B96C30E005F8B76 /* TodoCalandarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodoCalandarController.swift; path = ToDwoong/Presentation/Calander/TodoCalandarController.swift; sourceTree = SOURCE_ROOT; };
+		2EF9C5152B96C30E005F8B76 /* TodoCalandarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TodoCalandarController.swift; path = ToDwoong/Presentation/Calander/ViewController/TodoCalandarController.swift; sourceTree = SOURCE_ROOT; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7FE316442B9571F6004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 		1BA63AD22B8E8D42008F49CE /* Calander */ = {
 			isa = PBXGroup;
 			children = (
-				2E819FE52B9719F30031DDCA /* ViewController */,
+				2E819FE62B971F7F0031DDCA /* ViewController */,
 			);
 			path = Calander;
 			sourceTree = "<group>";
