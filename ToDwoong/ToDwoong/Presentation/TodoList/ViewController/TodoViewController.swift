@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-class TodoViewController: UIViewController {
+final class TodoViewController: UIViewController {
     
     // MARK: - Properties
     
