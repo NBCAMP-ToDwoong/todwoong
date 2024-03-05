@@ -16,7 +16,6 @@
 		1BC7A5FA2B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACC2B88ACB00097694E /* AppDelegate.swift */; };
 		1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */; };
-		1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* ViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
@@ -51,7 +50,6 @@
 		1BD2FAC92B88ACB00097694E /* ToDwoong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDwoong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD2FACC2B88ACB00097694E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1BD2FAD02B88ACB00097694E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 		1BA63ACD2B8E8CF8008F49CE /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
-				1BD2FAD02B88ACB00097694E /* ViewController.swift */,
 			);
 			path = TodoList;
 			sourceTree = "<group>";
@@ -388,7 +385,6 @@
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
-				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
