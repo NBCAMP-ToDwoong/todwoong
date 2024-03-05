@@ -91,7 +91,7 @@ final class GroupListView: UIView {
             make.width.equalToSuperview().offset(-40)
         }
         
-        addButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        addButton.titleLabel?.font = TDStyle.font.body(style: .regular)
         addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -200, bottom: 0, right: 0)
         addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -230, bottom: 0, right: 0)
     }
