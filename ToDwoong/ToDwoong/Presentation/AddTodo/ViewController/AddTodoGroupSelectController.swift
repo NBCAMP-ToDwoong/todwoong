@@ -9,15 +9,16 @@ import UIKit
 
 import SnapKit
 
-class AddTodoGroupSelectController: UIViewController {
+final class AddTodoGroupSelectController: UIViewController {
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
-    let tableView = UITableView()
+    private let tableView = UITableView()
     var groups: [String] = ["학교", "병원", "살려주세요"] // 예시 그룹 데이터
     
     weak var delegate: AddTodoGroupSelectControllerDelegate?
     
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +52,9 @@ class AddTodoGroupSelectController: UIViewController {
             make.edges.equalToSuperview()
         }
         
-        // 나머지 뷰 부분에 탭 제스처 추가
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissModal))
         view.addGestureRecognizer(tapGesture)
         
-        // 테이블 뷰 설정
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "GroupCell")
