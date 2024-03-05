@@ -85,16 +85,16 @@ extension AddTodoGroupSelectController: UITableViewDelegate, UITableViewDataSour
     
     // MARK: - Table view delegate
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedGroup = groups[indexPath.row]
-        delegate?.groupSelectController(self, didSelectGroup: selectedGroup)
-    }
-    
-    weak var delegate: AddTodoGroupSelectControllerDelegate?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .red
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let selectedGroup = groups[indexPath.row]
+//        delegate?.groupSelectController(self, didSelectGroup: selectedGroup)
+//    }
+//    
+//    weak var delegate: AddTodoGroupSelectControllerDelegate?
+//    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        
+//        view.backgroundColor = .red
+//    }
 }

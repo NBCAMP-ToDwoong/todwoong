@@ -80,7 +80,6 @@ extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else 
                                                             for: indexPath) as? GroupCollectionViewCell else
         { return UICollectionViewCell() }
         
@@ -105,7 +104,6 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
-        let buttonSize = buttonText.size(withAttributes: 
         let buttonSize = buttonText.size(withAttributes:
                                             [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
         let buttonWidth = buttonSize.width
@@ -114,7 +112,6 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: buttonWidth + 24, height: buttonHeight + 10)
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -164,10 +161,6 @@ extension TodoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, 
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
-        let topFixedAction = UIContextualAction(style: .normal, 
-    func tableView(_ tableView: UITableView,
-                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-    -> UISwipeActionsConfiguration? {
         let topFixedAction = UIContextualAction(style: .normal,
                                                 title: "고정",
                                                 handler: {(action, view, completionHandler) in
@@ -183,10 +176,6 @@ extension TodoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, 
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-    -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, 
-    func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
