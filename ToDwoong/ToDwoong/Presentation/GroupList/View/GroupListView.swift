@@ -86,8 +86,9 @@ final class GroupListView: UIView {
         addButton.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(155)
             make.trailing.equalToSuperview().offset(-20)
+            make.leading.equalToSuperview().offset(20)
             make.height.equalTo(40)
-            make.width.equalTo(355)
+            make.width.equalToSuperview().offset(-40)
         }
         
         addButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
