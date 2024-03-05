@@ -122,29 +122,29 @@ class AddTodoViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
         
-//        if let dueTime = selectedDueTime {
-//            CoreDataManager.shared.createTodo(title: title!,
-//                                              place: place,
-//                                              dueDate: dueDate,
-//                                              dueTime: dueTime,
-//                                              isCompleted: isCompleted,
-//                                              timeAlarm: timeAlarm,
-//                                              placeAlarm: placeAlarm,
-//                                              category: category)
-//        } else {
-//            print("is nil")
-//        }
+        //        if let dueTime = selectedDueTime {
+        //            CoreDataManager.shared.createTodo(title: title!,
+        //                                              place: place,
+        //                                              dueDate: dueDate,
+        //                                              dueTime: dueTime,
+        //                                              isCompleted: isCompleted,
+        //                                              timeAlarm: timeAlarm,
+        //                                              placeAlarm: placeAlarm,
+        //                                              category: category)
+        //        } else {
+        //            print("is nil")
+        //        }
     }
     
-    func handleDateOrTimeCellSelected(at indexPath: IndexPath, 
+    func handleDateOrTimeCellSelected(at indexPath: IndexPath,
                                       in cell: DateTimePickerContainerCell,
                                       mode: UIDatePicker.Mode) {
         guard let cellIndexPath = todoView.collectionView.indexPath(for: cell) else { return }
-
+        
         if mode == .time && selectedDueDate == nil {
             selectedDueDate = Date()
         }
-
+        
         let newItem = mode == .date ? 0 : 1
         if let existingDatePickerIndexPath = datePickerIndexPath,
            existingDatePickerIndexPath.section == cellIndexPath.section + 1,
@@ -170,13 +170,13 @@ class AddTodoViewController: UIViewController {
         todoView.collectionView.performBatchUpdates({
             self.todoView.collectionView.insertSections(IndexSet(integer: newSection))
         }, completion: nil)
-
+        
         if mode == .date {
             selectedDueDate = Date()
         } else if mode == .time {
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let currentTime = Calendar.current.dateComponents([.hour, .minute], from: Date())
-            selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!, 
+            selectedDueTime = Calendar.current.date(bySettingHour: currentTime.hour!,
                                                     minute: currentTime.minute!,
                                                     second: 0, of: fixedDate)
         }
@@ -235,7 +235,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         return datePickerIndexPath == nil ? 3 : 4
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         if let datePickerIndexPath = datePickerIndexPath, section == datePickerIndexPath.section {
             return 1
@@ -290,27 +290,27 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
                 fatalError("InfoCollectionViewCell dequeuing failed.")
             }
             switch indexPath.section {
-                case 2:
-                    switch indexPath.item {
-                    case 0:
-                        cell.configureCell(title: "그룹")
-                    case 1:
-                        guard let cell = collectionView.dequeueReusableCell(
-                            withReuseIdentifier: "InfoCell",
-                            for: indexPath) as? InfoCollectionViewCell else {
-                            fatalError("Unable to dequeue InfoCollectionViewCell")
-                        }
-                        cell.configureCell(title: "위치", detail: selectedPlace, showremoveButton: selectedPlace != nil)
-                        cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
-                        cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
-                        
-                        return cell
-                    case 2:
-                        cell.configureCell(title: "알람")
-                    default: break
+            case 2:
+                switch indexPath.item {
+                case 0:
+                    cell.configureCell(title: "그룹")
+                case 1:
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: "InfoCell",
+                        for: indexPath) as? InfoCollectionViewCell else {
+                        fatalError("Unable to dequeue InfoCollectionViewCell")
                     }
+                    cell.configureCell(title: "위치", detail: selectedPlace, showremoveButton: selectedPlace != nil)
+                    cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
+                    
+                    return cell
+                case 2:
+                    cell.configureCell(title: "알람")
                 default: break
                 }
+            default: break
+            }
             return cell
             
         }
@@ -369,13 +369,14 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     }
     
     private func goToGroupSelectController() {
-            let groupSelectController = AddTodoGroupSelectController()
-            groupSelectController.modalPresentationStyle = .custom
-            groupSelectController.delegate = self
-            present(groupSelectController, animated: true, completion: nil)
-        }
-        
+        let groupSelectController = AddTodoGroupSelectController()
+        groupSelectController.modalPresentationStyle = .custom
+        groupSelectController.delegate = self
+        present(groupSelectController, animated: true, completion: nil)
+    }
+    
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: String) {
+        print(group) // 받아온 그룹 데이터
         controller.dismiss(animated: true, completion: nil)
     }
     
@@ -431,7 +432,7 @@ extension AddTodoViewController: DateTimePickerDelegate {
         } else if mode == .time {
             let fixedDate = Calendar.current.date(from: DateComponents(year: 1970, month: 1, day: 1))!
             let timeComponents = Calendar.current.dateComponents([.hour, .minute], from: date)
-            selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!, 
+            selectedDueTime = Calendar.current.date(bySettingHour: timeComponents.hour!,
                                                     minute: timeComponents.minute!,
                                                     second: 0, of: fixedDate)
         }
