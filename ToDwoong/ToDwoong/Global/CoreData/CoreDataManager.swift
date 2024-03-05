@@ -32,12 +32,13 @@ final class CoreDataManager {
     
     // MARK: Todo Methods
     
-    func createTodo(title: String, 
+    func createTodo(title: String,
                     place: String?,
                     dueDate: Date?, dueTime: Date?,
                     isCompleted: Bool,
                     timeAlarm: Bool, placeAlarm: Bool,
-                    category: Category?
+                    category: Category?,
+                    fixed: Bool = false
     ) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
@@ -49,19 +50,16 @@ final class CoreDataManager {
         newTodo.timeAlarm = timeAlarm
         newTodo.placeAlarm = placeAlarm
         newTodo.category = category
-        
-        let maxIndexNumber = (readTodos().max(by: { $0.indexNumber < $1.indexNumber })?.indexNumber ?? -1) + 1
-        newTodo.indexNumber = maxIndexNumber
-        
+        newTodo.fixed = fixed
         saveContext()
     }
     
     func readTodos() -> [Todo] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            let sortByDuedate = NSSortDescriptor(key: "dueDate", ascending: true)
-            let sortByIndexNumber = NSSortDescriptor(key: "indexNumber", ascending: true)
-            fetchRequest.sortDescriptors = [sortByDuedate, sortByIndexNumber]
+            let fixedSortDescriptor = NSSortDescriptor(key: "fixed", ascending: false)
+            let dueDateSortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+            fetchRequest.sortDescriptors = [fixedSortDescriptor, dueDateSortDescriptor]
             
             let todos = try context.fetch(fetchRequest)
             return todos
@@ -105,16 +103,38 @@ final class CoreDataManager {
         newCategory.color = color
         newCategory.todo = todo
         
-        let maxIndexNumber = (readCategories().max(by: { $0.indexNumber < $1.indexNumber })?.indexNumber ?? -1) + 1
-        newCategory.indexNumber = maxIndexNumber
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Category")
+        fetchRequest.resultType = .dictionaryResultType
+        let calculateDesc = NSExpressionDescription()
+        calculateDesc.name = "maxIndexNumber"
+        calculateDesc.expression = NSExpression(forFunction: "max:", arguments: [NSExpression(forKeyPath: "indexNumber")])
+        calculateDesc.expressionResultType = .integer64AttributeType
+        fetchRequest.propertiesToFetch = [calculateDesc]
+
+        do {
+            let results = try context.fetch(fetchRequest)
+            if let maxIndexNumberDict = results.first as? [String: Int64],
+               let maxIndexNumber = maxIndexNumberDict["maxIndexNumber"] {
+                newCategory.indexNumber = Int32(maxIndexNumber + 1)
+            } else {
+                newCategory.indexNumber = 0
+            }
+        } catch let error as NSError {
+            print("Could not fetch maxIndexNumber: \(error), \(error.userInfo)")
+            newCategory.indexNumber = 0
+        }
         
         saveContext()
     }
     
     func readCategories() -> [Category] {
         do {
-            let categories = try context.fetch(categoryRequest) as [Category]
-            return categories.sorted(by: { $0.indexNumber < $1.indexNumber })
+            let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+            let sortDescriptor = NSSortDescriptor(key: "indexNumber", ascending: true)
+            fetchRequest.sortDescriptors = [sortDescriptor]
+            
+            let categories = try context.fetch(fetchRequest)
+            return categories
         } catch {
             print("카테고리 불러오기 실패")
             return []
