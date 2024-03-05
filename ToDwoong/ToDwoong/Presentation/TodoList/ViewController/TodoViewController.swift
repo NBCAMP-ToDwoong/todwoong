@@ -12,9 +12,14 @@ import TodwoongDesign
 class TodoViewController: UIViewController {
     
     // MARK: - Properties
-    
-    lazy var todoList = convertTodoDatas(todos: CoreDataManager.shared.readTodos())
-    var groupList = CoreDataManager.shared.readCategories()
+    let dataManager = CoreDataManager.shared
+    var rawTodoList: [Todo] {
+        dataManager.readTodos()
+    }
+    var convertTodoList: [TodoModel] {
+        convertTodoDatas(todos: rawTodoList)
+    }
+    lazy var groupList = dataManager.readCategories()
     
     // MARK: - UI Properties
     
@@ -28,6 +33,8 @@ class TodoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: nil)
         
         setDelegates()
         setAction()
@@ -123,7 +130,7 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if todoList.isEmpty {
+        if convertTodoList.isEmpty {
             todoView.emptyImageView.isHidden = false
             todoView.emptyLabel.isHidden = false
         } else {
@@ -131,7 +138,7 @@ extension TodoViewController: UITableViewDataSource {
             todoView.emptyLabel.isHidden = true
         }
         
-        return todoList.count
+        return convertTodoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -143,7 +150,7 @@ extension TodoViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
         }
-        cell.configure(data: todoList[indexPath.row])
+        cell.configure(data: convertTodoList[indexPath.row])
         
         return cell
     }
@@ -186,7 +193,8 @@ extension TodoViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
                                               handler: {(action, view, completionHandler) in
-            // FIXME: 기능 Feature에서 구현 예정
+            self.dataManager.deleteTodo(todo: self.rawTodoList[indexPath.row])
+            tableView.reloadData()
         })
         
         editAction.backgroundColor = .systemBlue
