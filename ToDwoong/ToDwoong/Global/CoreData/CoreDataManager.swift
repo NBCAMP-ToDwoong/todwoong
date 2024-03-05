@@ -50,12 +50,20 @@ final class CoreDataManager {
         newTodo.placeAlarm = placeAlarm
         newTodo.category = category
         
+        let maxIndexNumber = (readTodos().max(by: { $0.indexNumber < $1.indexNumber })?.indexNumber ?? -1) + 1
+        newTodo.indexNumber = maxIndexNumber
+        
         saveContext()
     }
     
     func readTodos() -> [Todo] {
         do {
-            let todos = try context.fetch(todoRequest) as [Todo]
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let sortByDuedate = NSSortDescriptor(key: "dueDate", ascending: true)
+            let sortByIndexNumber = NSSortDescriptor(key: "indexNumber", ascending: true)
+            fetchRequest.sortDescriptors = [sortByDuedate, sortByIndexNumber]
+            
+            let todos = try context.fetch(fetchRequest)
             return todos
         } catch {
             print("투두 불러오기 실패")
@@ -97,13 +105,16 @@ final class CoreDataManager {
         newCategory.color = color
         newCategory.todo = todo
         
+        let maxIndexNumber = (readCategories().max(by: { $0.indexNumber < $1.indexNumber })?.indexNumber ?? -1) + 1
+        newCategory.indexNumber = maxIndexNumber
+        
         saveContext()
     }
     
     func readCategories() -> [Category] {
         do {
             let categories = try context.fetch(categoryRequest) as [Category]
-            return categories
+            return categories.sorted(by: { $0.indexNumber < $1.indexNumber })
         } catch {
             print("카테고리 불러오기 실패")
             return []
@@ -148,33 +159,4 @@ final class CoreDataManager {
             print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
-    
-    // Sorted Todos Logic
-    
-    func sortTodos(_ todos: [Todo]) -> [Todo] {
-        let sortedTodos = todos.sorted { (current, next) -> Bool in
-            if current.dueDate != nil && next.dueDate == nil {
-                return true
-            } else if current.dueDate == nil && next.dueDate != nil {
-                return false
-            } else {
-                if let currentDueDate = current.dueDate, let nextDueDate = next.dueDate {
-                    if currentDueDate < nextDueDate {
-                        return true
-                    } else if currentDueDate > nextDueDate {
-                        return false
-                    }
-                }
-                
-                if let currentTitle = current.title, let nextTitle = next.title {
-                    return currentTitle.localizedCaseInsensitiveCompare(nextTitle) == .orderedAscending
-                }
-            }
-            
-            return false
-        }
-        
-        return sortedTodos
-    }
-
 }
