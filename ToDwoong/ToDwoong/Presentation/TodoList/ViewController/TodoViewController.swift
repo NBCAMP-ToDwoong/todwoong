@@ -87,7 +87,7 @@ extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier,
-                                                            for: indexPath) as? GroupCollectionViewCell else 
+                                                            for: indexPath) as? GroupCollectionViewCell else
         { return UICollectionViewCell() }
         
         cell.configure(data: groupList[indexPath.row])
@@ -111,7 +111,7 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
-        let buttonSize = buttonText.size(withAttributes: 
+        let buttonSize = buttonText.size(withAttributes:
                                             [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
         let buttonWidth = buttonSize.width
         let buttonHeight = buttonSize.height
@@ -119,7 +119,7 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: buttonWidth + 24, height: buttonHeight + 10)
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
@@ -165,10 +165,10 @@ extension TodoViewController: UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, 
+    func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
-        let topFixedAction = UIContextualAction(style: .normal, 
+        let topFixedAction = UIContextualAction(style: .normal,
                                                 title: "고정",
                                                 handler: {(action, view, completionHandler) in
             // FIXME: 기능 Feature에서 구현 예정
@@ -182,10 +182,10 @@ extension TodoViewController: UITableViewDelegate {
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView, 
+    func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
-        let editAction = UIContextualAction(style: .normal, 
+        let editAction = UIContextualAction(style: .normal,
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
             // FIXME: 기능 Feature에서 구현 예정
@@ -216,20 +216,26 @@ extension TodoViewController {
     }
     
     private func convertTodoData(_ todo: Todo) -> TodoModel {
-        
-        if let id = todo.id?.uuidString {
-            if let title = todo.title {
-                var convertedTodo = TodoModel(id: id, title: title, 
-                                              isCompleted: todo.isCompleted, placeAlarm: todo.placeAlarm,
-                                              timeAlarm: todo.timeAlarm)
-                convertedTodo.dueDate = todo.dueDate
-                convertedTodo.dueTime = todo.dueTime
-                convertedTodo.place = todo.place
-                convertedTodo.category = todo.category?.title
-                
-                return convertedTodo
-            }
+        var convertedCategory: CategoryModel?
+        var convertedTodo: TodoModel
+
+        if let category = todo.category {
+            convertedCategory = CategoryModel(id: category.id,
+                                              title: category.title!,
+                                              color: category.color,
+                                              indexNumber: category.indexNumber,
+                                              todo: nil) // 일단 nil로 초기화
         }
-        return TodoModel(id: "error", title: "error", isCompleted: false, placeAlarm: false, timeAlarm: false)
+
+        convertedTodo = TodoModel(id: todo.id, title: todo.title!,
+                                  dueDate: todo.dueDate, dueTime: todo.dueTime,
+                                  place: todo.place,
+                                  isCompleted: todo.isCompleted, fixed: todo.fixed,
+                                  timeAlarm: todo.timeAlarm, placeAlarm: todo.placeAlarm,
+                                  category: convertedCategory)
+
+        convertedCategory?.todo = convertedTodo
+
+        return convertedTodo
     }
 }
