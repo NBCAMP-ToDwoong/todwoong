@@ -43,7 +43,7 @@ class TodoCalendarController: UIViewController, FSCalendarDelegate, FSCalendarDa
         calendar.appearance.weekdayTextColor = .systemGray3
         calendar.appearance.titleDefaultColor = .black
         calendar.appearance.selectionColor = UIColor(red: 230/255, green: 244/255, blue: 237/255, alpha: 1)
-        calendar.appearance.titleTodayColor = UIColor.red
+        calendar.appearance.titleTodayColor = TDStyle.color.mainDarkTheme
         calendar.appearance.todayColor = UIColor.clear
         calendar.appearance.titleSelectionColor = UIColor.black
         calendar.appearance.eventDefaultColor = UIColor.black
