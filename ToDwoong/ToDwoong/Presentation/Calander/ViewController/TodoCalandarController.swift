@@ -41,7 +41,7 @@ class TodoCalendarController: UIViewController, FSCalendarDelegate, FSCalendarDa
     
     private func configureCalendarAppearance() {
         calendar.locale = Locale(identifier: "ko_KR")
-        calendar.appearance.headerDateFormat = "yyyy MMMM"
+        calendar.appearance.headerDateFormat = "yyyy.MM"
         calendar.appearance.headerTitleColor = TDStyle.color.mainDarkTheme
         calendar.appearance.weekdayTextColor = .systemGray3
         calendar.appearance.titleDefaultColor = .black
