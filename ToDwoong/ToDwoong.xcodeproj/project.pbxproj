@@ -34,6 +34,8 @@
 		2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */; };
 		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
 		2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */; };
+		2EF9C5122B96C00E005F8B76 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 2EF9C5112B96C00E005F8B76 /* FSCalendar */; };
+		2EF9C5162B96C30E005F8B76 /* TodoCalandarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5152B96C30E005F8B76 /* TodoCalandarController.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
@@ -80,6 +82,7 @@
 		2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerDelegate.swift; sourceTree = "<group>"; };
 		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
 		2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectControllerDelegate.swift; sourceTree = "<group>"; };
+		2EF9C5152B96C30E005F8B76 /* TodoCalandarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCalandarController.swift; sourceTree = SOURCE_ROOT; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -94,6 +97,7 @@
 				1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */,
 				1B612E462B94AFE500DB0C1E /* TodwoongDesign in Frameworks */,
 				1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */,
+				2EF9C5122B96C00E005F8B76 /* FSCalendar in Frameworks */,
 				1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,6 +156,8 @@
 		1BA63AD22B8E8D42008F49CE /* Calander */ = {
 			isa = PBXGroup;
 			children = (
+				2EF9C5142B96C2D4005F8B76 /* View */,
+				2EF9C5132B96C2CE005F8B76 /* ViewController */,
 			);
 			path = Calander;
 			sourceTree = "<group>";
@@ -294,6 +300,21 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		2EF9C5132B96C2CE005F8B76 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2EF9C5152B96C30E005F8B76 /* TodoCalandarController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		2EF9C5142B96C2D4005F8B76 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +362,7 @@
 				1BA63AD62B8E8EDB008F49CE /* SnapKit */,
 				1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */,
 				1B612E452B94AFE500DB0C1E /* TodwoongDesign */,
+				2EF9C5112B96C00E005F8B76 /* FSCalendar */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -373,6 +395,7 @@
 			packageReferences = (
 				1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */,
 				1B612E442B94AFE500DB0C1E /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				2EF9C5102B96C00E005F8B76 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -437,6 +460,7 @@
 				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
+				2EF9C5162B96C30E005F8B76 /* TodoCalandarController.swift in Sources */,
 				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
 				2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */,
 				2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */,
@@ -682,6 +706,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		2EF9C5102B96C00E005F8B76 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -699,6 +731,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		2EF9C5112B96C00E005F8B76 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EF9C5102B96C00E005F8B76 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 
