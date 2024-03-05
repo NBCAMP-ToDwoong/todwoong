@@ -62,6 +62,8 @@ final class AddGroupView: UIView {
                                                        color: TDStyle.color.bgRed)
     private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
                                                        color: .clear)
+
+    // FIXME: 테스트 이후 삭제 예정입니다.
     
     var testButton: UIButton = {
         let button = UIButton()
