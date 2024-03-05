@@ -16,7 +16,7 @@ final class CoreDataManager {
     private var persistentContainer: NSPersistentContainer? {
         (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
     }
-    private var context: NSManagedObjectContext {
+    var context: NSManagedObjectContext {
         guard let persistentContainer = self.persistentContainer else {
             fatalError("Persistent container is nil")
         }
@@ -165,6 +165,27 @@ final class CoreDataManager {
             return filteredTodos
         } catch {
             print("투두 필터링 실패: \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    func filterTodoByDuedate(_ date: Date) -> [Todo] {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        let dueDatePredicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)", startOfDay as NSDate, endOfDay as NSDate)
+        fetchRequest.predicate = dueDatePredicate
+
+        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+
+        do {
+            let todos = try context.fetch(fetchRequest)
+            return todos
+        } catch {
+            print("Error fetching todos for date: \(error)")
             return []
         }
     }
