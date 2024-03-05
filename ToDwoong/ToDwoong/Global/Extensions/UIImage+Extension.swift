@@ -17,9 +17,7 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
-}
-
-extension UIImage {
+    
     static func roundedImage(color: UIColor, size: CGSize) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: size)
         return renderer.image { context in
@@ -32,4 +30,3 @@ extension UIImage {
         }
     }
 }
-

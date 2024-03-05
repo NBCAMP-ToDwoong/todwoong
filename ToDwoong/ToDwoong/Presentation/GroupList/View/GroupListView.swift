@@ -14,6 +14,13 @@ final class GroupListView: UIView {
     
     // MARK: - Properties
     
+    private let normalCellIdentifier = "NormalGroupCell"
+    private let editCellIdentifier = "EditGroupCell"
+    
+    private var dummyCategories: [String] = ["밥먹기", "운동가기", "씻기", "ㅁㄴㅇ", "밥먹기", "운동가기", "씻기"]
+    
+    // MARK: - UI Properties
+    
     private let tableView: ContentSizedTableView = {
         let tableView = ContentSizedTableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .clear
@@ -26,6 +33,11 @@ final class GroupListView: UIView {
         button.backgroundColor = .white
         button.setTitleColor(UIColor.systemGray3, for: .normal)
         button.layer.cornerRadius = 8
+        
+        button.contentHorizontalAlignment = .leading
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+        
         if var plusIcon = UIImage(systemName: "plus") {
             let iconSize = CGSize(width: 15, height: 15)
             UIGraphicsBeginImageContextWithOptions(iconSize, false, 0.0)
@@ -41,23 +53,32 @@ final class GroupListView: UIView {
         return button
     }()
     
-    private let normalCellIdentifier = "NormalGroupCell"
-    private let editCellIdentifier = "EditGroupCell"
-    
-    private var dummyCategories: [String] = ["밥먹기", "운동가기", "씻기", "ㅁㄴㅇ", "밥먹기", "운동가기", "씻기"]
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setTableView()
         setAddButton()
+        setTableView()
         reloadData()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setTableView()
-        setAddButton()
-        reloadData()
+    }
+}
+
+// MARK: - UI & Layout Extension
+
+extension GroupListView {
+    private func setAddButton() {
+        addSubview(addButton)
+        
+        addButton.snp.makeConstraints { make in
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(16)
+            make.trailing.equalToSuperview().offset(-20)
+            make.leading.equalToSuperview().offset(20)
+            make.height.equalTo(44)
+        }
+        
+        addButton.titleLabel?.font = TDStyle.font.body(style: .regular)
     }
     
     private func setTableView() {
@@ -67,35 +88,15 @@ final class GroupListView: UIView {
         tableView.dataSource = self
         tableView.register(NormalGroupListTableViewCell.self, forCellReuseIdentifier: normalCellIdentifier)
         tableView.register(EditGroupListTableViewCell.self, forCellReuseIdentifier: editCellIdentifier)
-        
-        tableView.layer.borderColor = UIColor.gray.cgColor
-        tableView.layer.cornerRadius = 10
-        tableView.layer.masksToBounds = true
+    
         
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(200)
+            make.top.equalTo(addButton.snp.bottom).offset(-16)
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
-            make.bottom.lessThanOrEqualToSuperview().offset(-20)
         }
     }
     
-    private func setAddButton() {
-        addSubview(addButton)
-        
-        addButton.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(70)
-            make.trailing.equalToSuperview().offset(-20)
-            make.leading.equalToSuperview().offset(20)
-            make.height.equalTo(44)
-            make.width.equalToSuperview().offset(-40)
-        }
-        
-        addButton.titleLabel?.font = TDStyle.font.body(style: .regular)
-        addButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: -200, bottom: 0, right: 0)
-        addButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -230, bottom: 0, right: 0)
-    }
-
     private func reloadData() {
         tableView.reloadData()
     }
@@ -129,10 +130,14 @@ extension GroupListView: UITableViewDelegate {
         }
         
     func tableView(_ tableView: UITableView,
-                       moveRowAt sourceIndexPath: IndexPath,
-                       to destinationIndexPath: IndexPath) {
+                   moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
         let movedCategory = dummyCategories.remove(at: sourceIndexPath.row)
         dummyCategories.insert(movedCategory, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
