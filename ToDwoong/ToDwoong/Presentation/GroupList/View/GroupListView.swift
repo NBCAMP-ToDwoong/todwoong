@@ -84,7 +84,7 @@ final class GroupListView: UIView {
         addSubview(addButton)
         
         addButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(155)
+            make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(70)
             make.trailing.equalToSuperview().offset(-20)
             make.leading.equalToSuperview().offset(20)
             make.height.equalTo(40)
