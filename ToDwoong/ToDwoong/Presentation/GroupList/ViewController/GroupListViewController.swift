@@ -20,6 +20,8 @@ final class GroupListViewController: UIViewController {
         
         setupNavigationBar()
         setupGroupListView()
+        
+        groupListView.loadCategories()
     }
     
     private func setupNavigationBar() {
@@ -57,7 +59,7 @@ final class GroupListViewController: UIViewController {
         groupListView.backgroundColor = TDStyle.color.lightGray
     }
     
-    // MARK: Objc
+    // MARK: - Objc
     
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
@@ -66,6 +68,8 @@ final class GroupListViewController: UIViewController {
     @objc private func didTapEditButton() {
         isEditingMode.toggle()
         groupListView.setEditingMode(isEditingMode)
+        
+        navigationItem.rightBarButtonItem?.title = isEditingMode ? "완료" : "편집"
     }
 
     @objc private func addCategoryButtonTapped() {
