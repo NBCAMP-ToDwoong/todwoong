@@ -11,7 +11,7 @@ import TodwoongDesign
 
 final class TodoView: UIView {
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     lazy var groupListButton: UIButton = {
         let button = UIButton()
@@ -66,7 +66,7 @@ final class TodoView: UIView {
         return label
     }()
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -80,7 +80,7 @@ final class TodoView: UIView {
     }
 }
 
-// MARK: Extensions
+// MARK: - Extensions
 
 extension TodoView {
     private func setUI() {

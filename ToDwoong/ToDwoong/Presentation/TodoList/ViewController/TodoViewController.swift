@@ -11,16 +11,16 @@ import TodwoongDesign
 
 class TodoViewController: UIViewController {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     lazy var todoList = convertTodoDatas(todos: CoreDataManager.shared.readTodos())
     var groupList = CoreDataManager.shared.readCategories()
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     var todoView = TodoView()
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     override func loadView() {
         view = todoView
@@ -34,7 +34,7 @@ class TodoViewController: UIViewController {
     }
 }
 
-// MARK: Action
+// MARK: - Action
 
 extension TodoViewController {
     func setAction() {
@@ -49,7 +49,7 @@ extension TodoViewController {
     }
 }
 
-// MARK: Set Methods
+// MARK: - Set Methods
 
 extension TodoViewController {
     
@@ -69,7 +69,7 @@ extension TodoViewController {
     }
 }
 
-// MARK: CollectionViewDataSource
+// MARK: - CollectionViewDataSource
 
 extension TodoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -89,7 +89,7 @@ extension TodoViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: CollectionViewDelegate
+// MARK: - CollectionViewDelegate
 
 extension TodoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -119,7 +119,7 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: TableViewDataSource
+// MARK: - TableViewDataSource
 
 extension TodoViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -149,7 +149,7 @@ extension TodoViewController: UITableViewDataSource {
     }
 }
 
-// MARK: TableViewDelegate
+// MARK: - TableViewDelegate
 
 extension TodoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -198,7 +198,7 @@ extension TodoViewController: UITableViewDelegate {
     }
 }
 
-// MARK: Data Convert Method
+// MARK: - Data Convert Method
 
 extension TodoViewController {
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {

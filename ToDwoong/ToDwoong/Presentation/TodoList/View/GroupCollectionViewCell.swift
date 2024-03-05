@@ -11,15 +11,15 @@ import TodwoongDesign
 
 final class GroupCollectionViewCell: UICollectionViewCell {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     static let identifier = "categoryCollectionViewCell"
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     var groupButton = TDButton.chip(title: "Test", backgroundColor: TDStyle.color.mainTheme)
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     }
 }
 
-// MARK: Configure Method
+// MARK: - Configure Method
 
 extension GroupCollectionViewCell {
     func configure(data: Category) {
@@ -44,7 +44,7 @@ extension GroupCollectionViewCell {
     }
 }
 
-// MARK: Extensions
+// MARK: - Extensions
 
 extension GroupCollectionViewCell {
     func setUI() {
