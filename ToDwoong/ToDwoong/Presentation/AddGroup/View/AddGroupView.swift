@@ -45,21 +45,21 @@ final class AddGroupView: UIView {
     private lazy var palleteButton = makePalletButton(systemImageString: "xmark.circle",
                                                       color: TDStyle.color.bgGray)
     private lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgGray)
     private lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgRed)
     private lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgOrange)
     private lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgOrange) // 컬러 누락
     private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgYellow)
     private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgGreen)
     private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgBlue)
     private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
+                                                       color: TDStyle.color.bgPurple)
     private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
                                                        color: .clear)
 
