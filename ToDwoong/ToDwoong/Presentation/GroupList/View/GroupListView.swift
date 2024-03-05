@@ -49,14 +49,14 @@ final class GroupListView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setTableView()
-        setupAddButton()
+        setAddButton()
         reloadData()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setTableView()
-        setupAddButton()
+        setAddButton()
         reloadData()
     }
     
@@ -80,7 +80,7 @@ final class GroupListView: UIView {
         }
     }
     
-    private func setupAddButton() {
+    private func setAddButton() {
         addSubview(addButton)
         
         addButton.snp.makeConstraints { make in
@@ -122,28 +122,6 @@ extension GroupListView: UITableViewDelegate {
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return configuration
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        // 스와이프 액션을 설정
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completion) in
-//            self?.deleteCategory(at: indexPath)
-//            completion(true)
-//        }
-//        deleteAction.image = UIImage(systemName: "trash")
-//        
-//        let editAction = UIContextualAction(style: .normal, title: "Edit") { [weak self] (action, view, completion) in
-//            self?.editCategory(at: indexPath)
-//            completion(true)
-//        }
-//        editAction.image = UIImage(systemName: "gear")
-//        editAction.backgroundColor = UIColor.orange
-//        
-//        // 해당 indexPath에 대한 셀을 가져와 스와이프 액션 구성 설정
-//        if let cell = tableView.cellForRow(at: indexPath) as? NormalGroupListTableViewCell {
-//            let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-//            cell.swipeActionsConfiguration = configuration
-//        }
-//    }
     
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
             return true
