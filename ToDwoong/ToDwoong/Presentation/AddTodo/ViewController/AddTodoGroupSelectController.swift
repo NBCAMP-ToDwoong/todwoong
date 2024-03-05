@@ -22,11 +22,11 @@ final class AddTodoGroupSelectController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupTableView()
-        setupModalPresentationStyle()
+        setTableView()
+        setModalPresentationStyle()
     }
     
-    func setupModalPresentationStyle() {
+    func setModalPresentationStyle() {
         if #available(iOS 13.0, *) {
             isModalInPresentation = true
         }
@@ -34,7 +34,7 @@ final class AddTodoGroupSelectController: UIViewController {
         modalTransitionStyle = .coverVertical
     }
     
-    func setupTableView() {
+    func setTableView() {
         let modalHeight = view.frame.height * 0.8
         let modalWidth = view.frame.width
         let modalYPosition = view.frame.height * (1 - 0.7) / 2
@@ -66,7 +66,7 @@ final class AddTodoGroupSelectController: UIViewController {
     
 }
 
-// MARK: UITableViewDelegate, UITableViewDataSource
+// MARK: - UITableViewDelegate, UITableViewDataSource
 
 extension AddTodoGroupSelectController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {

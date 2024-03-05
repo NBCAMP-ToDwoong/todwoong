@@ -11,12 +11,15 @@ import FSCalendar
 import SnapKit
 import TodwoongDesign
 
-class TodoCalendarController: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
+final class TodoCalendarController: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
     
-    var todos: [Date]?
+    // MARK: - UI Properties
     
+    private var todos: [Date]?
     private var calendar: FSCalendar!
-
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
