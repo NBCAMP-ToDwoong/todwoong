@@ -91,4 +91,11 @@ extension AddTodoGroupSelectController: UITableViewDelegate, UITableViewDataSour
         delegate?.groupSelectController(self, didSelectGroup: selectedGroup)
     }
     
+    weak var delegate: AddTodoGroupSelectControllerDelegate?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .red
+    }
 }
