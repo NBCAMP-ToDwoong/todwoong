@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-class AddGroupView: UIView {
+final class AddGroupView: UIView {
     
     // MARK: - UI Properties
     
@@ -24,7 +24,7 @@ class AddGroupView: UIView {
         return textField
     }()
     
-    private lazy var palleteStackView: UIStackView = {
+    private lazy var palleteStackView1: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = 5
@@ -33,7 +33,18 @@ class AddGroupView: UIView {
         return stackView
     }()
     
-    private lazy var palleteButton1 = makePalletButton(systemImageString: "x.circle",
+    private lazy var palleteStackView2: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 5
+        stackView.distribution = .fillEqually
+        
+        return stackView
+    }()
+    
+    private lazy var palleteButton = makePalletButton(systemImageString: "xmark.circle",
+                                                      color: TDStyle.color.bgGray)
+    private lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgRed)
     private lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgRed)
@@ -43,6 +54,14 @@ class AddGroupView: UIView {
                                                        color: TDStyle.color.bgRed)
     private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgRed)
+    private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
+                                                       color: TDStyle.color.bgRed)
+    private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
+                                                       color: TDStyle.color.bgRed)
+    private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
+                                                       color: TDStyle.color.bgRed)
+    private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
+                                                       color: .clear)
     
     var testButton: UIButton = {
         let button = UIButton()
@@ -70,20 +89,31 @@ class AddGroupView: UIView {
 // MARK: - Extension
 
 extension AddGroupView {
-    func setUI() {
+    private func setUI() {
         self.backgroundColor = TDStyle.color.lightGray
         
-        addSubview(groupTextField)
-        addSubview(palleteStackView)
         [
+            groupTextField,
+            palleteStackView1,
+            palleteStackView2,
+            testButton
+        ].forEach { addSubview($0) }
+        
+        [
+            palleteButton,
             palleteButton1,
             palleteButton2,
             palleteButton3,
             palleteButton4,
-            palleteButton5
-        ].forEach { palleteStackView.addArrangedSubview($0)}
+        ].forEach { palleteStackView1.addArrangedSubview($0) }
         
-        addSubview(testButton)
+        [
+            palleteButton5,
+            palleteButton6,
+            palleteButton7,
+            palleteButton8,
+            palleteButton9
+        ].forEach { palleteStackView2.addArrangedSubview($0) }
         
         groupTextField.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(16)
@@ -92,12 +122,21 @@ extension AddGroupView {
             make.height.equalTo(44)
         }
         
-        palleteStackView.snp.makeConstraints { make in
+        palleteStackView1.snp.makeConstraints { make in
             make.top.equalTo(groupTextField.snp.bottom).offset(40)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
         }
         
+        palleteStackView2.snp.makeConstraints { make in
+            make.top.equalTo(palleteStackView1.snp.bottom).offset(5)
+            make.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        
+        palleteButton.snp.makeConstraints { make in
+            make.height.equalTo(palleteButton.snp.width)
+        }
         palleteButton1.snp.makeConstraints { make in
             make.height.equalTo(palleteButton1.snp.width)
         }
@@ -112,6 +151,18 @@ extension AddGroupView {
         }
         palleteButton5.snp.makeConstraints { make in
             make.height.equalTo(palleteButton5.snp.width)
+        }
+        palleteButton6.snp.makeConstraints { make in
+            make.height.equalTo(palleteButton6.snp.width)
+        }
+        palleteButton7.snp.makeConstraints { make in
+            make.height.equalTo(palleteButton7.snp.width)
+        }
+        palleteButton8.snp.makeConstraints { make in
+            make.height.equalTo(palleteButton8.snp.width)
+        }
+        palleteButton9.snp.makeConstraints { make in
+            make.height.equalTo(palleteButton9.snp.width)
         }
         
         testButton.snp.makeConstraints { make in
