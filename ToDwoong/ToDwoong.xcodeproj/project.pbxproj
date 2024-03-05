@@ -19,6 +19,21 @@
 		1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* ViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
+		2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA0630C2B906783007C9373 /* AddTodoViewController.swift */; };
+		2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */; };
+		2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */; };
+		2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */; };
+		2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */; };
+		2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */; };
+		2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */; };
+		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
+		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
+		2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */; };
+		2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */; };
+		2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */; };
+		2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */; };
+		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
+		2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
@@ -50,6 +65,21 @@
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		2EA0630C2B906783007C9373 /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
+		2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
+		2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerContainerCell.swift; sourceTree = "<group>"; };
+		2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeOptionCell.swift; sourceTree = "<group>"; };
+		2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
+		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
+		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
+		2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewDelegate.swift; sourceTree = "<group>"; };
+		2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerDelegate.swift; sourceTree = "<group>"; };
+		2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
+		2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerDelegate.swift; sourceTree = "<group>"; };
+		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
+		2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectControllerDelegate.swift; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -90,6 +120,10 @@
 		1BA63ACE2B8E8D07008F49CE /* AddTodo */ = {
 			isa = PBXGroup;
 			children = (
+				2EF9C5032B96845A005F8B76 /* Protocols */,
+				2EF9C4DD2B9497D7005F8B76 /* View */,
+				2EA0630B2B906769007C9373 /* ViewController */,
+				2EF9C4D82B92996F005F8B76 /* Cells */,
 			);
 			path = AddTodo;
 			sourceTree = "<group>";
@@ -215,6 +249,49 @@
 				1BD2FAD52B88ACB20097694E /* Assets.xcassets */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		2EA0630B2B906769007C9373 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2EA0630C2B906783007C9373 /* AddTodoViewController.swift */,
+				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
+				2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2EF9C4D82B92996F005F8B76 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */,
+				2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */,
+				2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */,
+				2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */,
+				2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		2EF9C4DD2B9497D7005F8B76 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */,
+				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2EF9C5032B96845A005F8B76 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */,
+				2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */,
+				2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */,
+				2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */,
+				2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
@@ -347,11 +424,26 @@
 			files = (
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
 				1BD2FAD12B88ACB00097694E /* ViewController.swift in Sources */,
+				2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
+				2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */,
+				2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
+				2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */,
+				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
+				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
+				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
+				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
+				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
+				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
+				2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */,
+				2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */,
+				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,
+				2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
