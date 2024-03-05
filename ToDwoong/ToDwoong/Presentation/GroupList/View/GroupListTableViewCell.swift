@@ -65,6 +65,15 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("초기화가 구현되지 않았습니다.")
     }
+    
+    func configureWithCategory(_ category: Category) {
+        if let color = TDStyle.color.colorFromString(category.color ?? "") {
+            let imageSize = CGSize(width: 40, height: 40)
+            let roundedImage = UIImage.roundedImage(color: color, size: imageSize)
+            iconImageView.image = roundedImage
+        }
+        titleLabel.text = category.title
+    }
 }
 
 final class EditGroupListTableViewCell: UITableViewCell {
