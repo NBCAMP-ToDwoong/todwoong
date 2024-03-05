@@ -24,15 +24,15 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = TDStyle.color.primaryLabel
+        label.font = TDStyle.font.body(style: .regular)
         return label
     }()
     
     private let arrowImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "chevron.right")
-        imageView.tintColor = UIColor.systemGray4
+        imageView.tintColor = TDStyle.color.bgGray
         return imageView
     }()
     
@@ -43,7 +43,7 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     
     private func setLayout() {
         let views: [UIView] = [iconImageView, titleLabel, arrowImageView]
-
+        
         views.forEach { view in
             addSubview(view)
             view.snp.makeConstraints { make in
@@ -73,15 +73,15 @@ final class EditGroupListTableViewCell: UITableViewCell {
         let button = UIButton()
         let image = UIImage(systemName: "minus.circle.fill")
         button.setImage(image, for: .normal)
-        button.tintColor = .red
+        button.tintColor = TDStyle.color.bgRed
         button.addTarget(EditGroupListTableViewCell.self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         return button
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = TDStyle.color.primaryLabel
+        label.font = TDStyle.font.body(style: .regular)
         return label
     }()
     

@@ -33,7 +33,7 @@ final class GroupListView: UIView {
             plusIcon = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
             UIGraphicsEndImageContext()
 
-            let tintColor = UIColor.systemGray3
+            let tintColor = TDStyle.color.bgGray
             plusIcon = plusIcon.withTintColor(tintColor)
 
             button.setImage(plusIcon, for: .normal)
@@ -123,16 +123,38 @@ extension GroupListView: UITableViewDelegate {
         return configuration
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        // 스와이프 액션을 설정
+//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completion) in
+//            self?.deleteCategory(at: indexPath)
+//            completion(true)
+//        }
+//        deleteAction.image = UIImage(systemName: "trash")
+//        
+//        let editAction = UIContextualAction(style: .normal, title: "Edit") { [weak self] (action, view, completion) in
+//            self?.editCategory(at: indexPath)
+//            completion(true)
+//        }
+//        editAction.image = UIImage(systemName: "gear")
+//        editAction.backgroundColor = UIColor.orange
+//        
+//        // 해당 indexPath에 대한 셀을 가져와 스와이프 액션 구성 설정
+//        if let cell = tableView.cellForRow(at: indexPath) as? NormalGroupListTableViewCell {
+//            let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+//            cell.swipeActionsConfiguration = configuration
+//        }
+//    }
+    
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
             return true
         }
         
-        func tableView(_ tableView: UITableView,
+    func tableView(_ tableView: UITableView,
                        moveRowAt sourceIndexPath: IndexPath,
                        to destinationIndexPath: IndexPath) {
-            let movedCategory = dummyCategories.remove(at: sourceIndexPath.row)
-            dummyCategories.insert(movedCategory, at: destinationIndexPath.row)
-        }
+        let movedCategory = dummyCategories.remove(at: sourceIndexPath.row)
+        dummyCategories.insert(movedCategory, at: destinationIndexPath.row)
+    }
 }
 
 // MARK: UITableViewDataSource

@@ -69,6 +69,6 @@ final class GroupListViewController: UIViewController {
     }
 
     @objc private func addCategoryButtonTapped() {
-        // 추가 버튼 메서드 구현
+        // FIXME: 그룹 추가 버튼 클릭 시 로직 구현
     }
 }
