@@ -87,7 +87,7 @@ final class GroupListView: UIView {
             make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(70)
             make.trailing.equalToSuperview().offset(-20)
             make.leading.equalToSuperview().offset(20)
-            make.height.equalTo(40)
+            make.height.equalTo(44)
             make.width.equalToSuperview().offset(-40)
         }
         
