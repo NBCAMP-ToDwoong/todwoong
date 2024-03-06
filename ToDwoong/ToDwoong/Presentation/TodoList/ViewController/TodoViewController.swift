@@ -208,24 +208,9 @@ extension TodoViewController {
     }
     
     private func convertTodoData(_ todo: Todo) -> TodoModel {
-        
-        if let id = todo.id?.uuidString {
-            if let title = todo.title {
-                var convertedTodo = TodoModel(id: id, title: title, 
-                                              isCompleted: todo.isCompleted, placeAlarm: todo.placeAlarm,
-                                              timeAlarm: todo.timeAlarm)
-                convertedTodo.dueDate = todo.dueDate
-                convertedTodo.dueTime = todo.dueTime
-                convertedTodo.place = todo.place
-                convertedTodo.category = todo.category?.title
-                
-                return convertedTodo
-            }
-        }
-        return TodoModel(id: "error", title: "error", isCompleted: false, placeAlarm: false, timeAlarm: false)
         var convertedCategory: CategoryModel?
         var convertedTodo: TodoModel
-
+        
         if let category = todo.category {
             convertedCategory = CategoryModel(id: category.id,
                                               title: category.title!,
@@ -233,16 +218,16 @@ extension TodoViewController {
                                               indexNumber: category.indexNumber,
                                               todo: nil) // 일단 nil로 초기화
         }
-
+        
         convertedTodo = TodoModel(id: todo.id, title: todo.title!,
                                   dueDate: todo.dueDate, dueTime: todo.dueTime,
                                   place: todo.place,
                                   isCompleted: todo.isCompleted, fixed: todo.fixed,
                                   timeAlarm: todo.timeAlarm, placeAlarm: todo.placeAlarm,
                                   category: convertedCategory)
-
+        
         convertedCategory?.todo = convertedTodo
-
+        
         return convertedTodo
     }
 }
