@@ -85,9 +85,10 @@ extension GroupListView {
         
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(addButton.snp.bottom).offset(-16)
+            make.top.equalTo(addButton.snp.bottom).offset(5)
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
+            make.bottom.equalToSuperview().offset(-20)
         }
     }
     
