@@ -9,9 +9,9 @@ import UIKit
 
 import SnapKit
 
-final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
+final class TitleCollectionViewCell: UICollectionViewCell {
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     var textField: UITextField = {
         let textField = UITextField()
@@ -33,7 +33,7 @@ final class TitleCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
 }
 
-// MARK: setView
+// MARK: - setView
 
 extension TitleCollectionViewCell {
     func setView() {
@@ -47,10 +47,14 @@ extension TitleCollectionViewCell {
     }
 }
 
-// MARK: textFieldDidEndEditing
+// MARK: - textFieldDidEndEditing
 
-extension TitleCollectionViewCell {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        delegate?.titleCellDidEndEditing(textField.text)
+extension TitleCollectionViewCell: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, 
+                   replacementString string: String) -> Bool {
+        let newText = (textField.text as NSString?)?.replacingCharacters(in: range, 
+                                                                         with: string) ?? string
+        delegate?.titleCellDidEndEditing(newText)
+        return true
     }
 }
