@@ -22,8 +22,15 @@ class TodoListViewController: UIViewController {
     lazy var filteredTodoList: [TodoModel] = convertTodoList
     
     lazy var groupList = dataManager.readCategories()
-    let buttonAction: ((UIButton) -> Void) = { button in
+    lazy var buttonAction: ((UIButton) -> Void) = { button in
         button.isSelected = !button.isSelected
+        let groupIndex = button.tag
+        let group = self.groupList[groupIndex]
+        
+        let filteredTodoList = self.dataManager.filterTodoByCategory(category: group)
+        self.filteredTodoList = self.convertTodoDatas(todos: filteredTodoList)
+        
+        self.todoView.todoTableView.reloadData()
     }
     
     // MARK: - UI Properties
@@ -39,8 +46,8 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
-//        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
+//        dataManager.createTodo(title: "Test5", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
+//        dataManager.createTodo(title: "테스트", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
         
         setDelegates()
         setAction()
@@ -65,6 +72,7 @@ extension TodoListViewController {
     @objc func allGroupButtonTapped(sender: UIButton) {
         sender.isSelected = !sender.isSelected
         filteredTodoList = convertTodoList
+        todoView.todoTableView.reloadData()
     }
 }
 
@@ -207,8 +215,12 @@ extension TodoListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
                                               handler: {(action, view, completionHandler) in
-            // FIXME: 데이터 변경에 맞춰 수정해야함
-            self.dataManager.deleteTodo(todo: self.rawTodoList[indexPath.row])
+            
+            let convertTodo = self.filteredTodoList[indexPath.row]
+            let rawTodo = self.convertToRawTodo(convertTodo)
+            
+            self.dataManager.deleteTodo(todo: rawTodo)
+            
             tableView.reloadData()
         })
         
@@ -254,5 +266,9 @@ extension TodoListViewController {
         convertedCategory?.todo = convertedTodo
 
         return convertedTodo
+    }
+    
+    private func convertToRawTodo(_ todo: TodoModel) -> Todo {
+        return rawTodoList.filter { $0.id == todo.id }[0]
     }
 }
