@@ -71,6 +71,7 @@ extension CalendarViewController {
         containerView = UIView()
         containerView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         containerView.layer.cornerRadius = 12
+        containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(containerView)
         
         containerView.snp.makeConstraints { make in
@@ -85,7 +86,6 @@ extension CalendarViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
-        tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
         
         let emptyStateView = UIView()
@@ -237,8 +237,8 @@ extension CalendarViewController: UITableViewDelegate {
             addTodoVC.todoIdToEdit = todoId
             
             // FIXME: 투두수정 모달 vs navigation
-            self.present(addTodoVC, animated: true, completion: nil)
-            //self.navigationController?.pushViewController(addTodoVC, animated: true)
+            //self.present(addTodoVC, animated: true, completion: nil)
+            self.navigationController?.pushViewController(addTodoVC, animated: true)
             completionHandler(true)
         }
         editAction.backgroundColor = .blue
