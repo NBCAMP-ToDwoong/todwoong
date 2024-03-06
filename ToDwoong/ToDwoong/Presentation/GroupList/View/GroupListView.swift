@@ -27,29 +27,19 @@ final class GroupListView: UIView {
         return tableView
     }()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("그룹 추가", for: .normal)
         button.backgroundColor = .white
         button.setTitleColor(UIColor.systemGray3, for: .normal)
         button.layer.cornerRadius = 8
-        
         button.contentHorizontalAlignment = .leading
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
 
-        if var plusIcon = UIImage(systemName: "plus") {
-            let iconSize = CGSize(width: 15, height: 15)
-            UIGraphicsBeginImageContextWithOptions(iconSize, false, 0.0)
-            plusIcon.draw(in: CGRect(origin: .zero, size: iconSize))
-            plusIcon = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
-            UIGraphicsEndImageContext()
-
-            let tintColor = TDStyle.color.bgGray
-            plusIcon = plusIcon.withTintColor(tintColor)
-
-            button.setImage(plusIcon, for: .normal)
-        }
+        let plusIcon = UIImage(systemName: "plus")?.withTintColor(TDStyle.color.bgGray, renderingMode: .alwaysOriginal)
+        button.setImage(plusIcon, for: .normal)
+        
         return button
     }()
     
@@ -62,6 +52,10 @@ final class GroupListView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func configureAddButtonAction(target: Any, action: Selector) {
+        addButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
 
@@ -135,10 +129,21 @@ extension GroupListView: UITableViewDelegate {
         }
         
     func tableView(_ tableView: UITableView,
-                       moveRowAt sourceIndexPath: IndexPath,
-                       to destinationIndexPath: IndexPath) {
+                   moveRowAt sourceIndexPath: IndexPath,
+                   to destinationIndexPath: IndexPath) {
         let movedCategory = categories.remove(at: sourceIndexPath.row)
         categories.insert(movedCategory, at: destinationIndexPath.row)
+
+        for (index, category) in categories.enumerated() {
+            category.indexNumber = Int32(index)
+        }
+
+        let context = CoreDataManager.shared.context
+        do {
+            try context.save()
+        } catch {
+            print("Core Data 컨텍스트 저장 실패: \(error)")
+        }
     }
 }
 
@@ -155,6 +160,7 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? EditGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
+            
             let category = categories[indexPath.row]
             cell.titleLabel.text = category.title
             
@@ -164,6 +170,7 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? NormalGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
+            
             let category = categories[indexPath.row]
             cell.configureWithCategory(category)
             
@@ -176,7 +183,7 @@ extension GroupListView: UITableViewDataSource {
 
 extension GroupListView {
     private func editCategory(at indexPath: IndexPath) {
-        // FIXME: 톱니바귀 설정을 눌렀을 때의 메서드를 작성
+        // FIXME: 편집(톱니바귀) 설정을 눌렀을 때의 메서드를 작성. 모달창을 띄워 카테고리를 Update하는 메서드
     }
 }
 
@@ -184,6 +191,8 @@ extension GroupListView {
     private func deleteCategory(at indexPath: IndexPath) {
         let categoryToDelete = categories[indexPath.row]
         CoreDataManager.shared.deleteCategory(category: categoryToDelete)
+        categories.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
     func setEditingMode(_ isEditing: Bool) {

@@ -16,9 +16,6 @@ final class NormalGroupListTableViewCell: UITableViewCell {
     
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        let imageSize = CGSize(width: 40, height: 40)
-        let roundedImage = UIImage.roundedImage(color: TDStyle.color.bgOrange, size: imageSize)
-        imageView.image = roundedImage
         return imageView
     }()
     
