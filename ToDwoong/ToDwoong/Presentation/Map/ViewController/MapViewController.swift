@@ -115,5 +115,17 @@ extension MapViewController: MKMapViewDelegate {
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
             mapView.setRegion(region, animated: true)
         }
+        
+        let detailVC = TodoDetailViewController()
+        detailVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = detailVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.detents = [.medium(), .large()]
+            
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+        }
+        
+        present(detailVC, animated: true, completion: nil)
     }
 }
