@@ -12,16 +12,16 @@ import FSCalendar
 import SnapKit
 import TodwoongDesign
 
-final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
+final class CalendarViewController: UIViewController {
     
     // MARK: - Properties
     
     lazy var todoList = convertTodoDatas(todos: [])
-    
     private var eventDates: [Date]?
     private var selectedDueDate: Date?
     
     // MARK: - UI Properties
+    
     private var calendar: FSCalendar!
     private var tableView: UITableView!
     private var containerView: UIView!
@@ -30,15 +30,27 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setViews()
+        loadData()
+    }
+    
+}
+
+// MARK: - Setup and Configuration
+
+extension CalendarViewController {
+    func loadData() {
+        selectedDueDate = Date()
+        fetchTodosAndSetEventDates()
+        fetchTodos(for: selectedDueDate)
+    }
+    
+    func setViews() {
         view.backgroundColor = .white
         configureCalendar()
         configureCalendarAppearance()
         configureContainerView()
         configureTableView()
-        
-        selectedDueDate = Date()
-        fetchTodosAndSetEventDates()
-        fetchTodos(for: selectedDueDate)
     }
     
     private func configureCalendar() {
@@ -52,10 +64,8 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
             make.left.right.equalTo(view)
             make.height.equalTo(330)
         }
-        
     }
     
-    // MARK: - Configure UI
     private func configureContainerView() {
         containerView = UIView()
         containerView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
@@ -77,23 +87,19 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
         
-        // 빈 상태의 뷰 구성
         let emptyStateView = UIView()
         let emptyStateImageView = UIImageView()
         let emptyStateLabel = UILabel()
-
-        // 빈 상태의 이미지와 라벨을 설정
+        
         emptyStateImageView.contentMode = .scaleAspectFit
         emptyStateImageView.image = UIImage(named: "Dwong")
         emptyStateLabel.text = "오늘은 어떤 일을 할까요?"
         emptyStateLabel.textColor = TDStyle.color.mainDarkTheme
         emptyStateLabel.textAlignment = .center
-
-        // 빈 상태 뷰에 이미지 뷰와 라벨을 추가
+        
         emptyStateView.addSubview(emptyStateImageView)
         emptyStateView.addSubview(emptyStateLabel)
 
-        // 오토레이아웃 설정
         emptyStateImageView.translatesAutoresizingMaskIntoConstraints = false
         emptyStateLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -114,10 +120,9 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
             make.right.equalTo(containerView.snp.right).offset(-16)
             make.bottom.equalTo(containerView.snp.bottom)
         }
-
-        // 빈 상태 뷰를 테이블뷰의 backgroundView로 설정
+        
         tableView.backgroundView = emptyStateView
-        tableView.backgroundView?.isHidden = true // 초기 상태에서는 숨겨진 상태로 설정
+        tableView.backgroundView?.isHidden = true
     }
     
     private func configureCalendarAppearance() {
@@ -158,21 +163,12 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
             make.centerY.equalTo(calendar.calendarHeaderView.snp.centerY)
         }
     }
-
-    @objc private func goToPreviousMonth() {
-        guard let previousMonth = Calendar.current.date(byAdding: .month,
-                                                        value: -1,
-                                                        to: self.calendar.currentPage) else { return }
-        self.calendar.setCurrentPage(previousMonth, animated: true)
-    }
-
-    @objc private func goToNextMonth() {
-        guard let nextMonth = Calendar.current.date(byAdding: .month,
-                                                    value: 1,
-                                                    to: self.calendar.currentPage) else { return }
-        self.calendar.setCurrentPage(nextMonth, animated: true)
-    }
     
+}
+
+// MARK: - FSCalendarDelegate, FSCalendarDataSource
+
+extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         guard let eventDates = eventDates else { return 0 }
         return eventDates.contains(where: { Calendar.current.isDate($0, inSameDayAs: date) }) ? 1 : 0
@@ -182,12 +178,11 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
         selectedDueDate = date
         fetchTodos(for: selectedDueDate)
     }
-    
 }
 
 // MARK: - UITableViewDataSource, UITableViewDelegate
 
-extension CalendarController: UITableViewDataSource, UITableViewDelegate {
+extension CalendarViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let hasData = !todoList.isEmpty
         tableView.backgroundView?.isHidden = hasData
@@ -195,55 +190,36 @@ extension CalendarController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
+                                                       for: indexPath) as? TDTableViewCell else {
             fatalError("Unable to dequeue TDTableViewCell")
         }
-
+        
         let todo = todoList[indexPath.row]
         cell.configure(data: todo)
         cell.checkButton.isSelected = todo.isCompleted
-
+        
         cell.onCheckButtonTapped = { [weak self, weak tableView] in
             guard let self = self, let tableView = tableView else { return }
-
+            
             let isCompleted = !todo.isCompleted
-            todo.isCompleted = isCompleted  // 모델 상태 업데이트
-
+            todo.isCompleted = isCompleted
+            
             self.updateTodoInCoreData(todoId: todo.id!, isCompleted: isCompleted) {
                 DispatchQueue.main.async {
-                    // Core Data 업데이트가 완료된 후 UI 업데이트
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
             }
         }
-
+        
         return cell
     }
-
-    func updateTodoInCoreData(todoId: UUID, isCompleted: Bool, completion: @escaping () -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-
-        // `UUID` 타입의 `todoId`를 직접 사용합니다.
-        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", todoId as CVarArg)
-
-        do {
-            let fetchedTodos = try managedContext.fetch(fetchRequest)
-            if let fetchedTodo = fetchedTodos.first {
-                fetchedTodo.isCompleted = isCompleted
-                try managedContext.save()
-                completion()
-            }
-        } catch let error as NSError {
-            print("Could not fetch or update. \(error), \(error.userInfo)")
-        }
-    }
+    
 }
 
 // MARK: - CoreData Methods
 
-extension CalendarController {
+extension CalendarViewController {
     func fetchTodos(for date: Date?) {
         guard let selectedDate = date else { return }
         let todos = CoreDataManager.shared.filterTodoByDuedate(selectedDate)
@@ -303,5 +279,42 @@ extension CalendarController {
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
         let convertedTodos = todos.compactMap { convertTodoData($0) }
         return convertedTodos
+    }
+    
+    func updateTodoInCoreData(todoId: UUID, isCompleted: Bool, completion: @escaping () -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", todoId as CVarArg)
+
+        do {
+            let fetchedTodos = try managedContext.fetch(fetchRequest)
+            if let fetchedTodo = fetchedTodos.first {
+                fetchedTodo.isCompleted = isCompleted
+                try managedContext.save()
+                completion()
+            }
+        } catch let error as NSError {
+            print("Could not fetch or update. \(error), \(error.userInfo)")
+        }
+    }
+    
+}
+
+// MARK: - @objc mothode
+
+extension CalendarViewController {
+    @objc private func goToPreviousMonth() {
+        guard let previousMonth = Calendar.current.date(byAdding: .month,
+                                                        value: -1,
+                                                        to: self.calendar.currentPage) else { return }
+        self.calendar.setCurrentPage(previousMonth, animated: true)
+    }
+
+    @objc private func goToNextMonth() {
+        guard let nextMonth = Calendar.current.date(byAdding: .month,
+                                                    value: 1,
+                                                    to: self.calendar.currentPage) else { return }
+        self.calendar.setCurrentPage(nextMonth, animated: true)
     }
 }
