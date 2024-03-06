@@ -23,7 +23,7 @@
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA0630C2B906783007C9373 /* AddTodoViewController.swift */; };
 		2EBF09352B984A5D0023F0E0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBF09342B984A5D0023F0E0 /* FSCalendar */; };
-		2EBF09392B984AE00023F0E0 /* CalanderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalanderController.swift */; };
+		2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */; };
 		2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */; };
 		2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */; };
 		2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */; };
@@ -83,7 +83,7 @@
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		2EA0630C2B906783007C9373 /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
-		2EBF09382B984AE00023F0E0 /* CalanderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderController.swift; sourceTree = "<group>"; };
+		2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderViewController.swift; sourceTree = "<group>"; };
 		2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerContainerCell.swift; sourceTree = "<group>"; };
@@ -302,7 +302,7 @@
 		2EBF09372B984A6A0023F0E0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2EBF09382B984AE00023F0E0 /* CalanderController.swift */,
+				2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -533,7 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
-				2EBF09392B984AE00023F0E0 /* CalanderController.swift in Sources */,
+				2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
