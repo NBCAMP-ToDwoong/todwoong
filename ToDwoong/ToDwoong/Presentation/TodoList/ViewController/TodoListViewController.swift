@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-class TodoViewController: UIViewController {
+class TodoListViewController: UIViewController {
     
     // MARK: - Properties
     let dataManager = CoreDataManager.shared
@@ -23,7 +23,7 @@ class TodoViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    var todoView = TodoView()
+    var todoView = TodoListView()
     
     // MARK: - Life Cycle
     
@@ -43,7 +43,7 @@ class TodoViewController: UIViewController {
 
 // MARK: - Action
 
-extension TodoViewController {
+extension TodoListViewController {
     func setAction() {
         todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
     }
@@ -58,7 +58,7 @@ extension TodoViewController {
 
 // MARK: - Set Methods
 
-extension TodoViewController {
+extension TodoListViewController {
     
     private func setDelegates() {
         setCollectionView()
@@ -78,7 +78,7 @@ extension TodoViewController {
 
 // MARK: - CollectionViewDataSource
 
-extension TodoViewController: UICollectionViewDataSource {
+extension TodoListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return groupList.count
@@ -98,7 +98,7 @@ extension TodoViewController: UICollectionViewDataSource {
 
 // MARK: - CollectionViewDelegate
 
-extension TodoViewController: UICollectionViewDelegate {
+extension TodoListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // FIXME: 그룹 필터 로직 구현 예정
@@ -106,7 +106,7 @@ extension TodoViewController: UICollectionViewDelegate {
     }
 }
 
-extension TodoViewController: UICollectionViewDelegateFlowLayout {
+extension TodoListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -128,7 +128,7 @@ extension TodoViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - TableViewDataSource
 
-extension TodoViewController: UITableViewDataSource {
+extension TodoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if convertTodoList.isEmpty {
             todoView.emptyImageView.isHidden = false
@@ -158,7 +158,7 @@ extension TodoViewController: UITableViewDataSource {
 
 // MARK: - TableViewDelegate
 
-extension TodoViewController: UITableViewDelegate {
+extension TodoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         // FIXME: 해당 투두 편집 화면으로 이동(투두 편집 화면 구현 이후 추가 예정)
@@ -208,7 +208,7 @@ extension TodoViewController: UITableViewDelegate {
 
 // MARK: - Data Convert Method
 
-extension TodoViewController {
+extension TodoListViewController {
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
         let convertedTodos = todos.map { convertTodoData($0) }
         

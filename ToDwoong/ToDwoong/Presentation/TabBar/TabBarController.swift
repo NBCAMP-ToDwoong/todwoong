@@ -39,7 +39,7 @@ extension TabBarController {
     }
     
     private func setTabBar() {
-        let toDoListViewController = TodoViewController()
+        let toDoListViewController = TodoListViewController()
         toDoListViewController.tabBarItem = UITabBarItem(title: "할 일", image: UIImage(systemName: "checklist"), tag: 0)
 
         let calendarViewController = SecondViewController()

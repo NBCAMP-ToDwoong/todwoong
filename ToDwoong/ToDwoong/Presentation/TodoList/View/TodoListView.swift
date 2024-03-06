@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-final class TodoView: UIView {
+final class TodoListView: UIView {
     
     // MARK: - UI Properties
     
@@ -83,7 +83,7 @@ final class TodoView: UIView {
 
 // MARK: - Extensions
 
-extension TodoView {
+extension TodoListView {
     private func setUI() {
         self.backgroundColor = .white
 
