@@ -195,49 +195,49 @@ extension CalendarController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
-                                                       for: indexPath) as? TDTableViewCell else {
-            fatalError("존재하지 않는 셀입니다.")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else {
+            fatalError("Unable to dequeue TDTableViewCell")
         }
-        
+
         let todo = todoList[indexPath.row]
         cell.configure(data: todo)
-        
-        cell.onCheckButtonTapped = { [weak self] in
-            guard let self = self else { return }
-            
-            print("체크박스 선택됨 > UUID: \(todo.id)")
-            
-            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "id == %@", todo.id! as any CVarArg as CVarArg)
-            do {
-                let fetchedTodos = try CoreDataManager.shared.context.fetch(fetchRequest)
-                if let fetchedTodo = fetchedTodos.first {
-                    CoreDataManager.shared.updateTodo(todo: fetchedTodo,
-                                                      newTitle: fetchedTodo.title ?? "",
-                                                      newPlace: fetchedTodo.place ?? "",
-                                                      newDate: fetchedTodo.dueDate,
-                                                      newTime: fetchedTodo.dueTime,
-                                                      newCompleted: !fetchedTodo.isCompleted,
-                                                      newTimeAlarm: fetchedTodo.timeAlarm,
-                                                      newPlaceAlarm: fetchedTodo.placeAlarm,
-                                                      newCategory: fetchedTodo.category)
-                    
-                    print("업데이트 완료 > UUID: \(fetchedTodo.id), isCompleted: \(fetchedTodo.isCompleted)")
-                    
-                    cell.checkButton.isSelected = !fetchedTodo.isCompleted
-                    DispatchQueue.main.async {
-                        tableView.reloadRows(at: [indexPath], with: .none)
-                    }
+        cell.checkButton.isSelected = todo.isCompleted
+
+        cell.onCheckButtonTapped = { [weak self, weak tableView] in
+            guard let self = self, let tableView = tableView else { return }
+
+            let isCompleted = !todo.isCompleted
+            todo.isCompleted = isCompleted  // 모델 상태 업데이트
+
+            self.updateTodoInCoreData(todoId: todo.id!, isCompleted: isCompleted) {
+                DispatchQueue.main.async {
+                    // Core Data 업데이트가 완료된 후 UI 업데이트
+                    tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
-            } catch let error {
-                print("Todo fetching error: \(error)")
             }
         }
-        
-        cell.checkButton.isSelected = todo.isCompleted
-        
+
         return cell
+    }
+
+    func updateTodoInCoreData(todoId: UUID, isCompleted: Bool, completion: @escaping () -> Void) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        // `UUID` 타입의 `todoId`를 직접 사용합니다.
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", todoId as CVarArg)
+
+        do {
+            let fetchedTodos = try managedContext.fetch(fetchRequest)
+            if let fetchedTodo = fetchedTodos.first {
+                fetchedTodo.isCompleted = isCompleted
+                try managedContext.save()
+                completion()
+            }
+        } catch let error as NSError {
+            print("Could not fetch or update. \(error), \(error.userInfo)")
+        }
     }
 }
 
