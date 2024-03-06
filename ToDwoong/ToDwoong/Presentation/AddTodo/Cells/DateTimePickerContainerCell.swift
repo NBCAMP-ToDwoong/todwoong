@@ -11,13 +11,13 @@ import SnapKit
 
 final class DateTimePickerContainerCell: UICollectionViewCell {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var collectionView: UICollectionView!
     
-    // MARK: - UI Properties
+    // MARK: UI Properties
     
     weak var parentViewController: AddTodoViewController?
     
@@ -32,7 +32,7 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
     
 }
 
-// MARK: - setView
+// MARK: setView
 
 extension DateTimePickerContainerCell {
     private func setView() {
@@ -84,7 +84,7 @@ extension DateTimePickerContainerCell {
     
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -137,7 +137,7 @@ extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionVie
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
+// MARK: UICollectionViewDelegateFlowLayout
 
 extension DateTimePickerContainerCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
