@@ -12,7 +12,7 @@ import TodwoongDesign
 
 final class InfoCollectionViewCell: UICollectionViewCell {
     
-    // MARK: - UI Properties
+    // MARK: UI Properties
     
     var titleLabel: UILabel = {
         let label = UILabel()
@@ -61,7 +61,7 @@ final class InfoCollectionViewCell: UICollectionViewCell {
     
 }
 
-// MARK: - setView
+// MARK: setView
 
 extension InfoCollectionViewCell {
     private func setView() {
@@ -96,7 +96,7 @@ extension InfoCollectionViewCell {
     
 }
 
-// MARK: - configureCell
+// MARK: configureCell
 
 extension InfoCollectionViewCell {
     func configureCell(title: String, detail: String? = nil, showremoveButton: Bool = false) {

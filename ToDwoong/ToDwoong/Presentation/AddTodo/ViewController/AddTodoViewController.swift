@@ -12,14 +12,12 @@ import TodwoongDesign
 
 class AddTodoViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var selectedTitle: String?
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var selectedPlace: String?
-    
-    // MARK: - UI Properties
     
     var datePickerIndexPath: IndexPath?
     var dateTimePickerContainerCell: DateTimePickerContainerCell?
@@ -35,7 +33,7 @@ class AddTodoViewController: UIViewController {
         view = AddTodoView()
     }
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +83,6 @@ class AddTodoViewController: UIViewController {
     
     
     // TODO: 완료 버튼 액션 구현
-    
     @objc func doneButtonTapped() {
         let title = selectedTitle
         let dateFormatter = DateFormatter()
@@ -193,7 +190,7 @@ class AddTodoViewController: UIViewController {
     
 }
 
-// MARK: - UIGestureRecognizerDelegate
+// MARK: UIGestureRecognizerDelegate
 
 extension AddTodoViewController: UIGestureRecognizerDelegate {
     func setTapGesture() {
@@ -231,7 +228,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: UICollectionViewDelegate, UICollectionViewDataSource
 
 extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -361,7 +358,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
 }
 
-// MARK: - PresentController
+// MARK: PresentController
 
 extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     private func goToMapViewController() {
@@ -373,7 +370,6 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     
     private func goToGroupSelectController() {
         let groupSelectController = AddTodoGroupSelectController()
-        groupSelectController.modalPresentationStyle = .custom
         groupSelectController.delegate = self
         present(groupSelectController, animated: true, completion: nil)
     }
@@ -426,7 +422,7 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
-// MARK: - DateTimePickerDelegate
+// MARK: DateTimePickerDelegate
 
 extension AddTodoViewController: DateTimePickerDelegate {
     func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode) {
@@ -468,7 +464,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
     }
 }
 
-// MARK: - TitleCollectionViewCellDelegate
+// MARK: TitleCollectionViewCellDelegate
 
 extension AddTodoViewController: TitleCollectionViewCellDelegate {
     func titleCellDidEndEditing(_ text: String?) {
