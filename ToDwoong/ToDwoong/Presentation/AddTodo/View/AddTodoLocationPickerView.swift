@@ -13,7 +13,7 @@ import TodwoongDesign
 
 final class AddTodoLocationPickerView: UIView {
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     let mapView = MKMapView()
     let searchBar = UISearchBar()
@@ -47,7 +47,7 @@ final class AddTodoLocationPickerView: UIView {
     
 }
 
-// MARK: setConstraints
+// MARK: - setConstraints
 
 extension AddTodoLocationPickerView {
     private func setConstraints() {
@@ -74,7 +74,7 @@ extension AddTodoLocationPickerView {
     }
 }
 
-// MARK: setAddressContainerView
+// MARK: - setAddressContainerView
 
 extension AddTodoLocationPickerView {
     private func setAddressContainerView() {
@@ -110,7 +110,7 @@ extension AddTodoLocationPickerView {
     }
 }
 
-// MARK: @objc
+// MARK: - @objc mothode
 
 extension AddTodoLocationPickerView {
     @objc private func didTapConfirmAddressButton() {

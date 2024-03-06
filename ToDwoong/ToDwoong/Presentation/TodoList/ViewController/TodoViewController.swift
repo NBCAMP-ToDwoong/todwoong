@@ -158,7 +158,7 @@ extension TodoViewController: UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView,
+    func tableView(_ tableView: UITableView, 
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let topFixedAction = UIContextualAction(style: .normal,
@@ -175,7 +175,7 @@ extension TodoViewController: UITableViewDelegate {
         return swipeActions
     }
     
-    func tableView(_ tableView: UITableView,
+    func tableView(_ tableView: UITableView, 
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
     -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
@@ -210,7 +210,7 @@ extension TodoViewController {
     private func convertTodoData(_ todo: Todo) -> TodoModel {
         var convertedCategory: CategoryModel?
         var convertedTodo: TodoModel
-
+        
         if let category = todo.category {
             convertedCategory = CategoryModel(id: category.id,
                                               title: category.title!,
@@ -218,16 +218,16 @@ extension TodoViewController {
                                               indexNumber: category.indexNumber,
                                               todo: nil) // 일단 nil로 초기화
         }
-
+        
         convertedTodo = TodoModel(id: todo.id, title: todo.title!,
                                   dueDate: todo.dueDate, dueTime: todo.dueTime,
                                   place: todo.place,
                                   isCompleted: todo.isCompleted, fixed: todo.fixed,
                                   timeAlarm: todo.timeAlarm, placeAlarm: todo.placeAlarm,
                                   category: convertedCategory)
-
+        
         convertedCategory?.todo = convertedTodo
-
+        
         return convertedTodo
     }
 }
