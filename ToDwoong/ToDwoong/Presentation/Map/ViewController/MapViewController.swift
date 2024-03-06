@@ -13,8 +13,12 @@ import TodwoongDesign
 
 class MapViewController: UIViewController {
     
+    // Instance
+    
     var mapView: MKMapView!
     let locationManager = CLLocationManager()
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +47,8 @@ class MapViewController: UIViewController {
     }
 }
 
+// MARK: - CLLocationManagerDelegate
+
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // 위치 업데이트 처리
@@ -52,6 +58,8 @@ extension MapViewController: CLLocationManagerDelegate {
         // 위치 서비스 권한 변경 처리
     }
 }
+
+// MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

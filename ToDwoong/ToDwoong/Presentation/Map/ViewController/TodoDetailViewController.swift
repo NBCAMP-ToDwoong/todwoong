@@ -10,17 +10,23 @@ import TodwoongDesign
 
 class TodoDetailViewController: UIViewController {
     
+    // MARK: - Storage
+    
     var todos: [TodoModel] = []
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadTodos()
+        loadTodos() // 실제 데이터 로딩
     }
     
     func loadTodos() {
         // 실제 Todo 데이터를 로드하는 로직 구현
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension TodoDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,4 +42,5 @@ extension TodoDetailViewController: UITableViewDataSource {
         return cell
     }
 }
+
 
