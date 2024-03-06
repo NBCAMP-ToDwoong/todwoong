@@ -136,35 +136,15 @@ extension AddGroupView {
             make.trailing.equalToSuperview().offset(-16)
         }
         
-        palleteButton.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton.snp.width)
-        }
-        palleteButton1.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton1.snp.width)
-        }
-        palleteButton2.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton2.snp.width)
-        }
-        palleteButton3.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton3.snp.width)
-        }
-        palleteButton4.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton4.snp.width)
-        }
-        palleteButton5.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton5.snp.width)
-        }
-        palleteButton6.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton6.snp.width)
-        }
-        palleteButton7.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton7.snp.width)
-        }
-        palleteButton8.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton8.snp.width)
-        }
-        palleteButton9.snp.makeConstraints { make in
-            make.height.equalTo(palleteButton9.snp.width)
+        let buttons = [palleteButton, palleteButton1, palleteButton2, 
+                       palleteButton3, palleteButton4, palleteButton5,
+                       palleteButton6, palleteButton7, palleteButton8, palleteButton9
+        ]
+        
+        for button in buttons {
+            button.snp.makeConstraints { make in
+                make.height.equalTo(button.snp.width)
+            }
         }
         
         testButton.snp.makeConstraints { make in
