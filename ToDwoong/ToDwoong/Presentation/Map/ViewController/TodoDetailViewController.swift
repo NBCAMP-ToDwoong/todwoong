@@ -6,13 +6,34 @@
 //
 
 import UIKit
+import TodwoongDesign
 
 class TodoDetailViewController: UIViewController {
-    var todoTitle: String?
+    
+    var todos: [TodoModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
+        loadTodos()
+    }
+    
+    func loadTodos() {
+        // 실제 Todo 데이터를 로드하는 로직 구현
     }
 }
+
+extension TodoDetailViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return todos.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else {
+            return UITableViewCell()
+        }
+        let todo = todos[indexPath.row]
+        cell.configure(data: todo)
+        return cell
+    }
+}
+
