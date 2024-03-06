@@ -51,15 +51,15 @@ final class AddGroupView: UIView {
     private lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgOrange)
     private lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgOrange) // 컬러 누락
-    private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgYellow)
-    private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
+    private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgGreen)
-    private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
+    private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgBlue)
-    private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
+    private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgPurple)
+    private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
+                                                       color: .clear)
     private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
                                                        color: .clear)
 
