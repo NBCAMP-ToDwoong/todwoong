@@ -13,11 +13,17 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    var buttonAction: ((UIButton) -> Void) = { _ in }
     static let identifier = "categoryCollectionViewCell"
     
     // MARK: - UI Properties
     
-    var groupButton = TDButton.chip(title: "Test", backgroundColor: TDStyle.color.mainTheme)
+    var groupButton: UIButton = {
+        let button = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
+        button.addTarget(self, action: #selector(groupButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
     
     // MARK: - Life Cycle
     
@@ -41,6 +47,14 @@ extension GroupCollectionViewCell {
         if let color = data.color {
             groupButton.tintColor = UIColor(named: color)
         }
+    }
+}
+
+// MARK: - @objc Method
+
+extension GroupCollectionViewCell {
+    @objc func groupButtonTapped(_ sender: UIButton) {
+        buttonAction(sender)
     }
 }
 

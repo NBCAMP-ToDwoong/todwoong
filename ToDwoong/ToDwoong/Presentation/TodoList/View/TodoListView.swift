@@ -21,6 +21,8 @@ final class TodoListView: UIView {
         return button
     }()
     
+    lazy var allGroupButton = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
+    
     lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -89,6 +91,7 @@ extension TodoListView {
 
         [
             groupListButton,
+            allGroupButton,
             groupCollectionView,
             todoListFrameView,
             emptyImageView,
@@ -101,10 +104,14 @@ extension TodoListView {
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalTo(groupCollectionView)
         }
+        allGroupButton.snp.makeConstraints { make in
+            make.leading.equalTo(groupListButton.snp.trailing).offset(8)
+            make.centerY.equalTo(groupCollectionView)
+        }
         groupCollectionView.snp.makeConstraints{ make in
             make.top.equalTo(safeAreaLayoutGuide).offset(30)
             make.height.equalTo(30.33)
-            make.leading.equalTo(groupListButton.snp.trailing).offset(8)
+            make.leading.equalTo(allGroupButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview()
         }
         todoListFrameView.snp.makeConstraints { make in

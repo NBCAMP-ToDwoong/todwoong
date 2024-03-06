@@ -19,7 +19,12 @@ class TodoListViewController: UIViewController {
     var convertTodoList: [TodoModel] {
         convertTodoDatas(todos: rawTodoList)
     }
+    lazy var filteredTodoList: [TodoModel] = convertTodoList
+    
     lazy var groupList = dataManager.readCategories()
+    let buttonAction: ((UIButton) -> Void) = { button in
+        button.isSelected = !button.isSelected
+    }
     
     // MARK: - UI Properties
     
@@ -34,7 +39,8 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: nil)
+//        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
+//        dataManager.createTodo(title: "Test", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
         
         setDelegates()
         setAction()
@@ -46,6 +52,7 @@ class TodoListViewController: UIViewController {
 extension TodoListViewController {
     func setAction() {
         todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
+        todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
     }
     
     @objc func categoryListButtonTapped() {
@@ -53,6 +60,11 @@ extension TodoListViewController {
         // FIXME: 그룹 뷰컨트롤러로 이동 (GroupList 구현 이후 연결 예정)
         
         //        self.navigationController?.pushViewController(GroupListViewController, animated: true)
+    }
+    
+    @objc func allGroupButtonTapped(sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        filteredTodoList = convertTodoList
     }
 }
 
@@ -91,6 +103,8 @@ extension TodoListViewController: UICollectionViewDataSource {
         { return UICollectionViewCell() }
         
         cell.configure(data: groupList[indexPath.row])
+        cell.groupButton.tag = indexPath.row
+        cell.buttonAction = buttonAction
         
         return cell
     }
@@ -138,7 +152,7 @@ extension TodoListViewController: UITableViewDataSource {
             todoView.emptyLabel.isHidden = true
         }
         
-        return convertTodoList.count
+        return filteredTodoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,7 +164,7 @@ extension TodoListViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
         }
-        cell.configure(data: convertTodoList[indexPath.row])
+        cell.configure(data: filteredTodoList[indexPath.row])
         
         return cell
     }
@@ -193,6 +207,7 @@ extension TodoListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
                                               handler: {(action, view, completionHandler) in
+            // FIXME: 데이터 변경에 맞춰 수정해야함
             self.dataManager.deleteTodo(todo: self.rawTodoList[indexPath.row])
             tableView.reloadData()
         })
@@ -218,6 +233,8 @@ extension TodoListViewController {
     private func convertTodoData(_ todo: Todo) -> TodoModel {
         var convertedCategory: CategoryModel?
         var convertedTodo: TodoModel
+        
+//        print(todo.category)
 
         if let category = todo.category {
             convertedCategory = CategoryModel(id: category.id,
@@ -226,7 +243,7 @@ extension TodoListViewController {
                                               indexNumber: category.indexNumber,
                                               todo: nil) // 일단 nil로 초기화
         }
-
+        
         convertedTodo = TodoModel(id: todo.id, title: todo.title!,
                                   dueDate: todo.dueDate, dueTime: todo.dueTime,
                                   place: todo.place,
