@@ -20,6 +20,9 @@ final class AddGroupViewController: UIViewController {
         return ""
     }()
     
+    private var editMode = false
+    private var editCategory: Category?
+    
     // MARK: - UI Properties
     
     private var addGroupView = AddGroupView()
@@ -37,6 +40,12 @@ final class AddGroupViewController: UIViewController {
         setButtonMethod()
         setDelegate()
         setNavigationBar()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        checkEditMode()
     }
 }
 
@@ -62,7 +71,6 @@ extension AddGroupViewController: UITextFieldDelegate {
         let currentLength = textField.text?.count ?? 0
         let newLength = currentLength + string.count - range.length
         
-        // 최대 입력 길이를 초과하는지 확인합니다.
         return newLength <= maxLength
     }
 }
@@ -100,7 +108,18 @@ extension AddGroupViewController {
 
     @objc func createGroup() {
         if let title = addGroupView.groupTextField.text {
-//            CoreDataManager.shared.createCategory(title: title, color: selectedColor, todo: nil)
+            CoreDataManager.shared.createCategory(title: title, color: selectedColor, todo: nil)
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func editGroup() {
+        guard let category = editCategory else { return }
+        
+        if let title = addGroupView.groupTextField.text {
+            CoreDataManager.shared.updateCategory(category: category, newTitle: title, newColor: selectedColor, newTodo: nil)
+            editMode = false
+            editCategory = nil
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -120,9 +139,53 @@ extension AddGroupViewController {
 
 extension AddGroupViewController {
     private func setNavigationBar() {
-        self.title = "그룹 추가"
-        let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(createGroup))
-        self.navigationItem.rightBarButtonItem = rightButton
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        if editMode {
+            self.title = "그룹 편집"
+            let rightButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editGroup))
+            self.navigationItem.rightBarButtonItem = rightButton
+            self.navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            self.title = "그룹 추가"
+            let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(createGroup))
+            self.navigationItem.rightBarButtonItem = rightButton
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+        }
+    }
+}
+
+// MARK: - EditMode Method
+
+extension AddGroupViewController {
+    func editModeOn(category: Category) {
+        print("editMode On")
+        editMode = true
+        editCategory = category
+    }
+    
+    private func checkEditMode() {
+        if editMode {
+            setEditMode()
+        }
+    }
+    
+    private func setEditMode() {
+        let buttons = [addGroupView.palleteButton1,
+                       addGroupView.palleteButton2, addGroupView.palleteButton3,
+                       addGroupView.palleteButton4, addGroupView.palleteButton5,
+                       addGroupView.palleteButton6, addGroupView.palleteButton7]
+        
+        if let category = editCategory {
+            addGroupView.groupTextField.text = category.title
+            
+            if category.color == TDStyle.color.mainTheme.toHex() {
+                addGroupView.palleteButtonTapped(sender: addGroupView.palleteButton)
+            } else {
+                for button in buttons {
+                    if category.color == button.tintColor.toHex() {
+                        addGroupView.palleteButtonTapped(sender: button)
+                    }
+                }
+            }
+        }
     }
 }

@@ -47,25 +47,35 @@ final class AddGroupView: UIView {
     }()
     
     lazy var palleteButton: UIButton = makePalletButton(systemImageString: "xmark.circle",
-                                                                color: TDStyle.color.bgGray)
-    private lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgGray)
-    private lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
-    private lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgOrange)
-    private lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgYellow)
-    private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgGreen)
-    private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgBlue)
-    private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgPurple)
-    private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: .clear)
-    private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: .clear)
+                                                        color: TDStyle.color.bgGray)
+    lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgGray)
+    lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgRed)
+    lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgOrange)
+    lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgYellow)
+    lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgGreen)
+    lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgBlue)
+    lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgPurple)
+    lazy var palleteButton8: UIButton = {
+        let button = makePalletButton(systemImageString: "circle.fill",
+                         color: .clear)
+        button.isEnabled = false
+        
+        return button
+    }()
+    lazy var palleteButton9 = {
+        let button = makePalletButton(systemImageString: "circle.fill",
+                         color: .clear)
+        button.isEnabled = false
+        
+        return button
+    }()
     
     var checkMarkImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
