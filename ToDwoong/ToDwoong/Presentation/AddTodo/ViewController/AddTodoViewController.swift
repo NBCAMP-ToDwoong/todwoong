@@ -19,6 +19,7 @@ class AddTodoViewController: UIViewController {
     var selectedDueTime: Date?
     var selectedPlace: String?
     var selectedGroup: Category?
+    var todoIdToEdit: UUID?
     
     var datePickerIndexPath: IndexPath?
     var dateTimePickerContainerCell: DateTimePickerContainerCell?

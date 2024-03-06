@@ -82,12 +82,16 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
     }
 
     @objc private func goToPreviousMonth() {
-        guard let previousMonth = Calendar.current.date(byAdding: .month, value: -1, to: self.calendar.currentPage) else { return }
+        guard let previousMonth = Calendar.current.date(byAdding: .month, 
+                                                        value: -1,
+                                                        to: self.calendar.currentPage) else { return }
         self.calendar.setCurrentPage(previousMonth, animated: true)
     }
 
     @objc private func goToNextMonth() {
-        guard let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: self.calendar.currentPage) else { return }
+        guard let nextMonth = Calendar.current.date(byAdding: .month, 
+                                                    value: 1,
+                                                    o: self.calendar.currentPage) else { return }
         self.calendar.setCurrentPage(nextMonth, animated: true)
     }
 
