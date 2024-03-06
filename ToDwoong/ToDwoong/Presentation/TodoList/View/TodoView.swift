@@ -121,7 +121,7 @@ extension TodoView {
             make.height.equalTo(emptyImageView.snp.width)
         }
         emptyLabel.snp.makeConstraints { make in
-            make.top.equalTo(emptyImageView)
+            make.top.equalTo(emptyImageView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
         }
     }
