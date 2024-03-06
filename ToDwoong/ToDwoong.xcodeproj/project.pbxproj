@@ -48,6 +48,8 @@
 		E0EACB672B907EC700BBEB0B /* TodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoView.swift */; };
 		E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */; };
 		E0EACB6B2B95A7FB00BBEB0B /* ContentSizeTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6A2B95A7FB00BBEB0B /* ContentSizeTableView.swift */; };
+		E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */; };
+		E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB712B971D7400BBEB0B /* AddGroupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -104,6 +106,8 @@
 		E0EACB662B907EC700BBEB0B /* TodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoView.swift; sourceTree = "<group>"; };
 		E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		E0EACB6A2B95A7FB00BBEB0B /* ContentSizeTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizeTableView.swift; sourceTree = "<group>"; };
+		E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGroupViewController.swift; path = ToDwoong/Presentation/AddGroup/ViewController/AddGroupViewController.swift; sourceTree = SOURCE_ROOT; };
+		E0EACB712B971D7400BBEB0B /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +164,8 @@
 		1BA63AD02B8E8D1B008F49CE /* AddGroup */ = {
 			isa = PBXGroup;
 			children = (
+				E0EACB702B971CF400BBEB0B /* ViewController */,
+				E0EACB732B971D7A00BBEB0B /* View */,
 			);
 			path = AddGroup;
 			sourceTree = "<group>";
@@ -389,6 +395,22 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		E0EACB702B971CF400BBEB0B /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E0EACB732B971D7A00BBEB0B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E0EACB712B971D7400BBEB0B /* AddGroupView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -505,6 +527,7 @@
 				E0EACB6B2B95A7FB00BBEB0B /* ContentSizeTableView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
+				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
 				2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */,
 				2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */,
@@ -515,6 +538,7 @@
 				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
+				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
 				2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */,

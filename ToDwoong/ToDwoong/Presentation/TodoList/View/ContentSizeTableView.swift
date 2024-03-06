@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ContentSizeTableView: UITableView {
+final class ContentSizeTableView: UITableView {
     override var intrinsicContentSize: CGSize {
         let height = self.contentSize.height + self.contentInset.top + self.contentInset.bottom
         return CGSize(width: self.contentSize.width, height: height)
