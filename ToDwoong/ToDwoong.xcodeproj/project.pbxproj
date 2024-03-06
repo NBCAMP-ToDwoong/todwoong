@@ -40,6 +40,7 @@
 		2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
+		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
@@ -102,6 +103,7 @@
 		2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectControllerDelegate.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
+		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				1BA08A5D2B985506001D3698 /* MapView.swift */,
+				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
 				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
 				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
+				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
