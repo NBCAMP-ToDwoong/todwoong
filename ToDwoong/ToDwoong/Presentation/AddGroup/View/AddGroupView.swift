@@ -28,6 +28,25 @@ final class AddGroupView: UIView {
         return textField
     }()
     
+    lazy var validationGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹명을 입력해주세요!"
+        label.textColor = .systemRed
+        label.font = TDStyle.font.caption1(style: .regular)
+        
+        return label
+    }()
+    
+    lazy var restrictionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹명은 5자리 이하로 입력해 주세요."
+        label.textColor = .systemRed
+        label.font = TDStyle.font.caption1(style: .regular)
+        label.isHidden = true
+        
+        return label
+    }()
+    
     private lazy var palleteStackView1: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -116,6 +135,8 @@ extension AddGroupView {
         
         [
             groupTextField,
+            validationGuideLabel,
+            restrictionLabel,
             palleteStackView1,
             palleteStackView2,
             checkMarkImageView
@@ -142,6 +163,16 @@ extension AddGroupView {
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(44)
+        }
+        
+        validationGuideLabel.snp.makeConstraints { make in
+            make.top.equalTo(groupTextField.snp.bottom).offset(8)
+            make.leading.equalTo(groupTextField).offset(8)
+        }
+        
+        restrictionLabel.snp.makeConstraints { make in
+            make.top.equalTo(groupTextField.snp.bottom).offset(8)
+            make.leading.equalTo(groupTextField).offset(8)
         }
         
         palleteStackView1.snp.makeConstraints { make in

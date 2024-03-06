@@ -57,12 +57,13 @@ extension AddGroupViewController: UITextFieldDelegate {
         addGroupView.groupTextField.delegate = self
     }
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
         if let text = textField.text{
             if text.isEmpty {
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
+                addGroupView.validationGuideLabel.isHidden = false
             } else {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
+                addGroupView.validationGuideLabel.isHidden = true
             }
         }
     }
@@ -71,6 +72,12 @@ extension AddGroupViewController: UITextFieldDelegate {
         
         let currentLength = textField.text?.count ?? 0
         let newLength = currentLength + string.count - range.length
+        
+        if newLength > maxLength {
+            addGroupView.restrictionLabel.isHidden = false
+        } else {
+            addGroupView.restrictionLabel.isHidden = true
+        }
         
         return newLength <= maxLength
     }
@@ -183,6 +190,8 @@ extension AddGroupViewController {
     }
     
     private func setEditMode() {
+        addGroupView.validationGuideLabel.isHidden = true
+        
         let buttons = [addGroupView.palleteButton1,
                        addGroupView.palleteButton2, addGroupView.palleteButton3,
                        addGroupView.palleteButton4, addGroupView.palleteButton5,
