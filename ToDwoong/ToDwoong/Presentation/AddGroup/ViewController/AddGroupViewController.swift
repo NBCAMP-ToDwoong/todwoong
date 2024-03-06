@@ -56,6 +56,15 @@ extension AddGroupViewController: UITextFieldDelegate {
             }
         }
     }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let maxLength = 5
+        
+        let currentLength = textField.text?.count ?? 0
+        let newLength = currentLength + string.count - range.length
+        
+        // 최대 입력 길이를 초과하는지 확인합니다.
+        return newLength <= maxLength
+    }
 }
 
 // MARK: - Set Button Method
