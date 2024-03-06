@@ -12,7 +12,7 @@ import TodwoongDesign
 
 final class DateTimeOptionCell: UICollectionViewCell {
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     var removeButtonAction: (() -> Void)?
     
@@ -59,7 +59,7 @@ final class DateTimeOptionCell: UICollectionViewCell {
     
 }
 
-// MARK: setView
+// MARK: - setView
 
 extension DateTimeOptionCell {
     private func setView() {
@@ -95,7 +95,7 @@ extension DateTimeOptionCell {
     }
 }
 
-// MARK: setInfo
+// MARK: - setInfo
 
 extension DateTimeOptionCell {
     func setInfo(labelText: String, infoText: String?) {
@@ -110,7 +110,7 @@ extension DateTimeOptionCell {
     }
 }
 
-// MARK: Heper Functions
+// MARK: - Heper Functions
 
 extension DateTimeOptionCell {
     private func adjustLayoutForEmptyInfo() {
@@ -154,7 +154,7 @@ extension DateTimeOptionCell {
     }
 }
 
-// MARK: @objc
+// MARK: - @objc methode
 
 extension DateTimeOptionCell {
     @objc private func removeButtonTapped() {

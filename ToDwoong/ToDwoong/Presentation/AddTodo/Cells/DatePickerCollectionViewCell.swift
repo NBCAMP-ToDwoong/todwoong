@@ -28,7 +28,7 @@ class DatePickerCollectionViewCell: UICollectionViewCell {
     
 }
 
-// MARK: setDatePicker
+// MARK: - setDatePicker
 
 extension DatePickerCollectionViewCell {
     private func setDatePicker() {
@@ -41,7 +41,7 @@ extension DatePickerCollectionViewCell {
     }
 }
 
-// MARK: configure
+// MARK: - configure
 
 extension DatePickerCollectionViewCell {
     func configure(for mode: UIDatePicker.Mode) {
@@ -52,7 +52,7 @@ extension DatePickerCollectionViewCell {
     }
 }
 
-// MARK: @objc
+// MARK: - @objc methode
 
 extension DatePickerCollectionViewCell {
     @objc func datePickerValueChanged(_ datePicker: UIDatePicker) {
