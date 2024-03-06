@@ -110,5 +110,10 @@ extension MapViewController: CLLocationManagerDelegate {
 // MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
-
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        if let coordinate = view.annotation?.coordinate {
+            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
+            mapView.setRegion(region, animated: true)
+        }
+    }
 }
