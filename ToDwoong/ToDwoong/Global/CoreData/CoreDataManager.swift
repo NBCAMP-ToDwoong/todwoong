@@ -107,7 +107,8 @@ final class CoreDataManager {
         fetchRequest.resultType = .dictionaryResultType
         let calculateDesc = NSExpressionDescription()
         calculateDesc.name = "maxIndexNumber"
-        calculateDesc.expression = NSExpression(forFunction: "max:", arguments: [NSExpression(forKeyPath: "indexNumber")])
+        calculateDesc.expression = NSExpression(forFunction: "max:",
+                                                arguments: [NSExpression(forKeyPath: "indexNumber")])
         calculateDesc.expressionResultType = .integer64AttributeType
         fetchRequest.propertiesToFetch = [calculateDesc]
 
@@ -175,7 +176,9 @@ final class CoreDataManager {
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
 
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-        let dueDatePredicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)", startOfDay as NSDate, endOfDay as NSDate)
+        let dueDatePredicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)",
+                                           startOfDay as NSDate,
+                                           endOfDay as NSDate)
         fetchRequest.predicate = dueDatePredicate
 
         let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)

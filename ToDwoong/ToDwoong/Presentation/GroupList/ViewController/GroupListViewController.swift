@@ -18,11 +18,14 @@ final class GroupListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBar()
-        setupGroupListView()
+        setNavigationBar()
+        setGroupListView()
+        
+        groupListView.loadCategories()
+        groupListView.configureAddButtonAction(target: self, action: #selector(addCategoryButtonTapped))
     }
     
-    private func setupNavigationBar() {
+    private func setNavigationBar() {
         title = "그룹"
         
         let leftBarButtonItem = UIBarButtonItem(
@@ -48,7 +51,7 @@ final class GroupListViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-    private func setupGroupListView() {
+    private func setGroupListView() {
         view.addSubview(groupListView)
         groupListView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -57,7 +60,7 @@ final class GroupListViewController: UIViewController {
         groupListView.backgroundColor = TDStyle.color.lightGray
     }
     
-    // MARK: Objc
+    // MARK: - Objc
     
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
@@ -66,9 +69,11 @@ final class GroupListViewController: UIViewController {
     @objc private func didTapEditButton() {
         isEditingMode.toggle()
         groupListView.setEditingMode(isEditingMode)
+        
+        navigationItem.rightBarButtonItem?.title = isEditingMode ? "완료" : "편집"
     }
 
     @objc private func addCategoryButtonTapped() {
-        // FIXME: 그룹 추가 버튼 클릭 시 로직 구현
+        // FIXME: 그룹 추가 버튼 클릭 시 로직 구현. 모달창을 띄워 카테고리 Create하는 메서드
     }
 }
