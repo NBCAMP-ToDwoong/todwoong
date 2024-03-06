@@ -11,9 +11,13 @@ import TodwoongDesign
 
 final class AddGroupView: UIView {
     
+    // MARK: - Properties
+    
+    var buttonTapped: (UIButton) -> () = { button in }
+    
     // MARK: - UI Properties
     
-    private lazy var groupTextField: UITextField = {
+    lazy var groupTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
         textField.backgroundColor = .white
@@ -42,8 +46,8 @@ final class AddGroupView: UIView {
         return stackView
     }()
     
-    private lazy var palleteButton = makePalletButton(systemImageString: "xmark.circle",
-                                                      color: TDStyle.color.bgGray)
+    lazy var palleteButton: UIButton = makePalletButton(systemImageString: "xmark.circle",
+                                                                color: TDStyle.color.bgGray)
     private lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
                                                        color: TDStyle.color.bgGray)
     private lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
@@ -62,16 +66,14 @@ final class AddGroupView: UIView {
                                                        color: .clear)
     private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
                                                        color: .clear)
-
-    // FIXME: 테스트 이후 삭제 예정입니다.
     
-    var testButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("저장", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10
+    var checkMarkImageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        imageView.image = UIImage(systemName: "checkmark")
+        imageView.isHidden = true
+        imageView.tintColor = .white
         
-        return button
+        return imageView
     }()
     
     // MARK: - Life Cycle
@@ -88,6 +90,14 @@ final class AddGroupView: UIView {
     }
 }
 
+// MARK: - @objc Method
+
+extension AddGroupView {
+    @objc func palleteButtonTapped(sender: UIButton) {
+        buttonTapped(sender)
+    }
+}
+
 // MARK: - Extension
 
 extension AddGroupView {
@@ -98,7 +108,7 @@ extension AddGroupView {
             groupTextField,
             palleteStackView1,
             palleteStackView2,
-            testButton
+            checkMarkImageView
         ].forEach { addSubview($0) }
         
         [
@@ -146,12 +156,6 @@ extension AddGroupView {
                 make.height.equalTo(button.snp.width)
             }
         }
-        
-        testButton.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-50)
-            make.width.equalTo(60)
-            make.centerX.equalToSuperview()
-        }
     }
     
     private func makePalletButton(systemImageString: String, color: UIColor) -> UIButton {
@@ -160,6 +164,7 @@ extension AddGroupView {
         button.tintColor = color
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.addTarget(self, action: #selector(palleteButtonTapped), for: .touchUpInside)
         
         return button
     }
