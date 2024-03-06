@@ -26,10 +26,9 @@ class TodoListViewController: UIViewController {
         button.isSelected = !button.isSelected
         let groupIndex = button.tag
         let group = self.groupList[groupIndex]
-        
         let filteredTodoList = self.dataManager.filterTodoByCategory(category: group)
-        self.filteredTodoList = self.convertTodoDatas(todos: filteredTodoList)
         
+        self.filteredTodoList = self.convertTodoDatas(todos: filteredTodoList)
         self.todoView.todoTableView.reloadData()
     }
     
