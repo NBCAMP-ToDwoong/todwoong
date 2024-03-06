@@ -18,12 +18,14 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         setMapView()
         setLocationManager()
+        loadTodosAndPins()
     }
     
     private func setMapView() {
         mapView = MKMapView()
         mapView.frame = view.bounds
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.delegate = self
         view.addSubview(mapView)
     }
     
@@ -34,32 +36,56 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-    // 장소에 따라서 지도에 핀이 추가되는 메서드
+    // Todo데이터를 불러오고, 각 투두의 장소에 맞는 핀을 생성하는 메서드를 실행하는 메서드
+    private func loadTodosAndPins() {
+        // Core Data에서 Todo항목을 불러오는 로직이 작성 되어야 함
+        let mockTodos = [
+            ("서울"),
+            ("부산"),
+            ("대구")
+        ]
+        
+    for todo in mockTodos {
+            addPinForPlace(todo)
+        }
+    }
+    
+    // 장소를 입력받아서 해당 장소에 핀을 표시해주는 메서드
     func addPinForPlace(_ place: String) {
         let geocoder = CLGeocoder()
-        
-        geocoder.geocodeAddressString(place) { [weak self] (placemerks, error) in
+                
+        geocoder.geocodeAddressString(place) { [weak self] (placemarks, error) in
             guard let strongSelf = self else { return }
-            
+                    
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
             
-            if let placemark = placemerks?.first, let location = placemark.location {
+            if let placemark = placemarks?.first, let location = placemark.location {
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = location.coordinate
-                annotation.title = place
                 
                 DispatchQueue.main.async {
                     strongSelf.mapView.addAnnotation(annotation)
-                    
-                    strongSelf.mapView.setCenter(annotation.coordinate, animated: true)
                 }
             }
         }
     }
+        
+    
+    // 버튼을 눌렀을 때, 사용자의 현재 위치로 돌아가는 메서드
+    @objc func moveToCurrentLocation() {
+        if let currentLocation = locationManager.location {
+            let region = MKCoordinateRegion(center: currentLocation.coordinate,
+                                            latitudinalMeters: 300,
+                                            longitudinalMeters: 300)
+            mapView.setRegion(region, animated: true)
+        }
+    }
 }
+
+// Extension
 
 // MARK: - CLLocationManagerDelegate
 
@@ -79,4 +105,10 @@ extension MapViewController: CLLocationManagerDelegate {
             locationManager.startUpdatingLocation()
         }
     }
+}
+
+// MARK: - MKMapViewDelegate
+
+extension MapViewController: MKMapViewDelegate {
+
 }
