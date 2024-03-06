@@ -136,27 +136,6 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupTableViewCellIdentifier", for: indexPath)
         cell.textLabel?.text = groupList[indexPath.row].title
-        
-        let colorDiameter: CGFloat = 20
-        let colorView = UIView()
-        colorView.backgroundColor = UIColor(named: groupList[indexPath.row].color ?? "#D1FADF")
-        colorView.layer.cornerRadius = colorDiameter / 2
-        colorView.translatesAutoresizingMaskIntoConstraints = false
-        
-        for subview in cell.contentView.subviews where subview.tag == 99 {
-            subview.removeFromSuperview()
-        }
-
-        colorView.tag = 99
-        cell.contentView.addSubview(colorView)
-        
-        NSLayoutConstraint.activate([
-            colorView.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 15),
-            colorView.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-            colorView.widthAnchor.constraint(equalToConstant: colorDiameter),
-            colorView.heightAnchor.constraint(equalToConstant: colorDiameter)
-        ])
-        
         return cell
     }
 }
