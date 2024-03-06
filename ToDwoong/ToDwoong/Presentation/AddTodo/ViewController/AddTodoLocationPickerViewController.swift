@@ -11,14 +11,14 @@ import UIKit
 
 final class AddTodoLocationPickerViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var addressString: String = ""
     var selectedPlace: String?
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
-    // MARK: - UI Properties
+    // MARK: UI Properties
     
     weak var delegate: AddTodoLocationPickerDelegate?
     
@@ -34,7 +34,7 @@ final class AddTodoLocationPickerViewController: UIViewController {
         view = locationPickerView
     }
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,7 +111,7 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
     }
 }
 
-// MARK: - CLLocationManagerDelegate
+// MARK: CLLocationManagerDelegate
 
 extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -134,7 +134,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: UISearchBarDelegate
 
 extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -154,7 +154,7 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     }
 }
 
-// MARK: - AddTodoLocationPickerViewDelegate
+// MARK: AddTodoLocationPickerViewDelegate
 
 extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
     func didTapConfirmAddress(_ address: String) {
