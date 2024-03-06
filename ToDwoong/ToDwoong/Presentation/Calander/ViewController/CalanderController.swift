@@ -18,7 +18,7 @@ final class CalendarController: UIViewController, FSCalendarDelegate, FSCalendar
     
     lazy var todoList = convertTodoDatas(todos: [])
     
-    private var eventDates: [Date]? // 이벤트 날짜만 따로 저장하기 위한 배열
+    private var eventDates: [Date]?
     private var selectedDueDate: Date?
     
     // MARK: - UI Properties
@@ -203,7 +203,6 @@ extension CalendarController: UITableViewDataSource, UITableViewDelegate {
         let todo = todoList[indexPath.row]
         cell.configure(data: todo)
         
-        // 체크 버튼이 눌렸을 때의 동작을 정의합니다.
         cell.onCheckButtonTapped = { [weak self] in
             guard let self = self else { return }
             
