@@ -51,6 +51,7 @@ extension CalendarViewController {
         configureCalendarAppearance()
         configureContainerView()
         configureTableView()
+        selectTodayDate()
     }
     
     private func configureCalendar() {
@@ -164,6 +165,12 @@ extension CalendarViewController {
         }
     }
     
+    private func selectTodayDate() {
+        let today = Date()
+        calendar.select(today)
+        selectedDueDate = today
+        fetchTodos(for: today)
+    }
 }
 
 // MARK: - FSCalendarDelegate, FSCalendarDataSource
@@ -186,11 +193,12 @@ extension CalendarViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let hasData = !todoList.isEmpty
         tableView.backgroundView?.isHidden = hasData
+        tableView.backgroundColor = .clear
         return hasData ? todoList.count : 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
                                                        for: indexPath) as? TDTableViewCell else {
             fatalError("Unable to dequeue TDTableViewCell")
         }
