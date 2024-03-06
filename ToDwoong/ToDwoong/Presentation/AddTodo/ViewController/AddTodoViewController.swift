@@ -370,7 +370,6 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     
     private func goToGroupSelectController() {
         let groupSelectController = AddTodoGroupSelectController()
-        groupSelectController.modalPresentationStyle = .custom
         groupSelectController.delegate = self
         present(groupSelectController, animated: true, completion: nil)
     }
