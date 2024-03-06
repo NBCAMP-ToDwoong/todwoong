@@ -5,6 +5,7 @@
 //  Created by t2023-m0041 on 3/4/24.
 //
 
+import CoreData
 import UIKit
 
 import SnapKit
@@ -16,8 +17,7 @@ final class GroupListView: UIView {
     
     private let normalCellIdentifier = "NormalGroupCell"
     private let editCellIdentifier = "EditGroupCell"
-    
-    private var dummyCategories: [String] = ["밥먹기", "운동가기", "씻기", "ㅁㄴㅇ", "밥먹기", "운동가기", "씻기"]
+    private var categories: [Category] = []
     
     // MARK: - UI Properties
     
@@ -27,29 +27,19 @@ final class GroupListView: UIView {
         return tableView
     }()
     
-    private let addButton: UIButton = {
+    private lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("그룹 추가", for: .normal)
         button.backgroundColor = .white
         button.setTitleColor(UIColor.systemGray3, for: .normal)
         button.layer.cornerRadius = 8
-        
         button.contentHorizontalAlignment = .leading
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
         button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+
+        let plusIcon = UIImage(systemName: "plus")?.withTintColor(TDStyle.color.bgGray, renderingMode: .alwaysOriginal)
+        button.setImage(plusIcon, for: .normal)
         
-        if var plusIcon = UIImage(systemName: "plus") {
-            let iconSize = CGSize(width: 15, height: 15)
-            UIGraphicsBeginImageContextWithOptions(iconSize, false, 0.0)
-            plusIcon.draw(in: CGRect(origin: .zero, size: iconSize))
-            plusIcon = UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
-            UIGraphicsEndImageContext()
-
-            let tintColor = TDStyle.color.bgGray
-            plusIcon = plusIcon.withTintColor(tintColor)
-
-            button.setImage(plusIcon, for: .normal)
-        }
         return button
     }()
     
@@ -62,6 +52,10 @@ final class GroupListView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func configureAddButtonAction(target: Any, action: Selector) {
+        addButton.addTarget(target, action: action, for: .touchUpInside)
     }
 }
 
@@ -88,7 +82,7 @@ extension GroupListView {
         tableView.dataSource = self
         tableView.register(NormalGroupListTableViewCell.self, forCellReuseIdentifier: normalCellIdentifier)
         tableView.register(EditGroupListTableViewCell.self, forCellReuseIdentifier: editCellIdentifier)
-    
+        
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(addButton.snp.bottom).offset(-16)
@@ -100,9 +94,14 @@ extension GroupListView {
     private func reloadData() {
         tableView.reloadData()
     }
+    
+    func loadCategories() {
+        categories = CoreDataManager.shared.readCategories()
+        tableView.reloadData()
+    }
 }
 
-// MARK: UITableViewDelegate
+// MARK: - UITableViewDelegate
 
 extension GroupListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
@@ -132,20 +131,27 @@ extension GroupListView: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        let movedCategory = dummyCategories.remove(at: sourceIndexPath.row)
-        dummyCategories.insert(movedCategory, at: destinationIndexPath.row)
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        let movedCategory = categories.remove(at: sourceIndexPath.row)
+        categories.insert(movedCategory, at: destinationIndexPath.row)
+
+        for (index, category) in categories.enumerated() {
+            category.indexNumber = Int32(index)
+        }
+
+        let context = CoreDataManager.shared.context
+        do {
+            try context.save()
+        } catch {
+            print("Core Data 컨텍스트 저장 실패: \(error)")
+        }
     }
 }
 
-// MARK: UITableViewDataSource
+// MARK: - UITableViewDataSource
 
 extension GroupListView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummyCategories.count
+        return categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,8 +160,9 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? EditGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
-            let category = dummyCategories[indexPath.row]
-            cell.titleLabel.text = category
+            
+            let category = categories[indexPath.row]
+            cell.titleLabel.text = category.title
             
             return cell
         } else {
@@ -163,8 +170,9 @@ extension GroupListView: UITableViewDataSource {
                                                            for: indexPath) as? NormalGroupListTableViewCell else {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
-            let category = dummyCategories[indexPath.row]
-            cell.titleLabel.text = category
+            
+            let category = categories[indexPath.row]
+            cell.configureWithCategory(category)
             
             return cell
         }
@@ -175,13 +183,15 @@ extension GroupListView: UITableViewDataSource {
 
 extension GroupListView {
     private func editCategory(at indexPath: IndexPath) {
-        // FIXME: 톱니바귀 설정을 눌렀을 때의 메서드를 작성
+        // FIXME: 편집(톱니바귀) 설정을 눌렀을 때의 메서드를 작성. 모달창을 띄워 카테고리를 Update하는 메서드
     }
 }
 
 extension GroupListView {
     private func deleteCategory(at indexPath: IndexPath) {
-        dummyCategories.remove(at: indexPath.row)
+        let categoryToDelete = categories[indexPath.row]
+        CoreDataManager.shared.deleteCategory(category: categoryToDelete)
+        categories.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .automatic)
     }
     
