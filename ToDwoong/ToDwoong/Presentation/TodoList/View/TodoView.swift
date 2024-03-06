@@ -41,10 +41,11 @@ final class TodoView: UIView {
         return view
     }()
     
-    lazy var todoTableView: ContentSizeTableView = {
-        let tableView = ContentSizeTableView()
+    lazy var todoTableView: UITableView = {
+        let tableView = UITableView()
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         
         return tableView
     }()
@@ -113,7 +114,7 @@ extension TodoView {
         todoTableView.snp.makeConstraints{ make in
             make.top.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-            make.bottom.lessThanOrEqualToSuperview()
+            make.bottom.equalToSuperview()
         }
         emptyImageView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
