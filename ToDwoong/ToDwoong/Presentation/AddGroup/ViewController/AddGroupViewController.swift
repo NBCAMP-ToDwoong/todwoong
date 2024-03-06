@@ -39,6 +39,7 @@ final class AddGroupViewController: UIViewController {
 
         setButtonMethod()
         setDelegate()
+        hideKeyboard()
         setNavigationBar()
     }
     
@@ -72,6 +73,20 @@ extension AddGroupViewController: UITextFieldDelegate {
         let newLength = currentLength + string.count - range.length
         
         return newLength <= maxLength
+    }
+}
+
+// MARK: - Keyboard Hide Method
+
+extension AddGroupViewController {
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                 action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
@@ -157,7 +172,6 @@ extension AddGroupViewController {
 
 extension AddGroupViewController {
     func editModeOn(category: Category) {
-        print("editMode On")
         editMode = true
         editCategory = category
     }
