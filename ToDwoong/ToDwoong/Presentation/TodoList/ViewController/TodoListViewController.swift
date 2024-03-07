@@ -188,7 +188,7 @@ extension TodoListViewController: UITableViewDataSource {
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
         
-        cell.configure(data: filteredTodoList[indexPath.row])
+        cell.configure(data: filteredTodoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
         
         return cell
     }
@@ -285,7 +285,7 @@ extension TodoListViewController {
     }
     
     private func filterTodoDatas(todos: [TodoModel], group: Category) -> [TodoModel] {
-        return todos.filter { $0.category?.title == group.title }
+        return todos.filter { $0.category?.id == group.id }
     }
     
     private func convertToRawTodo(_ todo: TodoModel) -> Todo {
@@ -293,7 +293,7 @@ extension TodoListViewController {
     }
 }
 
-// MARK : - Data Fetch Method
+// MARK: - Data Fetch Method
 
 extension TodoListViewController {
     private func todoDataFetch() {
