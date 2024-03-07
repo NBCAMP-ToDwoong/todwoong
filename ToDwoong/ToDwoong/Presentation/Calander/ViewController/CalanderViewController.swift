@@ -236,8 +236,6 @@ extension CalendarViewController: UITableViewDelegate {
             
             addTodoVC.todoIdToEdit = todoId
             
-            // FIXME: 투두수정 모달 vs navigation
-            //self.present(addTodoVC, animated: true, completion: nil)
             self.navigationController?.pushViewController(addTodoVC, animated: true)
             completionHandler(true)
         }

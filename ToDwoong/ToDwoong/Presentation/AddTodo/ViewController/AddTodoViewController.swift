@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class AddTodoViewController: UIViewController {
+final class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -19,6 +19,8 @@ class AddTodoViewController: UIViewController {
     var selectedDueTime: Date?
     var selectedPlace: String?
     var selectedGroup: Category?
+    var selecetTimeAlarm: Bool!
+    var selectePlaceAlarm: Bool!
     var todoIdToEdit: UUID?
     
     var datePickerIndexPath: IndexPath?
@@ -31,21 +33,46 @@ class AddTodoViewController: UIViewController {
         return todoView
     }
     
-    override func loadView() {
-        view = AddTodoView()
-                
-        if let todoId = todoIdToEdit {
+    // MARK: - Life Cycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setNavigationBar()
+        setTapGesture()
+        setCollectionView()
+        if todoIdToEdit != nil {
             navigationItem.title = "투두 수정"
         } else {
             navigationItem.title = "새로운 투두 추가"
         }
     }
     
+    override func loadView() {
+        view = AddTodoView()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let todoId = todoIdToEdit {
-            printTodoInfo(for: todoId)
+            loadTodoDetails(for: todoId)
+        }
+    }
+    
+    func loadTodoDetails(for todoId: UUID) {
+        if let todo = CoreDataManager.shared.fetchTodoById(todoId) {
+            selectedTitle = todo.title
+            selectedDueDate = todo.dueDate
+            selectedDueTime = todo.dueTime
+            selectedPlace =  todo.place
+            selecetTimeAlarm = todo.timeAlarm
+            selectePlaceAlarm = todo.placeAlarm
+            selectedGroup = todo.category
+            
+            todoView.collectionView.reloadData()
+        } else {
+            print("해당하는 투두가 없습니다.")
         }
     }
     
@@ -72,39 +99,6 @@ class AddTodoViewController: UIViewController {
         }
     }
     
-    // MARK: - Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setTestButton()
-        setNavigationBar()
-        setTapGesture()
-        setCollectionView()
-    }
-    
-    // FIXME: 테스트용 추후삭제
-    
-    private let testButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("테스트 버튼", for: .normal)
-        button.backgroundColor = .blue
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    private func setTestButton() {
-        view.addSubview(testButton)
-        testButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            testButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            testButton.heightAnchor.constraint(equalToConstant: 50),
-            testButton.widthAnchor.constraint(equalToConstant: 200)
-        ])
-        
-        testButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-    }
-    
     func setNavigationBar() {
         navigationItem.title = "투두 추가"
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -120,48 +114,33 @@ class AddTodoViewController: UIViewController {
         todoView.collectionView.delegate = self
     }
     
-    
-    // TODO: 완료 버튼 액션 구현
     @objc func doneButtonTapped() {
-        let title = selectedTitle
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-        
-        var formattedDueDate: String?
-        if let selectedDueDate = selectedDueDate {
-            formattedDueDate = dateFormatter.string(from: selectedDueDate)
+        guard let title = selectedTitle, !title.isEmpty else {
+            print("제목이 비어 있습니다.")
+            return
         }
         
-        var formattedDueTime: String?
-        if let selectedDueTime = selectedDueTime {
-            formattedDueTime = dateFormatter.string(from: selectedDueTime)
-        }
-        
-        let place = selectedPlace ?? nil
+        let place = selectedPlace
         let isCompleted = false
-        let timeAlarm = false
-        let placeAlarm = false
-        let category = selectedGroup ?? nil
+        let timeAlarm = selecetTimeAlarm ?? false
+        let placeAlarm = selectePlaceAlarm ?? false
+        let category = selectedGroup
         
-        let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        let message = """
-        title: \(title)
-        place: \(place)
-        dueDate: \(formattedDueDate)
-        dueTime: \(formattedDueTime)
-        isCompleted: \(isCompleted)
-        timeAlarm: \(timeAlarm)
-        placeAlarm: \(placeAlarm)
-        category: \(category)
-        """
-        alert.message = message
-        
-        present(alert, animated: true, completion: nil)
-        
-        if let title = selectedTitle {
+        if let todoId = todoIdToEdit {
+            if let todoToUpdate = CoreDataManager.shared.fetchTodoById(todoId) {
+                CoreDataManager.shared.updateTodo(todo: todoToUpdate,
+                                                  newTitle: title,
+                                                  newPlace: place ?? "",
+                                                  newDate: selectedDueDate,
+                                                  newTime: selectedDueTime,
+                                                  newCompleted: isCompleted,
+                                                  newTimeAlarm: timeAlarm,
+                                                  newPlaceAlarm: placeAlarm,
+                                                  newCategory: category)
+                print("투두 항목이 업데이트되었습니다.")
+                navigationController?.popViewController(animated: true)
+            }
+        } else {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
                                               dueDate: selectedDueDate,
@@ -170,44 +149,10 @@ class AddTodoViewController: UIViewController {
                                               timeAlarm: timeAlarm,
                                               placeAlarm: placeAlarm,
                                               category: category)
-            print("createTodo to succese")
-            // FIXME: 추후 삭제
-            let todos = CoreDataManager.shared.readTodos()
-            printTodos(todos: todos)
-        } else {
-            print("todo data is nil")
+            print("새 투두 항목이 생성되었습니다.")
+            navigationController?.popViewController(animated: true)
         }
     }
-    
-    func printTodos(todos: [Todo]) {
-        for todo in todos {
-            let title = todo.title ?? "No Title"
-            let category = todo.category?.title ?? "No Category"
-            let dueDate = todo.dueDate?.description ?? "No Due Date"
-            let dueTime = todo.dueTime?.description ?? "No Due Time"
-            let place = todo.place ?? "No Place"
-            let isCompleted = todo.isCompleted ? "Completed" : "Not Completed"
-            let timeAlarm = todo.timeAlarm ? "On" : "Off"
-            let placeAlarm = todo.placeAlarm ? "On" : "Off"
-            let fixed = todo.fixed ? "Fixed" : "Not Fixed"
-
-            print("""
-            Title: \(title)
-            Category: \(category)
-            Due Date: \(dueDate)
-            Due Time: \(dueTime)
-            Place: \(place)
-            Status: \(isCompleted)
-            Time Alarm: \(timeAlarm)
-            Place Alarm: \(placeAlarm)
-            Fixed: \(fixed)
-            ------------------------------
-            """)
-        }
-    }
-
-    // 조회한 Todo 데이터를 정리하여 출력
-    
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
                                       in cell: DateTimePickerContainerCell,
@@ -319,7 +264,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView, 
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let datePickerIndexPath = datePickerIndexPath, indexPath.section == datePickerIndexPath.section {
             guard let cell = collectionView.dequeueReusableCell(
@@ -353,6 +298,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
                 fatalError("TitleCollectionViewCell dequeuing failed.")
             }
             cell.delegate = self
+            cell.textField.text = selectedTitle
             return cell
             
         } else {
@@ -366,18 +312,11 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             case 2:
                 switch indexPath.item {
                 case 0:
-                    cell.configureCell(title: "그룹")
+                    cell.configureCell(title: "그룹", detail: selectedGroup?.title ?? "") // 그룹 셀, 받아온 그룹 정보 설정
                 case 1:
-                    guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: "InfoCell",
-                        for: indexPath) as? InfoCollectionViewCell else {
-                        fatalError("Unable to dequeue InfoCollectionViewCell")
-                    }
-                    cell.configureCell(title: "위치", detail: selectedPlace, showremoveButton: selectedPlace != nil)
+                    cell.configureCell(title: "위치", detail: selectedPlace ?? "", showremoveButton: selectedPlace != nil)
                     cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
                     cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
-                    
-                    return cell
                 case 2:
                     cell.configureCell(title: "알람")
                 default: break
@@ -385,13 +324,15 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             default: break
             }
             return cell
-            
         }
-        
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        didSelectItemAt indexPath: IndexPath) {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let todoIdToEdit = todoIdToEdit {
+            printTodoInfo(for: todoIdToEdit)
+        }
+        
         switch indexPath.section {
         case 0:
             switch indexPath.item {
