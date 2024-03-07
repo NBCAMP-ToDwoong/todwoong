@@ -62,13 +62,17 @@ class AddTodoViewController: UIViewController {
     
     @objc func doneButtonTapped() {
         let title = selectedTitle
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+        
         let place = selectedPlace ?? nil
         let isCompleted = false
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup ?? nil
         
-        if let title = title {
+        if let title = selectedTitle {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
                                               dueDate: selectedDueDate,
@@ -77,8 +81,9 @@ class AddTodoViewController: UIViewController {
                                               timeAlarm: timeAlarm,
                                               placeAlarm: placeAlarm,
                                               category: category)
+            print("createTodo to succese")
         } else {
-            print("Todo creation failed")
+            print("createTodo to fail")
         }
     }
     
