@@ -11,9 +11,13 @@ import TodwoongDesign
 
 final class AddGroupView: UIView {
     
+    // MARK: - Properties
+    
+    var buttonTapped: (UIButton) -> () = { button in }
+    
     // MARK: - UI Properties
     
-    private lazy var groupTextField: UITextField = {
+    lazy var groupTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
         textField.backgroundColor = .white
@@ -22,6 +26,25 @@ final class AddGroupView: UIView {
         textField.leftViewMode = .always
         
         return textField
+    }()
+    
+    lazy var validationGuideLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹명을 입력해주세요!"
+        label.textColor = .systemRed
+        label.font = TDStyle.font.caption1(style: .regular)
+        
+        return label
+    }()
+    
+    lazy var restrictionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹명은 5자리 이하로 입력해 주세요."
+        label.textColor = .systemRed
+        label.font = TDStyle.font.caption1(style: .regular)
+        label.isHidden = true
+        
+        return label
     }()
     
     private lazy var palleteStackView1: UIStackView = {
@@ -42,36 +65,44 @@ final class AddGroupView: UIView {
         return stackView
     }()
     
-    private lazy var palleteButton = makePalletButton(systemImageString: "xmark.circle",
-                                                      color: TDStyle.color.bgGray)
-    private lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgGray)
-    private lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgRed)
-    private lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgOrange)
-    private lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgYellow)
-    private lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgGreen)
-    private lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgBlue)
-    private lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: TDStyle.color.bgPurple)
-    private lazy var palleteButton8 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: .clear)
-    private lazy var palleteButton9 = makePalletButton(systemImageString: "circle.fill",
-                                                       color: .clear)
-
-    // FIXME: 테스트 이후 삭제 예정입니다.
-    
-    var testButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("저장", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10
+    lazy var palleteButton: UIButton = makePalletButton(systemImageString: "xmark.circle",
+                                                        color: TDStyle.color.bgGray)
+    lazy var palleteButton1 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgGray)
+    lazy var palleteButton2 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgRed)
+    lazy var palleteButton3 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgOrange)
+    lazy var palleteButton4 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgYellow)
+    lazy var palleteButton5 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgGreen)
+    lazy var palleteButton6 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgBlue)
+    lazy var palleteButton7 = makePalletButton(systemImageString: "circle.fill",
+                                               color: TDStyle.color.bgPurple)
+    lazy var palleteButton8: UIButton = {
+        let button = makePalletButton(systemImageString: "circle.fill",
+                         color: .clear)
+        button.isEnabled = false
         
         return button
+    }()
+    lazy var palleteButton9 = {
+        let button = makePalletButton(systemImageString: "circle.fill",
+                         color: .clear)
+        button.isEnabled = false
+        
+        return button
+    }()
+    
+    var checkMarkImageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        imageView.image = UIImage(systemName: "checkmark")
+        imageView.isHidden = true
+        imageView.tintColor = .white
+        
+        return imageView
     }()
     
     // MARK: - Life Cycle
@@ -88,6 +119,14 @@ final class AddGroupView: UIView {
     }
 }
 
+// MARK: - @objc Method
+
+extension AddGroupView {
+    @objc func palleteButtonTapped(sender: UIButton) {
+        buttonTapped(sender)
+    }
+}
+
 // MARK: - Extension
 
 extension AddGroupView {
@@ -96,9 +135,11 @@ extension AddGroupView {
         
         [
             groupTextField,
+            validationGuideLabel,
+            restrictionLabel,
             palleteStackView1,
             palleteStackView2,
-            testButton
+            checkMarkImageView
         ].forEach { addSubview($0) }
         
         [
@@ -124,6 +165,16 @@ extension AddGroupView {
             make.height.equalTo(44)
         }
         
+        validationGuideLabel.snp.makeConstraints { make in
+            make.top.equalTo(groupTextField.snp.bottom).offset(8)
+            make.leading.equalTo(groupTextField).offset(8)
+        }
+        
+        restrictionLabel.snp.makeConstraints { make in
+            make.top.equalTo(groupTextField.snp.bottom).offset(8)
+            make.leading.equalTo(groupTextField).offset(8)
+        }
+        
         palleteStackView1.snp.makeConstraints { make in
             make.top.equalTo(groupTextField.snp.bottom).offset(40)
             make.leading.equalToSuperview().offset(16)
@@ -146,12 +197,6 @@ extension AddGroupView {
                 make.height.equalTo(button.snp.width)
             }
         }
-        
-        testButton.snp.makeConstraints { make in
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-50)
-            make.width.equalTo(60)
-            make.centerX.equalToSuperview()
-        }
     }
     
     private func makePalletButton(systemImageString: String, color: UIColor) -> UIButton {
@@ -160,6 +205,7 @@ extension AddGroupView {
         button.tintColor = color
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
+        button.addTarget(self, action: #selector(palleteButtonTapped), for: .touchUpInside)
         
         return button
     }
