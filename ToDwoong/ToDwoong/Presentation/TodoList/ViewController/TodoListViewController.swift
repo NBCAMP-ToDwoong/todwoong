@@ -307,7 +307,7 @@ extension TodoListViewController {
         let customStackView: UIStackView = {
             let stackView = UIStackView()
             stackView.axis = .horizontal
-            stackView.spacing = 10
+            stackView.spacing = 20
             stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
             stackView.isLayoutMarginsRelativeArrangement = true
             

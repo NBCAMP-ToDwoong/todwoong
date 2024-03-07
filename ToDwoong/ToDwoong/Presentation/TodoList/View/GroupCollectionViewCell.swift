@@ -42,10 +42,13 @@ final class GroupCollectionViewCell: UICollectionViewCell {
 
 extension GroupCollectionViewCell {
     func configure(data: Category) {
-        groupButton.setTitle(data.title, for: .normal)
+        
+        guard let title = data.title else { return }
         
         if let color = data.color {
-            groupButton.configuration?.baseBackgroundColor = UIColor(hex: color)
+            let button = TDButton.chip(title: title, backgroundColor: UIColor(hex: color))
+            
+            groupButton.configuration = button.configuration
         }
     }
 }
