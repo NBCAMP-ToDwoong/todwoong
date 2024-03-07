@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B3093C02B99577900535981 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3093BF2B99577900535981 /* TodwoongDesign */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
-		1BA08A502B972D3B001D3698 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA08A4F2B972D3B001D3698 /* TodwoongDesign */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
 		1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD62B8E8EDB008F49CE /* SnapKit */; };
@@ -24,6 +24,8 @@
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA0630C2B906783007C9373 /* AddTodoViewController.swift */; };
+		2EBF09352B984A5D0023F0E0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBF09342B984A5D0023F0E0 /* FSCalendar */; };
+		2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */; };
 		2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */; };
 		2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */; };
 		2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */; };
@@ -87,6 +89,7 @@
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		2EA0630C2B906783007C9373 /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
+		2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderViewController.swift; sourceTree = "<group>"; };
 		2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerContainerCell.swift; sourceTree = "<group>"; };
@@ -126,8 +129,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */,
-				1BA08A502B972D3B001D3698 /* TodwoongDesign in Frameworks */,
+				1B3093C02B99577900535981 /* TodwoongDesign in Frameworks */,
 				1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */,
+				2EBF09352B984A5D0023F0E0 /* FSCalendar in Frameworks */,
 				1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -210,6 +214,7 @@
 		1BA63AD22B8E8D42008F49CE /* Calander */ = {
 			isa = PBXGroup;
 			children = (
+				2EBF09372B984A6A0023F0E0 /* ViewController */,
 			);
 			path = Calander;
 			sourceTree = "<group>";
@@ -318,6 +323,14 @@
 				2EA0630C2B906783007C9373 /* AddTodoViewController.swift */,
 				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
 				2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		2EBF09372B984A6A0023F0E0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -463,7 +476,8 @@
 			packageProductDependencies = (
 				1BA63AD62B8E8EDB008F49CE /* SnapKit */,
 				1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */,
-				1BA08A4F2B972D3B001D3698 /* TodwoongDesign */,
+				2EBF09342B984A5D0023F0E0 /* FSCalendar */,
+				1B3093BF2B99577900535981 /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -495,7 +509,8 @@
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
 				1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1BA08A4E2B972D3B001D3698 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -546,6 +561,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
+				2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
@@ -806,12 +822,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1BA08A4E2B972D3B001D3698 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+		1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.5;
+				minimumVersion = 1.0.7;
 			};
 		};
 		1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
@@ -822,12 +838,20 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1BA08A4F2B972D3B001D3698 /* TodwoongDesign */ = {
+		1B3093BF2B99577900535981 /* TodwoongDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1BA08A4E2B972D3B001D3698 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			package = 1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
 			productName = TodwoongDesign;
 		};
 		1BA63AD62B8E8EDB008F49CE /* SnapKit */ = {
@@ -839,6 +863,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = "SnapKit-Dynamic";
+		};
+		2EBF09342B984A5D0023F0E0 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 

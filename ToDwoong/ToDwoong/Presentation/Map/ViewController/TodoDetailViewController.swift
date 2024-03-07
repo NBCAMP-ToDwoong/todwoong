@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import TodwoongDesign
 
 class TodoDetailViewController: UIViewController {
@@ -38,9 +39,7 @@ extension TodoDetailViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         let todo = todos[indexPath.row]
-        cell.configure(data: todo)
+        cell.configure(data: todo, iconImage: <#UIImage#>)
         return cell
     }
 }
-
-
