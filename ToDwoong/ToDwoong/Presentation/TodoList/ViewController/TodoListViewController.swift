@@ -52,11 +52,6 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        dataManager.createTodo(title: "Test1", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: rawGroupList[0])
-//        dataManager.createTodo(title: "Test2", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
-//        dataManager.createTodo(title: "테스트1", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
-//        dataManager.createTodo(title: "테스트2", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
-        
         setDelegates()
         setAction()
     }
@@ -188,6 +183,8 @@ extension TodoListViewController: UITableViewDataSource {
         
         cell.onCheckButtonTapped = {
             rawTodo.isCompleted = !rawTodo.isCompleted
+            self.dataManager.saveContext()
+            tableView.reloadRows(at: [indexPath], with: .none)
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
         
@@ -241,6 +238,7 @@ extension TodoListViewController: UITableViewDelegate {
             let rawTodo = self.convertToRawTodo(convertTodo)
             
             self.dataManager.deleteTodo(todo: rawTodo)
+            self.todoDataFetch()
             
             tableView.reloadData()
         })
@@ -258,25 +256,14 @@ extension TodoListViewController: UITableViewDelegate {
 
 extension TodoListViewController {
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
-//        print(todos[0].category)
-//        let convertedTodos = todos.map { convertTodoData($0) }
-        
-        for todo in todos {
-            print ("전: \(todo.category?.title)")
-            let convertTodo = convertTodoData(todo)
+        let convertedTodos = todos.map { convertTodoData($0) }
 
-            print ("후: \(convertTodo.category?.title)")
-        }
-        
-//        print(convertedTodos[0].category)
-        return [TodoModel]()
+        return convertedTodos
     }
     
     private func convertTodoData(_ todo: Todo) -> TodoModel {
         var convertedCategory: CategoryModel?
         var convertedTodo: TodoModel
-
-//        print ("0: \(todo.category)")
         
         if let category = todo.category {
             convertedCategory = CategoryModel(id: category.id,
@@ -294,18 +281,22 @@ extension TodoListViewController {
                                   category: convertedCategory)
 
         convertedCategory?.todo = convertedTodo
-        print ("중: \(convertedTodo.category?.title)")
         return convertedTodo
     }
     
     private func filterTodoDatas(todos: [TodoModel], group: Category) -> [TodoModel] {
-//        print ("2: \(todos[0].category?.title)")
-//        print ("3: \(group.title)")
-//        print ("4: \(todos[0].category)")
         return todos.filter { $0.category?.title == group.title }
     }
     
     private func convertToRawTodo(_ todo: TodoModel) -> Todo {
         return rawTodoList.filter { $0.id == todo.id }[0]
+    }
+}
+
+// MARK : - Data Fetch Method
+
+extension TodoListViewController {
+    private func todoDataFetch() {
+        rawTodoList = dataManager.readTodos()
     }
 }
