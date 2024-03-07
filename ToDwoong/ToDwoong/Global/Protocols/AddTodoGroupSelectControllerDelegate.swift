@@ -6,5 +6,5 @@
 //
 
 protocol AddTodoGroupSelectControllerDelegate: AnyObject {
-    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: String)
+    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup category: Category)
 }

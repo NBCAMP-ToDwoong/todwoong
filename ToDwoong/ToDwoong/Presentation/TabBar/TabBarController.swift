@@ -42,7 +42,7 @@ extension TabBarController {
         let toDoListViewController = TodoListViewController()
         toDoListViewController.tabBarItem = UITabBarItem(title: "할 일", image: UIImage(systemName: "checklist"), tag: 0)
 
-        let calendarViewController = SecondViewController()
+        let calendarViewController = CalendarViewController()
         calendarViewController.tabBarItem = UITabBarItem(title: "캘린더", image: UIImage(systemName: "calendar"), tag: 1)
 
         viewControllers = [toDoListViewController, calendarViewController].map {
