@@ -33,6 +33,43 @@ class AddTodoViewController: UIViewController {
     
     override func loadView() {
         view = AddTodoView()
+                
+        if let todoId = todoIdToEdit {
+            navigationItem.title = "투두 수정"
+        } else {
+            navigationItem.title = "새로운 투두 추가"
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let todoId = todoIdToEdit {
+            printTodoInfo(for: todoId)
+        }
+    }
+    
+    func printTodoInfo(for todoId: UUID) {
+        if let todo = CoreDataManager.shared.fetchTodoById(todoId) {
+            print("투두 수정을 위한 정보:")
+            print("ID: \(todo.id ?? UUID())")
+            print("Title: \(todo.title ?? "")")
+            print("Place: \(todo.place ?? "")")
+            if let dueDate = todo.dueDate {
+                print("Due Date: \(dueDate)")
+            }
+            if let dueTime = todo.dueTime {
+                print("Due Time: \(dueTime)")
+            }
+            print("Is Completed: \(todo.isCompleted)")
+            print("Time Alarm: \(todo.timeAlarm)")
+            print("Place Alarm: \(todo.placeAlarm)")
+            if let category = todo.category {
+                print("Category: \(category.title ?? "")")
+            }
+        } else {
+            print("해당하는 투두가 없습니다.")
+        }
     }
     
     // MARK: - Life Cycle

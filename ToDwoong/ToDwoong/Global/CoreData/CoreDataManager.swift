@@ -69,7 +69,7 @@ final class CoreDataManager {
         }
     }
     
-    func updateTodo(todo: Todo, 
+    func updateTodo(todo: Todo,
                     newTitle: String, newPlace: String,
                     newDate: Date?, newTime: Date?,
                     newCompleted: Bool,
@@ -203,4 +203,71 @@ final class CoreDataManager {
             print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
+}
+
+// MARK: - fetchTodoById
+
+extension CoreDataManager {
+    func fetchTodoById(_ id: UUID) -> Todo? {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        do {
+            let result = try context.fetch(fetchRequest)
+            return result.first
+        } catch {
+            print("Error fetching Todo by ID: \(error)")
+            return nil
+        }
+    }
+    
+    func updateTodoById(_ id: UUID,
+                        newTitle: String,
+                        newPlace: String? = nil,
+                        newDueDate: Date? = nil,
+                        newDueTime: Date? = nil,
+                        newIsCompleted: Bool,
+                        newTimeAlarm: Bool,
+                        newPlaceAlarm: Bool,
+                        newCategory: Category? = nil) {
+        
+        guard let todoToUpdate = fetchTodoById(id) else {
+            print("Todo not found")
+            return
+        }
+        
+        todoToUpdate.title = newTitle
+        todoToUpdate.isCompleted = newIsCompleted
+        todoToUpdate.timeAlarm = newTimeAlarm
+        todoToUpdate.placeAlarm = newPlaceAlarm
+        
+        if let newPlace = newPlace {
+            todoToUpdate.place = newPlace
+        }
+        
+        if let newDueDate = newDueDate {
+            todoToUpdate.dueDate = newDueDate
+        }
+        
+        if let newDueTime = newDueTime {
+            todoToUpdate.dueTime = newDueTime
+        }
+        
+        if let newCategory = newCategory {
+            todoToUpdate.category = newCategory
+        }
+        
+        saveContext()
+    }
+    
+    func deleteTodoById(_ id: UUID) {
+        guard let todoToDelete = fetchTodoById(id) else {
+            print("Todo not found")
+            return
+        }
+        
+        context.delete(todoToDelete)
+        saveContext()
+    }
+    
 }
