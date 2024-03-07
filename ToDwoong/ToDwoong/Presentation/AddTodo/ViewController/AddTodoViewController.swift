@@ -13,7 +13,7 @@ import TodwoongDesign
 final class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
-    
+    var todoToEdit: Todo?
     var selectedTitle: String?
     var selectedDueDate: Date?
     var selectedDueTime: Date?
@@ -21,7 +21,6 @@ final class AddTodoViewController: UIViewController {
     var selectedGroup: Category?
     var selecetTimeAlarm: Bool!
     var selectePlaceAlarm: Bool!
-    var todoIdToEdit: UUID?
     
     var datePickerIndexPath: IndexPath?
     var dateTimePickerContainerCell: DateTimePickerContainerCell?
@@ -41,61 +40,25 @@ final class AddTodoViewController: UIViewController {
         setNavigationBar()
         setTapGesture()
         setCollectionView()
-        if todoIdToEdit != nil {
-            navigationItem.title = "투두 수정"
-        } else {
-            navigationItem.title = "투두 추가"
-        }
+        setViewBasedOnTodo()
     }
     
     override func loadView() {
         view = AddTodoView()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let todoId = todoIdToEdit {
-            loadTodoDetails(for: todoId)
-        }
-    }
-    
-    func loadTodoDetails(for todoId: UUID) {
-        if let todo = CoreDataManager.shared.fetchTodoById(todoId) {
+    private func setViewBasedOnTodo() {
+        if let todo = todoToEdit {
+            navigationItem.title = "투두 수정"
             selectedTitle = todo.title
             selectedDueDate = todo.dueDate
             selectedDueTime = todo.dueTime
-            selectedPlace =  todo.place
+            selectedPlace = todo.place
             selecetTimeAlarm = todo.timeAlarm
             selectePlaceAlarm = todo.placeAlarm
             selectedGroup = todo.category
-            
-            todoView.collectionView.reloadData()
         } else {
-            print("해당하는 투두가 없습니다.")
-        }
-    }
-    
-    func printTodoInfo(for todoId: UUID) {
-        if let todo = CoreDataManager.shared.fetchTodoById(todoId) {
-            print("투두 수정을 위한 정보:")
-            print("ID: \(todo.id ?? UUID())")
-            print("Title: \(todo.title ?? "")")
-            print("Place: \(todo.place ?? "")")
-            if let dueDate = todo.dueDate {
-                print("Due Date: \(dueDate)")
-            }
-            if let dueTime = todo.dueTime {
-                print("Due Time: \(dueTime)")
-            }
-            print("Is Completed: \(todo.isCompleted)")
-            print("Time Alarm: \(todo.timeAlarm)")
-            print("Place Alarm: \(todo.placeAlarm)")
-            if let category = todo.category {
-                print("Category: \(category.title ?? "")")
-            }
-        } else {
-            print("해당하는 투두가 없습니다.")
+            navigationItem.title = "투두 추가"
         }
     }
     
@@ -119,27 +82,23 @@ final class AddTodoViewController: UIViewController {
             print("제목이 비어 있습니다.")
             return
         }
-        
         let place = selectedPlace
         let isCompleted = false
         let timeAlarm = selecetTimeAlarm ?? false
         let placeAlarm = selectePlaceAlarm ?? false
         let category = selectedGroup
-
-        if let todoId = todoIdToEdit {
-            if let todoToUpdate = CoreDataManager.shared.fetchTodoById(todoId) {
-                CoreDataManager.shared.updateTodo(todo: todoToUpdate,
-                                                  newTitle: title,
-                                                  newPlace: place ?? "",
-                                                  newDate: selectedDueDate,
-                                                  newTime: selectedDueTime,
-                                                  newCompleted: isCompleted,
-                                                  newTimeAlarm: timeAlarm,
-                                                  newPlaceAlarm: placeAlarm,
-                                                  newCategory: category)
-                print("투두 항목이 업데이트되었습니다.")
-                navigationController?.popViewController(animated: true)
-            }
+        
+        if let todo = todoToEdit {
+            CoreDataManager.shared.updateTodo(todo: todo,
+                                              newTitle: title,
+                                              newPlace: place ?? "",
+                                              newDate: selectedDueDate,
+                                              newTime: selectedDueTime,
+                                              newCompleted: isCompleted,
+                                              newTimeAlarm: timeAlarm,
+                                              newPlaceAlarm: placeAlarm,
+                                              newCategory: category)
+            print("투두 항목이 업데이트되었습니다.")
         } else {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
@@ -150,9 +109,9 @@ final class AddTodoViewController: UIViewController {
                                               placeAlarm: placeAlarm,
                                               category: category)
             print("새 투두 항목이 생성되었습니다.")
-            navigationController?.popViewController(animated: true)
         }
         
+        navigationController?.popViewController(animated: true)
     }
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
@@ -330,10 +289,6 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let todoIdToEdit = todoIdToEdit {
-            printTodoInfo(for: todoIdToEdit)
-        }
-        
         switch indexPath.section {
         case 0:
             switch indexPath.item {
