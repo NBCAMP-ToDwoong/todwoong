@@ -66,38 +66,11 @@ class AddTodoViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
-        var formattedDueDate: String?
-        if let selectedDueDate = selectedDueDate {
-            formattedDueDate = dateFormatter.string(from: selectedDueDate)
-        }
-        
-        var formattedDueTime: String?
-        if let selectedDueTime = selectedDueTime {
-            formattedDueTime = dateFormatter.string(from: selectedDueTime)
-        }
-        
         let place = selectedPlace ?? nil
         let isCompleted = false
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup ?? nil
-        
-        let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        let message = """
-        title: \(title)
-        place: \(place)
-        dueDate: \(formattedDueDate)
-        dueTime: \(formattedDueTime)
-        isCompleted: \(isCompleted)
-        timeAlarm: \(timeAlarm)
-        placeAlarm: \(placeAlarm)
-        category: \(category)
-        """
-        alert.message = message
-        
-        present(alert, animated: true, completion: nil)
         
         if let title = selectedTitle {
             CoreDataManager.shared.createTodo(title: title,
@@ -109,9 +82,6 @@ class AddTodoViewController: UIViewController {
                                               placeAlarm: placeAlarm,
                                               category: category)
             print("createTodo to succese")
-            // FIXME: 추후 삭제
-            let todos = CoreDataManager.shared.readTodos()
-            printTodos(todos: todos)
         } else {
             print("createTodo to fail")
         }
