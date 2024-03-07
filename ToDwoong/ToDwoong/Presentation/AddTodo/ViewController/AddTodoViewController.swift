@@ -12,12 +12,14 @@ import TodwoongDesign
 
 class AddTodoViewController: UIViewController {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var selectedTitle: String?
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var selectedPlace: String?
+    var selectedGroup: Category?
+    var todoIdToEdit: UUID?
     
     var datePickerIndexPath: IndexPath?
     var dateTimePickerContainerCell: DateTimePickerContainerCell?
@@ -33,7 +35,7 @@ class AddTodoViewController: UIViewController {
         view = AddTodoView()
     }
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,11 +101,11 @@ class AddTodoViewController: UIViewController {
             formattedDueTime = dateFormatter.string(from: selectedDueTime)
         }
         
-        let place = selectedPlace ?? ""
-        let isCompleted = false // 완료 여부, 초기값으로 false 설정
-        let timeAlarm = false // 시간 알람 설정, 초기값으로 false 설정
-        let placeAlarm = false // 장소 알람 설정, 초기값으로 false 설정
-        let category: Category? = nil // 카테고리 설정, 예시로는 nil로 설정
+        let place = selectedPlace ?? nil
+        let isCompleted = false
+        let timeAlarm = false
+        let placeAlarm = false
+        let category = selectedGroup ?? nil
         
         let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
@@ -122,19 +124,53 @@ class AddTodoViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
         
-        //        if let dueTime = selectedDueTime {
-        //            CoreDataManager.shared.createTodo(title: title!,
-        //                                              place: place,
-        //                                              dueDate: dueDate,
-        //                                              dueTime: dueTime,
-        //                                              isCompleted: isCompleted,
-        //                                              timeAlarm: timeAlarm,
-        //                                              placeAlarm: placeAlarm,
-        //                                              category: category)
-        //        } else {
-        //            print("is nil")
-        //        }
+        if let title = selectedTitle {
+            CoreDataManager.shared.createTodo(title: title,
+                                              place: place,
+                                              dueDate: selectedDueDate,
+                                              dueTime: selectedDueTime,
+                                              isCompleted: isCompleted,
+                                              timeAlarm: timeAlarm,
+                                              placeAlarm: placeAlarm,
+                                              category: category)
+            print("createTodo to succese")
+            // FIXME: 추후 삭제
+            let todos = CoreDataManager.shared.readTodos()
+            printTodos(todos: todos)
+        } else {
+            print("todo data is nil")
+        }
     }
+    
+    func printTodos(todos: [Todo]) {
+        for todo in todos {
+            let title = todo.title ?? "No Title"
+            let category = todo.category?.title ?? "No Category"
+            let dueDate = todo.dueDate?.description ?? "No Due Date"
+            let dueTime = todo.dueTime?.description ?? "No Due Time"
+            let place = todo.place ?? "No Place"
+            let isCompleted = todo.isCompleted ? "Completed" : "Not Completed"
+            let timeAlarm = todo.timeAlarm ? "On" : "Off"
+            let placeAlarm = todo.placeAlarm ? "On" : "Off"
+            let fixed = todo.fixed ? "Fixed" : "Not Fixed"
+
+            print("""
+            Title: \(title)
+            Category: \(category)
+            Due Date: \(dueDate)
+            Due Time: \(dueTime)
+            Place: \(place)
+            Status: \(isCompleted)
+            Time Alarm: \(timeAlarm)
+            Place Alarm: \(placeAlarm)
+            Fixed: \(fixed)
+            ------------------------------
+            """)
+        }
+    }
+
+    // 조회한 Todo 데이터를 정리하여 출력
+    
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
                                       in cell: DateTimePickerContainerCell,
@@ -190,7 +226,7 @@ class AddTodoViewController: UIViewController {
     
 }
 
-// MARK: UIGestureRecognizerDelegate
+// MARK: - UIGestureRecognizerDelegate
 
 extension AddTodoViewController: UIGestureRecognizerDelegate {
     func setTapGesture() {
@@ -228,7 +264,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// MARK: UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -358,7 +394,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
     
 }
 
-// MARK: PresentController
+// MARK: - PresentController
 
 extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     private func goToMapViewController() {
@@ -374,14 +410,14 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
         present(groupSelectController, animated: true, completion: nil)
     }
     
-    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: String) {
-        print(group) // 받아온 그룹 데이터
+    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
+        selectedGroup = group
         controller.dismiss(animated: true, completion: nil)
     }
     
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
@@ -422,7 +458,7 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
-// MARK: DateTimePickerDelegate
+// MARK: - DateTimePickerDelegate
 
 extension AddTodoViewController: DateTimePickerDelegate {
     func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode) {
@@ -453,7 +489,7 @@ extension AddTodoViewController: DateTimePickerDelegate {
     }
 }
 
-// MARK: AddTodoLocationPickerDelegate
+// MARK: - AddTodoLocationPickerDelegate
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
     func didPickLocation(_ address: String) {
@@ -464,7 +500,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
     }
 }
 
-// MARK: TitleCollectionViewCellDelegate
+// MARK: - TitleCollectionViewCellDelegate
 
 extension AddTodoViewController: TitleCollectionViewCellDelegate {
     func titleCellDidEndEditing(_ text: String?) {
