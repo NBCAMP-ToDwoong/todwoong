@@ -143,7 +143,7 @@ extension TodoViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             cell.checkButton.isSelected = !cell.checkButton.isSelected
         }
-        cell.configure(data: todoList[indexPath.row])
+        cell.configure(data: todoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
         
         return cell
     }
