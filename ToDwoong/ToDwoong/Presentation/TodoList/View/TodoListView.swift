@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-final class TodoView: UIView {
+final class TodoListView: UIView {
     
     // MARK: - UI Properties
     
@@ -20,6 +20,8 @@ final class TodoView: UIView {
         
         return button
     }()
+    
+    lazy var allGroupButton = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
     
     lazy var groupCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -41,10 +43,11 @@ final class TodoView: UIView {
         return view
     }()
     
-    lazy var todoTableView: ContentSizeTableView = {
-        let tableView = ContentSizeTableView()
+    lazy var todoTableView: UITableView = {
+        let tableView = UITableView()
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
         
         return tableView
     }()
@@ -82,12 +85,13 @@ final class TodoView: UIView {
 
 // MARK: - Extensions
 
-extension TodoView {
+extension TodoListView {
     private func setUI() {
         self.backgroundColor = .white
 
         [
             groupListButton,
+            allGroupButton,
             groupCollectionView,
             todoListFrameView,
             emptyImageView,
@@ -100,10 +104,14 @@ extension TodoView {
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalTo(groupCollectionView)
         }
+        allGroupButton.snp.makeConstraints { make in
+            make.leading.equalTo(groupListButton.snp.trailing).offset(8)
+            make.centerY.equalTo(groupCollectionView)
+        }
         groupCollectionView.snp.makeConstraints{ make in
             make.top.equalTo(safeAreaLayoutGuide).offset(30)
             make.height.equalTo(30.33)
-            make.leading.equalTo(groupListButton.snp.trailing).offset(8)
+            make.leading.equalTo(allGroupButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview()
         }
         todoListFrameView.snp.makeConstraints { make in
@@ -113,7 +121,7 @@ extension TodoView {
         todoTableView.snp.makeConstraints{ make in
             make.top.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
-            make.bottom.lessThanOrEqualToSuperview()
+            make.bottom.equalToSuperview()
         }
         emptyImageView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
