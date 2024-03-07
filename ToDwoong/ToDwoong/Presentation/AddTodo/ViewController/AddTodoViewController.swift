@@ -44,7 +44,7 @@ final class AddTodoViewController: UIViewController {
         if todoIdToEdit != nil {
             navigationItem.title = "투두 수정"
         } else {
-            navigationItem.title = "새로운 투두 추가"
+            navigationItem.title = "투두 추가"
         }
     }
     
@@ -120,13 +120,27 @@ final class AddTodoViewController: UIViewController {
             return
         }
         
-        let place = selectedPlace ?? nil
+        let place = selectedPlace
         let isCompleted = false
         let timeAlarm = selecetTimeAlarm ?? false
         let placeAlarm = selectePlaceAlarm ?? false
         let category = selectedGroup
-        
-        if let title = selectedTitle {
+
+        if let todoId = todoIdToEdit {
+            if let todoToUpdate = CoreDataManager.shared.fetchTodoById(todoId) {
+                CoreDataManager.shared.updateTodo(todo: todoToUpdate,
+                                                  newTitle: title,
+                                                  newPlace: place ?? "",
+                                                  newDate: selectedDueDate,
+                                                  newTime: selectedDueTime,
+                                                  newCompleted: isCompleted,
+                                                  newTimeAlarm: timeAlarm,
+                                                  newPlaceAlarm: placeAlarm,
+                                                  newCategory: category)
+                print("투두 항목이 업데이트되었습니다.")
+                navigationController?.popViewController(animated: true)
+            }
+        } else {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
                                               dueDate: selectedDueDate,
@@ -138,6 +152,7 @@ final class AddTodoViewController: UIViewController {
             print("새 투두 항목이 생성되었습니다.")
             navigationController?.popViewController(animated: true)
         }
+        
     }
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
