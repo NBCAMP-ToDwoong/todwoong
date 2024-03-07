@@ -204,7 +204,7 @@ extension CalendarViewController: UITableViewDataSource {
         }
         
         let todo = todoList[indexPath.row]
-        cell.configure(data: todo)
+        cell.configure(data: todo, iconImage: UIImage(named: "AddTodoMapPin")!)
         cell.checkButton.isSelected = todo.isCompleted
         
         cell.onCheckButtonTapped = { [weak self, weak tableView] in
