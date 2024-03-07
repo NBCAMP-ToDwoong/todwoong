@@ -12,6 +12,7 @@ import TodwoongDesign
 class TodoListViewController: UIViewController {
     
     // MARK: - Properties
+    
     let dataManager = CoreDataManager.shared
     
     lazy var rawTodoList = dataManager.readTodos()
@@ -66,10 +67,7 @@ extension TodoListViewController {
     }
     
     @objc func categoryListButtonTapped() {
-        
-        // FIXME: 그룹 뷰컨트롤러로 이동 (GroupList 구현 이후 연결 예정)
-        
-        //        self.navigationController?.pushViewController(GroupListViewController, animated: true)
+        self.navigationController?.pushViewController(GroupListViewController(), animated: true)
     }
     
     @objc func allGroupButtonTapped(sender: UIButton) {
