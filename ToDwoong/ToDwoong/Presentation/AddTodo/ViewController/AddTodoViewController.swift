@@ -40,32 +40,9 @@ class AddTodoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTestButton()
         setNavigationBar()
         setTapGesture()
         setCollectionView()
-    }
-    
-    // FIXME: 테스트용 추후삭제
-    
-    private let testButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("테스트 버튼", for: .normal)
-        button.backgroundColor = .blue
-        button.setTitleColor(.white, for: .normal)
-        return button
-    }()
-    private func setTestButton() {
-        view.addSubview(testButton)
-        testButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            testButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            testButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-            testButton.heightAnchor.constraint(equalToConstant: 50),
-            testButton.widthAnchor.constraint(equalToConstant: 200)
-        ])
-        
-        testButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
     }
     
     func setNavigationBar() {
@@ -83,46 +60,17 @@ class AddTodoViewController: UIViewController {
         todoView.collectionView.delegate = self
     }
     
-    
-    // TODO: 완료 버튼 액션 구현
     @objc func doneButtonTapped() {
         let title = selectedTitle
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(identifier: "UTC")
         
-        var formattedDueDate: String?
-        if let selectedDueDate = selectedDueDate {
-            formattedDueDate = dateFormatter.string(from: selectedDueDate)
-        }
-        
-        var formattedDueTime: String?
-        if let selectedDueTime = selectedDueTime {
-            formattedDueTime = dateFormatter.string(from: selectedDueTime)
-        }
-        
         let place = selectedPlace ?? nil
         let isCompleted = false
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup ?? nil
-        
-        let alert = UIAlertController(title: "추가된 투두 정보", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-        
-        let message = """
-        title: \(title)
-        place: \(place)
-        dueDate: \(formattedDueDate)
-        dueTime: \(formattedDueTime)
-        isCompleted: \(isCompleted)
-        timeAlarm: \(timeAlarm)
-        placeAlarm: \(placeAlarm)
-        category: \(category)
-        """
-        alert.message = message
-        
-        present(alert, animated: true, completion: nil)
         
         if let title = selectedTitle {
             CoreDataManager.shared.createTodo(title: title,
@@ -134,43 +82,10 @@ class AddTodoViewController: UIViewController {
                                               placeAlarm: placeAlarm,
                                               category: category)
             print("createTodo to succese")
-            // FIXME: 추후 삭제
-            let todos = CoreDataManager.shared.readTodos()
-            printTodos(todos: todos)
         } else {
-            print("todo data is nil")
+            print("createTodo to fail")
         }
     }
-    
-    func printTodos(todos: [Todo]) {
-        for todo in todos {
-            let title = todo.title ?? "No Title"
-            let category = todo.category?.title ?? "No Category"
-            let dueDate = todo.dueDate?.description ?? "No Due Date"
-            let dueTime = todo.dueTime?.description ?? "No Due Time"
-            let place = todo.place ?? "No Place"
-            let isCompleted = todo.isCompleted ? "Completed" : "Not Completed"
-            let timeAlarm = todo.timeAlarm ? "On" : "Off"
-            let placeAlarm = todo.placeAlarm ? "On" : "Off"
-            let fixed = todo.fixed ? "Fixed" : "Not Fixed"
-
-            print("""
-            Title: \(title)
-            Category: \(category)
-            Due Date: \(dueDate)
-            Due Time: \(dueTime)
-            Place: \(place)
-            Status: \(isCompleted)
-            Time Alarm: \(timeAlarm)
-            Place Alarm: \(placeAlarm)
-            Fixed: \(fixed)
-            ------------------------------
-            """)
-        }
-    }
-
-    // 조회한 Todo 데이터를 정리하여 출력
-    
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
                                       in cell: DateTimePickerContainerCell,
