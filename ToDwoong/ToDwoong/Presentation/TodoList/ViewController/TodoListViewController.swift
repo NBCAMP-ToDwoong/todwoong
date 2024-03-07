@@ -13,22 +13,29 @@ class TodoListViewController: UIViewController {
     
     // MARK: - Properties
     let dataManager = CoreDataManager.shared
-    var rawTodoList: [Todo] {
-        dataManager.readTodos()
-    }
+    
+    lazy var rawTodoList = dataManager.readTodos()
+    lazy var rawGroupList = dataManager.readCategories()
+    
     var convertTodoList: [TodoModel] {
         convertTodoDatas(todos: rawTodoList)
     }
-    lazy var filteredTodoList: [TodoModel] = convertTodoList
+    var filteredTodoList: [TodoModel] {
+        if let groupIndex = selectedGroup {
+            let group = rawGroupList[groupIndex]
+            return filterTodoDatas(todos: convertTodoList, group: group)
+        } else {
+            return convertTodoList
+        }
+    }
     
-    lazy var groupList = dataManager.readCategories()
+    var selectedGroup: Int?
+    
     lazy var buttonAction: ((UIButton) -> Void) = { button in
-        button.isSelected = !button.isSelected
-        let groupIndex = button.tag
-        let group = self.groupList[groupIndex]
-        let filteredTodoList = self.dataManager.filterTodoByCategory(category: group)
+        self.selectedGroup = button.tag
+        self.todoView.allGroupButton.alpha = 0.3
         
-        self.filteredTodoList = self.convertTodoDatas(todos: filteredTodoList)
+        self.todoView.groupCollectionView.reloadData()
         self.todoView.todoTableView.reloadData()
     }
     
@@ -45,8 +52,10 @@ class TodoListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        dataManager.createTodo(title: "Test5", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
-//        dataManager.createTodo(title: "테스트", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
+//        dataManager.createTodo(title: "Test1", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: rawGroupList[0])
+//        dataManager.createTodo(title: "Test2", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[0])
+//        dataManager.createTodo(title: "테스트1", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
+//        dataManager.createTodo(title: "테스트2", place: "서울특별시 강남구", dueDate: nil, dueTime: nil, isCompleted: false, timeAlarm: false, placeAlarm: false, category: groupList[1])
         
         setDelegates()
         setAction()
@@ -69,8 +78,9 @@ extension TodoListViewController {
     }
     
     @objc func allGroupButtonTapped(sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        filteredTodoList = convertTodoList
+        selectedGroup = nil
+        todoView.allGroupButton.alpha = 1
+        todoView.groupCollectionView.reloadData()
         todoView.todoTableView.reloadData()
     }
 }
@@ -100,7 +110,7 @@ extension TodoListViewController {
 extension TodoListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return groupList.count
+        return rawGroupList.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
@@ -109,9 +119,15 @@ extension TodoListViewController: UICollectionViewDataSource {
                                                             for: indexPath) as? GroupCollectionViewCell else
         { return UICollectionViewCell() }
         
-        cell.configure(data: groupList[indexPath.row])
+        cell.configure(data: rawGroupList[indexPath.row])
         cell.groupButton.tag = indexPath.row
         cell.buttonAction = buttonAction
+        
+        if selectedGroup != cell.groupButton.tag {
+            cell.groupButton.alpha = 0.3
+        } else {
+            cell.groupButton.alpha = 1
+        }
         
         return cell
     }
@@ -131,7 +147,7 @@ extension TodoListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
+        guard let buttonText = rawGroupList[indexPath.row].title else { return CGSize() }
         let buttonSize = buttonText.size(withAttributes:
                                             [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
         let buttonWidth = buttonSize.width
@@ -151,7 +167,7 @@ extension TodoListViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if convertTodoList.isEmpty {
+        if filteredTodoList.isEmpty {
             todoView.emptyImageView.isHidden = false
             todoView.emptyLabel.isHidden = false
         } else {
@@ -168,9 +184,13 @@ extension TodoListViewController: UITableViewDataSource {
             for: indexPath) as? TDTableViewCell else
         { return UITableViewCell() }
         
+        let rawTodo = self.convertToRawTodo(self.filteredTodoList[indexPath.row])
+        
         cell.onCheckButtonTapped = {
-            cell.checkButton.isSelected = !cell.checkButton.isSelected
+            rawTodo.isCompleted = !rawTodo.isCompleted
         }
+        cell.checkButton.isSelected = rawTodo.isCompleted
+        
         cell.configure(data: filteredTodoList[indexPath.row])
         
         return cell
@@ -186,22 +206,24 @@ extension TodoListViewController: UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView,
-                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-    -> UISwipeActionsConfiguration? {
-        let topFixedAction = UIContextualAction(style: .normal,
-                                                title: "고정",
-                                                handler: {(action, view, completionHandler) in
-            // FIXME: 기능 Feature에서 구현 예정
-        })
-        
-        topFixedAction.backgroundColor = .systemGray
-        
-        let swipeActions = UISwipeActionsConfiguration(actions: [topFixedAction])
-        swipeActions.performsFirstActionWithFullSwipe = false
-        
-        return swipeActions
-    }
+    // FIXME: MVP 이후 구현 예정
+    
+//    func tableView(_ tableView: UITableView,
+//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+//    -> UISwipeActionsConfiguration? {
+//        let topFixedAction = UIContextualAction(style: .normal,
+//                                                title: "고정",
+//                                                handler: {(action, view, completionHandler) in
+//
+//        })
+//        
+//        topFixedAction.backgroundColor = .systemGray
+//        
+//        let swipeActions = UISwipeActionsConfiguration(actions: [topFixedAction])
+//        swipeActions.performsFirstActionWithFullSwipe = false
+//        
+//        return swipeActions
+//    }
     
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
@@ -209,7 +231,7 @@ extension TodoListViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal,
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
-            // FIXME: 기능 Feature에서 구현 예정
+            // FIXME: Todo 추가 구현 이후 연결 예정
         })
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
@@ -236,17 +258,26 @@ extension TodoListViewController: UITableViewDelegate {
 
 extension TodoListViewController {
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
-        let convertedTodos = todos.map { convertTodoData($0) }
+//        print(todos[0].category)
+//        let convertedTodos = todos.map { convertTodoData($0) }
         
-        return convertedTodos
+        for todo in todos {
+            print ("전: \(todo.category?.title)")
+            let convertTodo = convertTodoData(todo)
+
+            print ("후: \(convertTodo.category?.title)")
+        }
+        
+//        print(convertedTodos[0].category)
+        return [TodoModel]()
     }
     
     private func convertTodoData(_ todo: Todo) -> TodoModel {
         var convertedCategory: CategoryModel?
         var convertedTodo: TodoModel
-        
-//        print(todo.category)
 
+//        print ("0: \(todo.category)")
+        
         if let category = todo.category {
             convertedCategory = CategoryModel(id: category.id,
                                               title: category.title!,
@@ -263,8 +294,15 @@ extension TodoListViewController {
                                   category: convertedCategory)
 
         convertedCategory?.todo = convertedTodo
-
+        print ("중: \(convertedTodo.category?.title)")
         return convertedTodo
+    }
+    
+    private func filterTodoDatas(todos: [TodoModel], group: Category) -> [TodoModel] {
+//        print ("2: \(todos[0].category?.title)")
+//        print ("3: \(group.title)")
+//        print ("4: \(todos[0].category)")
+        return todos.filter { $0.category?.title == group.title }
     }
     
     private func convertToRawTodo(_ todo: TodoModel) -> Todo {
