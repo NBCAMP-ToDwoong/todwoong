@@ -12,10 +12,12 @@ class TodoAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var colorName: String
+    var category: String
     
-    init(coordinate: CLLocationCoordinate2D, title: String, colorName: String) {
+    init(coordinate: CLLocationCoordinate2D, title: String, colorName: String, category: String) {
         self.coordinate = coordinate
         self.title = title
         self.colorName = colorName
+        self.category = category
     }
 }
