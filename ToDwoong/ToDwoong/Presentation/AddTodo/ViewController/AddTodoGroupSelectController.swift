@@ -15,8 +15,8 @@ final class AddTodoGroupSelectController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: AddTodoGroupSelectControllerDelegate?
-    private let groupList = ["test1", "test2", "test3"]
-    private var selectGroup = ""
+    var groupList: [Category] = []
+    private var selectedCategory: Category?
     
     // MARK: - UI Properties
     
@@ -75,9 +75,10 @@ final class AddTodoGroupSelectController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setTableView()
+        groupList = CoreDataManager.shared.readCategories()
         setUI()
         setLayout()
+        setTableView()
     }
 }
 
@@ -86,7 +87,10 @@ final class AddTodoGroupSelectController: UIViewController {
 extension AddTodoGroupSelectController {
     @objc
     func saveGroup() {
-        delegate?.groupSelectController(self, didSelectGroup: selectGroup)
+        if let selectedCategory = selectedCategory {
+            delegate?.groupSelectController(self, didSelectGroup: selectedCategory)
+            dismiss(animated: true, completion: nil)
+        }
     }
 }
 
@@ -94,14 +98,7 @@ extension AddTodoGroupSelectController {
 
 extension AddTodoGroupSelectController {
     private func setUI() {
-        [
-            timeNotificationButton,
-            tableView,
-            saveButton
-        ].forEach {
-            view.addSubview($0)
-        }
-        
+        [timeNotificationButton, tableView, saveButton].forEach { view.addSubview($0) }
         view.backgroundColor = .white
     }
     
@@ -125,7 +122,6 @@ extension AddTodoGroupSelectController {
     private func setTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "groupTableViewCellIdentifier")
     }
 }
@@ -138,10 +134,8 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupTableViewCellIdentifier", for: indexPath)
-        cell.textLabel?.text = groupList[indexPath.row]
-        
+        cell.textLabel?.text = groupList[indexPath.row].title
         return cell
     }
 }
@@ -150,11 +144,9 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
 
 extension AddTodoGroupSelectController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCategory = groupList[indexPath.row]
         if let cell = tableView.cellForRow(at: indexPath) {
-            cell.selectionStyle = .none
             cell.accessoryType = .checkmark
-            
-            selectGroup = groupList[indexPath.row]
         }
     }
     
