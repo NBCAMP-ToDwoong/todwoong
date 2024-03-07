@@ -45,8 +45,7 @@ extension GroupCollectionViewCell {
         groupButton.setTitle(data.title, for: .normal)
         
         if let color = data.color {
-            // FIXME: hex 값으로 Color 생성하는 extension 안 됨
-//            groupButton.tintColor = UIColor(hex: color)
+            groupButton.configuration?.baseBackgroundColor = UIColor(hex: color)
         }
     }
 }
