@@ -120,27 +120,13 @@ final class AddTodoViewController: UIViewController {
             return
         }
         
-        let place = selectedPlace
+        let place = selectedPlace ?? nil
         let isCompleted = false
         let timeAlarm = selecetTimeAlarm ?? false
         let placeAlarm = selectePlaceAlarm ?? false
         let category = selectedGroup
         
-        if let todoId = todoIdToEdit {
-            if let todoToUpdate = CoreDataManager.shared.fetchTodoById(todoId) {
-                CoreDataManager.shared.updateTodo(todo: todoToUpdate,
-                                                  newTitle: title,
-                                                  newPlace: place ?? "",
-                                                  newDate: selectedDueDate,
-                                                  newTime: selectedDueTime,
-                                                  newCompleted: isCompleted,
-                                                  newTimeAlarm: timeAlarm,
-                                                  newPlaceAlarm: placeAlarm,
-                                                  newCategory: category)
-                print("투두 항목이 업데이트되었습니다.")
-                navigationController?.popViewController(animated: true)
-            }
-        } else {
+        if let title = selectedTitle {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
                                               dueDate: selectedDueDate,
