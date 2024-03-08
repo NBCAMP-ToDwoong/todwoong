@@ -19,6 +19,8 @@ class MapView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
         setMapView()
         setCategoryChipsView()
     }
@@ -57,7 +59,7 @@ class MapView: UIView {
     }
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
-        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title, backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? .gray)
+        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title, backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
         chipButton.addTarget(target, action: action, for: .touchUpInside)
         stackView.addArrangedSubview(chipButton)
     }

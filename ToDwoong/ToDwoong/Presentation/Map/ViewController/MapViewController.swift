@@ -14,10 +14,13 @@ import TodwoongDesign
 class MapViewController: UIViewController {
     
     var customMapView: MapView!
+    // 핀 크기관련 프로퍼티... 현재 작동하지않음
+//    var selectedAnnotation: MKAnnotation?
     let locationManager = CLLocationManager()
     
     var todos: [TodoModel] = []
     var categories: [CategoryModel] = []
+    var todoAnnotationMap: [String: TodoAnnotation] = [:]
     
     override func loadView() {
         customMapView = MapView()
@@ -29,6 +32,7 @@ class MapViewController: UIViewController {
         
         customMapView.mapView.delegate = self
         setLocationManager()
+        setNavigationBar()
         createDummyData()
     }
     
@@ -37,6 +41,32 @@ class MapViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+    }
+    
+    private func setNavigationBar() {
+        let leftBarButtonItem = UIBarButtonItem(
+            title: "< Back",
+            style: .plain,
+            target: self,
+            action: #selector(didTapBackButton)
+        )
+        navigationItem.leftBarButtonItem = leftBarButtonItem
+        
+        let rightBarButtonItem = UIBarButtonItem(
+            title: "내 위치",
+            style: .plain,
+            target: self,
+            action: #selector(moveToCurrentLocation)
+        )
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        
+        // 네비게이션 색상 설정
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        navigationBarAppearance.backgroundColor = .clear
+        
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     // 더미데이터 생성코드
@@ -64,6 +94,23 @@ class MapViewController: UIViewController {
                       fixed: false,
                       timeAlarm: true,
                       placeAlarm: true,
+                      category: personalCategory),
+            TodoModel(id: UUID(), title: "TIL작성하기",
+                      dueDate: Date(),
+                      dueTime: Date(),
+                      place: "대구",
+                      isCompleted: false,
+                      fixed: false,
+                      timeAlarm: true,
+                      placeAlarm: true,
+                      category: workCategory),
+            TodoModel(id: UUID(), title: "밥먹기",
+                      dueDate: Date().addingTimeInterval(86400 * 2),
+                      dueTime: Date(), place: "대전",
+                      isCompleted: false,
+                      fixed: false,
+                      timeAlarm: true,
+                      placeAlarm: true,
                       category: personalCategory)
         ]
 
@@ -77,12 +124,12 @@ class MapViewController: UIViewController {
     private func loadTodosAndPins() {
         for todo in self.todos {
             if let place = todo.place, let categoryColor = todo.category?.color {
-                addPinForPlace(place, colorName: categoryColor, category: todo.category?.title ?? "")
+                addPinForPlace(place, colorName: categoryColor, category: todo.category?.title ?? "", todo: todo)
             }
         }
     }
 
-    func addPinForPlace(_ place: String, colorName: String, category: String) {
+    func addPinForPlace(_ place: String, colorName: String, category: String, todo: TodoModel) {
         let geocoder = CLGeocoder()
         
         geocoder.geocodeAddressString(place) { [weak self] (placemarks, error) in
@@ -95,6 +142,8 @@ class MapViewController: UIViewController {
             
             if let placemark = placemarks?.first, let location = placemark.location {
                 let annotation = TodoAnnotation(coordinate: location.coordinate, title: place, colorName: colorName, category: category)
+                
+                strongSelf.todoAnnotationMap[todo.id?.uuidString ?? ""] = annotation
                 
                 DispatchQueue.main.async {
                     strongSelf.customMapView.mapView.addAnnotation(annotation)
@@ -138,6 +187,10 @@ class MapViewController: UIViewController {
         present(detailVC, animated: true, completion: nil)
     }
     
+    @objc private func didTapBackButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     // 버튼을 눌렀을 때, 사용자의 현재 위치로 돌아가는 메서드
     @objc func moveToCurrentLocation() {
         if let currentLocation = locationManager.location {
@@ -178,6 +231,7 @@ extension MapViewController: MKMapViewDelegate {
         if let coordinate = view.annotation?.coordinate {
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
             mapView.setRegion(region, animated: true)
+//            selectedAnnotation = view.annotation
         }
         
         let detailVC = TodoDetailViewController()
@@ -217,4 +271,14 @@ extension MapViewController: MKMapViewDelegate {
 
         return nil
     }
+    
+//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+//        if let selectedAnnotation = selectedAnnotation,
+//           let annotationView = mapView.view(for: selectedAnnotation) as? MKMarkerAnnotationView {
+//            let color = TDStyle.color.colorFromString((selectedAnnotation as? TodoAnnotation)?.colorName ?? "")
+//            annotationView.markerTintColor = color ?? UIColor.green
+//            annotationView.transform = CGAffineTransform.identity
+//            self.selectedAnnotation = nil
+//        }
+//    }
 }
