@@ -12,7 +12,7 @@ import TodwoongDesign
 
 class TodoDetailViewController: UIViewController {
     
-    // Properties
+    // MARK: - Properties
     
     var detailView: TodoDetailView!
     var selectedCategoryTitle: String? {
@@ -21,9 +21,11 @@ class TodoDetailViewController: UIViewController {
         }
     }
     
-    // Storage
+    // MARK: - Data Storage
     
     var todos: [TodoModel] = []
+    
+    // MARK: - Lifecycle
     
     override func loadView() {
         detailView = TodoDetailView()
@@ -38,6 +40,8 @@ class TodoDetailViewController: UIViewController {
         
         loadTodosForSelectedCategory()
     }
+    
+    // MARK: - Setting Method
     
     func loadTodosForSelectedCategory() {
         guard let category = selectedCategoryTitle else {

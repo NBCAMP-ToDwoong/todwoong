@@ -12,6 +12,8 @@ import TodwoongDesign
 
 class TodoDetailView: UIView {
     
+    // MARK: - UI Properties
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .white
@@ -19,6 +21,8 @@ class TodoDetailView: UIView {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
+    
+    // MARK: - Lifecycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

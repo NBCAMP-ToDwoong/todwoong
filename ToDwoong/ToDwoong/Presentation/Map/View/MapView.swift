@@ -13,10 +13,14 @@ import TodwoongDesign
 
 class MapView: UIView {
     
+    // MARK: - UI Properties
+    
     let mapView: MKMapView = MKMapView()
     private let scrollView: UIScrollView = UIScrollView()
     let stackView: UIStackView = UIStackView()
 
+    // MARK: - Lifecycle
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         mapView.showsUserLocation = true
@@ -28,6 +32,8 @@ class MapView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UI Method
     
     private func setMapView() {
         addSubview(mapView)

@@ -13,14 +13,20 @@ import TodwoongDesign
 
 class MapViewController: UIViewController {
     
+    // MARK: - Instance
+    
     var customMapView: MapView!
     // 핀 크기관련 프로퍼티... 현재 작동하지않음
 //    var selectedAnnotation: MKAnnotation?
     let locationManager = CLLocationManager()
     
+    // MARK: - Data Storage
+    
     var todos: [TodoModel] = []
     var categories: [CategoryModel] = []
     var todoAnnotationMap: [String: TodoAnnotation] = [:]
+    
+    // MARK: - Lifecycle
     
     override func loadView() {
         customMapView = MapView()
@@ -35,6 +41,8 @@ class MapViewController: UIViewController {
         setNavigationBar()
         createDummyData()
     }
+    
+    // MARK: - Setting Method
     
     private func setLocationManager() {
         locationManager.delegate = self
@@ -157,6 +165,8 @@ class MapViewController: UIViewController {
             customMapView.addCategoryChip(category: category, action: #selector(categoryChipTapped(_:)), target: self)
         }
     }
+    
+    // MARK: - Objc Func
     
     @objc func categoryChipTapped(_ sender: TDCustomButton) {
         guard let title = sender.titleLabel?.text else { return }
