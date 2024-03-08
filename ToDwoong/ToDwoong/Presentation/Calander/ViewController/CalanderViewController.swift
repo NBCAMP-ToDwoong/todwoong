@@ -16,7 +16,7 @@ final class CalendarViewController: UIViewController {
     
     // MARK: - Properties
     
-    lazy var todoList = convertTodoDatas(todos: [])
+    lazy var todoList: [Todo] = []
     private var eventDates: [Date]?
     private var selectedDueDate: Date?
     
@@ -198,13 +198,15 @@ extension CalendarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
                                                        for: indexPath) as? TDTableViewCell else {
             fatalError("Unable to dequeue TDTableViewCell")
         }
         
         let todo = todoList[indexPath.row]
-        cell.configure(data: todo, iconImage: UIImage(named: "AddTodoMapPin")!)
+        let todoModel = convertTodoData(todo: todo)!
+        
+        cell.configure(data: todoModel, iconImage: UIImage(named: "AddTodoMapPin")!)
         cell.checkButton.isSelected = todo.isCompleted
         
         cell.onCheckButtonTapped = { [weak self, weak tableView] in
@@ -212,38 +214,31 @@ extension CalendarViewController: UITableViewDataSource {
             
             let isCompleted = !todo.isCompleted
             todo.isCompleted = isCompleted
-            
-            self.updateTodoInCoreData(todoId: todo.id!, isCompleted: isCompleted) {
-                DispatchQueue.main.async {
-                    tableView.reloadRows(at: [indexPath], with: .automatic)
-                }
-            }
+            CoreDataManager.shared.saveContext()
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         return cell
     }
+
 }
 
 // MARK: - UITableViewDelegate
 
 extension CalendarViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, 
+    func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
                                             title: "수정") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
-            let todoId = self.todoList[indexPath.row].id
+            let todoToEdit = self.todoList[indexPath.row]
             let addTodoVC = AddTodoViewController()
-            
-            addTodoVC.todoIdToEdit = todoId
-            
-            // FIXME: 투두수정 모달 vs navigation
-            //self.present(addTodoVC, animated: true, completion: nil)
+            addTodoVC.todoToEdit = todoToEdit
             self.navigationController?.pushViewController(addTodoVC, animated: true)
             completionHandler(true)
         }
         editAction.backgroundColor = .blue
         
-        let deleteAction = UIContextualAction(style: .destructive, 
+        let deleteAction = UIContextualAction(style: .destructive,
                                               title: "삭제") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
             
@@ -272,8 +267,7 @@ extension CalendarViewController: UITableViewDelegate {
 extension CalendarViewController {
     private func fetchTodos(for date: Date?) {
         guard let selectedDate = date else { return }
-        let todos = CoreDataManager.shared.filterTodoByDuedate(selectedDate)
-        self.todoList = convertTodoDatas(todos: todos)
+        self.todoList = CoreDataManager.shared.filterTodoByDuedate(selectedDate)
         tableView.reloadData()
     }
     
@@ -292,7 +286,7 @@ extension CalendarViewController {
         calendar.reloadData()
     }
     
-    private func convertTodoData(_ todo: Todo) -> TodoModel? {
+    private func convertTodoData(todo: Todo) -> TodoModel? {
         guard let id = todo.id, let title = todo.title else {
             return nil
         }
@@ -327,7 +321,7 @@ extension CalendarViewController {
     }
     
     private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
-        let convertedTodos = todos.compactMap { convertTodoData($0) }
+        let convertedTodos = todos.compactMap { convertTodoData(todo: $0) }
         return convertedTodos
     }
     

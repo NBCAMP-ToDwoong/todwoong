@@ -45,14 +45,19 @@ extension TitleCollectionViewCell {
         layer.borderColor = UIColor.black.cgColor
         layer.masksToBounds = true
     }
+    
+    func setTitle(_ title: String?) {
+        textField.text = title
+    }
+    
 }
 
 // MARK: - textFieldDidEndEditing
 
 extension TitleCollectionViewCell: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, 
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
-        let newText = (textField.text as NSString?)?.replacingCharacters(in: range, 
+        let newText = (textField.text as NSString?)?.replacingCharacters(in: range,
                                                                          with: string) ?? string
         delegate?.titleCellDidEndEditing(newText)
         return true
