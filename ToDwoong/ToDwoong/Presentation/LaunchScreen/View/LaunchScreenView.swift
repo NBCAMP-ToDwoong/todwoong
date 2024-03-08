@@ -16,7 +16,7 @@ final class LaunchScreenView: UIView {
     
     private let launchScreenImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "LaunchScreenImage")
+        imageView.image = UIImage(named: "appIcon")
         imageView.contentMode = .scaleAspectFit
         
         return imageView

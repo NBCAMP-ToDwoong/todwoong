@@ -26,7 +26,7 @@ final class OnboardingView: UIView {
     
     private lazy var locationImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "OnboardingImage")
+        imageView.image = UIImage(named: "dwoong")
         imageView.contentMode = .scaleAspectFit
         
         return imageView
