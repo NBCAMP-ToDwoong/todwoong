@@ -56,8 +56,8 @@ class MapView: UIView {
         }
     }
     
-    func addCategoryChip(category: DummyCategory, action: Selector, target: Any?) {
-        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title, backgroundColor: TDStyle.color.colorFromString(category.color) ?? .gray)
+    func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
+        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title, backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? .gray)
         chipButton.addTarget(target, action: action, for: .touchUpInside)
         stackView.addArrangedSubview(chipButton)
     }

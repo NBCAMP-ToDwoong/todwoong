@@ -11,17 +11,13 @@ import UIKit
 
 import TodwoongDesign
 
-struct DummyCategory {
-    let title: String
-    let color: String
-}
-
 class MapViewController: UIViewController {
     
     var customMapView: MapView!
     let locationManager = CLLocationManager()
     
-    var categories: [DummyCategory] = []
+    var todos: [TodoModel] = []
+    var categories: [CategoryModel] = []
     
     override func loadView() {
         customMapView = MapView()
@@ -30,10 +26,10 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         customMapView.mapView.delegate = self
         setLocationManager()
-        loadTodosAndPins()
-        loadCategoriesAndCategoryChips()
+        createDummyData()
     }
     
     private func setLocationManager() {
@@ -43,27 +39,49 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
     }
     
-    // Todo데이터를 불러오고, 각 투두의 장소에 맞는 핀을 생성하는 메서드를 실행하는 메서드
-    private func loadTodosAndPins() {
-        let categories = [
-            "직장": "bgBlue",
-            "취미": "bgRed",
-            "운동": "bgGreen"
+    // 더미데이터 생성코드
+    func createDummyData() {
+        let allCategory = CategoryModel(id: UUID(), title: "전체", color: "bgGray", indexNumber: 0, todo: nil)
+        let workCategory = CategoryModel(id: UUID(), title: "일", color: "bgRed", indexNumber: 1, todo: nil)
+        let personalCategory = CategoryModel(id: UUID(), title: "운동", color: "bgBlue", indexNumber: 2, todo: nil)
+        categories = [workCategory, personalCategory]
+        categories.insert(allCategory, at: 0)
+
+        let todos = [
+            TodoModel(id: UUID(), title: "프로젝트 끝내기",
+                      dueDate: Date(),
+                      dueTime: Date(),
+                      place: "서울",
+                      isCompleted: false,
+                      fixed: false,
+                      timeAlarm: true,
+                      placeAlarm: true,
+                      category: workCategory),
+            TodoModel(id: UUID(), title: "운동 가기",
+                      dueDate: Date().addingTimeInterval(86400 * 2),
+                      dueTime: Date(), place: "부산",
+                      isCompleted: false,
+                      fixed: false,
+                      timeAlarm: true,
+                      placeAlarm: true,
+                      category: personalCategory)
         ]
 
-        let mockTodos = [
-            (title: "프로젝트 끝내기", place: "서울", category: "직장"),
-            (title: "체육관", place: "부산", category: "운동"),
-            (title: "밥먹기", place: "대구", category: "취미")
-        ]
-        
-        mockTodos.forEach { todo in
-            let colorName = categories[todo.category] ?? "bgBlue" // 기본 색상
-            addPinForPlace(todo.place, colorName: colorName, category: todo.category)
+        self.todos = todos
+
+        loadCategoriesAndCategoryChips()
+        loadTodosAndPins()
+    }
+    
+    // Todo데이터를 불러오고, 각 투두의 장소에 맞는 핀을 생성하는 메서드를 실행하는 메서드
+    private func loadTodosAndPins() {
+        for todo in self.todos {
+            if let place = todo.place, let categoryColor = todo.category?.color {
+                addPinForPlace(place, colorName: categoryColor, category: todo.category?.title ?? "")
+            }
         }
     }
 
-    // 장소, 색상 이름, 카테고리를 입력받아 해당 장소에 핀을 표시해주는 메서드
     func addPinForPlace(_ place: String, colorName: String, category: String) {
         let geocoder = CLGeocoder()
         
@@ -86,19 +104,6 @@ class MapViewController: UIViewController {
     }
     
     private func loadCategoriesAndCategoryChips() {
-        
-        categories = [
-            DummyCategory(title: "직장", color: "bgBlue"),
-            DummyCategory(title: "학교", color: "bgRed"),
-            DummyCategory(title: "운동", color: "bgGreen"),
-            DummyCategory(title: "취미", color: "bgYellow"),
-            DummyCategory(title: "공부", color: "bgBlue"),
-            DummyCategory(title: "여행", color: "bgBlue"),
-            DummyCategory(title: "여행", color: "bgBlue"),
-            DummyCategory(title: "여행", color: "bgBlue"),
-            DummyCategory(title: "여행", color: "bgBlue")
-        ]
-        
         categories.forEach { category in
             customMapView.addCategoryChip(category: category, action: #selector(categoryChipTapped(_:)), target: self)
         }
@@ -106,10 +111,31 @@ class MapViewController: UIViewController {
     
     @objc func categoryChipTapped(_ sender: TDCustomButton) {
         guard let title = sender.titleLabel?.text else { return }
+        
+        if title == "전체" {
             customMapView.mapView.annotations.forEach { annotation in
-            guard let todoAnnotation = annotation as? TodoAnnotation else { return }
-            customMapView.mapView.view(for: annotation)?.isHidden = todoAnnotation.category != title
+                guard let todoAnnotation = annotation as? TodoAnnotation else { return }
+                customMapView.mapView.view(for: annotation)?.isHidden = false
+            }
+        } else {
+            customMapView.mapView.annotations.forEach { annotation in
+                guard let todoAnnotation = annotation as? TodoAnnotation else { return }
+                customMapView.mapView.view(for: annotation)?.isHidden = todoAnnotation.category != title
+            }
         }
+        
+        let detailVC = TodoDetailViewController()
+        detailVC.selectedCategoryTitle = title
+        detailVC.todos = self.todos
+        detailVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = detailVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+        }
+        
+        present(detailVC, animated: true, completion: nil)
     }
     
     // 버튼을 눌렀을 때, 사용자의 현재 위치로 돌아가는 메서드

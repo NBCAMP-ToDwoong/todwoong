@@ -12,7 +12,17 @@ import TodwoongDesign
 
 class TodoDetailViewController: UIViewController {
     
+    // Properties
+    
     var detailView: TodoDetailView!
+    var selectedCategoryTitle: String? {
+        didSet {
+            loadTodosForSelectedCategory()
+        }
+    }
+    
+    // Storage
+    
     var todos: [TodoModel] = []
     
     override func loadView() {
@@ -22,48 +32,25 @@ class TodoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         detailView.tableView.dataSource = self
         detailView.tableView.delegate = self
-        loadMockData()
+        
+        loadTodosForSelectedCategory()
     }
     
-    func loadMockData() {
-        let workCategory = CategoryModel(id: UUID(), title: "일", color: "bgBlue", indexNumber: 0, todo: nil)
-        let personalCategory = CategoryModel(id: UUID(), title: "집", color: "bgRed", indexNumber: 1, todo: nil)
-
-        todos = [
-            TodoModel(id: UUID(), title: "프로젝트 끝내기",
-                      dueDate: Date(),
-                      dueTime: Date(),
-                      place: "부산",
-                      isCompleted: false,
-                      fixed: false,
-                      timeAlarm: true,
-                      placeAlarm: true,
-                      category: workCategory),
-            TodoModel(id: UUID(),
-                      title: "체육관",
-                      dueDate: Date().addingTimeInterval(86400),
-                      dueTime: Date(),
-                      place: "대구",
-                      isCompleted: false,
-                      fixed: false,
-                      timeAlarm: true,
-                      placeAlarm: true,
-                      category: personalCategory),
-            TodoModel(id: UUID(),
-                      title: "으아",
-                      dueDate: Date().addingTimeInterval(2 * 86400),
-                      dueTime: Date(),
-                      place: "서울",
-                      isCompleted: false,
-                      fixed: false,
-                      timeAlarm: true,
-                      placeAlarm: true,
-                      category: personalCategory)
-        ]
-
-            detailView.tableView.reloadData()
+    func loadTodosForSelectedCategory() {
+        guard let category = selectedCategoryTitle else {
+            detailView?.tableView.reloadData()
+            return
+        }
+        
+        if category == "전체" {
+            detailView?.tableView.reloadData()
+        } else {
+            todos = todos.filter { $0.category?.title == category }
+            detailView?.tableView.reloadData()
+        }
     }
 
 }
