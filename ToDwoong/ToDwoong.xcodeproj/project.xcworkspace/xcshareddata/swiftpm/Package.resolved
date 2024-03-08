@@ -1,4 +1,5 @@
 {
+  "originHash" : "a1b943a3cd6da9b466ccb1625397f2d9e2701cb87c03fcaa6768a941f7a1a060",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -28,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
