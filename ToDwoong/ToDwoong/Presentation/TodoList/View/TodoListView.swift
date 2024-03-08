@@ -46,7 +46,6 @@ final class TodoListView: UIView {
     lazy var todoTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
-        tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
         
         return tableView
@@ -109,7 +108,7 @@ extension TodoListView {
             make.centerY.equalTo(groupCollectionView)
         }
         groupCollectionView.snp.makeConstraints{ make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(30)
+            make.top.equalTo(safeAreaLayoutGuide).offset(8)
             make.height.equalTo(30.33)
             make.leading.equalTo(allGroupButton.snp.trailing).offset(8)
             make.trailing.equalToSuperview()
