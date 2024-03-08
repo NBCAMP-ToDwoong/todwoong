@@ -44,6 +44,9 @@ extension OnboardingViewController {
     
     @objc private func requestButtonTapped() {
         requestAuthorization()
+        
+        let firstAccess = false
+        UserDefaults.standard.set(firstAccess, forKey: "first")
     }
 }
 

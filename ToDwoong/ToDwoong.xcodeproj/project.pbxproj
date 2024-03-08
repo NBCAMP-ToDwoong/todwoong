@@ -52,6 +52,7 @@
 		E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */; };
 		E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */; };
 		E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB712B971D7400BBEB0B /* AddGroupView.swift */; };
+		E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFD22B9AA7BC00DF94D4 /* LaunchScreenViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,6 +112,7 @@
 		E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGroupViewController.swift; path = ToDwoong/Presentation/AddGroup/ViewController/AddGroupViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB712B971D7400BBEB0B /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
+		E0F4CFD22B9AA7BC00DF94D4 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -379,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */,
+				E0F4CFD22B9AA7BC00DF94D4 /* LaunchScreenViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */,
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
 				2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
