@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class LaunchScreenView: UIView {
+final class LaunchScreenView: UIView {
     
     // MARK: UI Properties
     
