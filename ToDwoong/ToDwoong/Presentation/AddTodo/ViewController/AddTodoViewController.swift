@@ -13,6 +13,7 @@ import TodwoongDesign
 final class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
+    
     var todoToEdit: Todo?
     var selectedTitle: String?
     var selectedDueDate: Date?
@@ -335,6 +336,9 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
         let mapViewController = AddTodoLocationPickerViewController()
         mapViewController.delegate = self
         mapViewController.modalPresentationStyle = .fullScreen
+        if let todo = todoToEdit, let address = selectedPlace {
+            mapViewController.setLocation(address)
+        }
         present(mapViewController, animated: true, completion: nil)
     }
     
