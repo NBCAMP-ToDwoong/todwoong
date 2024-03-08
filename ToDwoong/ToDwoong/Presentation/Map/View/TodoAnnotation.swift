@@ -21,5 +21,7 @@ class TodoAnnotation: NSObject, MKAnnotation {
         self.title = title
         self.colorName = colorName
         self.category = category
+        
+        super.init()
     }
 }

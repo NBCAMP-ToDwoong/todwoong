@@ -60,12 +60,18 @@ class MapViewController: UIViewController {
         )
         navigationItem.leftBarButtonItem = leftBarButtonItem
         
+        let locationImage = UIImage(named: "currentLocationIcon")?.resizableImage(withCapInsets: UIEdgeInsets(top: 9,
+                                                                                                              left: 9,
+                                                                                                              bottom: 9,
+                                                                                                              right: 9),
+                                                                                  resizingMode: .stretch)
         let rightBarButtonItem = UIBarButtonItem(
-            title: "내 위치",
+            image: locationImage,
             style: .plain,
             target: self,
             action: #selector(moveToCurrentLocation)
         )
+        rightBarButtonItem.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: -110)
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
         // 네비게이션 색상 설정
@@ -149,7 +155,7 @@ class MapViewController: UIViewController {
             }
             
             if let placemark = placemarks?.first, let location = placemark.location {
-                let annotation = TodoAnnotation(coordinate: location.coordinate, title: place, colorName: colorName, category: category)
+                let annotation = TodoAnnotation(coordinate: location.coordinate, title: todo.title, colorName: colorName, category: category)
                 
                 strongSelf.todoAnnotationMap[todo.id?.uuidString ?? ""] = annotation
                 
@@ -264,19 +270,28 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if let todoAnnotation = annotation as? TodoAnnotation {
             let reuseId = "marker"
-            var markerView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKMarkerAnnotationView
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
             
-            if markerView == nil {
-                markerView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-                markerView?.canShowCallout = true
+            if annotationView == nil {
+                annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+                annotationView?.canShowCallout = true
             } else {
-                markerView?.annotation = annotation
+                annotationView?.annotation = annotation
             }
 
-            let color = TDStyle.color.colorFromString(todoAnnotation.colorName)
-            markerView?.markerTintColor = color ?? UIColor.green
-
-            return markerView
+            let customImage = UIImage(named: "AddTodoMapPin")?
+                .withRenderingMode(.alwaysTemplate)
+                .withTintColor(TDStyle.color.colorFromString(todoAnnotation.colorName) ?? .green)
+            
+            let size = CGSize(width: 30, height: 30)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            customImage?.draw(in: CGRect(origin: .zero, size: size))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView?.image = resizedImage
+            
+            return annotationView
         }
 
         return nil
