@@ -19,10 +19,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         
-        let tabBarController = TabBarController() 
-        
-        window?.rootViewController = tabBarController
+        let launchScreenViewController = LaunchScreenViewController()
+        window?.rootViewController = launchScreenViewController
         window?.makeKeyAndVisible()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            if let accessCheck = UserDefaults.standard.object(forKey: "first") as? Bool {
+                let rootViewController = TabBarController()
+
+                self.window?.rootViewController = rootViewController
+            } else {
+                let rootViewController = OnboardingViewController()
+
+                self.window?.rootViewController = rootViewController
+            }
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }
