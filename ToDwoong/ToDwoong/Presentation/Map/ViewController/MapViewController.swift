@@ -183,10 +183,14 @@ extension MapViewController: MKMapViewDelegate {
         let detailVC = TodoDetailViewController()
         detailVC.modalPresentationStyle = .pageSheet
         
+        if let todoAnnotation = view.annotation as? TodoAnnotation {
+            detailVC.selectedCategoryTitle = todoAnnotation.category
+            detailVC.todos = self.todos
+        }
+        
         if let sheet = detailVC.sheetPresentationController {
             sheet.prefersGrabberVisible = true
             sheet.detents = [.medium(), .large()]
-            
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
         }
         
