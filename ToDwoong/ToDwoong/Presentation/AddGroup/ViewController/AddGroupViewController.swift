@@ -67,7 +67,8 @@ extension AddGroupViewController: UITextFieldDelegate {
             }
         }
     }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         let maxLength = 5
         
         let currentLength = textField.text?.count ?? 0
@@ -130,7 +131,8 @@ extension AddGroupViewController {
 
     @objc func createGroup() {
         if let title = addGroupView.groupTextField.text {
-            CoreDataManager.shared.createCategory(title: title, color: selectedColor, todo: nil)
+            CoreDataManager.shared.createCategory(title: title,
+                                                  color: selectedColor)
             self.navigationController?.popViewController(animated: true)
         }
     }
@@ -139,7 +141,9 @@ extension AddGroupViewController {
         guard let category = editCategory else { return }
         
         if let title = addGroupView.groupTextField.text {
-            CoreDataManager.shared.updateCategory(category: category, newTitle: title, newColor: selectedColor, newTodo: nil)
+            CoreDataManager.shared.updateCategory(category: category,
+                                                  newTitle: title,
+                                                  newColor: selectedColor)
             editMode = false
             editCategory = nil
             self.navigationController?.popViewController(animated: true)
@@ -163,12 +167,14 @@ extension AddGroupViewController {
     private func setNavigationBar() {
         if editMode {
             self.title = "그룹 편집"
-            let rightButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editGroup))
+            let rightButton = UIBarButtonItem(title: "편집", style: .plain,
+                                              target: self, action: #selector(editGroup))
             self.navigationItem.rightBarButtonItem = rightButton
             self.navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
             self.title = "그룹 추가"
-            let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(createGroup))
+            let rightButton = UIBarButtonItem(title: "저장", style: .plain,
+                                              target: self, action: #selector(createGroup))
             self.navigationItem.rightBarButtonItem = rightButton
             self.navigationItem.rightBarButtonItem?.isEnabled = false
         }
