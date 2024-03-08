@@ -34,11 +34,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 self.window?.rootViewController = rootViewController
             }
         }
-        
-//        let tabBarController = TabBarController()
-//        
-//        window?.rootViewController = tabBarController
-//        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { }

@@ -53,6 +53,7 @@
 		E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */; };
 		E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB712B971D7400BBEB0B /* AddGroupView.swift */; };
 		E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFD22B9AA7BC00DF94D4 /* LaunchScreenViewController.swift */; };
+		E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFD42B9AB34B00DF94D4 /* LaunchScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,6 +114,7 @@
 		E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGroupViewController.swift; path = ToDwoong/Presentation/AddGroup/ViewController/AddGroupViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB712B971D7400BBEB0B /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		E0F4CFD22B9AA7BC00DF94D4 /* LaunchScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenViewController.swift; sourceTree = "<group>"; };
+		E0F4CFD42B9AB34B00DF94D4 /* LaunchScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchScreenView.swift; path = ToDwoong/Presentation/LaunchScreen/View/LaunchScreenView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -389,6 +391,7 @@
 		E0EACB5C2B8F7FF900BBEB0B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E0F4CFD42B9AB34B00DF94D4 /* LaunchScreenView.swift */,
 				E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */,
 			);
 			path = View;
@@ -561,6 +564,7 @@
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
+				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
 				2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */,
 				2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */,
 				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,

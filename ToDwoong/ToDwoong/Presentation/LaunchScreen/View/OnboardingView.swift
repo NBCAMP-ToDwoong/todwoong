@@ -8,21 +8,37 @@
 import UIKit
 
 import SnapKit
+import TodwoongDesign
 
 final class OnboardingView: UIView {
     
     // MARK: UI Properties
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "원활한 앱 사용을 위해 접근 권한을 허용해주세요"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.font = TDStyle.font.title2(style: .bold)
+        
+        return label
+    }()
+    
     private lazy var locationImageView: UIImageView = {
         let imageView = UIImageView()
-//        imageView.image = UIImage()
+        imageView.image = UIImage(named: "OnboardingImage")
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "위치권한 항상 허용 상태"
+        label.text = "*권한을 허용하지 않아도 서비스 이용은 가능하지만 일부 서비스가 제한될 수 있습니다."
+        label.textAlignment = .center
+        label.font = TDStyle.font.footnote(style: .regular)
+        label.textColor = TDStyle.color.secondaryLabel
+        label.numberOfLines = 0
         
         return label
     }()
@@ -30,7 +46,8 @@ final class OnboardingView: UIView {
     lazy var requestButton: UIButton = {
         let button = UIButton()
         button.setTitle("시작하기", for: .normal)
-        button.backgroundColor = .green
+        button.backgroundColor = TDStyle.color.mainTheme
+        button.layer.cornerRadius = 25
         
         return button
     }()
@@ -55,27 +72,35 @@ extension OnboardingView {
         self.backgroundColor = .white
         
         [
+            titleLabel,
             locationImageView,
             descriptionLabel,
             requestButton
         ].forEach{self.addSubview($0)}
         
-        locationImageView.snp.makeConstraints{ make in
+        titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-50)
-            make.height.equalTo(50)
-            make.width.equalTo(30)
+            make.width.equalTo(self.snp.width).dividedBy(1.5)
+            make.centerY.equalToSuperview().dividedBy(2)
         }
         
-        descriptionLabel.snp.makeConstraints{ make in
-            make.top.equalTo(locationImageView.snp_bottomMargin).offset(16)
+        locationImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().dividedBy(1.2)
+            make.width.height.equalTo(self.snp.width).dividedBy(3)
         }
         
-        requestButton.snp.makeConstraints{ make in
-            make.bottom.equalTo(safeAreaLayoutGuide).offset(-30)
+        descriptionLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(self.snp.width).dividedBy(1.5)
+            make.bottom.equalTo(requestButton.snp.top).offset(-16)
+        }
+        
+        requestButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().dividedBy(1.1)
             make.leading.equalTo(safeAreaLayoutGuide).offset(16)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-16)
+            make.height.equalTo(50)
         }
     }
 }
