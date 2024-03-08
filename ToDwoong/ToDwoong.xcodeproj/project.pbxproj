@@ -52,6 +52,10 @@
 		E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */; };
 		E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */; };
 		E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB712B971D7400BBEB0B /* AddGroupView.swift */; };
+		E0F4CFD72B9ACBC700DF94D4 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFD62B9ACBC700DF94D4 /* PreferencesViewController.swift */; };
+		E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFD82B9ACBDE00DF94D4 /* PreferencesView.swift */; };
+		E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFDC2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift */; };
+		E0F4CFDF2B9AD54D00DF94D4 /* PreferencesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0F4CFDE2B9AD54D00DF94D4 /* PreferencesModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,6 +115,10 @@
 		E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCollectionViewCell.swift; sourceTree = "<group>"; };
 		E0EACB6E2B971CE200BBEB0B /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGroupViewController.swift; path = ToDwoong/Presentation/AddGroup/ViewController/AddGroupViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB712B971D7400BBEB0B /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
+		E0F4CFD62B9ACBC700DF94D4 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreferencesViewController.swift; path = ToDwoong/Presentation/Preferences/ViewController/PreferencesViewController.swift; sourceTree = SOURCE_ROOT; };
+		E0F4CFD82B9ACBDE00DF94D4 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreferencesView.swift; path = ToDwoong/Presentation/Preferences/View/PreferencesView.swift; sourceTree = SOURCE_ROOT; };
+		E0F4CFDC2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTableViewCell.swift; sourceTree = "<group>"; };
+		E0F4CFDE2B9AD54D00DF94D4 /* PreferencesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +200,9 @@
 		1BA63AD32B8E8D55008F49CE /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				E0F4CFDB2B9ACBF100DF94D4 /* ViewController */,
+				E0F4CFDA2B9ACBE600DF94D4 /* View */,
+				E0F4CFE02B9AD55200DF94D4 /* Model */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -424,6 +435,31 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		E0F4CFDA2B9ACBE600DF94D4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E0F4CFD82B9ACBDE00DF94D4 /* PreferencesView.swift */,
+				E0F4CFDC2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E0F4CFDB2B9ACBF100DF94D4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E0F4CFD62B9ACBC700DF94D4 /* PreferencesViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		E0F4CFE02B9AD55200DF94D4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E0F4CFDE2B9AD54D00DF94D4 /* PreferencesModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -536,6 +572,7 @@
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
 				1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */,
 				E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */,
+				E0F4CFD72B9ACBC700DF94D4 /* PreferencesViewController.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
 				2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */,
 				7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */,
@@ -547,7 +584,10 @@
 				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
 				2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */,
 				2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */,
+				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
+				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
+				E0F4CFDF2B9AD54D00DF94D4 /* PreferencesModel.swift in Sources */,
 				2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */,
 				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
 				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
