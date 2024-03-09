@@ -53,18 +53,17 @@ extension TabBarController {
 
 extension TabBarController {
     private func setNavigationBar() {
-        let customStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.spacing = 20
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
-            stackView.isLayoutMarginsRelativeArrangement = true
+        let customView: UIView = {
+            let view = UIView()
             
-            return stackView
+            return view
         }()
         let mapButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(systemName: "map"), for: .normal)
+            button.contentVerticalAlignment = .fill
+            button.contentHorizontalAlignment = .fill
+            button.imageView?.contentMode = .scaleAspectFit
             button.tintColor = .black
             button.addTarget(self, action: #selector(mapButtonTapped), for: .touchUpInside)
             
@@ -73,18 +72,33 @@ extension TabBarController {
         let preferencesButton: UIButton = {
             let button = UIButton()
             button.setImage(UIImage(named: "ellipsis"), for: .normal)
+            button.imageView?.contentMode = .scaleAspectFit
             button.tintColor = .black
             button.addTarget(self, action: #selector(preferencesButtonTapped), for: .touchUpInside)
             
             return button
         }()
         
-        customStackView.addArrangedSubview(mapButton)
-        customStackView.addArrangedSubview(preferencesButton)
+        customView.addSubview(mapButton)
+        customView.addSubview(preferencesButton)
         
-        let customBarButtonItem = UIBarButtonItem(customView: customStackView)
+        let customBarButtonItem = UIBarButtonItem(customView: customView)
         
         self.navigationItem.rightBarButtonItem = customBarButtonItem
+        
+        customView.snp.makeConstraints { make in
+            make.height.equalTo(25)
+            make.width.equalTo(70)
+        }
+        mapButton.snp.makeConstraints { make in
+            make.top.leading.bottom.equalToSuperview()
+            make.width.equalTo(mapButton.snp.height)
+        }
+        preferencesButton.snp.makeConstraints { make in
+            make.leading.equalTo(mapButton.snp.trailing).offset(20)
+            make.top.bottom.equalToSuperview()
+            make.width.equalTo(mapButton.snp.height)
+        }
     }
     
     @objc func mapButtonTapped() {
