@@ -32,7 +32,6 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         loadData()
-        setNavigationBar()
     }
     
 }
@@ -94,9 +93,10 @@ extension CalendarViewController {
         let emptyStateLabel = UILabel()
         
         emptyStateImageView.contentMode = .scaleAspectFit
-        emptyStateImageView.image = UIImage(named: "Dwong")
+        emptyStateImageView.image = UIImage(named: "dwoong")
         emptyStateLabel.text = "오늘은 어떤 일을 할까요?"
         emptyStateLabel.textColor = TDStyle.color.mainDarkTheme
+        emptyStateLabel.font = TDStyle.font.body(style: .bold)
         emptyStateLabel.textAlignment = .center
         
         emptyStateView.addSubview(emptyStateImageView)
@@ -385,54 +385,5 @@ extension CalendarViewController {
                                                     value: 1,
                                                     to: self.calendar.currentPage) else { return }
         self.calendar.setCurrentPage(nextMonth, animated: true)
-    }
-}
-
-// MARK: - NavigationBar Custom
-
-extension CalendarViewController {
-    private func setNavigationBar() {
-        let customStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.spacing = 20
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
-            stackView.isLayoutMarginsRelativeArrangement = true
-            
-            return stackView
-        }()
-        let mapButton: UIButton = {
-            let button = UIButton()
-            button.setImage(UIImage(systemName: "map"), for: .normal)
-            button.tintColor = .black
-            button.addTarget(self, action: #selector(mapButtonTapped), for: .touchUpInside)
-            
-            return button
-        }()
-        let preferencesButton: UIButton = {
-            let button = UIButton()
-            button.setImage(UIImage(named: "ellipsis"), for: .normal)
-            button.tintColor = .black
-            button.addTarget(self, action: #selector(preferencesButtonTapped), for: .touchUpInside)
-            
-            return button
-        }()
-        
-        customStackView.addArrangedSubview(mapButton)
-        customStackView.addArrangedSubview(preferencesButton)
-        
-        let customBarButtonItem = UIBarButtonItem(customView: customStackView)
-        
-        self.navigationItem.rightBarButtonItem = customBarButtonItem
-    }
-    
-    @objc func mapButtonTapped() {
-        // FIXME: 맵 구현 이후 주석 해제 예정
-//        navigationController?.pushViewController(AddTodoViewController(), animated: true)
-    }
-    
-    @objc func preferencesButtonTapped() {
-        // FIXME: 설정 구현 이후 주석 해제 예정
-//        navigationController?.pushViewController(PreferencesViewController(), animated: .true)
     }
 }
