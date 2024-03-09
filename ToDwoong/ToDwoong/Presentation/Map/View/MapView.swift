@@ -26,7 +26,11 @@ class MapView: UIView {
         return button
     }()
     
-    lazy var allGroupButton = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
+    lazy var allGroupButton: UIButton = {
+        let button = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
+        button.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
+        return button
+    }()
 
     // MARK: - Lifecycle
     
@@ -89,11 +93,17 @@ class MapView: UIView {
     }
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
-        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title, backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
-
-        chipButton.addTarget(target, action: action, for: .touchUpInside)
-
-        stackView.addArrangedSubview(chipButton)
-
+        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title , backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
+            chipButton.addTarget(target, action: action, for: .touchUpInside)
+            stackView.addArrangedSubview(chipButton)
+        }
+    
+    // MARK: - Objc
+    
+    @objc func allGroupButtonTapped() {
+        if let viewController = next as? MapViewController {
+            viewController.allGroupButtonTapped()
+        }
     }
+
 }

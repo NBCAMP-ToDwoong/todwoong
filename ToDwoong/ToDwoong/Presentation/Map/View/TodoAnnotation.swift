@@ -11,6 +11,7 @@ import UIKit
 import TodwoongDesign
 
 class TodoAnnotation: NSObject, MKAnnotation {
+    
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var colorName: String
