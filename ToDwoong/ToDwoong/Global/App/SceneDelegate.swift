@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
                 self.window?.rootViewController = rootViewController
             } else {
-                let rootViewController = OnboardingViewController()
+                let rootViewController = UINavigationController(rootViewController: OnboardingViewController())
 
                 self.window?.rootViewController = rootViewController
             }
