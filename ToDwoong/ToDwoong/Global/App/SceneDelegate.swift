@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             if let accessCheck = UserDefaults.standard.object(forKey: "first") as? Bool {
-                let rootViewController = TabBarController()
+                let rootViewController = UINavigationController(rootViewController: TabBarController())
 
                 self.window?.rootViewController = rootViewController
             } else {
