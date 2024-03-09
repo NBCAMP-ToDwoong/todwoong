@@ -99,6 +99,8 @@ extension TabBarController {
             make.top.bottom.equalToSuperview()
             make.width.equalTo(mapButton.snp.height)
         }
+        
+        navigationItem.hidesBackButton = true
     }
     
     @objc func mapButtonTapped() {
