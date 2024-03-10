@@ -14,6 +14,8 @@ final class InfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
+    var deleteGroupAction: (() -> Void)?
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -99,11 +101,12 @@ extension InfoCollectionViewCell {
 // MARK: - configureCell
 
 extension InfoCollectionViewCell {
-    func configureCell(title: String, detail: String? = nil, showremoveButton: Bool = false) {
+    func configureCell(title: String, detail: String? = nil, showRemoveButton: Bool = false) {
         titleLabel.text = title
         detailLabel.text = detail
-        removeButton.isHidden = !showremoveButton
+        removeButton.isHidden = !showRemoveButton
         detailLabel.textAlignment = detail != nil ? .right : .left
     }
+    
     
 }
