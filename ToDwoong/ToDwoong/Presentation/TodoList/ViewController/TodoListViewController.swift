@@ -61,6 +61,16 @@ class TodoListViewController: UIViewController {
         
         setDelegates()
         setAction()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .DataUpdatedNotification,
+            object: nil)
+    }
+    
+    @objc func dataUpdated(_ notification: Notification) {
+        todoDataFetch()
+        todoView.todoTableView.reloadData()
     }
 }
 

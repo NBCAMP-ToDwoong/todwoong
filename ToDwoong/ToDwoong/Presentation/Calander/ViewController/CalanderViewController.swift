@@ -32,7 +32,11 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         loadData()
-        NotificationCenter.default.addObserver(self, selector: #selector(dataUpdated(_:)), name: .DataUpdatedNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .DataUpdatedNotification,
+            object: nil)
     }
     
     @objc func dataUpdated(_ notification: Notification) {
