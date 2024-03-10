@@ -75,6 +75,7 @@ final class AddTodoViewController: UIViewController {
     private func setCollectionView() {
         todoView.collectionView.dataSource = self
         todoView.collectionView.delegate = self
+        view.backgroundColor = TDStyle.color.lightGray
     }
     
     @objc func doneButtonTapped() {
@@ -382,9 +383,11 @@ extension AddTodoViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         if section == 3 {
-            return UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 20, left: 15, bottom: 0, right: 15)
         } else if section == 1 {
-            return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+            return UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15)
+        } else if section == 0 {
+            return UIEdgeInsets(top: 10, left: 15, bottom: 0, right: 15)
         } else {
             return UIEdgeInsets.zero
         }

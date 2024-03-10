@@ -7,6 +7,8 @@
 
 import UIKit
 
+import TodwoongDesign
+
 final class AddTodoView: UIView {
     
     // MARK: UI Properties
@@ -38,13 +40,14 @@ extension AddTodoView {
         collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: "TitleCell")
         collectionView.register(DateTimePickerContainerCell.self, forCellWithReuseIdentifier: "DateTimeContainerCell")
         collectionView.register(DatePickerCollectionViewCell.self, forCellWithReuseIdentifier: "DatePickerCell")
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = TDStyle.color.lightGray
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
         }
-        
     }
     
 }

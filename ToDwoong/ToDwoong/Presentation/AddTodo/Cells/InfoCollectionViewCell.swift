@@ -65,10 +65,18 @@ final class InfoCollectionViewCell: UICollectionViewCell {
 
 extension InfoCollectionViewCell {
     private func setView() {
-        layer.borderWidth = 0.2
-        layer.borderColor = UIColor.black.cgColor
         layer.masksToBounds = true
+        self.clipsToBounds = true
+        self.backgroundColor = .white
         
+        // Horizontal separator
+        let separatorView = UIView()
+        separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        addSubview(separatorView)
+        separatorView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
