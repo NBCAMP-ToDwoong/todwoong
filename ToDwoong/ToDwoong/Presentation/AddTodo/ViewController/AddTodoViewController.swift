@@ -219,7 +219,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         if let datePickerIndexPath = datePickerIndexPath, section == datePickerIndexPath.section {
             return 1
         } else if section == 2 || (datePickerIndexPath != nil && section == 3) {
-            return 3
+            return 2 // 알람제외
         } else {
             return 1
         }
@@ -336,8 +336,8 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
         let mapViewController = AddTodoLocationPickerViewController()
         mapViewController.delegate = self
         mapViewController.modalPresentationStyle = .fullScreen
-        if let todo = todoToEdit, let address = selectedPlace {
-            mapViewController.setLocation(address)
+        if let address = selectedPlace {
+            mapViewController.selectedPlace = address // 이 줄이 변경되었습니다.
         }
         present(mapViewController, animated: true, completion: nil)
     }
@@ -430,12 +430,22 @@ extension AddTodoViewController: DateTimePickerDelegate {
 // MARK: - AddTodoLocationPickerDelegate
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
+    func presentLocationPicker() {
+        let locationPickerVC = AddTodoLocationPickerViewController()
+        locationPickerVC.delegate = self
+        present(locationPickerVC, animated: true, completion: nil)
+    }
+    
     func didPickLocation(_ address: String) {
         self.selectedPlace = address
-        
-        let indexPath = IndexPath(item: 1, section: 2)
+        updateLocationCell()
+    }
+
+    private func updateLocationCell() {
+        let indexPath = IndexPath(item: 1, section: 2) // 위치 정보를 표시하는 셀의 인덱스
         todoView.collectionView.reloadItems(at: [indexPath])
     }
+    
 }
 
 // MARK: - TitleCollectionViewCellDelegate
