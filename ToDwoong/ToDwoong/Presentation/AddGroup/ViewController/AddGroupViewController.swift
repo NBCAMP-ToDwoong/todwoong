@@ -40,7 +40,6 @@ final class AddGroupViewController: UIViewController {
         setButtonMethod()
         setDelegate()
         hideKeyboard()
-        setNavigationBar()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,15 +58,16 @@ extension AddGroupViewController: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if let text = textField.text{
             if text.isEmpty {
-                self.navigationItem.rightBarButtonItem?.isEnabled = false
+                self.addGroupView.addButton.isEnabled = false
                 addGroupView.validationGuideLabel.isHidden = false
             } else {
-                self.navigationItem.rightBarButtonItem?.isEnabled = true
+                self.addGroupView.addButton.isEnabled = true
                 addGroupView.validationGuideLabel.isHidden = true
             }
         }
     }
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         let maxLength = 5
         
         let currentLength = textField.text?.count ?? 0
@@ -102,7 +102,7 @@ extension AddGroupViewController {
 extension AddGroupViewController {
     private func setButtonMethod() {
         
-        addGroupView.buttonTapped = { button in
+        addGroupView.palleteButtonTapped = { button in
             if button.imageView?.image == UIImage(systemName: "xmark.circle") {
                 guard let color = TDStyle.color.mainTheme.toHex() else { return }
                 self.selectedColor = color
@@ -126,23 +126,13 @@ extension AddGroupViewController {
                 }
             }
         }
-    }
-
-    @objc func createGroup() {
-        if let title = addGroupView.groupTextField.text {
-            CoreDataManager.shared.createCategory(title: title, color: selectedColor, todo: nil)
-            self.navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    @objc func editGroup() {
-        guard let category = editCategory else { return }
         
-        if let title = addGroupView.groupTextField.text {
-            CoreDataManager.shared.updateCategory(category: category, newTitle: title, newColor: selectedColor, newTodo: nil)
-            editMode = false
-            editCategory = nil
-            self.navigationController?.popViewController(animated: true)
+        addGroupView.addButtonTapped = {
+            if let title = self.addGroupView.groupTextField.text {
+                CoreDataManager.shared.createCategory(title: title,
+                                                      color: self.selectedColor)
+                self.dismiss(animated: true)
+            }
         }
     }
 }
@@ -154,24 +144,6 @@ extension AddGroupViewController {
         addGroupView.checkMarkImageView.frame = CGRect(
             x: Int(xAnchor), y: Int(yAnchor), width: Int(width), height: Int(heigth)
         )
-    }
-}
-
-// MARK: - Set NavigationBar
-
-extension AddGroupViewController {
-    private func setNavigationBar() {
-        if editMode {
-            self.title = "그룹 편집"
-            let rightButton = UIBarButtonItem(title: "편집", style: .plain, target: self, action: #selector(editGroup))
-            self.navigationItem.rightBarButtonItem = rightButton
-            self.navigationItem.rightBarButtonItem?.isEnabled = true
-        } else {
-            self.title = "그룹 추가"
-            let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(createGroup))
-            self.navigationItem.rightBarButtonItem = rightButton
-            self.navigationItem.rightBarButtonItem?.isEnabled = false
-        }
     }
 }
 
@@ -201,14 +173,29 @@ extension AddGroupViewController {
             addGroupView.groupTextField.text = category.title
             
             if category.color == TDStyle.color.mainTheme.toHex() {
-                addGroupView.palleteButtonTapped(sender: addGroupView.palleteButton)
+                addGroupView.palleteButtonAction(sender: addGroupView.palleteButton)
             } else {
                 for button in buttons {
                     if category.color == button.tintColor.toHex() {
-                        addGroupView.palleteButtonTapped(sender: button)
+                        addGroupView.palleteButtonAction(sender: button)
                     }
                 }
             }
         }
+        
+        addGroupView.addButton.setTitle("편집", for: .normal)
+        addGroupView.addButton.isEnabled = true
+        addGroupView.addButtonTapped = {
+            guard let category = self.editCategory else { return }
+            
+            if let title = self.addGroupView.groupTextField.text {
+                CoreDataManager.shared.updateCategory(category: category,
+                                                      newTitle: title,
+                                                      newColor: self.selectedColor)
+
+                self.dismiss(animated: true)
+            }
+        }
+        
     }
 }

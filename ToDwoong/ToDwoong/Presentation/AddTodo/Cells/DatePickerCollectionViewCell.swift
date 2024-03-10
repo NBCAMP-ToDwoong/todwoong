@@ -33,6 +33,7 @@ class DatePickerCollectionViewCell: UICollectionViewCell {
 extension DatePickerCollectionViewCell {
     private func setDatePicker() {
         addSubview(datePicker)
+        backgroundColor = .white
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         datePicker.snp.makeConstraints { make in
             make.edges.equalToSuperview()

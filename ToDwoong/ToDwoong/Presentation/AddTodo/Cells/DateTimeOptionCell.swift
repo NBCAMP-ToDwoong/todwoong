@@ -63,9 +63,6 @@ final class DateTimeOptionCell: UICollectionViewCell {
 
 extension DateTimeOptionCell {
     private func setView() {
-        layer.borderWidth = 0.2
-        layer.borderColor = UIColor.black.cgColor
-        
         [titleLabel, infoLabelContainer, removeButton].forEach { subview in
             addSubview(subview)
         }

@@ -13,24 +13,30 @@ class TodoListViewController: UIViewController {
     
     // MARK: - Properties
     
-    let dataManager = CoreDataManager.shared
+    private let dataManager = CoreDataManager.shared
     
-    lazy var rawTodoList = dataManager.readTodos()
-    lazy var rawGroupList = dataManager.readCategories()
+    private lazy var rawTodoList = dataManager.readTodos()
+    private lazy var rawGroupList = dataManager.readCategories()
     
-    var convertTodoList: [TodoModel] {
-        convertTodoDatas(todos: rawTodoList)
-    }
-    var filteredTodoList: [TodoModel] {
-        if let groupIndex = selectedGroup {
-            let group = rawGroupList[groupIndex]
-            return filterTodoDatas(todos: convertTodoList, group: group)
+    private var todoList: [TodoModel] {
+        if selectedGroup == nil {
+            return allTodoList
         } else {
-            return convertTodoList
+            return filteredTodoList
         }
     }
+    private var allTodoList: [TodoModel] {
+        convertTodoDatas(todos: rawTodoList)
+    }
+    private var filteredTodoList: [TodoModel] {
+        if let groupIndex = selectedGroup {
+            let group = rawGroupList[groupIndex]
+            return filterTodoDatas(todos: allTodoList, group: group)
+        }
+        return convertTodoDatas(todos: rawTodoList)
+    }
     
-    var selectedGroup: Int?
+    private var selectedGroup: Int?
     
     lazy var buttonAction: ((UIButton) -> Void) = { button in
         self.selectedGroup = button.tag
@@ -42,7 +48,7 @@ class TodoListViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    var todoView = TodoListView()
+    private var todoView = TodoListView()
     
     // MARK: - Life Cycle
     
@@ -55,23 +61,22 @@ class TodoListViewController: UIViewController {
         
         setDelegates()
         setAction()
-        setNavigationBar()
     }
 }
 
 // MARK: - Action
 
 extension TodoListViewController {
-    func setAction() {
+    private func setAction() {
         todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
         todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
     }
     
-    @objc func categoryListButtonTapped() {
+    @objc private func categoryListButtonTapped() {
         self.navigationController?.pushViewController(GroupListViewController(), animated: true)
     }
     
-    @objc func allGroupButtonTapped(sender: UIButton) {
+    @objc private func allGroupButtonTapped(sender: UIButton) {
         selectedGroup = nil
         todoView.allGroupButton.alpha = 1
         todoView.groupCollectionView.reloadData()
@@ -161,7 +166,7 @@ extension TodoListViewController: UICollectionViewDelegateFlowLayout {
 
 extension TodoListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if filteredTodoList.isEmpty {
+        if todoList.isEmpty {
             todoView.emptyImageView.isHidden = false
             todoView.emptyLabel.isHidden = false
         } else {
@@ -169,7 +174,7 @@ extension TodoListViewController: UITableViewDataSource {
             todoView.emptyLabel.isHidden = true
         }
         
-        return filteredTodoList.count
+        return todoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -178,7 +183,7 @@ extension TodoListViewController: UITableViewDataSource {
             for: indexPath) as? TDTableViewCell else
         { return UITableViewCell() }
         
-        let rawTodo = self.convertToRawTodo(self.filteredTodoList[indexPath.row])
+        let rawTodo = self.convertToRawTodo(self.todoList[indexPath.row])
         
         cell.onCheckButtonTapped = {
             rawTodo.isCompleted = !rawTodo.isCompleted
@@ -187,7 +192,7 @@ extension TodoListViewController: UITableViewDataSource {
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
         
-        cell.configure(data: filteredTodoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
+        cell.configure(data: todoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
         
         return cell
     }
@@ -198,8 +203,11 @@ extension TodoListViewController: UITableViewDataSource {
 extension TodoListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // FIXME: 해당 투두 편집 화면으로 이동(투두 편집 화면 구현 이후 추가 예정)
+        let addTodoViewViewController = AddTodoViewController()
+        let convertedTodo = self.todoList[indexPath.row]
         
+        addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
+        self.present(addTodoViewViewController, animated: true)
     }
     
     // FIXME: MVP 이후 구현 예정
@@ -227,13 +235,18 @@ extension TodoListViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal,
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
-            // FIXME: Todo 추가 구현 이후 연결 예정
+
+            let addTodoViewViewController = AddTodoViewController()
+            let convertedTodo = self.todoList[indexPath.row]
+            
+            addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
+            self.present(addTodoViewViewController, animated: true)
         })
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
                                               handler: {(action, view, completionHandler) in
             
-            let convertTodo = self.filteredTodoList[indexPath.row]
+            let convertTodo = self.todoList[indexPath.row]
             let rawTodo = self.convertToRawTodo(convertTodo)
             
             self.dataManager.deleteTodo(todo: rawTodo)
@@ -297,54 +310,5 @@ extension TodoListViewController {
 extension TodoListViewController {
     private func todoDataFetch() {
         rawTodoList = dataManager.readTodos()
-    }
-}
-
-// MARK: - NavigationBar Custom
-
-extension TodoListViewController {
-    private func setNavigationBar() {
-        let customStackView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.axis = .horizontal
-            stackView.spacing = 20
-            stackView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8)
-            stackView.isLayoutMarginsRelativeArrangement = true
-            
-            return stackView
-        }()
-        let mapButton: UIButton = {
-            let button = UIButton()
-            button.setImage(UIImage(systemName: "map"), for: .normal)
-            button.tintColor = .black
-            button.addTarget(self, action: #selector(mapButtonTapped), for: .touchUpInside)
-            
-            return button
-        }()
-        let preferencesButton: UIButton = {
-            let button = UIButton()
-            button.setImage(UIImage(named: "ellipsis"), for: .normal)
-            button.tintColor = .black
-            button.addTarget(self, action: #selector(preferencesButtonTapped), for: .touchUpInside)
-            
-            return button
-        }()
-        
-        customStackView.addArrangedSubview(mapButton)
-        customStackView.addArrangedSubview(preferencesButton)
-        
-        let customBarButtonItem = UIBarButtonItem(customView: customStackView)
-        
-        self.navigationItem.rightBarButtonItem = customBarButtonItem
-    }
-    
-    @objc func mapButtonTapped() {
-        // FIXME: 맵 구현 이후 주석 해제 예정
-//        navigationController?.pushViewController(MapViewController(), animated: .true)
-    }
-    
-    @objc func preferencesButtonTapped() {
-        // FIXME: 설정 구현 이후 주석 해제 예정
-//        navigationController?.pushViewController(PreferencesViewController(), animated: .true)
     }
 }

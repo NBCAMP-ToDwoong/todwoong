@@ -8,16 +8,17 @@
 import UIKit
 
 import SnapKit
+import TodwoongDesign
 
 final class DateTimePickerContainerCell: UICollectionViewCell {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     var selectedDueDate: Date?
     var selectedDueTime: Date?
     var collectionView: UICollectionView!
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
     weak var parentViewController: AddTodoViewController?
     
@@ -32,7 +33,7 @@ final class DateTimePickerContainerCell: UICollectionViewCell {
     
 }
 
-// MARK: setView
+// MARK: - setView
 
 extension DateTimePickerContainerCell {
     private func setView() {
@@ -40,20 +41,33 @@ extension DateTimePickerContainerCell {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
+        //self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+        
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .white
         collectionView.register(DateTimeOptionCell.self, forCellWithReuseIdentifier: "DateTimeContainerCell")
         collectionView.register(DatePickerCollectionViewCell.self, forCellWithReuseIdentifier: "DatePickerCell")
+        
         addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
+        
+        let separatorView = UIView()
+        separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        addSubview(separatorView)
+        separatorView.snp.makeConstraints { make in
+            make.width.equalTo(1)
+            make.top.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
     }
 }
 
-// MARK: configureDateTimeOptionCell
+// MARK: - configureDateTimeOptionCell
 
 extension DateTimePickerContainerCell {
     private func configureDateTimeOptionCell(_ cell: DateTimeOptionCell, isDateCell: Bool) {
@@ -84,7 +98,7 @@ extension DateTimePickerContainerCell {
     
 }
 
-// MARK: UICollectionViewDelegate, UICollectionViewDataSource
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource
 
 extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -137,7 +151,7 @@ extension DateTimePickerContainerCell: UICollectionViewDelegate, UICollectionVie
     }
 }
 
-// MARK: UICollectionViewDelegateFlowLayout
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension DateTimePickerContainerCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,

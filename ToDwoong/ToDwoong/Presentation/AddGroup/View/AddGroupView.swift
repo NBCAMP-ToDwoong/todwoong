@@ -13,15 +13,43 @@ final class AddGroupView: UIView {
     
     // MARK: - Properties
     
-    var buttonTapped: (UIButton) -> () = { button in }
+    var palleteButtonTapped: ((UIButton) -> ())?
+    var addButtonTapped: (() -> ())?
     
     // MARK: - UI Properties
+    
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "그룹"
+        
+        return label
+    }()
+    
+    var addButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("저장", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
+        button.isEnabled = false
+        button.setTitleColor(.systemGray3, for: .disabled)
+        
+        return button
+    }()
+
+    private var seperateLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray3
+        
+        return view
+    }()
     
     lazy var groupTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "제목"
-        textField.backgroundColor = .white
+        textField.backgroundColor = .clear
         textField.layer.cornerRadius = 10
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.systemGray3.cgColor
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: frame.height))
         textField.leftViewMode = .always
         
@@ -122,8 +150,15 @@ final class AddGroupView: UIView {
 // MARK: - @objc Method
 
 extension AddGroupView {
-    @objc func palleteButtonTapped(sender: UIButton) {
-        buttonTapped(sender)
+    @objc func palleteButtonAction(sender: UIButton) {
+        if let buttonTapped = palleteButtonTapped {
+            buttonTapped(sender)
+        }
+    }
+    @objc func addButtonAction(sender: UIButton) {
+        if let buttonTapped = addButtonTapped {
+            buttonTapped()
+        }
     }
 }
 
@@ -131,9 +166,12 @@ extension AddGroupView {
 
 extension AddGroupView {
     private func setUI() {
-        self.backgroundColor = TDStyle.color.lightGray
+        self.backgroundColor = .white
         
         [
+            titleLabel,
+            addButton,
+            seperateLine,
             groupTextField,
             validationGuideLabel,
             restrictionLabel,
@@ -158,8 +196,25 @@ extension AddGroupView {
             palleteButton9
         ].forEach { palleteStackView2.addArrangedSubview($0) }
         
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(40)
+            make.leading.equalToSuperview().offset(16)
+        }
+        
+        addButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(40)
+            make.height.equalTo(titleLabel.snp.height)
+            make.trailing.equalToSuperview().offset(-16)
+        }
+        
+        seperateLine.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+            make.trailing.leading.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
         groupTextField.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.top.equalTo(seperateLine.snp.bottom).offset(16)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(-16)
             make.height.equalTo(44)
@@ -205,7 +260,7 @@ extension AddGroupView {
         button.tintColor = color
         button.contentHorizontalAlignment = .fill
         button.contentVerticalAlignment = .fill
-        button.addTarget(self, action: #selector(palleteButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(palleteButtonAction), for: .touchUpInside)
         
         return button
     }

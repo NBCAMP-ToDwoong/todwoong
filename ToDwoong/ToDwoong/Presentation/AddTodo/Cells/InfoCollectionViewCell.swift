@@ -14,6 +14,8 @@ final class InfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
+    var deleteGroupAction: (() -> Void)?
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -65,10 +67,17 @@ final class InfoCollectionViewCell: UICollectionViewCell {
 
 extension InfoCollectionViewCell {
     private func setView() {
-        layer.borderWidth = 0.2
-        layer.borderColor = UIColor.black.cgColor
         layer.masksToBounds = true
+        self.clipsToBounds = true
+        self.backgroundColor = .white
         
+        let separatorView = UIView()
+        separatorView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5)
+        addSubview(separatorView)
+        separatorView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(10)
@@ -82,7 +91,7 @@ extension InfoCollectionViewCell {
         }
         
         removeButton.snp.makeConstraints { make in
-            make.right.equalTo(symbolImageView.snp.left).offset(0)
+            make.right.equalToSuperview().offset(-10)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(20)
         }
@@ -93,17 +102,38 @@ extension InfoCollectionViewCell {
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(10)
         }
     }
-    
 }
 
 // MARK: - configureCell
 
 extension InfoCollectionViewCell {
-    func configureCell(title: String, detail: String? = nil, showremoveButton: Bool = false) {
-        titleLabel.text = title
-        detailLabel.text = detail
-        removeButton.isHidden = !showremoveButton
-        detailLabel.textAlignment = detail != nil ? .right : .left
-    }
+    func configureCell(title: String, detail: String? = nil, showRemoveButton: Bool = false) {
+            titleLabel.text = title
+            detailLabel.text = detail
+            
+            if let detail = detail, !detail.isEmpty {
+                removeButton.isHidden = false
+                symbolImageView.isHidden = true
+                detailLabel.textAlignment = .right
+            } else {
+                removeButton.isHidden = true
+                symbolImageView.isHidden = false
+                detailLabel.textAlignment = .left
+            }
+        }
     
+    func toggleRemoveButton(_ show: Bool) {
+        removeButton.isHidden = !show
+        symbolImageView.isHidden = show
+        if show {
+            detailLabel.snp.updateConstraints { make in
+                make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(20)
+            }
+        } else {
+            detailLabel.snp.updateConstraints { make in
+                make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(10)
+            }
+        }
+    }
+  
 }
