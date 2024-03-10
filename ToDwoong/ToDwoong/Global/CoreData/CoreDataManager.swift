@@ -70,7 +70,7 @@ final class CoreDataManager {
     }
     
     func updateTodo(todo: Todo, 
-                    newTitle: String, newPlace: String,
+                    newTitle: String, newPlace: String?,
                     newDate: Date?, newTime: Date?,
                     newCompleted: Bool,
                     newTimeAlarm: Bool, newPlaceAlarm: Bool,
