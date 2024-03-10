@@ -43,14 +43,18 @@ class MapViewController: UIViewController {
         loadCategoriesAndCategoryChips()
         loadTodosAndPins()
         
-        customMapView.categoryListView.dataSource = self
-        customMapView.categoryListView.delegate = self
-        customMapView.selectedCategory = { [weak self] category in
-            guard let self = self else { return }
-            self.selectCategory(category)
-        }
-        
-        customMapView.groupListButton.addTarget(self, action: #selector(toggleCategoryList), for: .touchUpInside)
+        customMapView.groupListButton.addTarget(self, action: #selector(showGroupList), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        navigationBarAppearance.backgroundColor = .clear
+            
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     // MARK: - Setting Method
@@ -128,7 +132,6 @@ class MapViewController: UIViewController {
     
     private func loadCategoriesAndCategoryChips() {
         categories = CoreDataManager.shared.readCategories()
-        customMapView.categories = categories.map { $0.toCategoryModel() }
         categories.forEach { category in
             customMapView.addCategoryChip(category: category.toCategoryModel(), action: #selector(categoryChipTapped(_:)), target: self)
         }
@@ -196,8 +199,9 @@ class MapViewController: UIViewController {
         }
     }
     
-    @objc private func toggleCategoryList() {
-        customMapView.toggleCategoryList()
+    @objc private func showGroupList() {
+        let groupListViewController = GroupListViewController()
+        navigationController?.pushViewController(groupListViewController, animated: true)
     }
 }
 
@@ -292,29 +296,6 @@ extension MapViewController: MKMapViewDelegate {
 //            self.selectedAnnotation = nil
 //        }
 //    }
-}
-
-extension MapViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return customMapView.categories.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        let category = customMapView.categories[indexPath.row]
-        cell.textLabel?.text = category.title
-        return cell
-    }
-    
-    
-}
-
-extension MapViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let category = customMapView.categories[indexPath.row]
-        customMapView.selectedCategory?(category)
-        customMapView.toggleCategoryList()
-    }
 }
 
 extension MapViewController {

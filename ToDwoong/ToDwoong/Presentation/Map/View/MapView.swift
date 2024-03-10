@@ -15,28 +15,19 @@ class MapView: UIView {
     
     // MARK: - UI Properties
     
-    lazy var categoryListView: UITableView = {
-        let tableView = UITableView()
-        tableView.isHidden = true
-        tableView.backgroundColor = .white
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CategoryCell")
-        return tableView
-    }()
-    
     let mapView: MKMapView = MKMapView()
     private let scrollView: UIScrollView = UIScrollView()
     let stackView: UIStackView = UIStackView()
     var selectedCategoryButton: CategoryChipButton?
     
-    // Hamburger Button Storage
-    
-    var categories: [CategoryModel] = []
-    var selectedCategory: ((CategoryModel) -> Void)?
-    
     lazy var groupListButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.tintColor = .black
-        button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+        let configuration = UIImage.SymbolConfiguration(pointSize: 25)
+        let image = UIImage(systemName: "line.3.horizontal", withConfiguration: configuration)
+        button.setImage(image, for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }()
     
@@ -74,7 +65,6 @@ class MapView: UIView {
     
     func setCategoryChipsView() {
         addSubview(scrollView)
-        addSubview(categoryListView)
         scrollView.addSubview(stackView)
         scrollView.addSubview(groupListButton)
         scrollView.addSubview(allGroupButton)
@@ -107,12 +97,6 @@ class MapView: UIView {
             make.trailing.equalTo(scrollView.contentLayoutGuide)
             make.height.equalTo(scrollView)
         }
-        
-        categoryListView.snp.makeConstraints { make in
-            make.top.equalTo(scrollView.snp.bottom)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(0)
-        }
     }
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
@@ -132,18 +116,6 @@ class MapView: UIView {
     @objc func allGroupButtonTapped() {
         if let viewController = next as? MapViewController {
             viewController.allGroupButtonTapped(allGroupButton)
-        }
-    }
-
-    @objc func toggleCategoryList() {
-        categoryListView.isHidden.toggle()
-            
-        categoryListView.snp.updateConstraints { make in
-            make.height.equalTo(categoryListView.isHidden ? 0 : 200)
-        }
-            
-        UIView.animate(withDuration: 0.3) {
-            self.layoutIfNeeded()
         }
     }
 }
