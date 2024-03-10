@@ -74,26 +74,26 @@ final class AddTodoLocationPickerViewController: UIViewController {
     
     func setLocation(_ address: String) {
         isMapCenteredByUser = true
-
+        
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = address
         let search = MKLocalSearch(request: searchRequest)
-
+        
         search.start { [weak self] (response, error) in
             guard let self = self else { return }
-
+            
             if let error = error {
                 print("Error searching for address: \(error)")
                 return
             }
-
+            
             guard let response = response, let mapItem = response.mapItems.first else {
                 print("No results found for address")
                 return
             }
-
+            
             let placemark = mapItem.placemark
-
+            
             DispatchQueue.main.async {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
                                                 latitudinalMeters: 500,
@@ -112,7 +112,7 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
             isMapCenteredByUser = false
             return
         }
-
+        
         let center = mapView.centerCoordinate
         fetchAddressFromCoordinates(center)
     }
@@ -157,14 +157,14 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
             let addressLine = "\(cityAddress) \(roadAddress)"
             addressComponents.append(addressLine)
         }
-
+        
         let addressString = addressComponents.joined(separator: "\n")
         
         DispatchQueue.main.async {
             self.locationPickerView.addressLabel.text = addressString
         }
     }
-
+    
 }
 
 // MARK: - CLLocationManagerDelegate
@@ -179,7 +179,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
             isMapCenteredByUser = false
         }
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error fetching location: \(error)")
     }
@@ -194,7 +194,7 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
         DispatchQueue.main.async {
             self.locationPickerView.addressLabel.text = ""
         }
-
+        
         setLocation(searchTerm)
     }
 }
@@ -202,9 +202,9 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
 // MARK: - AddTodoLocationPickerViewDelegate
 extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
     func didTapConfirmAddress(_ address: String) {
-            let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
-            
-            delegate?.didPickLocation(firstLineOfAddress)
-            dismiss(animated: true, completion: nil)
-        }
+        let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
+        
+        delegate?.didPickLocation(firstLineOfAddress)
+        dismiss(animated: true, completion: nil)
+    }
 }
