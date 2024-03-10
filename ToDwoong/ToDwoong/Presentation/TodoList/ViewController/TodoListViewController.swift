@@ -148,7 +148,9 @@ extension TodoListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         // FIXME: 그룹 필터 로직 구현 예정
-        
+        selectedGroup = indexPath.row
+        todoView.groupCollectionView.reloadData()
+        todoView.todoTableView.reloadData()
     }
 }
 
