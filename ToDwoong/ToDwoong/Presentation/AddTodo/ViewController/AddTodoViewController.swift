@@ -275,7 +275,7 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
                 case 0:
                     cell.configureCell(title: "그룹", detail: selectedGroup?.title ?? "") // 그룹 셀, 받아온 그룹 정보 설정
                 case 1:
-                    cell.configureCell(title: "위치", detail: selectedPlace ?? "", showremoveButton: selectedPlace != nil)
+                    cell.configureCell(title: "위치", detail: selectedPlace ?? "", showRemoveButton: selectedPlace != nil)
                     cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
                     cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
                 case 2:
