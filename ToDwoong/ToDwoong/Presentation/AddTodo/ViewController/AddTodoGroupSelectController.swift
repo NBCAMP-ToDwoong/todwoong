@@ -16,7 +16,7 @@ final class AddTodoGroupSelectController: UIViewController {
     
     weak var delegate: AddTodoGroupSelectControllerDelegate?
     var groupList: [Category] = []
-    private var selectedCategory: Category?
+    var selectedCategory: Category?
     
     // MARK: - UI Properties
     
@@ -135,7 +135,16 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupTableViewCellIdentifier", for: indexPath)
-        cell.textLabel?.text = groupList[indexPath.row].title
+        let group = groupList[indexPath.row]
+        cell.textLabel?.text = group.title
+        
+        // 선택된 카테고리와 현재 셀의 카테고리가 일치하는 경우 체크마크 설정
+        if let selectedCategory = selectedCategory, selectedCategory == group {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
 }
@@ -144,10 +153,18 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
 
 extension AddTodoGroupSelectController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedCategory = groupList[indexPath.row]
+        for row in 0..<tableView.numberOfRows(inSection: indexPath.section) {
+            if let cell = tableView.cellForRow(at: IndexPath(row: row, section: indexPath.section)) {
+                cell.accessoryType = .none
+            }
+        }
+        
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .checkmark
+            selectedCategory = groupList[indexPath.row]
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
