@@ -42,6 +42,15 @@ class MapViewController: UIViewController {
         
         loadCategoriesAndCategoryChips()
         loadTodosAndPins()
+        
+        customMapView.categoryListView.dataSource = self
+        customMapView.categoryListView.delegate = self
+        customMapView.selectedCategory = { [weak self] category in
+            guard let self = self else { return }
+            self.selectCategory(category)
+        }
+        
+        customMapView.groupListButton.addTarget(self, action: #selector(toggleCategoryList), for: .touchUpInside)
     }
     
     // MARK: - Setting Method
@@ -119,15 +128,26 @@ class MapViewController: UIViewController {
     
     private func loadCategoriesAndCategoryChips() {
         categories = CoreDataManager.shared.readCategories()
+        customMapView.categories = categories.map { $0.toCategoryModel() }
         categories.forEach { category in
             customMapView.addCategoryChip(category: category.toCategoryModel(), action: #selector(categoryChipTapped(_:)), target: self)
         }
     }
     
+    private func selectCategory(_ category: CategoryModel) {
+        guard let chipButton = customMapView.stackView.arrangedSubviews.first(where: { ($0 as? CategoryChipButton)?.titleLabel?.text == category.title }) as? CategoryChipButton else {
+            return
+        }
+            
+        categoryChipTapped(chipButton)
+    }
+    
     // MARK: - Objc Func
     
-    @objc func categoryChipTapped(_ sender: TDCustomButton) {
+    @objc func categoryChipTapped(_ sender: CategoryChipButton) {
         guard let title = sender.titleLabel?.text else { return }
+        
+        customMapView.selectCategoryButton(sender)
         
         let detailVC = TodoDetailViewController()
         
@@ -157,6 +177,10 @@ class MapViewController: UIViewController {
         
         present(detailVC, animated: true, completion: nil)
     }
+
+    @objc func allGroupButtonTapped(_ sender: CategoryChipButton) {
+        categoryChipTapped(sender)
+    }
     
     @objc private func didTapBackButton() {
         navigationController?.popViewController(animated: true)
@@ -170,6 +194,10 @@ class MapViewController: UIViewController {
                                             longitudinalMeters: 300)
             customMapView.mapView.setRegion(region, animated: true)
         }
+    }
+    
+    @objc private func toggleCategoryList() {
+        customMapView.toggleCategoryList()
     }
 }
 
@@ -264,6 +292,29 @@ extension MapViewController: MKMapViewDelegate {
 //            self.selectedAnnotation = nil
 //        }
 //    }
+}
+
+extension MapViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return customMapView.categories.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let category = customMapView.categories[indexPath.row]
+        cell.textLabel?.text = category.title
+        return cell
+    }
+    
+    
+}
+
+extension MapViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let category = customMapView.categories[indexPath.row]
+        customMapView.selectedCategory?(category)
+        customMapView.toggleCategoryList()
+    }
 }
 
 extension MapViewController {

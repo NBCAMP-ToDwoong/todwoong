@@ -15,9 +15,23 @@ class MapView: UIView {
     
     // MARK: - UI Properties
     
+    lazy var categoryListView: UITableView = {
+        let tableView = UITableView()
+        tableView.isHidden = true
+        tableView.backgroundColor = .white
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "CategoryCell")
+        return tableView
+    }()
+    
     let mapView: MKMapView = MKMapView()
     private let scrollView: UIScrollView = UIScrollView()
     let stackView: UIStackView = UIStackView()
+    var selectedCategoryButton: CategoryChipButton?
+    
+    // Hamburger Button Storage
+    
+    var categories: [CategoryModel] = []
+    var selectedCategory: ((CategoryModel) -> Void)?
     
     lazy var groupListButton: UIButton = {
        let button = UIButton()
@@ -26,9 +40,11 @@ class MapView: UIView {
         return button
     }()
     
-    lazy var allGroupButton: UIButton = {
-        let button = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
+    lazy var allGroupButton: CategoryChipButton = {
+        let button = CategoryChipButton(title: "전체", color: TDStyle.color.mainTheme)
         button.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
+        button.titleLabel?.font = TDStyle.font.body(style: .regular)
+        button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8) 
         return button
     }()
 
@@ -58,6 +74,7 @@ class MapView: UIView {
     
     func setCategoryChipsView() {
         addSubview(scrollView)
+        addSubview(categoryListView)
         scrollView.addSubview(stackView)
         scrollView.addSubview(groupListButton)
         scrollView.addSubview(allGroupButton)
@@ -90,20 +107,43 @@ class MapView: UIView {
             make.trailing.equalTo(scrollView.contentLayoutGuide)
             make.height.equalTo(scrollView)
         }
+        
+        categoryListView.snp.makeConstraints { make in
+            make.top.equalTo(scrollView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(0)
+        }
     }
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
-        let chipButton = TDCustomButton(frame: .zero, type: .chip, title: category.title , backgroundColor: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
-            chipButton.addTarget(target, action: action, for: .touchUpInside)
-            stackView.addArrangedSubview(chipButton)
-        }
+        let chipButton = CategoryChipButton(title: category.title, color: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
+        chipButton.addTarget(target, action: action, for: .touchUpInside)
+        stackView.addArrangedSubview(chipButton)
+    }
+    
+    func selectCategoryButton(_ button: CategoryChipButton) {
+        selectedCategoryButton?.isSelectedButton = false
+        selectedCategoryButton = button
+        selectedCategoryButton?.isSelectedButton = true
+    }
     
     // MARK: - Objc
     
     @objc func allGroupButtonTapped() {
         if let viewController = next as? MapViewController {
-            viewController.allGroupButtonTapped()
+            viewController.allGroupButtonTapped(allGroupButton)
         }
     }
 
+    @objc func toggleCategoryList() {
+        categoryListView.isHidden.toggle()
+            
+        categoryListView.snp.updateConstraints { make in
+            make.height.equalTo(categoryListView.isHidden ? 0 : 200)
+        }
+            
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
+    }
 }
