@@ -104,8 +104,7 @@ extension TabBarController {
     }
     
     @objc func mapButtonTapped() {
-        // FIXME: 맵 구현 이후 주석 해제 예정
-//        navigationController?.pushViewController(MapViewController(), animated: .true)
+        navigationController?.pushViewController(MapViewController(), animated: true)
     }
     
     @objc func preferencesButtonTapped() {
