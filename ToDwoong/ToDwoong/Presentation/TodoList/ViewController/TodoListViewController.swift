@@ -66,11 +66,22 @@ class TodoListViewController: UIViewController {
             selector: #selector(dataUpdated(_:)),
             name: .TodoDataUpdatedNotification,
             object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdatedGroup(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
     }
     
     @objc func dataUpdated(_ notification: Notification) {
         todoDataFetch()
         todoView.todoTableView.reloadData()
+    }
+    
+    @objc func dataUpdatedGroup(_ notification: Notification) {
+        groupDataFetch()
+        todoView.groupCollectionView.reloadData()
     }
 }
 
@@ -322,5 +333,9 @@ extension TodoListViewController {
 extension TodoListViewController {
     private func todoDataFetch() {
         rawTodoList = dataManager.readTodos()
+    }
+    
+    private func groupDataFetch() {
+        rawGroupList = dataManager.readCategories()
     }
 }
