@@ -442,7 +442,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
     }
 
     private func updateLocationCell() {
-        let indexPath = IndexPath(item: 1, section: 2) // 위치 정보를 표시하는 셀의 인덱스
+        let indexPath = IndexPath(item: 1, section: 2)
         todoView.collectionView.reloadItems(at: [indexPath])
     }
     

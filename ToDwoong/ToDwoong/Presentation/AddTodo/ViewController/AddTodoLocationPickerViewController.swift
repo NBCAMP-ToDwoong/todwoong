@@ -159,10 +159,10 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
         }
         
         let addressString = addressComponents.joined(separator: "\n")
-        if addressString == "55557" {
-            self.locationPickerView.addressLabel.text = "로딩 중입니다..."
-        } else {
-            self.locationPickerView.addressLabel.text = addressString
+        DispatchQueue.main.async {
+            if !addressString.allSatisfy({ $0.isNumber }) {
+                self.locationPickerView.addressLabel.text = addressString
+            }
         }
     }
     
@@ -175,7 +175,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
             let region = MKCoordinateRegion(center: location.coordinate,
                                             latitudinalMeters: 500,
                                             longitudinalMeters: 500)
-            locationPickerView.mapView.setRegion(region, animated: true)
+            locationPickerView.mapView.setRegion(region, animated: false)
             locationManager.stopUpdatingLocation()
             isMapCenteredByUser = false
         }
