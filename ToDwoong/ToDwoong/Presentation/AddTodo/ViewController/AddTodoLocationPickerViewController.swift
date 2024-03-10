@@ -11,15 +11,19 @@ import UIKit
 
 final class AddTodoLocationPickerViewController: UIViewController {
     
-    // MARK: Properties
-    
+    // MARK: - Properties
     var addressString: String = ""
-    var selectedPlace: String?
+    var selectedPlace: String? {
+        didSet {
+            configureMapLocation()
+        }
+    }
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
-    // MARK: UI Properties
+    private var isMapCenteredByUser = false
     
+    // MARK: - UI Properties
     weak var delegate: AddTodoLocationPickerDelegate?
     
     private var locationPickerView: AddTodoLocationPickerView {
@@ -34,13 +38,13 @@ final class AddTodoLocationPickerViewController: UIViewController {
         view = locationPickerView
     }
     
-    // MARK: Life Cycle
-    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegates()
         requestLocationAccess()
         centerMapOnUserLocation()
+        configureMapLocation()
     }
     
     private func setDelegates() {
@@ -60,16 +64,55 @@ final class AddTodoLocationPickerViewController: UIViewController {
         }
     }
     
-    func closeAddTodoLocationPickerModal(with address: String?) {
-        selectedPlace = address
-        dismiss(animated: true, completion: nil)
+    private func configureMapLocation() {
+        if let selectedPlace = selectedPlace, !selectedPlace.isEmpty {
+            setLocation(selectedPlace)
+        } else {
+            centerMapOnUserLocation()
+        }
+    }
+    
+    func setLocation(_ address: String) {
+        isMapCenteredByUser = true
+        
+        let searchRequest = MKLocalSearch.Request()
+        searchRequest.naturalLanguageQuery = address
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { [weak self] (response, error) in
+            guard let self = self else { return }
+            
+            if let error = error {
+                print("Error searching for address: \(error)")
+                return
+            }
+            
+            guard let response = response, let mapItem = response.mapItems.first else {
+                print("No results found for address")
+                return
+            }
+            
+            let placemark = mapItem.placemark
+            
+            DispatchQueue.main.async {
+                let region = MKCoordinateRegion(center: placemark.coordinate,
+                                                latitudinalMeters: 500,
+                                                longitudinalMeters: 500)
+                self.locationPickerView.mapView.setRegion(region, animated: false)
+                self.updateAddressLabel(with: placemark)
+            }
+        }
     }
 }
 
 // MARK: - MKMapViewDelegate
-
 extension AddTodoLocationPickerViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        guard !isMapCenteredByUser else {
+            isMapCenteredByUser = false
+            return
+        }
+        
         let center = mapView.centerCoordinate
         fetchAddressFromCoordinates(center)
     }
@@ -77,89 +120,92 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
     private func fetchAddressFromCoordinates(_ coordinates: CLLocationCoordinate2D) {
         let location = CLLocation(latitude: coordinates.latitude, longitude: coordinates.longitude)
         geocoder.reverseGeocodeLocation(location) { [weak self] (placemarks, error) in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             
             if let error = error {
-                print("Error fetchting address: \(error)")
+                print("Error fetching address: \(error)")
                 return
             }
             
-            // TODO: 수정 및 테스트중
             if let placemark = placemarks?.first {
-                var addressComponents: [String] = []
-                // 시/구
-                if let locality = placemark.locality {
-                    addressComponents.append(locality)
-                }
-                // 지번 주소
-                if let thoroughfare = placemark.thoroughfare {
-                    addressComponents.append(thoroughfare)
-                }
-                // 도로명 주소
-                if let street = placemark.subThoroughfare {
-                    addressComponents.append(street)
-                }
-                
-                let addressString = addressComponents.joined(separator: " ")
-                print(addressString)
-                DispatchQueue.main.async {
-                    strongSelf.locationPickerView.addressLabel.text = addressString
-                    print(addressString)
-                }
+                self.updateAddressLabel(with: placemark)
             }
         }
     }
+    
+    private func updateAddressLabel(with placemark: CLPlacemark) {
+        var addressComponents: [String] = []
+        
+        var cityAddress = ""
+        if let locality = placemark.locality, !locality.isEmpty {
+            cityAddress += locality
+        }
+        
+        var roadAddress = ""
+        if let thoroughfare = placemark.thoroughfare, !thoroughfare.isEmpty {
+            roadAddress += thoroughfare
+            if let subThoroughfare = placemark.subThoroughfare, !subThoroughfare.isEmpty {
+                roadAddress += " " + subThoroughfare
+            }
+        }
+        
+        if let name = placemark.name, !name.isEmpty, name != roadAddress, name != cityAddress {
+            addressComponents.append(name)
+        }
+        
+        if !cityAddress.isEmpty && cityAddress != roadAddress && !roadAddress.isEmpty {
+            let addressLine = "\(cityAddress) \(roadAddress)"
+            addressComponents.append(addressLine)
+        }
+        
+        let addressString = addressComponents.joined(separator: "\n")
+        DispatchQueue.main.async {
+            if !addressString.allSatisfy({ $0.isNumber }) {
+                self.locationPickerView.addressLabel.text = addressString
+            }
+        }
+    }
+    
 }
 
-// MARK: CLLocationManagerDelegate
-
+// MARK: - CLLocationManagerDelegate
 extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, 
-                                            longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, latitudinalMeters: 1000, longitudinalMeters: 1000)
-        locationPickerView.mapView.setRegion(region, animated: true)
-        locationManager.stopUpdatingLocation()
+        if let location = locations.first, !isMapCenteredByUser {
+            let region = MKCoordinateRegion(center: location.coordinate,
+                                            latitudinalMeters: 500,
+                                            longitudinalMeters: 500)
+            locationPickerView.mapView.setRegion(region, animated: false)
+            locationManager.stopUpdatingLocation()
+            isMapCenteredByUser = false
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Error fetchting location: \(error)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        }
+        print("Error fetching location: \(error)")
     }
 }
 
-// MARK: UISearchBarDelegate
-
+// MARK: - UISearchBarDelegate
 extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
         
-        geocoder.geocodeAddressString(searchBar.text ?? "") { [weak self] (placemarks, error) in
-            if let error = error {
-                print("Error searching address: \(error)")
-                return
-            }
-            if let placemark = placemarks?.first, let location = placemark.location {
-                let region = MKCoordinateRegion(center: location.coordinate, 
-                                                latitudinalMeters: 1000, longitudinalMeters: 1000)
-                self?.locationPickerView.mapView.setRegion(region, animated: true)
-            }
+        DispatchQueue.main.async {
+            self.locationPickerView.addressLabel.text = ""
         }
+        
+        setLocation(searchTerm)
     }
 }
 
-// MARK: AddTodoLocationPickerViewDelegate
-
+// MARK: - AddTodoLocationPickerViewDelegate
 extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
     func didTapConfirmAddress(_ address: String) {
-        self.selectedPlace = address
-        delegate?.didPickLocation(address)
+        let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
+        
+        delegate?.didPickLocation(firstLineOfAddress)
         dismiss(animated: true, completion: nil)
     }
 }

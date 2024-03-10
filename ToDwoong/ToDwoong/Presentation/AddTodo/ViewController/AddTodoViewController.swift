@@ -13,6 +13,7 @@ import TodwoongDesign
 final class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
+    
     var todoToEdit: Todo?
     var selectedTitle: String?
     var selectedDueDate: Date?
@@ -91,7 +92,7 @@ final class AddTodoViewController: UIViewController {
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
-                                              newPlace: place ?? "",
+                                              newPlace: place,
                                               newDate: selectedDueDate,
                                               newTime: selectedDueTime,
                                               newCompleted: isCompleted,
@@ -218,13 +219,13 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         if let datePickerIndexPath = datePickerIndexPath, section == datePickerIndexPath.section {
             return 1
         } else if section == 2 || (datePickerIndexPath != nil && section == 3) {
-            return 3
+            return 2 // 알람제외
         } else {
             return 1
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let datePickerIndexPath = datePickerIndexPath, indexPath.section == datePickerIndexPath.section {
             guard let cell = collectionView.dequeueReusableCell(
@@ -335,6 +336,9 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
         let mapViewController = AddTodoLocationPickerViewController()
         mapViewController.delegate = self
         mapViewController.modalPresentationStyle = .fullScreen
+        if let address = selectedPlace {
+            mapViewController.selectedPlace = address // 이 줄이 변경되었습니다.
+        }
         present(mapViewController, animated: true, completion: nil)
     }
     
@@ -426,12 +430,22 @@ extension AddTodoViewController: DateTimePickerDelegate {
 // MARK: - AddTodoLocationPickerDelegate
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
+    func presentLocationPicker() {
+        let locationPickerVC = AddTodoLocationPickerViewController()
+        locationPickerVC.delegate = self
+        present(locationPickerVC, animated: true, completion: nil)
+    }
+    
     func didPickLocation(_ address: String) {
         self.selectedPlace = address
-        
+        updateLocationCell()
+    }
+
+    private func updateLocationCell() {
         let indexPath = IndexPath(item: 1, section: 2)
         todoView.collectionView.reloadItems(at: [indexPath])
     }
+    
 }
 
 // MARK: - TitleCollectionViewCellDelegate
