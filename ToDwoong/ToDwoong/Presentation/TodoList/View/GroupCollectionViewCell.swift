@@ -18,7 +18,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
-    var groupButton: UIButton = {
+    lazy var groupButton: UIButton = {
         let button = TDButton.chip(title: "전체", backgroundColor: TDStyle.color.mainTheme)
         button.addTarget(self, action: #selector(groupButtonTapped), for: .touchUpInside)
         

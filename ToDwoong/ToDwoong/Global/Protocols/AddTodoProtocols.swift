@@ -26,4 +26,3 @@ protocol DateTimePickerDelegate: AnyObject {
 protocol TitleCollectionViewCellDelegate: AnyObject {
     func titleCellDidEndEditing(_ text: String?)
 }
-

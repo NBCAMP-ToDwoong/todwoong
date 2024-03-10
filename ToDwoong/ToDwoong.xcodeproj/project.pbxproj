@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB592B9DDB7D0030B31D /* SnapKit */; };
-		1B0FAB5F2B9DDB820030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB5E2B9DDB820030B31D /* TodwoongDesign */; };
 		1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB612B9DDB870030B31D /* FSCalendar */; };
-		1B0FAB632B9DDB8D0030B31D /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB5E2B9DDB820030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
+		1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; };
+		1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
@@ -67,7 +67,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B0FAB632B9DDB8D0030B31D /* TodwoongDesign in Embed Frameworks */,
+				1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -132,8 +132,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */,
+				1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */,
 				1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */,
-				1B0FAB5F2B9DDB820030B31D /* TodwoongDesign in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,8 +495,8 @@
 			name = ToDwoong;
 			packageProductDependencies = (
 				1B0FAB592B9DDB7D0030B31D /* SnapKit */,
-				1B0FAB5E2B9DDB820030B31D /* TodwoongDesign */,
 				1B0FAB612B9DDB870030B31D /* FSCalendar */,
+				1B0FAB672B9DE2540030B31D /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -528,8 +528,8 @@
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
 				1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1B0FAB5D2B9DDB820030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 				1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -863,20 +863,20 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		1B0FAB5D2B9DDB820030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.7;
-			};
-		};
 		1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.8.4;
+			};
+		};
+		1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -887,15 +887,15 @@
 			package = 1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		1B0FAB5E2B9DDB820030B31D /* TodwoongDesign */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1B0FAB5D2B9DDB820030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
-			productName = TodwoongDesign;
-		};
 		1B0FAB612B9DDB870030B31D /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		1B0FAB672B9DE2540030B31D /* TodwoongDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			productName = TodwoongDesign;
 		};
 /* End XCSwiftPackageProductDependency section */
 

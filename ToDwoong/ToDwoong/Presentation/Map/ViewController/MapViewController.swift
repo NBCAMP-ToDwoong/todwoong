@@ -102,7 +102,10 @@ class MapViewController: UIViewController {
         todos = CoreDataManager.shared.readTodos()
         for todo in todos {
             if let place = todo.place, let categoryColor = todo.category?.color {
-                addPinForPlace(place, colorName: categoryColor, category: todo.category?.title ?? "", todo: todo.toTodoModel())
+                addPinForPlace(place, 
+                               colorName: categoryColor,
+                               category: todo.category?.title ?? "", 
+                               todo: todo.toTodoModel())
             }
         }
     }
@@ -119,7 +122,10 @@ class MapViewController: UIViewController {
             }
             
             if let placemark = placemarks?.first, let location = placemark.location {
-                let annotation = TodoAnnotation(coordinate: location.coordinate, title: todo.title , colorName: colorName, category: category)
+                let annotation = TodoAnnotation(coordinate: location.coordinate, 
+                                                title: todo.title,
+                                                colorName: colorName,
+                                                category: category)
                 
                 strongSelf.todoAnnotationMap[todo.id?.uuidString ?? ""] = annotation
                 
@@ -133,12 +139,15 @@ class MapViewController: UIViewController {
     private func loadCategoriesAndCategoryChips() {
         categories = CoreDataManager.shared.readCategories()
         categories.forEach { category in
-            customMapView.addCategoryChip(category: category.toCategoryModel(), action: #selector(categoryChipTapped(_:)), target: self)
+            customMapView.addCategoryChip(category: category.toCategoryModel(), 
+                                          action: #selector(categoryChipTapped(_:)), target: self)
         }
     }
     
     private func selectCategory(_ category: CategoryModel) {
-        guard let chipButton = customMapView.stackView.arrangedSubviews.first(where: { ($0 as? CategoryChipButton)?.titleLabel?.text == category.title }) as? CategoryChipButton else {
+        guard let chipButton = customMapView.stackView.arrangedSubviews.first(where: {
+            ($0 as? CategoryChipButton)?.titleLabel?.text == category.title
+        }) as? CategoryChipButton else {
             return
         }
             
@@ -156,7 +165,7 @@ class MapViewController: UIViewController {
         
         if title == "전체" {
             customMapView.mapView.annotations.forEach { annotation in
-                guard let todoAnnotation = annotation as? TodoAnnotation else { return }
+                guard annotation is TodoAnnotation else { return }
                 customMapView.mapView.view(for: annotation)?.isHidden = false
             }
             detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
@@ -166,7 +175,8 @@ class MapViewController: UIViewController {
                 customMapView.mapView.view(for: annotation)?.isHidden = todoAnnotation.category != title
             }
             let selectedCategory = CoreDataManager.shared.readCategories().first { $0.title == title }
-            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(category: selectedCategory!).map { $0.toTodoModel() }
+            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(
+                category: selectedCategory!).map { $0.toTodoModel() }
         }
         
         detailVC.selectedCategoryTitle = title
@@ -205,8 +215,6 @@ class MapViewController: UIViewController {
     }
 }
 
-// Extension
-
 // MARK: - CLLocationManagerDelegate
 
 extension MapViewController: CLLocationManagerDelegate {
@@ -234,16 +242,18 @@ extension MapViewController: MKMapViewDelegate {
         if let coordinate = view.annotation?.coordinate {
             let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
             mapView.setRegion(region, animated: true)
-//            selectedAnnotation = view.annotation
         }
         
         let detailVC = TodoDetailViewController()
         detailVC.modalPresentationStyle = .pageSheet
         
         if let todoAnnotation = view.annotation as? TodoAnnotation,
-           let selectedCategory = CoreDataManager.shared.readCategories().first(where: { $0.title == todoAnnotation.category }) {
+           let selectedCategory = CoreDataManager.shared.readCategories().first(where: {
+               $0.title == todoAnnotation.category
+           }) {
             detailVC.selectedCategoryTitle = todoAnnotation.category
-            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(category: selectedCategory).map { $0.toTodoModel() }
+            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(
+                category: selectedCategory).map { $0.toTodoModel() }
         } else {
             detailVC.todos = []
         }
@@ -286,22 +296,12 @@ extension MapViewController: MKMapViewDelegate {
 
         return nil
     }
-    
-//    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-//        if let selectedAnnotation = selectedAnnotation,
-//           let annotationView = mapView.view(for: selectedAnnotation) as? MKMarkerAnnotationView {
-//            let color = TDStyle.color.colorFromString((selectedAnnotation as? TodoAnnotation)?.colorName ?? "")
-//            annotationView.markerTintColor = color ?? UIColor.green
-//            annotationView.transform = CGAffineTransform.identity
-//            self.selectedAnnotation = nil
-//        }
-//    }
 }
 
 extension MapViewController {
     func allGroupButtonTapped() {
         customMapView.mapView.annotations.forEach { annotation in
-            if let todoAnnotation = annotation as? TodoAnnotation {
+            if annotation is TodoAnnotation {
                 customMapView.mapView.view(for: annotation)?.isHidden = false
             }
         }

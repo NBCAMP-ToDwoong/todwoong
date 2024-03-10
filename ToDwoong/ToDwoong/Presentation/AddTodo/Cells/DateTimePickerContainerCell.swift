@@ -41,7 +41,6 @@ extension DateTimePickerContainerCell {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
-        //self.layer.cornerRadius = 10
         self.clipsToBounds = true
         
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)

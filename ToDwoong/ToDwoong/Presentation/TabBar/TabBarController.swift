@@ -94,8 +94,9 @@ extension TabBarController {
     }
     
     @objc func preferencesButtonTapped() {
-        let preferencesViewController = PreferencesViewController()
-        preferencesViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(preferencesViewController, animated: true)
+//        let preferencesViewController = PreferencesViewController()
+//        preferencesViewController.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(preferencesViewController, animated: true)
+        navigationController?.pushViewController(AddTodoViewController(), animated: true)
     }
 }
