@@ -23,6 +23,16 @@ final class GroupListViewController: UIViewController {
         
         groupListView.loadCategories()
         groupListView.configureAddButtonAction(target: self, action: #selector(addCategoryButtonTapped))
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
+    }
+    
+    @objc func dataUpdated(_ notification: Notification) {
+        groupListView.loadCategories()
     }
     
     private func setNavigationBar() {
@@ -74,6 +84,8 @@ final class GroupListViewController: UIViewController {
     }
 
     @objc private func addCategoryButtonTapped() {
-        // FIXME: 그룹 추가 버튼 클릭 시 로직 구현. 모달창을 띄워 카테고리 Create하는 메서드
+        let viewController = AddGroupViewController()
+        viewController.modalPresentationStyle = .fullScreen
+        present(viewController, animated: true)
     }
 }

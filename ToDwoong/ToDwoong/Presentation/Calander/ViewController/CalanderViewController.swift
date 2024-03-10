@@ -35,7 +35,7 @@ final class CalendarViewController: UIViewController {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(dataUpdated(_:)),
-            name: .DataUpdatedNotification,
+            name: .TodoDataUpdatedNotification,
             object: nil)
     }
     
