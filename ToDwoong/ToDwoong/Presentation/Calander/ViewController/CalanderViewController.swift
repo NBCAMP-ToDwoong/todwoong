@@ -95,7 +95,7 @@ extension CalendarViewController {
         emptyStateImageView.contentMode = .scaleAspectFit
         emptyStateImageView.image = UIImage(named: "dwoong")
         emptyStateLabel.text = "오늘은 어떤 일을 할까요?"
-        emptyStateLabel.textColor = TDStyle.color.mainDarkTheme
+        emptyStateLabel.textColor = TDStyle.color.mainTheme
         emptyStateLabel.font = TDStyle.font.body(style: .bold)
         emptyStateLabel.textAlignment = .center
         
