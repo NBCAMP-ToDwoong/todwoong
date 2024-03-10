@@ -41,7 +41,6 @@
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
-		7F89A4A82B9ACA9B002442CD /* MapViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */; };
 		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
 		7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
@@ -112,7 +111,6 @@
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
-		7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoAndCategory+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCategoryChip.swift; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
@@ -381,7 +379,6 @@
 				7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */,
 				7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */,
 				1BA08A122B96F686001D3698 /* UIColor+Extension.swift */,
-				7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */,
 				7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */,
 			);
 			path = Extensions;
@@ -623,7 +620,6 @@
 				2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */,
 				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
 				7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */,
-				7F89A4A82B9ACA9B002442CD /* MapViewController+Extension.swift in Sources */,
 				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
 				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
