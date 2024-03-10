@@ -13,6 +13,7 @@ import TodwoongDesign
 final class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
+    
     var todoToEdit: Todo?
     var selectedTitle: String?
     var selectedDueDate: Date?
@@ -92,7 +93,7 @@ final class AddTodoViewController: UIViewController {
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
-                                              newPlace: place ?? "",
+                                              newPlace: place,
                                               newDate: selectedDueDate,
                                               newTime: selectedDueTime,
                                               newCompleted: isCompleted,
@@ -167,6 +168,12 @@ final class AddTodoViewController: UIViewController {
         todoView.collectionView.reloadItems(at: [indexPath])
     }
     
+    @objc func removeGrouop() {
+        self.selectedGroup = nil
+        let indexPath = IndexPath(item: 0, section: 2)
+        todoView.collectionView.reloadItems(at: [indexPath])
+    }
+    
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -219,13 +226,13 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         if let datePickerIndexPath = datePickerIndexPath, section == datePickerIndexPath.section {
             return 1
         } else if section == 2 || (datePickerIndexPath != nil && section == 3) {
-            return 3
+            return 2 // 알람제외
         } else {
             return 1
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let datePickerIndexPath = datePickerIndexPath, indexPath.section == datePickerIndexPath.section {
             guard let cell = collectionView.dequeueReusableCell(
@@ -273,9 +280,13 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
             case 2:
                 switch indexPath.item {
                 case 0:
-                    cell.configureCell(title: "그룹", detail: selectedGroup?.title ?? "") // 그룹 셀, 받아온 그룹 정보 설정
+                    cell.configureCell(title: "그룹", detail: selectedGroup?.title ?? "", 
+                                       showRemoveButton: selectedGroup != nil)
+                    cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
+                    cell.removeButton.addTarget(self, action: #selector(removeGrouop), for: .touchUpInside)
                 case 1:
-                    cell.configureCell(title: "위치", detail: selectedPlace ?? "", showRemoveButton: selectedPlace != nil)
+                    cell.configureCell(title: "위치", detail: selectedPlace ?? "", 
+                                       showRemoveButton: selectedPlace != nil)
                     cell.removeButton.removeTarget(nil, action: nil, for: .allEvents)
                     cell.removeButton.addTarget(self, action: #selector(removeAddress), for: .touchUpInside)
                 case 2:
@@ -336,18 +347,25 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
         let mapViewController = AddTodoLocationPickerViewController()
         mapViewController.delegate = self
         mapViewController.modalPresentationStyle = .fullScreen
+        if let address = selectedPlace {
+            mapViewController.selectedPlace = address // 이 줄이 변경되었습니다.
+        }
         present(mapViewController, animated: true, completion: nil)
     }
     
     private func goToGroupSelectController() {
         let groupSelectController = AddTodoGroupSelectController()
         groupSelectController.delegate = self
+        groupSelectController.selectedCategory = self.selectedGroup  // 이 줄을 추가
         present(groupSelectController, animated: true, completion: nil)
     }
     
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
-        selectedGroup = group
+        self.selectedGroup = group
         controller.dismiss(animated: true, completion: nil)
+        
+        let indexPath = IndexPath(item: 0, section: 2)
+        todoView.collectionView.reloadItems(at: [indexPath])
     }
     
 }
@@ -429,12 +447,22 @@ extension AddTodoViewController: DateTimePickerDelegate {
 // MARK: - AddTodoLocationPickerDelegate
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
+    func presentLocationPicker() {
+        let locationPickerVC = AddTodoLocationPickerViewController()
+        locationPickerVC.delegate = self
+        present(locationPickerVC, animated: true, completion: nil)
+    }
+    
     func didPickLocation(_ address: String) {
         self.selectedPlace = address
-        
+        updateLocationCell()
+    }
+
+    private func updateLocationCell() {
         let indexPath = IndexPath(item: 1, section: 2)
         todoView.collectionView.reloadItems(at: [indexPath])
     }
+    
 }
 
 // MARK: - TitleCollectionViewCellDelegate

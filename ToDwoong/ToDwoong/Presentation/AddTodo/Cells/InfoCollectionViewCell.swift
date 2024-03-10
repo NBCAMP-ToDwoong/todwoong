@@ -14,6 +14,8 @@ final class InfoCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Properties
     
+    var deleteGroupAction: (() -> Void)?
+    
     var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
@@ -133,4 +135,5 @@ extension InfoCollectionViewCell {
             }
         }
     }
+  
 }
