@@ -7,7 +7,6 @@
 
 import UIKit
 
-import SnapKit
 import TodwoongDesign
 
 final class AddTodoViewController: UIViewController {
@@ -24,6 +23,9 @@ final class AddTodoViewController: UIViewController {
     var selectePlaceAlarm: Bool!
     
     var datePickerIndexPath: IndexPath?
+    
+    // MARK: - UI Properties
+    
     var dateTimePickerContainerCell: DateTimePickerContainerCell?
     
     private var todoView: AddTodoView {
@@ -33,10 +35,42 @@ final class AddTodoViewController: UIViewController {
         return todoView
     }
     
+    private lazy var saveButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("저장", for: .normal)
+        button.tintColor = TDStyle.color.mainTheme
+        button.setTitleColor(TDStyle.color.mainTheme, for: .normal)
+        button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = TDStyle.color.mainTheme
+        button.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
+        
+        return button
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.addSubview(saveButton)
+        view.addSubview(closeButton)
+        
+        closeButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(60)
+            make.leading.equalToSuperview().offset(16)
+        }
+        
+        saveButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(60)
+            make.trailing.equalToSuperview().offset(-16)
+        }
         
         setNavigationBar()
         setTapGesture()
@@ -78,7 +112,11 @@ final class AddTodoViewController: UIViewController {
         todoView.collectionView.delegate = self
         view.backgroundColor = TDStyle.color.lightGray
     }
-    
+
+    @objc func closeModal() {
+        dismiss(animated: true, completion: nil)
+    }
+
     @objc func doneButtonTapped() {
         guard let title = selectedTitle, !title.isEmpty else {
             print("제목이 비어 있습니다.")
@@ -113,7 +151,7 @@ final class AddTodoViewController: UIViewController {
             print("새 투두 항목이 생성되었습니다.")
         }
         
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     func handleDateOrTimeCellSelected(at indexPath: IndexPath,
