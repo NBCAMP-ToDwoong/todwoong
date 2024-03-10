@@ -99,18 +99,6 @@ extension TodoDetailViewController: UITableViewDataSource {
             cell.checkButton.isSelected = self.todos[indexPath.row].isCompleted
         }
         
-//        cell.onLocationButtonTapped = { [weak self] in
-//            guard let self = self else { return }
-//            
-//            if let mapViewController = self.presentingViewController as? MapViewController {
-//                mapViewController.zoomToTodo(todo) {
-//                    DispatchQueue.main.async {
-//                        self.dismiss(animated: true, completion: nil)
-//                    }
-//                }
-//            }
-//        }
-        
         return cell
     }
 }
