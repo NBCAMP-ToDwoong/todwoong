@@ -98,7 +98,7 @@ final class AddTodoLocationPickerViewController: UIViewController {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
                                                 latitudinalMeters: 500,
                                                 longitudinalMeters: 500)
-                self.locationPickerView.mapView.setRegion(region, animated: true)
+                self.locationPickerView.mapView.setRegion(region, animated: false)
                 self.updateAddressLabel(with: placemark)
             }
         }
@@ -159,8 +159,9 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
         }
         
         let addressString = addressComponents.joined(separator: "\n")
-        
-        DispatchQueue.main.async {
+        if addressString == "55557" {
+            self.locationPickerView.addressLabel.text = "로딩 중입니다..."
+        } else {
             self.locationPickerView.addressLabel.text = addressString
         }
     }
@@ -174,7 +175,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
             let region = MKCoordinateRegion(center: location.coordinate,
                                             latitudinalMeters: 500,
                                             longitudinalMeters: 500)
-            locationPickerView.mapView.setRegion(region, animated: false)
+            locationPickerView.mapView.setRegion(region, animated: true)
             locationManager.stopUpdatingLocation()
             isMapCenteredByUser = false
         }

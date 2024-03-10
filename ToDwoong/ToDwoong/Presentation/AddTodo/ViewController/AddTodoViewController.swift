@@ -92,7 +92,7 @@ final class AddTodoViewController: UIViewController {
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
-                                              newPlace: place ?? "",
+                                              newPlace: place,
                                               newDate: selectedDueDate,
                                               newTime: selectedDueTime,
                                               newCompleted: isCompleted,
