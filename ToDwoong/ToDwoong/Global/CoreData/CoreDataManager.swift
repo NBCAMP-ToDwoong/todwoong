@@ -57,9 +57,9 @@ final class CoreDataManager {
     func readTodos() -> [Todo] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            let fixedSortDescriptor = NSSortDescriptor(key: "fixed", ascending: false)
             let dueDateSortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
-            fetchRequest.sortDescriptors = [fixedSortDescriptor, dueDateSortDescriptor]
+            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
+            fetchRequest.sortDescriptors = [dueDateSortDescriptor, dueTimeSortDescriptor]
             
             let todos = try context.fetch(fetchRequest)
             return todos
@@ -70,7 +70,7 @@ final class CoreDataManager {
     }
     
     func updateTodo(todo: Todo, 
-                    newTitle: String, newPlace: String,
+                    newTitle: String, newPlace: String?,
                     newDate: Date?, newTime: Date?,
                     newCompleted: Bool,
                     newTimeAlarm: Bool, newPlaceAlarm: Bool,
@@ -96,12 +96,11 @@ final class CoreDataManager {
     
     // MARK: Category Methods
     
-    func createCategory(title: String, color: String, todo: Todo?) {
+    func createCategory(title: String, color: String) {
         let newCategory = Category(context: context)
         newCategory.id = UUID()
         newCategory.title = title
         newCategory.color = color
-        newCategory.todo = todo
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Category")
         fetchRequest.resultType = .dictionaryResultType
@@ -142,10 +141,9 @@ final class CoreDataManager {
         }
     }
     
-    func updateCategory(category: Category, newTitle: String, newColor: String, newTodo: Todo?) {
+    func updateCategory(category: Category, newTitle: String, newColor: String) {
         category.title = newTitle
         category.color = newColor
-        category.todo = newTodo
         
         saveContext()
     }

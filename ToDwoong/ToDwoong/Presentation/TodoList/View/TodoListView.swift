@@ -17,6 +17,9 @@ final class TodoListView: UIView {
         let button = UIButton()
         button.tintColor = .black
         button.setImage(UIImage(systemName: "line.3.horizontal"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        button.imageView?.contentMode = .scaleAspectFit
         
         return button
     }()
@@ -53,17 +56,18 @@ final class TodoListView: UIView {
     
     lazy var emptyImageView: UIImageView = {
         let imageView = UIImageView()
-        let image = UIImage(systemName: "photo")    // FIXME: 이미지 정해지면 수정 예정
+        let image = UIImage(named: "dwoong")
         imageView.image = image
+        imageView.contentMode = .scaleAspectFit
         
         return imageView
     }()
     
     lazy var emptyLabel: UILabel = {
         let label = UILabel()
-        label.text = "오늘의 투두를 추가해보세요!"
+        label.text = "오늘은 어떤 일을 할까요?"
         label.textColor = TDStyle.color.mainTheme
-        label.font = TDStyle.font.body(style: .regular)
+        label.font = TDStyle.font.body(style: .bold)
         
         return label
     }()
@@ -102,6 +106,8 @@ extension TodoListView {
         groupListButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(16)
             make.centerY.equalTo(groupCollectionView)
+            make.height.equalTo(allGroupButton)
+            make.width.equalTo(groupListButton.snp.height)
         }
         allGroupButton.snp.makeConstraints { make in
             make.leading.equalTo(groupListButton.snp.trailing).offset(8)
@@ -124,7 +130,7 @@ extension TodoListView {
         }
         emptyImageView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
-            make.width.equalTo(self.snp.width).dividedBy(2.5)
+            make.width.equalTo(self.snp.width).dividedBy(3)
             make.height.equalTo(emptyImageView.snp.width)
         }
         emptyLabel.snp.makeConstraints { make in

@@ -41,9 +41,9 @@ extension TitleCollectionViewCell {
         textField.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
         }
-        layer.borderWidth = 0.2
-        layer.borderColor = UIColor.black.cgColor
-        layer.masksToBounds = true
+        //self.layer.cornerRadius = 10
+        self.clipsToBounds = true
+        self.backgroundColor = .white
     }
     
     func setTitle(_ title: String?) {

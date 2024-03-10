@@ -69,8 +69,8 @@ extension CalendarViewController {
     
     private func configureContainerView() {
         containerView = UIView()
-        containerView.backgroundColor = UIColor(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
-        containerView.layer.cornerRadius = 12
+        containerView.backgroundColor = TDStyle.color.lightGray
+        containerView.layer.cornerRadius = 20
         containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         view.addSubview(containerView)
         
@@ -93,9 +93,10 @@ extension CalendarViewController {
         let emptyStateLabel = UILabel()
         
         emptyStateImageView.contentMode = .scaleAspectFit
-        emptyStateImageView.image = UIImage(named: "Dwong")
+        emptyStateImageView.image = UIImage(named: "dwoong")
         emptyStateLabel.text = "오늘은 어떤 일을 할까요?"
-        emptyStateLabel.textColor = TDStyle.color.mainDarkTheme
+        emptyStateLabel.textColor = TDStyle.color.mainTheme
+        emptyStateLabel.font = TDStyle.font.body(style: .bold)
         emptyStateLabel.textAlignment = .center
         
         emptyStateView.addSubview(emptyStateImageView)
@@ -242,17 +243,13 @@ extension CalendarViewController: UITableViewDelegate {
                                               title: "삭제") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
             
-            let todoModelToDelete = self.todoList[indexPath.row]
-            
-            if let todoToDelete = self.getTodoById(id: todoModelToDelete.id!) {
-                CoreDataManager.shared.deleteTodo(todo: todoToDelete)
-                self.todoList.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .automatic)
-                
-                self.updateEventDatesAfterDeletion()
-            }
+            let todoToDelete = self.todoList[indexPath.row]
+            CoreDataManager.shared.deleteTodo(todo: todoToDelete)
+            self.todoList.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             
             completionHandler(true)
+            self.fetchTodosAndSetEventDates()  // 데이터 갱신
         }
         deleteAction.backgroundColor = .red
         
