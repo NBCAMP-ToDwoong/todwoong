@@ -96,8 +96,8 @@ final class AddTodoLocationPickerViewController: UIViewController {
 
             DispatchQueue.main.async {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
-                                                latitudinalMeters: 1000,
-                                                longitudinalMeters: 1000)
+                                                latitudinalMeters: 500,
+                                                longitudinalMeters: 500)
                 self.locationPickerView.mapView.setRegion(region, animated: true)
                 self.updateAddressLabel(with: placemark)
             }
@@ -170,16 +170,16 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
 // MARK: - CLLocationManagerDelegate
 extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if !isMapCenteredByUser {
-            guard let location = locations.first else { return }
-            let region = MKCoordinateRegion(center: location.coordinate, 
-                                            latitudinalMeters: 1000,
-                                            longitudinalMeters: 1000)
-            locationPickerView.mapView.setRegion(region, animated: true)
+        if let location = locations.first, !isMapCenteredByUser {
+            let region = MKCoordinateRegion(center: location.coordinate,
+                                            latitudinalMeters: 500,
+                                            longitudinalMeters: 500)
+            locationPickerView.mapView.setRegion(region, animated: false)
+            locationManager.stopUpdatingLocation()
+            isMapCenteredByUser = false
         }
-        locationManager.stopUpdatingLocation()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error fetching location: \(error)")
     }
