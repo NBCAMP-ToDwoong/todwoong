@@ -122,7 +122,7 @@ extension TabBarController {
     }
     
     @objc func preferencesButtonTapped() {
-        navigationController?.pushViewController(AddTodoViewController(), animated: true)
+        navigationController?.pushViewController(PreferencesViewController(), animated: true)
     }
 }
 
