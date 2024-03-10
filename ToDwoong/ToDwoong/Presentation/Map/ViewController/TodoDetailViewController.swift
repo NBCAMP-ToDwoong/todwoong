@@ -45,14 +45,17 @@ class TodoDetailViewController: UIViewController {
     
     func loadTodosForSelectedCategory() {
         guard let category = selectedCategoryTitle else {
+            todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
             detailView?.tableView.reloadData()
             return
         }
-        
+            
         if category == "전체" {
+            todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
             detailView?.tableView.reloadData()
         } else {
-            todos = todos.filter { $0.category?.title == category }
+            let selectedCategory = CoreDataManager.shared.readCategories().first { $0.title == category }
+            todos = CoreDataManager.shared.filterTodoByCategory(category: selectedCategory!).map { $0.toTodoModel() }
             detailView?.tableView.reloadData()
         }
     }
@@ -78,21 +81,33 @@ extension TodoDetailViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = { [weak self] in
             guard let self = self else { return }
             
-            self.todos[indexPath.row].isCompleted.toggle()
+            let todo = self.todos[indexPath.row]
+            todo.isCompleted.toggle()
+            let todoEntity = CoreDataManager.shared.readTodos().first { $0.id == todo.id }
+            CoreDataManager.shared.updateTodo(todo: todoEntity!,
+                                              newTitle: todo.title,
+                                              newPlace: todo.place ?? "",
+                                              newDate: todo.dueDate,
+                                              newTime: todo.dueTime,
+                                              newCompleted: todo.isCompleted,
+                                              newTimeAlarm: todo.timeAlarm,
+                                              newPlaceAlarm: todo.placeAlarm,
+                                              newCategory: todoEntity?.category)
+            
             cell.checkButton.isSelected = self.todos[indexPath.row].isCompleted
         }
         
-        cell.onLocationButtonTapped = { [weak self] in
-            guard let self = self else { return }
-            
-            if let mapViewController = self.presentingViewController as? MapViewController {
-                mapViewController.zoomToTodo(todo) {
-                    DispatchQueue.main.async {
-                        self.dismiss(animated: true, completion: nil)
-                    }
-                }
-            }
-        }
+//        cell.onLocationButtonTapped = { [weak self] in
+//            guard let self = self else { return }
+//            
+//            if let mapViewController = self.presentingViewController as? MapViewController {
+//                mapViewController.zoomToTodo(todo) {
+//                    DispatchQueue.main.async {
+//                        self.dismiss(animated: true, completion: nil)
+//                    }
+//                }
+//            }
+//        }
         
         return cell
     }
