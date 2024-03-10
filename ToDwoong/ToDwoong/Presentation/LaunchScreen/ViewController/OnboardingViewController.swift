@@ -47,6 +47,8 @@ extension OnboardingViewController {
         
         let firstAccess = false
         UserDefaults.standard.set(firstAccess, forKey: "first")
+        
+        navigationController?.pushViewController(TabBarController(), animated: true)
     }
 }
 
