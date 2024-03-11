@@ -5,8 +5,8 @@
 //  Created by yen on 3/6/24.
 //
 
-import UIKit
 import MapKit
+import UIKit
 
 import SnapKit
 import TodwoongDesign
@@ -34,8 +34,7 @@ class MapView: UIView {
     lazy var allGroupButton: CategoryChipButton = {
         let button = CategoryChipButton(title: "전체", color: TDStyle.color.mainTheme)
         button.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
-        button.titleLabel?.font = TDStyle.font.body(style: .regular)
-        button.contentEdgeInsets = UIEdgeInsets(top: 2, left: 8, bottom: 2, right: 8) 
+
         return button
     }()
 
@@ -100,7 +99,9 @@ class MapView: UIView {
     }
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
-        let chipButton = CategoryChipButton(title: category.title, color: TDStyle.color.colorFromString(category.color ?? "#D1FADF") ?? TDStyle.color.bgGreen)
+        let chipButton = CategoryChipButton(title: category.title, 
+                                            color: TDStyle.color.colorFromString(category.color ?? "#D1FADF")
+                                            ?? TDStyle.color.bgGreen)
         chipButton.addTarget(target, action: action, for: .touchUpInside)
         stackView.addArrangedSubview(chipButton)
     }
