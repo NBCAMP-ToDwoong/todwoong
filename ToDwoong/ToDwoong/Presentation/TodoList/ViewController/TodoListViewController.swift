@@ -220,6 +220,7 @@ extension TodoListViewController: UITableViewDelegate {
         let convertedTodo = self.todoList[indexPath.row]
         
         addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
+        addTodoViewViewController.modalPresentationStyle = .fullScreen
         self.present(addTodoViewViewController, animated: true)
     }
     
@@ -253,6 +254,7 @@ extension TodoListViewController: UITableViewDelegate {
             let convertedTodo = self.todoList[indexPath.row]
             
             addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
+            addTodoViewViewController.modalPresentationStyle = .fullScreen
             self.present(addTodoViewViewController, animated: true)
         })
         let deleteAction = UIContextualAction(style: .normal,

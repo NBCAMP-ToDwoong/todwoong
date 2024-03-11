@@ -76,6 +76,7 @@ final class AddTodoViewController: UIViewController {
         setTapGesture()
         setCollectionView()
         setViewBasedOnTodo()
+        hideKeyboardWhenTappedAround()
     }
     
     override func loadView() {
@@ -213,6 +214,15 @@ final class AddTodoViewController: UIViewController {
         todoView.collectionView.reloadItems(at: [indexPath])
     }
     
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 // MARK: - UIGestureRecognizerDelegate
@@ -344,7 +354,13 @@ extension AddTodoViewController: UICollectionViewDelegate, UICollectionViewDataS
         case 0:
             switch indexPath.item {
             case 0:
-                print("Section 1, 제목")
+                if indexPath.item == 0 { // 제목 입력 셀
+                    // 해당 셀을 가져옵니다.
+                    if let cell = collectionView.cellForItem(at: indexPath) as? TitleCollectionViewCell {
+                        // 텍스트 필드를 first responder로 만들어 키보드를 표시합니다.
+                        cell.textField.becomeFirstResponder()
+                    }
+                }
             default:
                 break
             }
