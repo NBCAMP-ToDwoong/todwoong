@@ -199,7 +199,7 @@ extension CalendarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
                                                        for: indexPath) as? TDTableViewCell else {
             fatalError("Unable to dequeue TDTableViewCell")
         }
@@ -210,14 +210,13 @@ extension CalendarViewController: UITableViewDataSource {
         cell.configure(data: todoModel, iconImage: UIImage(named: "AddTodoMapPin")!)
         cell.checkButton.isSelected = todo.isCompleted
         
-        cell.onCheckButtonTapped = { [weak self, weak tableView] in
-            guard let self = self, let tableView = tableView else { return }
-            
+        cell.onCheckButtonTapped = { [weak tableView] in
             let isCompleted = !todo.isCompleted
             todo.isCompleted = isCompleted
             CoreDataManager.shared.saveContext()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            tableView?.reloadRows(at: [indexPath], with: .automatic)
         }
+        
         return cell
     }
 

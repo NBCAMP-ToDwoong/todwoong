@@ -70,7 +70,9 @@ extension TodoDetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, for: indexPath) as? TDTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
+                                                       for: indexPath) as? TDTableViewCell
+        else {
             return UITableViewCell()
         }
         

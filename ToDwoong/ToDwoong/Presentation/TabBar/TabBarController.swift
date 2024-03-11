@@ -9,20 +9,6 @@ import UIKit
 
 import TodwoongDesign
 
-class FirstViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = TDStyle.color.bgBlue
-    }
-}
-
-class SecondViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = TDStyle.color.bgRed
-    }
-}
-
 class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,8 +94,9 @@ extension TabBarController {
     }
     
     @objc func preferencesButtonTapped() {
-        let preferencesViewController = PreferencesViewController()
-        preferencesViewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(preferencesViewController, animated: true)
+//        let preferencesViewController = PreferencesViewController()
+//        preferencesViewController.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(preferencesViewController, animated: true)
+        navigationController?.pushViewController(AddTodoViewController(), animated: true)
     }
 }

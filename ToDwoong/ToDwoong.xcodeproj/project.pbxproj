@@ -7,24 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B3093C02B99577900535981 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3093BF2B99577900535981 /* TodwoongDesign */; };
+		1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB592B9DDB7D0030B31D /* SnapKit */; };
+		1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB612B9DDB870030B31D /* FSCalendar */; };
+		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
+		1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; };
+		1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
-		1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD62B8E8EDB008F49CE /* SnapKit */; };
-		1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; };
-		1BC7A5F22B8EC6FB00B9F6A8 /* SnapKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */; };
-		1BC7A5FA2B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACC2B88ACB00097694E /* AppDelegate.swift */; };
 		1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */; };
 		1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* TodoListViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA0630C2B906783007C9373 /* AddTodoViewController.swift */; };
-		2EBF09352B984A5D0023F0E0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 2EBF09342B984A5D0023F0E0 /* FSCalendar */; };
 		2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */; };
 		2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */; };
 		2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */; };
@@ -34,17 +32,11 @@
 		2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */; };
 		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
 		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
-		2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */; };
-		2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */; };
-		2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */; };
-		2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */; };
 		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
-		2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
-		7F89A4A82B9ACA9B002442CD /* MapViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */; };
 		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
 		7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
@@ -69,14 +61,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		1BC7A5F32B8EC6FB00B9F6A8 /* Embed Frameworks */ = {
+		1B1681A42B9ADDD70039C239 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1BC7A5F22B8EC6FB00B9F6A8 /* SnapKit-Dynamic in Embed Frameworks */,
-				1BC7A5FA2B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Embed Frameworks */,
+				1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,12 +75,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoAlarmViewController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		1BA08A5B2B9854D6001D3698 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1BA08A5D2B985506001D3698 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ToDwoongDesign.framework; sourceTree = "<group>"; };
 		1BD2FAC92B88ACB00097694E /* ToDwoong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDwoong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD2FACC2B88ACB00097694E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -107,17 +98,11 @@
 		2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
 		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
-		2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewDelegate.swift; sourceTree = "<group>"; };
-		2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerDelegate.swift; sourceTree = "<group>"; };
-		2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
-		2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerDelegate.swift; sourceTree = "<group>"; };
 		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
-		2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectControllerDelegate.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
-		7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapViewController+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoAndCategory+Extension.swift"; sourceTree = "<group>"; };
 		7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCategoryChip.swift; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
@@ -146,11 +131,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BA63AD72B8E8EDB008F49CE /* SnapKit in Frameworks */,
-				1B3093C02B99577900535981 /* TodwoongDesign in Frameworks */,
-				1BA63AD92B8E8EDB008F49CE /* SnapKit-Dynamic in Frameworks */,
-				2EBF09352B984A5D0023F0E0 /* FSCalendar in Frameworks */,
-				1BC7A5F92B8EC74C00B9F6A8 /* ToDwoongDesign.framework in Frameworks */,
+				1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */,
+				1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */,
+				1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,14 +241,6 @@
 			path = LaunchScreen;
 			sourceTree = "<group>";
 		};
-		1BC7A5F62B8EC72D00B9F6A8 /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-				1BC7A5F72B8EC74800B9F6A8 /* ToDwoongDesign.framework */,
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
 		1BD2FAC02B88ACB00097694E = {
 			isa = PBXGroup;
 			children = (
@@ -301,7 +276,6 @@
 				1BD2FAE22B88AE470097694E /* App */,
 				1BD2FAE32B88AE540097694E /* Support */,
 				2EF9C5032B96845A005F8B76 /* Protocols */,
-				1BC7A5F62B8EC72D00B9F6A8 /* DesignSystem */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -382,11 +356,7 @@
 		2EF9C5032B96845A005F8B76 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				2EF9C5042B9684C8005F8B76 /* AddTodoLocationPickerViewDelegate.swift */,
-				2EF9C5062B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift */,
-				2EF9C5082B968523005F8B76 /* TitleCollectionViewCellDelegate.swift */,
-				2EF9C50A2B968542005F8B76 /* DateTimePickerDelegate.swift */,
-				2EF9C50E2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift */,
+				1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -397,7 +367,6 @@
 				7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */,
 				7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */,
 				1BA08A122B96F686001D3698 /* UIColor+Extension.swift */,
-				7F89A4A72B9ACA9B002442CD /* MapViewController+Extension.swift */,
 				7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */,
 			);
 			path = Extensions;
@@ -517,7 +486,7 @@
 				1BD2FAC52B88ACB00097694E /* Sources */,
 				1BD2FAC62B88ACB00097694E /* Frameworks */,
 				1BD2FAC72B88ACB00097694E /* Resources */,
-				1BC7A5F32B8EC6FB00B9F6A8 /* Embed Frameworks */,
+				1B1681A42B9ADDD70039C239 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -525,10 +494,9 @@
 			);
 			name = ToDwoong;
 			packageProductDependencies = (
-				1BA63AD62B8E8EDB008F49CE /* SnapKit */,
-				1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */,
-				2EBF09342B984A5D0023F0E0 /* FSCalendar */,
-				1B3093BF2B99577900535981 /* TodwoongDesign */,
+				1B0FAB592B9DDB7D0030B31D /* SnapKit */,
+				1B0FAB612B9DDB870030B31D /* FSCalendar */,
+				1B0FAB672B9DE2540030B31D /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -559,9 +527,9 @@
 			);
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
-				1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */,
-				2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -621,17 +589,15 @@
 				E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */,
 				E0F4CFD72B9ACBC700DF94D4 /* PreferencesViewController.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
-				2EF9C50F2B968C7E005F8B76 /* AddTodoGroupSelectControllerDelegate.swift in Sources */,
 				7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
+				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
 				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
-				2EF9C5092B968523005F8B76 /* TitleCollectionViewCellDelegate.swift in Sources */,
-				2EF9C5052B9684C9005F8B76 /* AddTodoLocationPickerViewDelegate.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
@@ -640,7 +606,6 @@
 				2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */,
 				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
 				7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */,
-				7F89A4A82B9ACA9B002442CD /* MapViewController+Extension.swift in Sources */,
 				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
 				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
@@ -652,8 +617,6 @@
 				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
 				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
 				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
-				2EF9C5072B9684FD005F8B76 /* AddTodoLocationPickerDelegate.swift in Sources */,
-				2EF9C50B2B968542005F8B76 /* DateTimePickerDelegate.swift in Sources */,
 				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,
 				2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
@@ -719,6 +682,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -776,6 +740,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -791,13 +756,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP6444HYG3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ToDwoong/Global/DesignSystem",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
@@ -811,11 +775,13 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yenny42.ToDwoong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ToDwoong.NBCAMP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -827,13 +793,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VP6444HYG3;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/ToDwoong/Global/DesignSystem",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
@@ -847,11 +812,13 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yenny42.ToDwoong;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ToDwoong.NBCAMP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -882,15 +849,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.7;
-			};
-		};
-		1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -898,7 +857,7 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+		1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
@@ -906,28 +865,31 @@
 				minimumVersion = 2.8.4;
 			};
 		};
+		1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1B3093BF2B99577900535981 /* TodwoongDesign */ = {
+		1B0FAB592B9DDB7D0030B31D /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B3093BE2B99577900535981 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
-			productName = TodwoongDesign;
-		};
-		1BA63AD62B8E8EDB008F49CE /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		1BA63AD82B8E8EDB008F49CE /* SnapKit-Dynamic */ = {
+		1B0FAB612B9DDB870030B31D /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1BA63AD52B8E8EDB008F49CE /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
-		2EBF09342B984A5D0023F0E0 /* FSCalendar */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2EBF09332B984A5C0023F0E0 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			package = 1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
+		};
+		1B0FAB672B9DE2540030B31D /* TodwoongDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			productName = TodwoongDesign;
 		};
 /* End XCSwiftPackageProductDependency section */
 

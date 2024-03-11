@@ -41,7 +41,6 @@ extension TitleCollectionViewCell {
         textField.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
         }
-        //self.layer.cornerRadius = 10
         self.clipsToBounds = true
         self.backgroundColor = .white
     }

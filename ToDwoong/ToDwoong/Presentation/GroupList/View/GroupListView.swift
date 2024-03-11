@@ -27,18 +27,35 @@ final class GroupListView: UIView {
         return tableView
     }()
     
-    private lazy var addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
-        button.setTitle("그룹 추가", for: .normal)
-        button.backgroundColor = .white
-        button.setTitleColor(UIColor.systemGray3, for: .normal)
-        button.layer.cornerRadius = 8
-        button.contentHorizontalAlignment = .leading
-        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
-        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
-
-        let plusIcon = UIImage(systemName: "plus")?.withTintColor(TDStyle.color.bgGray, renderingMode: .alwaysOriginal)
-        button.setImage(plusIcon, for: .normal)
+        
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.filled()
+            config.title = "그룹 추가"
+            config.baseBackgroundColor = .white
+            config.baseForegroundColor = UIColor.systemGray3
+            config.cornerStyle = .medium
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
+            config.imagePlacement = .leading
+            config.imagePadding = 8
+            
+            let plusIcon = UIImage(systemName: "plus")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+            config.image = plusIcon
+            
+            button.configuration = config
+            button.contentHorizontalAlignment = .leading
+        } else {
+            button.setTitle("그룹 추가", for: .normal)
+            button.backgroundColor = .white
+            button.setTitleColor(UIColor.systemGray3, for: .normal)
+            button.layer.cornerRadius = 8
+            button.contentHorizontalAlignment = .left
+            let plusIcon = UIImage(systemName: "plus")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+            button.setImage(plusIcon, for: .normal)
+            button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+            button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 0)
+        }
         
         return button
     }()

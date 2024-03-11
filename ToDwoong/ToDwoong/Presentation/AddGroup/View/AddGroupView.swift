@@ -13,8 +13,8 @@ final class AddGroupView: UIView {
     
     // MARK: - Properties
     
-    var palleteButtonTapped: ((UIButton) -> ())?
-    var addButtonTapped: (() -> ())?
+    var palleteButtonTapped: ((UIButton) -> Void)?
+    var addButtonTapped: (() -> Void)?
     
     // MARK: - UI Properties
     
@@ -25,7 +25,7 @@ final class AddGroupView: UIView {
         return label
     }()
     
-    var addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("저장", for: .normal)
         button.setTitleColor(.systemBlue, for: .normal)

@@ -40,18 +40,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return container
     }()
     
-    // MARK: Core Data Saving support
-    
-    func saveContext() {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("데이터를 저장하는 단계에서 문제가 발생 하였습니다. \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    
 }
