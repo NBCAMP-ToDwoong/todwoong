@@ -44,7 +44,8 @@ extension AddTodoView {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview()
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(60)
+            make.bottom.equalToSuperview()
             make.left.equalToSuperview().offset(16)
             make.right.equalToSuperview().offset(-16)
         }
