@@ -151,6 +151,7 @@ final class AddTodoViewController: UIViewController {
             print("새 투두 항목이 생성되었습니다.")
         }
         
+        NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
         dismiss(animated: true, completion: nil)
     }
     

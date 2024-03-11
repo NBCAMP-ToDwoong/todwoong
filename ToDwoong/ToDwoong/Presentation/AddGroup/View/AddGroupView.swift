@@ -159,6 +159,8 @@ extension AddGroupView {
         if let buttonTapped = addButtonTapped {
             buttonTapped()
         }
+        
+        NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
     }
 }
 

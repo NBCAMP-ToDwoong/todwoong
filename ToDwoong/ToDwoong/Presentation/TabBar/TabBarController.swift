@@ -122,7 +122,7 @@ extension TabBarController {
     }
     
     @objc func preferencesButtonTapped() {
-        navigationController?.pushViewController(AddTodoViewController(), animated: true)
+        navigationController?.pushViewController(PreferencesViewController(), animated: true)
     }
 }
 
@@ -221,9 +221,5 @@ extension TabBarController {
             self?.isExpanded.toggle()
             self?.updateUI()
         }
-//        let preferencesViewController = PreferencesViewController()
-//        preferencesViewController.hidesBottomBarWhenPushed = true
-//        navigationController?.pushViewController(preferencesViewController, animated: true)
-        navigationController?.pushViewController(AddTodoViewController(), animated: true)
     }
 }
