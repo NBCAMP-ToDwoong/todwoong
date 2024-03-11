@@ -242,15 +242,16 @@ extension CalendarViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
-                                            title: "수정") { [weak self] (action, view, completionHandler) in
+                                            title: "편집") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
             let todoToEdit = self.todoList[indexPath.row]
             let addTodoVC = AddTodoViewController()
             addTodoVC.todoToEdit = todoToEdit
-            self.navigationController?.pushViewController(addTodoVC, animated: true)
+            addTodoVC.modalPresentationStyle = .fullScreen
+            self.present(addTodoVC, animated: true)
             completionHandler(true)
         }
-        editAction.backgroundColor = .blue
+        editAction.backgroundColor = .systemBlue
         
         let deleteAction = UIContextualAction(style: .destructive,
                                               title: "삭제") { [weak self] (action, view, completionHandler) in
@@ -262,9 +263,9 @@ extension CalendarViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .automatic)
             
             completionHandler(true)
-            self.fetchTodosAndSetEventDates()  // 데이터 갱신
+            self.fetchTodosAndSetEventDates()
         }
-        deleteAction.backgroundColor = .red
+        deleteAction.backgroundColor = .systemRed
         
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         configuration.performsFirstActionWithFullSwipe = false
