@@ -221,5 +221,9 @@ extension TabBarController {
             self?.isExpanded.toggle()
             self?.updateUI()
         }
+//        let preferencesViewController = PreferencesViewController()
+//        preferencesViewController.hidesBottomBarWhenPushed = true
+//        navigationController?.pushViewController(preferencesViewController, animated: true)
+        navigationController?.pushViewController(AddTodoViewController(), animated: true)
     }
 }
