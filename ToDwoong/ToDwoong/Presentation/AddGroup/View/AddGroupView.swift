@@ -15,12 +15,23 @@ final class AddGroupView: UIView {
     
     var palleteButtonTapped: ((UIButton) -> Void)?
     var addButtonTapped: (() -> Void)?
+    var cancelButtonTapped: (() -> Void)?
     
     // MARK: - UI Properties
+    
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "xmark"), for: .normal)
+        button.tintColor = TDStyle.color.mainTheme
+        button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
+        
+        return button
+    }()
     
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "그룹"
+        label.font = TDStyle.font.body(style: .bold)
         
         return label
     }()
@@ -28,7 +39,7 @@ final class AddGroupView: UIView {
     lazy var addButton: UIButton = {
         let button = UIButton()
         button.setTitle("저장", for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
+        button.setTitleColor(TDStyle.color.mainTheme, for: .normal)
         button.addTarget(self, action: #selector(addButtonAction), for: .touchUpInside)
         button.isEnabled = false
         button.setTitleColor(.systemGray3, for: .disabled)
@@ -155,12 +166,16 @@ extension AddGroupView {
             buttonTapped(sender)
         }
     }
-    @objc func addButtonAction(sender: UIButton) {
+    @objc func addButtonAction() {
         if let buttonTapped = addButtonTapped {
             buttonTapped()
         }
-        
         NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+    }
+    @objc func cancelButtonAction() {
+        if let buttonTapped = cancelButtonTapped {
+            buttonTapped()
+        }
     }
 }
 
@@ -171,6 +186,7 @@ extension AddGroupView {
         self.backgroundColor = .white
         
         [
+            cancelButton,
             titleLabel,
             addButton,
             seperateLine,
@@ -199,13 +215,17 @@ extension AddGroupView {
         ].forEach { palleteStackView2.addArrangedSubview($0) }
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(40)
+            make.top.equalTo(safeAreaLayoutGuide).offset(16)
+            make.centerX.equalToSuperview()
+        }
+        
+        cancelButton.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
             make.leading.equalToSuperview().offset(16)
         }
         
         addButton.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide).offset(40)
-            make.height.equalTo(titleLabel.snp.height)
+            make.centerY.equalTo(titleLabel)
             make.trailing.equalToSuperview().offset(-16)
         }
         
