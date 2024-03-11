@@ -32,8 +32,22 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         loadData()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .TodoDataUpdatedNotification,
+            object: nil)
     }
     
+    @objc func dataUpdated(_ notification: Notification) {
+        fetchTodosAndSetEventDates()
+        fetchTodos(for: selectedDueDate)
+        tableView.reloadData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 }
 
 // MARK: - Setup and Configuration

@@ -61,6 +61,27 @@ class TodoListViewController: UIViewController {
         
         setDelegates()
         setAction()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .TodoDataUpdatedNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdatedGroup(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
+    }
+    
+    @objc func dataUpdated(_ notification: Notification) {
+        todoDataFetch()
+        todoView.todoTableView.reloadData()
+    }
+    
+    @objc func dataUpdatedGroup(_ notification: Notification) {
+        groupDataFetch()
+        todoView.groupCollectionView.reloadData()
     }
 }
 
@@ -132,15 +153,7 @@ extension TodoListViewController: UICollectionViewDataSource {
     }
 }
 
-// MARK: - CollectionViewDelegate
-
-extension TodoListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        // FIXME: 그룹 필터 로직 구현 예정
-        
-    }
-}
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension TodoListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
@@ -310,5 +323,9 @@ extension TodoListViewController {
 extension TodoListViewController {
     private func todoDataFetch() {
         rawTodoList = dataManager.readTodos()
+    }
+    
+    private func groupDataFetch() {
+        rawGroupList = dataManager.readCategories()
     }
 }

@@ -10,10 +10,11 @@
 		1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB592B9DDB7D0030B31D /* SnapKit */; };
 		1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB612B9DDB870030B31D /* FSCalendar */; };
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
-		1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; };
-		1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB672B9DE2540030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
+		1B0FAB732B9E4CFF0030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
+		1B91FAD92B9E521D0086471C /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
@@ -67,7 +68,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B0FAB692B9DE27C0030B31D /* TodwoongDesign in Embed Frameworks */,
+				1B91FAD92B9E521D0086471C /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -76,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
+		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoAlarmViewController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -132,7 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */,
-				1B0FAB682B9DE2540030B31D /* TodwoongDesign in Frameworks */,
+				1B0FAB732B9E4CFF0030B31D /* TodwoongDesign in Frameworks */,
 				1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +370,7 @@
 				7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */,
 				1BA08A122B96F686001D3698 /* UIColor+Extension.swift */,
 				7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */,
+				1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -496,7 +499,7 @@
 			packageProductDependencies = (
 				1B0FAB592B9DDB7D0030B31D /* SnapKit */,
 				1B0FAB612B9DDB870030B31D /* FSCalendar */,
-				1B0FAB672B9DE2540030B31D /* TodwoongDesign */,
+				1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -529,7 +532,7 @@
 			packageReferences = (
 				1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -608,6 +611,7 @@
 				7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */,
 				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
 				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
+				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
 				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
@@ -865,12 +869,12 @@
 				minimumVersion = 2.8.4;
 			};
 		};
-		1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+		1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.7;
+				minimumVersion = 1.0.8;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -886,9 +890,9 @@
 			package = 1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
 		};
-		1B0FAB672B9DE2540030B31D /* TodwoongDesign */ = {
+		1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B0FAB662B9DE2540030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			package = 1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
 			productName = TodwoongDesign;
 		};
 /* End XCSwiftPackageProductDependency section */
