@@ -134,6 +134,10 @@ extension AddGroupViewController {
                 self.dismiss(animated: true)
             }
         }
+        
+        addGroupView.cancelButtonTapped = {
+            self.dismiss(animated: true)
+        }
     }
 }
 
