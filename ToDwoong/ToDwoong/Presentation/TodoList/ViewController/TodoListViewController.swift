@@ -61,37 +61,17 @@ class TodoListViewController: UIViewController {
         
         setDelegates()
         setAction()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(dataUpdated(_:)),
-            name: .TodoDataUpdatedNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(dataUpdatedGroup(_:)),
-            name: .GroupDataUpdatedNotification,
-            object: nil)
+        setNotifications()
     }
     
-    @objc func dataUpdated(_ notification: Notification) {
-        todoDataFetch()
-        todoView.todoTableView.reloadData()
-    }
-    
-    @objc func dataUpdatedGroup(_ notification: Notification) {
-        groupDataFetch()
-        todoView.groupCollectionView.reloadData()
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
 // MARK: - Action
 
 extension TodoListViewController {
-    private func setAction() {
-        todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
-        todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
-    }
     
     @objc private func categoryListButtonTapped() {
         self.navigationController?.pushViewController(GroupListViewController(), animated: true)
@@ -103,15 +83,43 @@ extension TodoListViewController {
         todoView.groupCollectionView.reloadData()
         todoView.todoTableView.reloadData()
     }
+    
+    @objc private func dataUpdated(_ notification: Notification) {
+        todoDataFetch()
+        todoView.todoTableView.reloadData()
+    }
+    
+    @objc private func dataUpdatedGroup(_ notification: Notification) {
+        groupDataFetch()
+        todoView.groupCollectionView.reloadData()
+    }
 }
 
 // MARK: - Set Methods
 
 extension TodoListViewController {
+    private func setAction() {
+        todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
+        todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
+    }
     
     private func setDelegates() {
         setCollectionView()
         setTableView()
+    }
+    
+    private func setNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .TodoDataUpdatedNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdatedGroup(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
     }
     
     private func setCollectionView() {
@@ -201,6 +209,7 @@ extension TodoListViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             rawTodo.isCompleted = !rawTodo.isCompleted
             self.dataManager.saveContext()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             tableView.reloadRows(at: [indexPath], with: .none)
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
