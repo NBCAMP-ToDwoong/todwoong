@@ -213,6 +213,17 @@ extension TodoListViewController: UITableViewDataSource {
             tableView.reloadRows(at: [indexPath], with: .none)
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
+        cell.onLocationButtonTapped = { [weak self] in
+            guard let self = self else { return }
+            let todo = self.todoList[indexPath.row]
+            let mapViewController = MapViewController()
+            
+            //FIXME: mapViewController 프로퍼티 작업 이후 주석 해제 예정
+            
+//            mapViewController.initialTodo = todo
+            self.navigationController?.pushViewController(mapViewController, animated: true)
+          }
+
         
         cell.configure(data: todoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
         
