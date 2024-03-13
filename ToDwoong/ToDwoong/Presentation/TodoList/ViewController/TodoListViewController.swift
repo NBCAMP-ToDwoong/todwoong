@@ -214,34 +214,6 @@ extension TodoListViewController: UITableViewDataSource {
 // MARK: - TableViewDelegate
 
 extension TodoListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let addTodoViewViewController = AddTodoViewController()
-        let convertedTodo = self.todoList[indexPath.row]
-        
-        addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
-        addTodoViewViewController.modalPresentationStyle = .fullScreen
-        self.present(addTodoViewViewController, animated: true)
-    }
-    
-    // FIXME: MVP 이후 구현 예정
-    
-//    func tableView(_ tableView: UITableView,
-//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-//    -> UISwipeActionsConfiguration? {
-//        let topFixedAction = UIContextualAction(style: .normal,
-//                                                title: "고정",
-//                                                handler: {(action, view, completionHandler) in
-//
-//        })
-//        
-//        topFixedAction.backgroundColor = .systemGray
-//        
-//        let swipeActions = UISwipeActionsConfiguration(actions: [topFixedAction])
-//        swipeActions.performsFirstActionWithFullSwipe = false
-//        
-//        return swipeActions
-//    }
     
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
