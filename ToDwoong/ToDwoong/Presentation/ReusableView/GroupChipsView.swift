@@ -12,10 +12,12 @@ import TodwoongDesign
 
 class GroupChipsView: UIView {
     
-    // MARK: - Instance
+    // MARK: - Properties
     
     var selectedCategoryButton: TDCustomButton?
     var onAllGroupButtonTapped: (() -> Void)?
+    
+    // MARK: - UI Components
     
     lazy var groupScrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -51,6 +53,8 @@ class GroupChipsView: UIView {
         return button
     }()
     
+    // MARK: - Initializer
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setView()
@@ -64,6 +68,8 @@ class GroupChipsView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Setup Methods
     
     private func setView() {
         addSubview(groupListButton)
@@ -97,6 +103,8 @@ class GroupChipsView: UIView {
             make.edges.equalToSuperview()
         }
     }
+    
+    // MARK: - Public Methods
     
     func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
         let chipButton = TDCustomButton(frame: .zero, type: .chip,
@@ -139,6 +147,8 @@ class GroupChipsView: UIView {
             }
         }
     }
+    
+    // MARK: - Action Methods
     
     @objc func allGroupButtonTapped() {
         onAllGroupButtonTapped?()
