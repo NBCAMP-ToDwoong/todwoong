@@ -26,8 +26,8 @@ class TodoDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = TDStyle.color.bgGray
-        tableView.backgroundColor = TDStyle.color.bgGray
+        backgroundColor = TDStyle.color.lightGray
+        tableView.backgroundColor = TDStyle.color.lightGray
         setTableView()
     }
     
