@@ -50,10 +50,17 @@ class TodoDetailViewController: UIViewController {
         } else {
             todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
         }
+            
+        if todos.isEmpty {
+            detailView.emptyImageView.isHidden = false
+            detailView.emptyLabel.isHidden = false
+        } else {
+            detailView.emptyImageView.isHidden = true
+            detailView.emptyLabel.isHidden = true
+        }
+            
         detailView.tableView.reloadData()
     }
-
-
 }
 
 // MARK: - UITableViewDataSource

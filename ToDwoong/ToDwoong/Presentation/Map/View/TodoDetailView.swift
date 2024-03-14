@@ -22,6 +22,25 @@ class TodoDetailView: UIView {
         return tableView
     }()
     
+    lazy var emptyImageView: UIImageView = {
+        let imageView = UIImageView()
+        let image = UIImage(named: "dwoong")
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+            
+        return imageView
+    }()
+    
+    lazy var emptyLabel: UILabel = {
+        let label = UILabel()
+        label.text = "오늘은 어떤 일을 할까요?"
+        label.textColor = TDStyle.color.mainTheme
+        label.font = TDStyle.font.body(style: .bold)
+        label.textAlignment = .center
+            
+        return label
+    }()
+    
     // MARK: - Lifecycle
     
     override init(frame: CGRect) {
@@ -29,6 +48,7 @@ class TodoDetailView: UIView {
         backgroundColor = TDStyle.color.lightGray
         tableView.backgroundColor = TDStyle.color.lightGray
         setTableView()
+        setTodwoongUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,6 +62,22 @@ class TodoDetailView: UIView {
             make.bottom.equalToSuperview().offset(-10)
             make.leading.equalToSuperview().offset(15)
             make.trailing.equalToSuperview().offset(-15)
+        }
+    }
+    
+    private func setTodwoongUI() {
+        addSubview(emptyImageView)
+        addSubview(emptyLabel)
+        
+        emptyImageView.snp.makeConstraints { make in
+            make.centerX.centerY.equalToSuperview()
+            make.width.equalTo(self.snp.width).dividedBy(3)
+            make.height.equalTo(emptyImageView.snp.width)
+        }
+                
+        emptyLabel.snp.makeConstraints { make in
+            make.top.equalTo(emptyImageView.snp.bottom).offset(16)
+            make.centerX.equalToSuperview()
         }
     }
 }
