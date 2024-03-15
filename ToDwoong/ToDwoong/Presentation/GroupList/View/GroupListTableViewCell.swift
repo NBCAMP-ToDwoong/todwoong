@@ -33,14 +33,21 @@ final class NormalGroupListTableViewCell: UITableViewCell {
         return imageView
     }()
     
+    // MARK: - Lifecycle
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("초기화가 구현되지 않았습니다.")
+    }
+    
+    // MARK: - Helpers
+    
     private func setLayout() {
         let views: [UIView] = [iconImageView, titleLabel, arrowImageView]
-        
         views.forEach { view in
             addSubview(view)
             view.snp.makeConstraints { make in
@@ -59,13 +66,10 @@ final class NormalGroupListTableViewCell: UITableViewCell {
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("초기화가 구현되지 않았습니다.")
-    }
-    
     func configureWithCategory(_ category: Category) {
-        if let color = TDStyle.color.colorFromString(category.color ?? "") {
-            let imageSize = CGSize(width: 40, height: 40)
+        if let colorString = category.color {
+            let color = UIColor(hex: colorString)
+            let imageSize = CGSize(width: 30, height: 30)
             let roundedImage = UIImage.roundedImage(color: color, size: imageSize)
             iconImageView.image = roundedImage
         }
@@ -74,6 +78,8 @@ final class NormalGroupListTableViewCell: UITableViewCell {
 }
 
 final class EditGroupListTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
     
     let deleteButton: UIButton = {
         let button = UIButton()
@@ -91,14 +97,31 @@ final class EditGroupListTableViewCell: UITableViewCell {
         return label
     }()
     
+    // MARK: - Lifecycle
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setLayout()
     }
     
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("초기화가 구현되지 않았습니다.")
+    }
+    
+    // MARK: - Actions
+    
+    @objc func deleteButtonTapped() {
+        guard let tableView = superview as? ContentSizedTableView,
+              let indexPath = tableView.indexPath(for: self) else {
+                return
+            }
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
+    // MARK: - Helpers
+    
     private func setLayout() {
         let views: [UIView] = [deleteButton, titleLabel]
-
         views.forEach { view in
             addSubview(view)
             view.snp.makeConstraints { make in
@@ -111,18 +134,5 @@ final class EditGroupListTableViewCell: UITableViewCell {
                 }
             }
         }
-    }
-    
-    @objc func deleteButtonTapped() {
-        guard let tableView = superview as? ContentSizedTableView,
-                  let indexPath = tableView.indexPath(for: self) else {
-                return
-            }
-
-        tableView.deleteRows(at: [indexPath], with: .automatic)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("초기화가 구현되지 않았습니다.")
     }
 }

@@ -31,6 +31,8 @@
 		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
 		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
+		7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CC2BA4334E00455100 /* AddGroupButton.swift */; };
+		7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CE2BA433FA00455100 /* GroupTableView.swift */; };
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
@@ -101,6 +103,8 @@
 		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
 		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		7F7253CC2BA4334E00455100 /* AddGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupButton.swift; sourceTree = "<group>"; };
+		7F7253CE2BA433FA00455100 /* GroupTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableView.swift; sourceTree = "<group>"; };
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
@@ -398,6 +402,8 @@
 				7FE316462B957227004ED878 /* GroupListTableViewCell.swift */,
 				7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */,
 				7FE3164A2B957275004ED878 /* GroupListView.swift */,
+				7F7253CC2BA4334E00455100 /* AddGroupButton.swift */,
+				7F7253CE2BA433FA00455100 /* GroupTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -606,6 +612,7 @@
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
+				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
@@ -633,6 +640,7 @@
 				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,
 				2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */,
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
