@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
+		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
@@ -44,8 +45,6 @@
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
 		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
 		7F9010352BA22565008B778B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9010342BA22565008B778B /* FSCalendar */; };
-		7F9010382BA2256A008B778B /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9010372BA2256A008B778B /* SnapKit */; };
-		7F90103A2BA2256A008B778B /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9010392BA2256A008B778B /* SnapKit-Dynamic */; };
 		7F90103D2BA2256F008B778B /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 7F90103C2BA2256F008B778B /* TodwoongDesign */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
@@ -146,10 +145,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */,
 				7F9010352BA22565008B778B /* FSCalendar in Frameworks */,
 				7F90103D2BA2256F008B778B /* TodwoongDesign in Frameworks */,
-				7F9010382BA2256A008B778B /* SnapKit in Frameworks */,
-				7F90103A2BA2256A008B778B /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,9 +525,8 @@
 			name = ToDwoong;
 			packageProductDependencies = (
 				7F9010342BA22565008B778B /* FSCalendar */,
-				7F9010372BA2256A008B778B /* SnapKit */,
-				7F9010392BA2256A008B778B /* SnapKit-Dynamic */,
 				7F90103C2BA2256F008B778B /* TodwoongDesign */,
+				1B1886CE2BA495EB00353519 /* SnapKit */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -561,8 +558,8 @@
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
 				7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				7F9010362BA2256A008B778B /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7F90103B2BA2256F008B778B /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -900,20 +897,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "http://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 		7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.8.4;
-			};
-		};
-		7F9010362BA2256A008B778B /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
 			};
 		};
 		7F90103B2BA2256F008B778B /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
@@ -927,20 +924,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1B1886CE2BA495EB00353519 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
 		7F9010342BA22565008B778B /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
-		};
-		7F9010372BA2256A008B778B /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7F9010362BA2256A008B778B /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		7F9010392BA2256A008B778B /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 7F9010362BA2256A008B778B /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
 		};
 		7F90103C2BA2256F008B778B /* TodwoongDesign */ = {
 			isa = XCSwiftPackageProductDependency;
