@@ -10,6 +10,7 @@
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
 		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
+		1B1886D42BA49A1E00353519 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F90103C2BA2256F008B778B /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
@@ -74,6 +75,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				1B1886D42BA49A1E00353519 /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -797,7 +799,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -806,12 +808,13 @@
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "백그라운드 알림을 위해 항상 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "백그라운드 알림을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -839,7 +842,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -848,12 +851,13 @@
 				INFOPLIST_FILE = ToDwoong/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "백그라운드 알림을 위해 항상 허용해주세요";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "백그라운드 알림을 허용해주세요";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
