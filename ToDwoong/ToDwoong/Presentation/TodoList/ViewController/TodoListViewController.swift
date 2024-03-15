@@ -61,37 +61,17 @@ class TodoListViewController: UIViewController {
         
         setDelegates()
         setAction()
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(dataUpdated(_:)),
-            name: .TodoDataUpdatedNotification,
-            object: nil)
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(dataUpdatedGroup(_:)),
-            name: .GroupDataUpdatedNotification,
-            object: nil)
+        setNotifications()
     }
     
-    @objc func dataUpdated(_ notification: Notification) {
-        todoDataFetch()
-        todoView.todoTableView.reloadData()
-    }
-    
-    @objc func dataUpdatedGroup(_ notification: Notification) {
-        groupDataFetch()
-        todoView.groupCollectionView.reloadData()
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
 // MARK: - Action
 
 extension TodoListViewController {
-    private func setAction() {
-        todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
-        todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
-    }
     
     @objc private func categoryListButtonTapped() {
         self.navigationController?.pushViewController(GroupListViewController(), animated: true)
@@ -103,15 +83,43 @@ extension TodoListViewController {
         todoView.groupCollectionView.reloadData()
         todoView.todoTableView.reloadData()
     }
+    
+    @objc private func dataUpdated(_ notification: Notification) {
+        todoDataFetch()
+        todoView.todoTableView.reloadData()
+    }
+    
+    @objc private func dataUpdatedGroup(_ notification: Notification) {
+        groupDataFetch()
+        todoView.groupCollectionView.reloadData()
+    }
 }
 
 // MARK: - Set Methods
 
 extension TodoListViewController {
+    private func setAction() {
+        todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
+        todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
+    }
     
     private func setDelegates() {
         setCollectionView()
         setTableView()
+    }
+    
+    private func setNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .TodoDataUpdatedNotification,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdatedGroup(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
     }
     
     private func setCollectionView() {
@@ -201,9 +209,21 @@ extension TodoListViewController: UITableViewDataSource {
         cell.onCheckButtonTapped = {
             rawTodo.isCompleted = !rawTodo.isCompleted
             self.dataManager.saveContext()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             tableView.reloadRows(at: [indexPath], with: .none)
         }
         cell.checkButton.isSelected = rawTodo.isCompleted
+        cell.onLocationButtonTapped = { [weak self] in
+            guard let self = self else { return }
+            let todo = self.todoList[indexPath.row]
+            let mapViewController = MapViewController()
+            
+            //FIXME: mapViewController 프로퍼티 작업 이후 주석 해제 예정
+            
+//            mapViewController.initialTodo = todo
+            self.navigationController?.pushViewController(mapViewController, animated: true)
+          }
+
         
         cell.configure(data: todoList[indexPath.row], iconImage: UIImage(named: "AddTodoMapPin")!)
         
@@ -214,34 +234,6 @@ extension TodoListViewController: UITableViewDataSource {
 // MARK: - TableViewDelegate
 
 extension TodoListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let addTodoViewViewController = AddTodoViewController()
-        let convertedTodo = self.todoList[indexPath.row]
-        
-        addTodoViewViewController.todoToEdit = self.convertToRawTodo(convertedTodo)
-        addTodoViewViewController.modalPresentationStyle = .fullScreen
-        self.present(addTodoViewViewController, animated: true)
-    }
-    
-    // FIXME: MVP 이후 구현 예정
-    
-//    func tableView(_ tableView: UITableView,
-//                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-//    -> UISwipeActionsConfiguration? {
-//        let topFixedAction = UIContextualAction(style: .normal,
-//                                                title: "고정",
-//                                                handler: {(action, view, completionHandler) in
-//
-//        })
-//        
-//        topFixedAction.backgroundColor = .systemGray
-//        
-//        let swipeActions = UISwipeActionsConfiguration(actions: [topFixedAction])
-//        swipeActions.performsFirstActionWithFullSwipe = false
-//        
-//        return swipeActions
-//    }
     
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)

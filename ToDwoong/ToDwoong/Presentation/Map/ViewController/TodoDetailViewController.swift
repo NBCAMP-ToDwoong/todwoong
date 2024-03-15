@@ -15,11 +15,8 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Properties
     
     var detailView: TodoDetailView!
-    var selectedCategoryTitle: String? {
-        didSet {
-            loadTodosForSelectedCategory()
-        }
-    }
+    var selectedCategoryTitle: String?
+    var selectedCategoryIndex: Int? 
     
     // MARK: - Data Storage
     
@@ -44,22 +41,28 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Setting Method
     
     func loadTodosForSelectedCategory() {
-        guard let category = selectedCategoryTitle else {
+        if let index = selectedCategoryIndex {
+            if index == -1 {
+                todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
+            } else {
+                todos = CoreDataManager.shared.readTodos().filter
+                { $0.category?.indexNumber == Int32(index) }.map
+                { $0.toTodoModel() }
+            }
+        } else {
             todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
-            detailView?.tableView.reloadData()
-            return
         }
             
-        if category == "전체" {
-            todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
-            detailView?.tableView.reloadData()
+        if todos.isEmpty {
+            detailView.emptyImageView.isHidden = false
+            detailView.emptyLabel.isHidden = false
         } else {
-            let selectedCategory = CoreDataManager.shared.readCategories().first { $0.title == category }
-            todos = CoreDataManager.shared.filterTodoByCategory(category: selectedCategory!).map { $0.toTodoModel() }
-            detailView?.tableView.reloadData()
+            detailView.emptyImageView.isHidden = true
+            detailView.emptyLabel.isHidden = true
         }
+            
+        detailView.tableView.reloadData()
     }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -70,7 +73,7 @@ extension TodoDetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier, 
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
                                                        for: indexPath) as? TDTableViewCell
         else {
             return UITableViewCell()

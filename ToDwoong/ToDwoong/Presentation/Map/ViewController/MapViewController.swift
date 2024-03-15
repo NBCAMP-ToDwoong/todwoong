@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     
     // MARK: - Instance
     
+    var initialTodo: TodoModel?
     var customMapView: MapView!
     // 핀 크기관련 프로퍼티... 현재 작동하지않음
 //    var selectedAnnotation: MKAnnotation?
@@ -43,7 +44,11 @@ class MapViewController: UIViewController {
         loadCategoriesAndCategoryChips()
         loadTodosAndPins()
         
-        customMapView.groupListButton.addTarget(self, action: #selector(showGroupList), for: .touchUpInside)
+        customMapView.groupChipsView.groupListButton.addTarget(self,
+                                                                  action: #selector(showGroupList),
+                                                                  for: .touchUpInside)
+        
+        customMapView.groupChipsView.selectCategoryButton(customMapView.groupChipsView.allGroupButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,6 +60,15 @@ class MapViewController: UIViewController {
             
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let todo = initialTodo {
+            zoomToTodo(todo) {}
+            initialTodo = nil
+        }
     }
     
     // MARK: - Setting Method
@@ -102,9 +116,9 @@ class MapViewController: UIViewController {
         todos = CoreDataManager.shared.readTodos()
         for todo in todos {
             if let place = todo.place, let categoryColor = todo.category?.color {
-                addPinForPlace(place, 
+                addPinForPlace(place,
                                colorName: categoryColor,
-                               category: todo.category?.title ?? "", 
+                               category: todo.category?.title ?? "",
                                todo: todo.toTodoModel())
             }
         }
@@ -122,10 +136,13 @@ class MapViewController: UIViewController {
             }
             
             if let placemark = placemarks?.first, let location = placemark.location {
-                let annotation = TodoAnnotation(coordinate: location.coordinate, 
+                let categoryIndexNumber = Int(todo.category?.indexNumber ?? 0)
+                
+                let annotation = TodoAnnotation(coordinate: location.coordinate,
                                                 title: todo.title,
                                                 colorName: colorName,
-                                                category: category)
+                                                category: category,
+                                                categoryIndexNumber: categoryIndexNumber)
                 
                 strongSelf.todoAnnotationMap[todo.id?.uuidString ?? ""] = annotation
                 
@@ -135,51 +152,52 @@ class MapViewController: UIViewController {
             }
         }
     }
+
     
     private func loadCategoriesAndCategoryChips() {
         categories = CoreDataManager.shared.readCategories()
         categories.forEach { category in
-            customMapView.addCategoryChip(category: category.toCategoryModel(), 
+            customMapView.addCategoryChip(category: category.toCategoryModel(),
                                           action: #selector(categoryChipTapped(_:)), target: self)
         }
     }
     
     private func selectCategory(_ category: CategoryModel) {
-        guard let chipButton = customMapView.stackView.arrangedSubviews.first(where: {
-            ($0 as? CategoryChipButton)?.titleLabel?.text == category.title
-        }) as? CategoryChipButton else {
+        guard let chipButton = customMapView.groupChipsView.groupStackView.arrangedSubviews.first(where: {
+            ($0 as? TDCustomButton)?.titleLabel?.text == category.title
+        }) as? TDCustomButton else {
             return
         }
-            
+        
         categoryChipTapped(chipButton)
     }
     
     // MARK: - Objc Func
     
-    @objc func categoryChipTapped(_ sender: CategoryChipButton) {
-        guard let title = sender.titleLabel?.text else { return }
+    @objc func categoryChipTapped(_ sender: TDCustomButton) {
+        let indexNumber = sender.tag
+        customMapView.groupChipsView.selectCategoryButton(sender)
         
-        customMapView.selectCategoryButton(sender)
+        customMapView.mapView.annotations.forEach { annotation in
+            guard let view = customMapView.mapView.view(for: annotation) else { return }
+            view.isHidden = !(annotation is TodoAnnotation)
+        }
         
-        let detailVC = TodoDetailViewController()
-        
-        if title == "전체" {
+        if indexNumber == -1 {
             customMapView.mapView.annotations.forEach { annotation in
-                guard annotation is TodoAnnotation else { return }
-                customMapView.mapView.view(for: annotation)?.isHidden = false
+                customMapView.mapView.view(for: annotation)?.isHidden = !(annotation is TodoAnnotation)
             }
-            detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
         } else {
             customMapView.mapView.annotations.forEach { annotation in
                 guard let todoAnnotation = annotation as? TodoAnnotation else { return }
-                customMapView.mapView.view(for: annotation)?.isHidden = todoAnnotation.category != title
+                customMapView.mapView.view(for: annotation)?.isHidden
+                = todoAnnotation.categoryIndexNumber != indexNumber
             }
-            let selectedCategory = CoreDataManager.shared.readCategories().first { $0.title == title }
-            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(
-                category: selectedCategory!).map { $0.toTodoModel() }
         }
         
-        detailVC.selectedCategoryTitle = title
+        let detailVC = TodoDetailViewController()
+        
+        detailVC.selectedCategoryIndex = indexNumber
         detailVC.modalPresentationStyle = .pageSheet
         
         if let sheet = detailVC.sheetPresentationController {
@@ -191,8 +209,28 @@ class MapViewController: UIViewController {
         present(detailVC, animated: true, completion: nil)
     }
 
-    @objc func allGroupButtonTapped(_ sender: CategoryChipButton) {
-        categoryChipTapped(sender)
+
+    @objc func allGroupButtonTapped(_ sender: TDCustomButton) {
+        customMapView.groupChipsView.selectCategoryButton(sender)
+        
+        customMapView.mapView.annotations.forEach { annotation in
+            if annotation is TodoAnnotation {
+                customMapView.mapView.view(for: annotation)?.isHidden = false
+            }
+        }
+
+        let detailVC = TodoDetailViewController()
+        detailVC.selectedCategoryTitle = "전체"
+        detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
+        detailVC.modalPresentationStyle = .pageSheet
+        
+        if let sheet = detailVC.sheetPresentationController {
+            sheet.prefersGrabberVisible = true
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+        }
+        
+        present(detailVC, animated: true, completion: nil)
     }
     
     @objc private func didTapBackButton() {
@@ -230,7 +268,16 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse || status == .authorizedAlways {
-            locationManager.startUpdatingLocation()
+                locationManager.startUpdatingLocation()
+            }
+        
+        switch status {
+            case .denied, .restricted:
+                promptForLocationServices()
+            case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
+                locationManager.startUpdatingLocation()
+            @unknown default:
+                break
         }
     }
 }
@@ -247,15 +294,13 @@ extension MapViewController: MKMapViewDelegate {
         let detailVC = TodoDetailViewController()
         detailVC.modalPresentationStyle = .pageSheet
         
-        if let todoAnnotation = view.annotation as? TodoAnnotation,
-           let selectedCategory = CoreDataManager.shared.readCategories().first(where: {
-               $0.title == todoAnnotation.category
-           }) {
-            detailVC.selectedCategoryTitle = todoAnnotation.category
-            detailVC.todos = CoreDataManager.shared.filterTodoByCategory(
-                category: selectedCategory).map { $0.toTodoModel() }
-        } else {
-            detailVC.todos = []
+        if let todoAnnotation = view.annotation as? TodoAnnotation {
+            let filteredTodos
+            = CoreDataManager.shared.readTodos().filter { $0.category?.title == todoAnnotation.category }.map { $0.toTodoModel() }
+            detailVC.todos = filteredTodos
+            if let index = categories.firstIndex(where: { $0.title == todoAnnotation.category }) {
+                detailVC.selectedCategoryIndex = index
+            }
         }
         
         if let sheet = detailVC.sheetPresentationController {
@@ -281,7 +326,7 @@ extension MapViewController: MKMapViewDelegate {
 
             let customImage = UIImage(named: "AddTodoMapPin")?
                 .withRenderingMode(.alwaysTemplate)
-                .withTintColor(TDStyle.color.colorFromString(todoAnnotation.colorName) ?? .green)
+                .withTintColor(UIColor(hex: todoAnnotation.colorName))
             
             let size = CGSize(width: 30, height: 30)
             UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
@@ -299,30 +344,6 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController {
-    func allGroupButtonTapped() {
-        customMapView.mapView.annotations.forEach { annotation in
-            if annotation is TodoAnnotation {
-                customMapView.mapView.view(for: annotation)?.isHidden = false
-            }
-        }
-        
-        // 모든 Todo를 담은 모달창을 띄웁니다.
-        let detailVC = TodoDetailViewController()
-        detailVC.selectedCategoryTitle = "전체"
-        detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
-        detailVC.modalPresentationStyle = .pageSheet
-        
-        if let sheet = detailVC.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-        }
-        
-        present(detailVC, animated: true, completion: nil)
-    }
-}
-
-extension MapViewController {
     func zoomToTodo(_ todo: TodoModel, completion: @escaping () -> Void) {
         if let annotation = todoAnnotationMap[todo.id?.uuidString ?? ""] {
             let region = MKCoordinateRegion(center: annotation.coordinate,
@@ -336,5 +357,29 @@ extension MapViewController {
         } else {
             completion()
         }
+    }
+
+    func promptForLocationServices() {
+        let alertController = UIAlertController(title: "위치 서비스 필요",
+                                                message: "이 앱은 위치 서비스가 필요 합니다. 설정에서 위치 권한을 허용해주세요.",
+                                                preferredStyle: .alert)
+            
+        let settingsAction = UIAlertAction(title: "설정으로 이동", style: .default) { (_) -> Void in
+            guard let settingsUrl = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+
+            if UIApplication.shared.canOpenURL(settingsUrl) {
+                UIApplication.shared.open(settingsUrl, completionHandler: { (success) in
+                    print("Settings opened: \(success)")
+                })
+            }
+        }
+            
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alertController.addAction(settingsAction)
+        alertController.addAction(cancelAction)
+            
+        present(alertController, animated: true, completion: nil)
     }
 }
