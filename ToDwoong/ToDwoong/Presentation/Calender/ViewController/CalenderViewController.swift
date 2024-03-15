@@ -258,6 +258,7 @@ extension CalendarViewController: UITableViewDelegate {
             CoreDataManager.shared.deleteTodo(todo: todoToDelete)
             self.todoList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             
             completionHandler(true)
             self.fetchTodosAndSetEventDates()
