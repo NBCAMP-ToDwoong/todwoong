@@ -45,7 +45,9 @@ class TodoDetailViewController: UIViewController {
             if index == -1 {
                 todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
             } else {
-                todos = CoreDataManager.shared.readTodos().filter { $0.category?.indexNumber == Int32(index) }.map { $0.toTodoModel() }
+                todos = CoreDataManager.shared.readTodos().filter
+                { $0.category?.indexNumber == Int32(index) }.map
+                { $0.toTodoModel() }
             }
         } else {
             todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }

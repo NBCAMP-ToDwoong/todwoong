@@ -22,6 +22,14 @@ class TodoDetailView: UIView {
         return tableView
     }()
     
+    lazy var emptyStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        return stackView
+    }()
+    
     lazy var emptyImageView: UIImageView = {
         let imageView = UIImageView()
         let image = UIImage(named: "dwoong")
@@ -66,15 +74,20 @@ class TodoDetailView: UIView {
     }
     
     private func setTodwoongUI() {
-        addSubview(emptyImageView)
-        addSubview(emptyLabel)
+        addSubview(emptyStackView)
+        emptyStackView.addArrangedSubview(emptyImageView)
+        emptyStackView.addArrangedSubview(emptyLabel)
+        
+        emptyStackView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
         
         emptyImageView.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
             make.width.equalTo(self.snp.width).dividedBy(3)
             make.height.equalTo(emptyImageView.snp.width)
         }
-                
+        
         emptyLabel.snp.makeConstraints { make in
             make.top.equalTo(emptyImageView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()

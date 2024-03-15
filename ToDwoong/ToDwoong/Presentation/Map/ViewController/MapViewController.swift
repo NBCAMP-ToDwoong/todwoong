@@ -190,7 +190,8 @@ class MapViewController: UIViewController {
         } else {
             customMapView.mapView.annotations.forEach { annotation in
                 guard let todoAnnotation = annotation as? TodoAnnotation else { return }
-                customMapView.mapView.view(for: annotation)?.isHidden = todoAnnotation.categoryIndexNumber != indexNumber
+                customMapView.mapView.view(for: annotation)?.isHidden
+                = todoAnnotation.categoryIndexNumber != indexNumber
             }
         }
         
@@ -294,7 +295,8 @@ extension MapViewController: MKMapViewDelegate {
         detailVC.modalPresentationStyle = .pageSheet
         
         if let todoAnnotation = view.annotation as? TodoAnnotation {
-            let filteredTodos = CoreDataManager.shared.readTodos().filter { $0.category?.title == todoAnnotation.category }.map { $0.toTodoModel() }
+            let filteredTodos
+            = CoreDataManager.shared.readTodos().filter { $0.category?.title == todoAnnotation.category }.map { $0.toTodoModel() }
             detailVC.todos = filteredTodos
             if let index = categories.firstIndex(where: { $0.title == todoAnnotation.category }) {
                 detailVC.selectedCategoryIndex = index
