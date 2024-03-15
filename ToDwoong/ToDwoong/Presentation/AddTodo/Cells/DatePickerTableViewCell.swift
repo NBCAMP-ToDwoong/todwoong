@@ -18,6 +18,8 @@ class DatePickerTableViewCell: UITableViewCell {
     
     var dateChipTappedHandler: (() -> Void)?
     var timeChipTappedHandler: (() -> Void)?
+    var dateChipDeleteHandler: (() -> Void)?
+    var timeChipDeleteHandler: (() -> Void)?
     
     var selectedDate: Date? {
         didSet {
@@ -52,6 +54,10 @@ class DatePickerTableViewCell: UITableViewCell {
         
         let dateChip = InfoChipView(text: dateText, color: TDStyle.color.lightGray, showDeleteButton: false)
         let timeChip = InfoChipView(text: timeText, color: TDStyle.color.lightGray, showDeleteButton: false)
+        dateChip.removeFromSuperview()
+        timeChip.removeFromSuperview()
+        dateChip.delegate = self
+        timeChip.delegate = self
         
         dateLabel.text = "날짜"
         dateLabel.textColor = .black
@@ -113,7 +119,8 @@ class DatePickerTableViewCell: UITableViewCell {
 
 extension DatePickerTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {
-        // Handle delete button tap if needed
+        chipView.removeFromSuperview()
+        accessoryType = .disclosureIndicator
     }
     
 }

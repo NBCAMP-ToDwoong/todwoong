@@ -25,9 +25,17 @@ class AddTodoViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    let defaultCellIdentifier = "DefaultCell"
     let titleTextField = UITextField()
     let tableView = UITableView()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "투두 추가"
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = TDStyle.font.body(style: .bold)
+        return label
+    }()
     
     private lazy var saveButton: UIButton = {
         let button = UIButton()
@@ -52,11 +60,38 @@ class AddTodoViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
+        if todoToEdit != nil {
+            titleLabel.text = "투두 수정"
+        } else {
+            titleLabel.text = "투두 추가"
+        }
+        loadTodoToEdit()
+    }
+    
+    private func loadTodoToEdit() {
+        titleLabel = UILabel()
+        titleLabel.textAlignment = .center
+        titleLabel.textColor = TDStyle.color.mainTheme
+        
+        if todoToEdit != nil {
+            guard let todo = todoToEdit else { return }
+            
+            selectedTitle = todo.title!
+            selectedDueDate = todo.dueDate
+            selectedDueTime = todo.dueTime
+            selectedGroup = todo.category
+            selectedPlace = todo.place
+            
+            titleTextField.text = selectedTitle
+            
+            tableView.reloadData()
+        }
     }
     
     private func setView() {
@@ -66,56 +101,70 @@ class AddTodoViewController: UIViewController {
         setupTitleTextField()
         setupTableView()
         setupTapGesture()
+        
+        // UI 컴포넌트를 뷰에 추가
+        view.addSubview(titleLabel)
         view.addSubview(saveButton)
         view.addSubview(closeButton)
-        
-        closeButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(60)
-            make.leading.equalToSuperview().offset(16)
+
+        // titleLabel의 제약 조건 설정
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.centerX.equalToSuperview()
         }
-        
+
+        // closeButton의 제약 조건 설정
+        closeButton.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
+            make.leading.equalToSuperview().offset(16) // leading에 대한 제약 조건 유지
+        }
+
+        // saveButton의 제약 조건 설정
         saveButton.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(60)
-            make.trailing.equalToSuperview().offset(-16)
+            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
+            make.trailing.equalToSuperview().offset(-16) // trailing에 대한 제약 조건 유지
         }
     }
     
-    // FIXME: -
+    // FIXME: - 추후 변경
     @objc func doneButtonTapped() {
-//        guard let title = selectedTitle, !title.isEmpty else {
-//            print("제목이 비어 있습니다.")
-//            return
-//        }
-//        let place = selectedPlace
-//        let isCompleted = false
-////        let timeAlarm = selectedTimes ?? false
-////        let placeAlarm = selectedPlace ?? false
-//        let category = selectedGroup
-//        
-//        if let todo = todoToEdit {
-//            CoreDataManager.shared.updateTodo(todo: todo,
-//                                              newTitle: title,
-//                                              newPlace: place,
-//                                              newDate: selectedDueDate,
-//                                              newTime: selectedDueTime,
-//                                              newCompleted: isCompleted,
-//                                              newTimeAlarm: timeAlarm,
-//                                              newPlaceAlarm: placeAlarm,
-//                                              newCategory: category)
-//            print("투두 항목이 업데이트되었습니다.")
-//        } else {
-//            CoreDataManager.shared.createTodo(title: title,
-//                                              place: place,
-//                                              dueDate: selectedDueDate,
-//                                              dueTime: selectedDueTime,
-//                                              isCompleted: isCompleted,
-//                                              timeAlarm: timeAlarm,
-//                                              placeAlarm: placeAlarm,
-//                                              category: category)
-//            print("새 투두 항목이 생성되었습니다.")
-//        }
-//        
-//        NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+        let title = selectedTitle
+        guard !title.isEmpty else {
+            print("제목이 비어 있습니다.")
+            // 얼럿 뷰 표시
+            return
+        }
+        let place = selectedPlace
+        //let timeAlarm = selectedTimes ?? false 추후 수정
+        //let placeAlarm = selectedPlace ?? false 추후 수정
+        let timeAlarm = false
+        let placeAlarm = false
+        let category = selectedGroup
+        
+        if let todo = todoToEdit {
+            CoreDataManager.shared.updateTodo(todo: todo,
+                                              newTitle: title,
+                                              newPlace: place,
+                                              newDate: selectedDueDate,
+                                              newTime: selectedDueTime,
+                                              newCompleted: todo.isCompleted,
+                                              newTimeAlarm: timeAlarm,
+                                              newPlaceAlarm: placeAlarm,
+                                              newCategory: category)
+            print("투두 항목이 업데이트되었습니다.")
+        } else {
+            CoreDataManager.shared.createTodo(title: title,
+                                              place: place,
+                                              dueDate: selectedDueDate,
+                                              dueTime: selectedDueTime,
+                                              isCompleted: false,
+                                              timeAlarm: timeAlarm,
+                                              placeAlarm: placeAlarm,
+                                              category: category)
+            print("새 투두 항목이 생성되었습니다.")
+        }
+        
+        NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
         dismiss(animated: true, completion: nil)
     }
     
@@ -132,10 +181,15 @@ class AddTodoViewController: UIViewController {
         titleTextField.leftViewMode = .always
         
         titleTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
             make.left.right.equalTo(view).inset(14)
             make.height.equalTo(50)
         }
+        titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    @objc private func titleTextFieldDidChange(_ textField: UITextField) {
+        selectedTitle = textField.text ?? ""
     }
     
     private func setupTableView() {
@@ -181,7 +235,6 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         guard let touchedView = touch.view else { return false }
-        // 테이블뷰 셀이나 셀의 서브뷰가 아닌 경우에만 제스처 인식
         if !(touchedView is UITableViewCell) && !(touchedView.isDescendant(of: tableView)) {
             return true
         }
@@ -191,7 +244,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
 
 extension AddTodoViewController: UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -222,6 +275,14 @@ extension AddTodoViewController: UITableViewDelegate {
                     self?.goTimePickerViewController()
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
+                cell.dateChipDeleteHandler = { [weak self] in
+                    self?.selectedDueDate = nil
+                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
+                cell.timeChipDeleteHandler = { [weak self] in
+                    self?.selectedDueTime = nil
+                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
                 cell.accessoryType = .none
                 return cell
             case 1:
@@ -237,10 +298,14 @@ extension AddTodoViewController: UITableViewDelegate {
                 return cell
             case 2:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: LocationTableViewCell.identifier,
-                                                         for: indexPath) as? LocationTableViewCell else {
+                                                               for: indexPath) as? LocationTableViewCell else {
                     return UITableViewCell()
                 }
                 cell.configure(with: selectedPlace)
+                cell.onDeleteButtonTapped = { [weak self] in
+                    self?.selectedPlace = nil
+                    self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                }
                 return cell
             default:
                 break
@@ -248,7 +313,7 @@ extension AddTodoViewController: UITableViewDelegate {
             return UITableViewCell()
         case 1:
             if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: TimeAlarmTableViewCell.identifier, 
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: TimeAlarmTableViewCell.identifier,
                                                                for: indexPath) as? TimeAlarmTableViewCell else {
                     return UITableViewCell()
                 }
@@ -260,7 +325,7 @@ extension AddTodoViewController: UITableViewDelegate {
                 }
                 return cell
             } else {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceAlarmTableViewCell.identifier, 
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceAlarmTableViewCell.identifier,
                                                                for: indexPath) as? PlaceAlarmTableViewCell else {
                     return UITableViewCell()
                 }
@@ -283,8 +348,6 @@ extension AddTodoViewController: UITableViewDelegate {
         view.endEditing(true)
         if indexPath.section == 0 {
             switch indexPath.row {
-            case 0:
-                print("날짜 셀 선택")
             case 1:
                 goToGroupSelectController()
             case 2:
@@ -296,8 +359,6 @@ extension AddTodoViewController: UITableViewDelegate {
             switch indexPath.row {
             case 0:
                 goTimeAlarmViewController()
-            case 1:
-                print("장소 알림 셀 선택")
             default:
                 break
             }
@@ -370,57 +431,6 @@ extension AddTodoViewController: UITableViewDelegate {
 
 extension AddTodoViewController: UITableViewDataSource {}
 
-class LocationTableViewCell: UITableViewCell {
-    static let identifier = "LocationCell"
-    
-    let titleLabel = UILabel()
-    var chipView: InfoChipView?
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
-        contentView.addSubview(titleLabel)
-        titleLabel.text = "위치"
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12)
-            make.leading.equalToSuperview().offset(30)
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
-        }
-    }
-    
-    func configure(with selectedPlace: String?) {
-        chipView?.removeFromSuperview()
-        chipView = nil
-
-        if let place = selectedPlace, !place.isEmpty {
-            let newChipView = InfoChipView(text: place, color: TDStyle.color.lightGray, showDeleteButton: true)
-            contentView.addSubview(newChipView)
-            chipView = newChipView
-            
-            chipView?.snp.makeConstraints { make in
-                make.centerY.equalTo(titleLabel.snp.centerY)
-                make.trailing.equalToSuperview().offset(-30)
-                make.height.equalTo(30)
-            }
-            accessoryType = .none
-        } else {
-            accessoryType = .disclosureIndicator
-        }
-        titleLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(30)
-            if chipView == nil {
-                make.trailing.equalToSuperview().offset(-16)
-            }
-        }
-    }}
 
 extension AddTodoViewController: AddTodoLocationPickerDelegate {
     func goLocationPickerViewController() {

@@ -12,8 +12,8 @@ import TodwoongDesign
 
 class InfoChipView: UIView {
     private let textLabel = UILabel()
-    private let deleteButton = UIButton()
-    
+    private var deleteButton: UIButton?
+
     var text: String? {
         return textLabel.text
     }
@@ -23,10 +23,15 @@ class InfoChipView: UIView {
     init(text: String, color: UIColor, showDeleteButton: Bool) {
         super.init(frame: .zero)
         setupTextLabel(text: text)
-        setupDeleteButton()
         setupView(color: color)
+
+        if showDeleteButton {
+            setupDeleteButton()
+        } else {
+            textLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        }
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -41,14 +46,16 @@ class InfoChipView: UIView {
     }
 
     private func setupDeleteButton() {
-        deleteButton.setImage(UIImage(systemName: "multiply"), for: .normal)
-        deleteButton.tintColor = .black
-        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        addSubview(deleteButton)
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        deleteButton.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 4).isActive = true
-        deleteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
-        deleteButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "multiply"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 10).isActive = true
+        button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        button.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        self.deleteButton = button
     }
 
     private func setupView(color: UIColor) {
