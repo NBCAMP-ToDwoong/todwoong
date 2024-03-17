@@ -7,43 +7,117 @@
 
 import UIKit
 
-class AddTodoTimePickerController: UIViewController {
+import SnapKit
+import TodwoongDesign
 
+class AddTodoTimePickerController: UIViewController {
+    var selectedTime: Date?
     weak var delegate: TimePickerModalDelegate?
-    
     private let datePicker = UIDatePicker()
+    
+    private lazy var timeNotificationButton: UIButton = {
+        var config = UIButton.Configuration.plain()
+        
+        config.title = "시간 선택"
+        config.baseForegroundColor = TDStyle.color.mainDarkTheme
+        config.baseBackgroundColor = .clear
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: TDStyle.font.body(style: .bold)
+        ]
+        config.attributedTitle = AttributedString("시간 선택", attributes: AttributeContainer(attributes))
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        
+        return button
+    }()
+    
+    private lazy var saveButton: UIButton = {
+        createNotificationButton(title: "저장", method: #selector(saveTime), color: .systemBlue)
+    }()
+    
+    private func createNotificationButton(title: String,
+                                          method: Selector,
+                                          color: UIColor? = TDStyle.color.primaryLabel
+    ) -> UIButton {
+        var config = UIButton.Configuration.plain()
+        
+        config.title = title
+        config.baseForegroundColor = color
+        config.baseBackgroundColor = .clear
+        
+        let attributes: [NSAttributedString.Key: Any] = [
+            .font: TDStyle.font.body(style: .regular)
+        ]
+        config.attributedTitle = AttributedString(title, attributes: AttributeContainer(attributes))
+        
+        let button = UIButton(configuration: config, primaryAction: nil)
+        button.addTarget(self, action: method, for: .touchUpInside)
+        
+        return button
+    }
+    
+    private let separatorLine: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray4
+        return view
+    }()
+    
+    private func setupDatePicker() {
+        datePicker.datePickerMode = .time
+        datePicker.preferredDatePickerStyle = .wheels
+        if let selectedTime = selectedTime {
+            datePicker.setDate(selectedTime, animated: false)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupLayout()
         setupDatePicker()
-        setupDoneButton()
+        configureModalStyle()
     }
     
-    private func setupDatePicker() {
+    private func setupLayout() {
         view.backgroundColor = .white
-        view.addSubview(datePicker)
-        datePicker.datePickerMode = .time
-        datePicker.preferredDatePickerStyle = .wheels
+        [timeNotificationButton, saveButton, separatorLine, datePicker].forEach { view.addSubview($0) }
+        
+        timeNotificationButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.leading.equalToSuperview().offset(10)
+        }
+        
+        saveButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.trailing.equalToSuperview().offset(-10)
+        }
+        
+        separatorLine.snp.makeConstraints { make in
+            make.top.equalTo(saveButton.snp.bottom).offset(15)
+            make.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(0.5)
+        }
+        
         datePicker.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-100)
+            make.top.equalTo(separatorLine.snp.bottom).offset(20)
+            make.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
-    private func setupDoneButton() {
-        let doneButton = UIButton()
-        view.addSubview(doneButton)
-        doneButton.setTitle("완료", for: .normal)
-        doneButton.setTitleColor(.blue, for: .normal)
-        doneButton.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        doneButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(datePicker.snp.bottom).offset(20)
+    private func configureModalStyle() {
+        if let presentationController = presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium()]
         }
     }
     
-    @objc private func doneButtonTapped() {
+}
+
+// MARK: - @objc method
+
+extension AddTodoTimePickerController {
+    @objc private func saveTime() {
         delegate?.didSelectTime(datePicker.date)
         dismiss(animated: true, completion: nil)
     }
+    
 }

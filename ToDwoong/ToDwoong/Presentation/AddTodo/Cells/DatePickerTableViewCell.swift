@@ -71,32 +71,40 @@ class DatePickerTableViewCell: UITableViewCell {
         guard dateChip == nil else { return }
         
         let dateText = selectedDate.map { dateFormatter.string(from: $0) } ?? ""
-        let chip = InfoChipView(text: dateText, color: TDStyle.color.lightGray, showDeleteButton: true)
-        chip.tag = 1
-        chip.delegate = self
-        contentView.addSubview(chip)
-        chip.snp.makeConstraints { make in
+        dateChip = InfoChipView(text: dateText, color: TDStyle.color.lightGray, showDeleteButton: true)
+        dateChip?.tag = 1
+        dateChip?.delegate = self
+        contentView.addSubview(dateChip!)
+        dateChip?.snp.makeConstraints { make in
             make.trailing.equalTo(timeChip?.snp.leading ?? contentView.snp.trailing).offset(-8)
             make.centerY.equalToSuperview()
             make.height.equalTo(32)
         }
-        dateChip = chip
+        
+        // 날짜 칩에 탭 제스처 추가
+        let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(dateChipTapped))
+        dateChip?.addGestureRecognizer(dateTapGesture)
+        dateChip?.isUserInteractionEnabled = true
     }
     
     private func configureTimeChip() {
         guard timeChip == nil else { return }
         
         let timeText = selectedTime.map { timeFormatter.string(from: $0) } ?? ""
-        let chip = InfoChipView(text: timeText, color: TDStyle.color.lightGray, showDeleteButton: true)
-        chip.tag = 2
-        chip.delegate = self
-        contentView.addSubview(chip)
-        chip.snp.makeConstraints { make in
+        timeChip = InfoChipView(text: timeText, color: TDStyle.color.lightGray, showDeleteButton: true)
+        timeChip?.tag = 2
+        timeChip?.delegate = self
+        contentView.addSubview(timeChip!)
+        timeChip?.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-30)
             make.centerY.equalToSuperview()
             make.height.equalTo(32)
         }
-        timeChip = chip
+        
+        // 시간 칩에 탭 제스처 추가
+        let timeTapGesture = UITapGestureRecognizer(target: self, action: #selector(timeChipTapped))
+        timeChip?.addGestureRecognizer(timeTapGesture)
+        timeChip?.isUserInteractionEnabled = true
     }
     
     private func updateDateChip() {

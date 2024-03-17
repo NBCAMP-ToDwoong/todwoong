@@ -516,7 +516,6 @@ extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
 
 extension AddTodoViewController: DatePickerModalDelegate {
     func didSelectDate(_ date: Date) {
-        print(date)
         selectedDueDate = date
         
         if let datePickerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? DatePickerTableViewCell {
@@ -526,6 +525,7 @@ extension AddTodoViewController: DatePickerModalDelegate {
     
     private func goDatePickerViewController() {
         let datePickerViewController = AddTodoDatePickerController()
+        datePickerViewController.selectedDate = selectedDueDate
         datePickerViewController.delegate = self
         present(datePickerViewController, animated: true, completion: nil)
     }
@@ -542,6 +542,7 @@ extension AddTodoViewController: TimePickerModalDelegate {
     
     private func goTimePickerViewController() {
         let timePickerViewController = AddTodoTimePickerController()
+        timePickerViewController.selectedTime = selectedDueTime
         timePickerViewController.delegate = self
         present(timePickerViewController, animated: true, completion: nil)
     }
