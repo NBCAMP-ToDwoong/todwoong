@@ -11,6 +11,7 @@
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
 		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
 		1B1886D42BA49A1E00353519 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F90103C2BA2256F008B778B /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		1B5BCB4B2BA705B500A7962D /* CoreDataManager2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4A2BA705B500A7962D /* CoreDataManager2.swift */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
@@ -85,6 +86,7 @@
 /* Begin PBXFileReference section */
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		1B5BCB4A2BA705B500A7962D /* CoreDataManager2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager2.swift; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoAlarmViewController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			children = (
 				7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */,
 				7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */,
+				1B5BCB4A2BA705B500A7962D /* CoreDataManager2.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -662,6 +665,7 @@
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
+				1B5BCB4B2BA705B500A7962D /* CoreDataManager2.swift in Sources */,
 				2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */,
 				2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */,
 			);
