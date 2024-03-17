@@ -39,8 +39,8 @@ class LocationTableViewCell: UITableViewCell {
     }
     
     func configure(with selectedPlace: String?) {
-        chipView?.removeFromSuperview() // 기존 칩뷰 제거
-        chipView = nil // 참조 초기화
+        chipView?.removeFromSuperview()
+        chipView = nil
         hasLocationChip = false
         
         if let place = selectedPlace, !place.isEmpty {
@@ -49,25 +49,24 @@ class LocationTableViewCell: UITableViewCell {
             newChipView.delegate = self
             contentView.addSubview(newChipView)
             chipView = newChipView
-            // 칩뷰의 위치를 타이틀 라벨 바로 아래로 설정
             chipView?.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(4) // 타이틀 라벨 아래에 4pt 간격
-                make.leading.equalTo(titleLabel.snp.leading) // 타이틀 라벨과 좌측 정렬
-                make.trailing.lessThanOrEqualToSuperview().offset(-30) // 오른쪽 여백 유지
-                make.height.equalTo(30) // 칩뷰의 높이 설정
+                make.top.equalTo(titleLabel.snp.bottom).offset(4)
+                make.leading.equalTo(titleLabel.snp.leading)
+                make.trailing.lessThanOrEqualToSuperview().offset(-30)
+                make.height.equalTo(30)
             }
             
-            accessoryType = .none // 액세서리 타입을 none으로 설정
+            accessoryType = .none
         } else {
-            accessoryType = .disclosureIndicator // 액세서리 타입을 disclosureIndicator로 설정
+            accessoryType = .disclosureIndicator
         }
     }
 }
 
 extension LocationTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {
-        chipView.removeFromSuperview() // 칩뷰 제거
-        accessoryType = .disclosureIndicator // 액세서리 타입 복원
-        onDeleteButtonTapped?() // 삭제 버튼 탭 콜백 호출
+        chipView.removeFromSuperview()
+        accessoryType = .disclosureIndicator
+        onDeleteButtonTapped?()
     }
 }

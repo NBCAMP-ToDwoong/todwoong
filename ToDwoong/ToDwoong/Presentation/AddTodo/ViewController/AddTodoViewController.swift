@@ -87,6 +87,9 @@ class AddTodoViewController: UIViewController {
             selectedDueTime = todo.dueTime
             selectedGroup = todo.category
             selectedPlace = todo.place
+            // FIXME: 코어데이터 수정 후 작업
+//            selectedPlaceAlarm =
+//            selectedTimesAlarm =
             
             titleTextField.text = selectedTitle
             
@@ -418,11 +421,9 @@ extension AddTodoViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 {
-            print(selectedPlace)
             if let location = selectedPlace, !location.isEmpty {
                 return 80
             }
-            return 50
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
@@ -437,10 +438,11 @@ extension AddTodoViewController: UITableViewDelegate {
 extension AddTodoViewController: UITableViewDataSource {}
 
 
-extension AddTodoViewController: AddTodoLocationPickerDelegate {
+extension AddTodoViewController: LocationPickerDelegate {
     func goLocationPickerViewController() {
         let locationPickerVC = AddTodoLocationPickerViewController()
         locationPickerVC.delegate = self
+        locationPickerVC.selectedPlace = selectedPlace
         present(locationPickerVC, animated: true, completion: nil)
     }
     
@@ -454,7 +456,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
     
 }
 
-extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
+extension AddTodoViewController: GroupSelectControllerDelegate {
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
         self.selectedGroup = group
         let indexPath = IndexPath(row: 1, section: 0)
@@ -470,7 +472,7 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
     
 }
 
-extension AddTodoViewController: AddTodoTimeAlarmSelectControllerDelegate {
+extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
     func timesSelected(_ times: [String]) {
         selectedTimesAlarm = times
         let indexPath = IndexPath(row: 0, section: 1)
@@ -485,9 +487,9 @@ extension AddTodoViewController: AddTodoTimeAlarmSelectControllerDelegate {
     }
 }
 
-extension AddTodoViewController: AddTodoPlaceAlarmSelectControllerDelegate {
+extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
     func locationSelected(_ location: [String]) {
-        guard let selectedLocationAlarm = location.first else {
+        guard location.first != nil else {
             return
         }
         

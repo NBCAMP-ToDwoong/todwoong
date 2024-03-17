@@ -14,7 +14,7 @@ final class AddTodoGroupSelectController: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: AddTodoGroupSelectControllerDelegate?
+    weak var delegate: GroupSelectControllerDelegate?
     var groupList: [Category] = []
     var selectedCategory: Category?
     

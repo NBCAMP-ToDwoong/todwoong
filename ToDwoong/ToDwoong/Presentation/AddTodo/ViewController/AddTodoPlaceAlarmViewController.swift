@@ -17,7 +17,7 @@ final class AddTodoPlaceAlarmViewController: UIViewController {
                         "1km", "2km", "3km", "4km", "5km"]
     var selectedLocation: [String] = []
     
-    weak var delegate: AddTodoPlaceAlarmSelectControllerDelegate?
+    weak var delegate: PlaceAlarmSelectControllerDelegate?
     
     // MARK: - UI Properties
     

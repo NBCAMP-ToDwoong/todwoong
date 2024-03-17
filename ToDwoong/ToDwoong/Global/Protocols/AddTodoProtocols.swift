@@ -7,23 +7,23 @@
 
 import UIKit
 
-protocol AddTodoLocationPickerViewDelegate: AnyObject {
+protocol LocationPickerViewDelegate: AnyObject {
     func didTapConfirmAddress(_ address: String)
 }
 
-protocol AddTodoLocationPickerDelegate: AnyObject {
+protocol LocationPickerDelegate: AnyObject {
     func didPickLocation(_ address: String)
 }
 
-protocol AddTodoGroupSelectControllerDelegate: AnyObject {
+protocol GroupSelectControllerDelegate: AnyObject {
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup category: Category)
 }
 
-protocol AddTodoTimeAlarmSelectControllerDelegate: AnyObject {
+protocol TimeAlarmSelectControllerDelegate: AnyObject {
     func timesSelected(_ times: [String])
 }
 
-protocol AddTodoPlaceAlarmSelectControllerDelegate: AnyObject {
+protocol PlaceAlarmSelectControllerDelegate: AnyObject {
     func locationSelected(_ location: [String])
 }
 

@@ -13,7 +13,7 @@ final class AddTodoTimeAlarmViewController: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: AddTodoTimeAlarmSelectControllerDelegate?
+    weak var delegate: TimeAlarmSelectControllerDelegate?
     
     // FIXME: 직접설정이 없어서 주석처리 추후 변경
 //    let timeList = ["직접 설정",

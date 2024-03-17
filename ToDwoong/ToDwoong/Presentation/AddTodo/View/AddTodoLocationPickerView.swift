@@ -27,7 +27,7 @@ final class AddTodoLocationPickerView: UIView {
         return label
     }()
     
-    weak var delegate: AddTodoLocationPickerViewDelegate?
+    weak var delegate: LocationPickerViewDelegate?
     private var addressContainerView: UIStackView!
     
     override init(frame: CGRect) {
