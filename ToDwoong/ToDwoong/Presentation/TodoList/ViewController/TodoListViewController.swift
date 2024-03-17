@@ -218,9 +218,7 @@ extension TodoListViewController: UITableViewDataSource {
             let todo = self.todoList[indexPath.row]
             let mapViewController = MapViewController()
             
-            //FIXME: mapViewController 프로퍼티 작업 이후 주석 해제 예정
-            
-//            mapViewController.initialTodo = todo
+            mapViewController.initialTodo = todo
             self.navigationController?.pushViewController(mapViewController, animated: true)
           }
 
@@ -259,6 +257,7 @@ extension TodoListViewController: UITableViewDelegate {
             self.dataManager.deleteTodo(todo: rawTodo)
             self.todoDataFetch()
             
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             tableView.reloadData()
         })
         

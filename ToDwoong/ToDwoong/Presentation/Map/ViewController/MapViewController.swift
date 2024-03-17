@@ -296,7 +296,9 @@ extension MapViewController: MKMapViewDelegate {
         
         if let todoAnnotation = view.annotation as? TodoAnnotation {
             let filteredTodos
-            = CoreDataManager.shared.readTodos().filter { $0.category?.title == todoAnnotation.category }.map { $0.toTodoModel() }
+            = CoreDataManager.shared.readTodos()
+                .filter { $0.category?.title == todoAnnotation.category }
+                .map { $0.toTodoModel() }
             detailVC.todos = filteredTodos
             if let index = categories.firstIndex(where: { $0.title == todoAnnotation.category }) {
                 detailVC.selectedCategoryIndex = index

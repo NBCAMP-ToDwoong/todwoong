@@ -109,9 +109,6 @@ extension TodoDetailViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension TodoDetailViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 110
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedTodo = todos[indexPath.row]
