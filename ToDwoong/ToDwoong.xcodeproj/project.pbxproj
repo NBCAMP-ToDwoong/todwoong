@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB592B9DDB7D0030B31D /* SnapKit */; };
-		1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB612B9DDB870030B31D /* FSCalendar */; };
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
-		1B0FAB732B9E4CFF0030B31D /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */; };
+		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
 		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
-		1B91FAD92B9E521D0086471C /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
@@ -23,23 +20,32 @@
 		1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* TodoListViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
-		2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA0630C2B906783007C9373 /* AddTodoViewController.swift */; };
-		2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */; };
-		2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */; };
-		2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */; };
-		2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */; };
-		2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */; };
-		2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */; };
-		2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */; };
+		1BF353572BA7319700E4B812 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF353562BA7319700E4B812 /* TodwoongDesign */; };
+		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
+		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
+		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
+		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
+		2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */; };
+		2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */; };
+		2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */; };
+		2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */; };
+		2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */; };
+		2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */; };
+		2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */; };
+		2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */; };
+		2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */; };
+		2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */; };
 		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
 		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
 		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
+		7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CC2BA4334E00455100 /* AddGroupButton.swift */; };
+		7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CE2BA433FA00455100 /* GroupTableView.swift */; };
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
 		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
-		7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */; };
+		7F9010352BA22565008B778B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9010342BA22565008B778B /* FSCalendar */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
 		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
 		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
@@ -68,7 +74,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B91FAD92B9E521D0086471C /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,23 +95,30 @@
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		2EA0630C2B906783007C9373 /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
-		2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalanderViewController.swift; sourceTree = "<group>"; };
-		2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
-		2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCollectionViewCell.swift; sourceTree = "<group>"; };
-		2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimePickerContainerCell.swift; sourceTree = "<group>"; };
-		2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerCollectionViewCell.swift; sourceTree = "<group>"; };
-		2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTimeOptionCell.swift; sourceTree = "<group>"; };
-		2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
+		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
+		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
+		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
+		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
+		2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimeAlarmViewController.swift; sourceTree = "<group>"; };
+		2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmTableViewCell.swift; sourceTree = "<group>"; };
+		2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoPlaceAlarmViewController.swift; sourceTree = "<group>"; };
+		2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmTableViewCell.swift; sourceTree = "<group>"; };
+		2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoDatePickerController.swift; sourceTree = "<group>"; };
+		2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimePickerController.swift; sourceTree = "<group>"; };
+		2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
+		2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
 		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
 		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		7F7253CC2BA4334E00455100 /* AddGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupButton.swift; sourceTree = "<group>"; };
+		7F7253CE2BA433FA00455100 /* GroupTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableView.swift; sourceTree = "<group>"; };
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
 		7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoAndCategory+Extension.swift"; sourceTree = "<group>"; };
-		7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCategoryChip.swift; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
 		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -133,9 +145,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B0FAB5A2B9DDB7D0030B31D /* SnapKit in Frameworks */,
-				1B0FAB732B9E4CFF0030B31D /* TodwoongDesign in Frameworks */,
-				1B0FAB622B9DDB870030B31D /* FSCalendar in Frameworks */,
+				1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */,
+				1BF353572BA7319700E4B812 /* TodwoongDesign in Frameworks */,
+				7F9010352BA22565008B778B /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -165,7 +177,6 @@
 				1BA08A5D2B985506001D3698 /* MapView.swift */,
 				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
 				7F89A4A52B995868002442CD /* TodoDetailView.swift */,
-				7F89A4B12B9CD7FA002442CD /* CustomCategoryChip.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -216,12 +227,12 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		1BA63AD22B8E8D42008F49CE /* Calander */ = {
+		1BA63AD22B8E8D42008F49CE /* Calender */ = {
 			isa = PBXGroup;
 			children = (
 				2EBF09372B984A6A0023F0E0 /* ViewController */,
 			);
-			path = Calander;
+			path = Calender;
 			sourceTree = "<group>";
 		};
 		1BA63AD32B8E8D55008F49CE /* Preferences */ = {
@@ -285,13 +296,14 @@
 		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				7F4BD95D2BA2E9E100FC2C2C /* ReusableView */,
 				1B612E412B949BCE00DB0C1E /* TabBar */,
 				1BA63AD42B8E8D81008F49CE /* LaunchScreen */,
 				1BA63ACD2B8E8CF8008F49CE /* TodoList */,
 				1BA63ACE2B8E8D07008F49CE /* AddTodo */,
 				1BA63ACF2B8E8D0F008F49CE /* GroupList */,
 				1BA63AD02B8E8D1B008F49CE /* AddGroup */,
-				1BA63AD22B8E8D42008F49CE /* Calander */,
+				1BA63AD22B8E8D42008F49CE /* Calender */,
 				1BA63AD12B8E8D20008F49CE /* Map */,
 				1BA63AD32B8E8D55008F49CE /* Preferences */,
 			);
@@ -319,9 +331,13 @@
 			isa = PBXGroup;
 			children = (
 				1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */,
-				2EA0630C2B906783007C9373 /* AddTodoViewController.swift */,
 				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
 				2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */,
+				2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */,
+				2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */,
+				2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */,
+				2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */,
+				2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -329,7 +345,7 @@
 		2EBF09372B984A6A0023F0E0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				2EBF09382B984AE00023F0E0 /* CalanderViewController.swift */,
+				2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -337,11 +353,11 @@
 		2EF9C4D82B92996F005F8B76 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				2EF9C4CA2B9297F8005F8B76 /* InfoCollectionViewCell.swift */,
-				2EF9C4CC2B92982D005F8B76 /* TitleCollectionViewCell.swift */,
-				2EF9C4CE2B929857005F8B76 /* DateTimePickerContainerCell.swift */,
-				2EF9C4D02B929885005F8B76 /* DatePickerCollectionViewCell.swift */,
-				2EF9C4D22B9298B1005F8B76 /* DateTimeOptionCell.swift */,
+				2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */,
+				2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */,
+				2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */,
+				2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */,
+				2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -349,7 +365,6 @@
 		2EF9C4DD2B9497D7005F8B76 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2EF9C4DE2B94CA0F005F8B76 /* AddTodoView.swift */,
 				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
 			);
 			path = View;
@@ -359,8 +374,18 @@
 			isa = PBXGroup;
 			children = (
 				1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */,
+				2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		7F4BD95D2BA2E9E100FC2C2C /* ReusableView */ = {
+			isa = PBXGroup;
+			children = (
+				2E822D082BA2F3AA001ED00F /* InfoChipView.swift */,
+				2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */,
+			);
+			path = ReusableView;
 			sourceTree = "<group>";
 		};
 		7F6C81252B963ABA002E77C4 /* Extensions */ = {
@@ -390,6 +415,8 @@
 				7FE316462B957227004ED878 /* GroupListTableViewCell.swift */,
 				7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */,
 				7FE3164A2B957275004ED878 /* GroupListView.swift */,
+				7F7253CC2BA4334E00455100 /* AddGroupButton.swift */,
+				7F7253CE2BA433FA00455100 /* GroupTableView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -497,9 +524,9 @@
 			);
 			name = ToDwoong;
 			packageProductDependencies = (
-				1B0FAB592B9DDB7D0030B31D /* SnapKit */,
-				1B0FAB612B9DDB870030B31D /* FSCalendar */,
-				1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */,
+				7F9010342BA22565008B778B /* FSCalendar */,
+				1B1886CE2BA495EB00353519 /* SnapKit */,
+				1BF353562BA7319700E4B812 /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -530,9 +557,9 @@
 			);
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
-				1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				1BF353552BA7319700E4B812 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -584,21 +611,28 @@
 			files = (
 				E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */,
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
-				2EBF09392B984AE00023F0E0 /* CalanderViewController.swift in Sources */,
+				2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
 				1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */,
 				E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */,
+				2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */,
 				E0F4CFD72B9ACBC700DF94D4 /* PreferencesViewController.swift in Sources */,
+				2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */,
 				1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */,
 				7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */,
 				E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */,
+				2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
+				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
+				2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
+				2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */,
+				2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
 				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
@@ -606,28 +640,28 @@
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
 				E0F4CFDF2B9AD54D00DF94D4 /* PreferencesModel.swift in Sources */,
 				7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */,
-				2EF9C4D12B929885005F8B76 /* DatePickerCollectionViewCell.swift in Sources */,
-				2EA0630D2B906783007C9373 /* AddTodoViewController.swift in Sources */,
-				7F89A4B22B9CD7FA002442CD /* CustomCategoryChip.swift in Sources */,
-				2EF9C4CF2B929857005F8B76 /* DateTimePickerContainerCell.swift in Sources */,
-				2EF9C4D32B9298B1005F8B76 /* DateTimeOptionCell.swift in Sources */,
 				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
 				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
+				2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */,
 				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
-				2EF9C4DF2B94CA0F005F8B76 /* AddTodoView.swift in Sources */,
+				2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */,
 				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
-				2EF9C4CB2B9297F8005F8B76 /* InfoCollectionViewCell.swift in Sources */,
-				2EF9C4CD2B92982D005F8B76 /* TitleCollectionViewCell.swift in Sources */,
 				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
+				7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */,
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
+				2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */,
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
+				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
+				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
+				2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */,
+				2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -761,27 +795,33 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP6444HYG3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "투두 그룹 추가시 위치 정보 저장, 지도 화면 사용을 위하여 위치정보 접근 권한을 허용해주세요. 설정에서 이를 변경할 수 있습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "투두 그룹 추가시 위치 정보 저장, 지도 화면 사용을 위하여 위치정보 접근 권한을 허용해주세요. 설정에서 이를 변경할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ToDwoong.NBCAMP;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NBCAMP4.ToDwoong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store com.NBCAMP4.ToDwoong";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -798,27 +838,33 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = VP6444HYG3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 4;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ToDwoong/Info.plist;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_CFBundleDisplayName = "투둥";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "투두 그룹 추가시 위치 정보 저장, 지도 화면 사용을 위하여 위치정보 접근 권한을 허용해주세요. 설정에서 이를 변경할 수 있습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "투두 그룹 추가시 위치 정보 저장, 지도 화면 사용을 위하여 위치정보 접근 권한을 허용해주세요. 설정에서 이를 변경할 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ToDwoong.NBCAMP;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.NBCAMP4.ToDwoong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "App Store com.NBCAMP4.ToDwoong";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -853,15 +899,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+		1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			repositoryURL = "http://github.com/SnapKit/SnapKit";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.7.1;
 			};
 		};
-		1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+		1BF353552BA7319700E4B812 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
@@ -869,31 +923,23 @@
 				minimumVersion = 2.8.4;
 			};
 		};
-		1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.8;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1B0FAB592B9DDB7D0030B31D /* SnapKit */ = {
+		1B1886CE2BA495EB00353519 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B0FAB582B9DDB7D0030B31D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
-		1B0FAB612B9DDB870030B31D /* FSCalendar */ = {
+		1BF353562BA7319700E4B812 /* TodwoongDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B0FAB602B9DDB870030B31D /* XCRemoteSwiftPackageReference "FSCalendar" */;
-			productName = FSCalendar;
-		};
-		1B0FAB722B9E4CFF0030B31D /* TodwoongDesign */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1B0FAB712B9E4CFF0030B31D /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			package = 1BF353552BA7319700E4B812 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
 			productName = TodwoongDesign;
+		};
+		7F9010342BA22565008B778B /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
 		};
 /* End XCSwiftPackageProductDependency section */
 

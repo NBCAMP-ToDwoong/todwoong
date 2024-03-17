@@ -19,10 +19,18 @@ protocol AddTodoGroupSelectControllerDelegate: AnyObject {
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup category: Category)
 }
 
-protocol DateTimePickerDelegate: AnyObject {
-    func didPickDateOrTime(date: Date, mode: UIDatePicker.Mode)
+protocol AddTodoTimeAlarmSelectControllerDelegate: AnyObject {
+    func timesSelected(_ times: [String])
 }
 
-protocol TitleCollectionViewCellDelegate: AnyObject {
-    func titleCellDidEndEditing(_ text: String?)
+protocol AddTodoPlaceAlarmSelectControllerDelegate: AnyObject {
+    func locationSelected(_ location: [String])
+}
+
+protocol DatePickerModalDelegate: AnyObject {
+    func didSelectDate(_ date: Date)
+}
+
+protocol TimePickerModalDelegate: AnyObject {
+    func didSelectTime(_ date: Date)
 }
