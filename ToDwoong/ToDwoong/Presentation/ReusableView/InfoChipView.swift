@@ -15,7 +15,12 @@ class InfoChipView: UIView {
     private var deleteButton: UIButton?
 
     var text: String? {
-        return textLabel.text
+        get {
+            return textLabel.text
+        }
+        set(newText) {
+            textLabel.text = newText
+        }
     }
 
     weak var delegate: InfoChipViewDelegate?

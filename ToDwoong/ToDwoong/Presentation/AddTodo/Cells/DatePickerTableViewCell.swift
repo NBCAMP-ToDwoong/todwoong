@@ -11,10 +11,16 @@ import SnapKit
 import TodwoongDesign
 
 class DatePickerTableViewCell: UITableViewCell {
+    
+    // MARK: - UI Properties
+    
     static let identifier = "DatePickerCell"
-    let dateLabel = UILabel()
-    let dateFormatter = DateFormatter()
-    let timeFormatter = DateFormatter()
+    private let dateLabel = UILabel()
+    private let dateFormatter = DateFormatter()
+    private let timeFormatter = DateFormatter()
+    
+    private var dateChip: InfoChipView?
+    private var timeChip: InfoChipView?
     
     var dateChipTappedHandler: (() -> Void)?
     var timeChipTappedHandler: (() -> Void)?
@@ -22,92 +28,92 @@ class DatePickerTableViewCell: UITableViewCell {
     var timeChipDeleteHandler: (() -> Void)?
     
     var selectedDate: Date? {
-        didSet {
-            updateDateChip()
-        }
+        didSet { updateDateChip() }
     }
     
     var selectedTime: Date? {
-        didSet {
-            updateTimeChip()
-        }
+        didSet { updateTimeChip() }
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        configure()
+        configureFormatters()
+        configureUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        let dateText = dateFormatter.string(from: selectedDate ?? Date())
-        
-        timeFormatter.dateStyle = .none
-        timeFormatter.timeStyle = .short
-        let timeText = timeFormatter.string(from: selectedTime ?? Date())
-        
-        let dateChip = InfoChipView(text: dateText, color: TDStyle.color.lightGray, showDeleteButton: false)
-        let timeChip = InfoChipView(text: timeText, color: TDStyle.color.lightGray, showDeleteButton: false)
-        dateChip.removeFromSuperview()
-        timeChip.removeFromSuperview()
-        dateChip.delegate = self
-        timeChip.delegate = self
-        
+    private func configureFormatters() {
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        timeFormatter.locale = Locale(identifier: "ko_KR")
+        timeFormatter.dateFormat = "a h:mm"
+    }
+    
+    private func configureUI() {
+        configureDateLabel()
+        configureTimeChip()
+        configureDateChip()
+    }
+    
+    private func configureDateLabel() {
         dateLabel.text = "날짜"
-        dateLabel.textColor = .black
-
         contentView.addSubview(dateLabel)
-        contentView.addSubview(dateChip)
-        contentView.addSubview(timeChip)
-        
         dateLabel.snp.makeConstraints { make in
-            make.leading.equalTo(contentView.snp.leading).offset(30)
-            make.centerY.equalTo(contentView.snp.centerY)
+            make.leading.equalToSuperview().offset(30)
+            make.centerY.equalToSuperview()
         }
-
-        dateChip.snp.makeConstraints { make in
-            make.trailing.equalTo(timeChip.snp.leading).offset(-8)
-            make.top.equalTo(contentView.snp.top).offset(8)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-8)
+    }
+    
+    private func configureDateChip() {
+        guard dateChip == nil else { return }
+        
+        let dateText = selectedDate.map { dateFormatter.string(from: $0) } ?? ""
+        let chip = InfoChipView(text: dateText, color: TDStyle.color.lightGray, showDeleteButton: true)
+        chip.tag = 1
+        chip.delegate = self
+        contentView.addSubview(chip)
+        chip.snp.makeConstraints { make in
+            make.trailing.equalTo(timeChip?.snp.leading ?? contentView.snp.trailing).offset(-8)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(32)
         }
+        dateChip = chip
+    }
+    
+    private func configureTimeChip() {
+        guard timeChip == nil else { return }
         
-        timeChip.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView.snp.trailing).offset(-30)
-            make.top.equalTo(contentView.snp.top).offset(8)
-            make.bottom.equalTo(contentView.snp.bottom).offset(-8)
+        let timeText = selectedTime.map { timeFormatter.string(from: $0) } ?? ""
+        let chip = InfoChipView(text: timeText, color: TDStyle.color.lightGray, showDeleteButton: true)
+        chip.tag = 2
+        chip.delegate = self
+        contentView.addSubview(chip)
+        chip.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().offset(-30)
+            make.centerY.equalToSuperview()
+            make.height.equalTo(32)
         }
-        
-        let dateTapGesture = UITapGestureRecognizer(target: self, action: #selector(dateChipTapped))
-        dateChip.addGestureRecognizer(dateTapGesture)
-        dateChip.isUserInteractionEnabled = true
-
-        let timeTapGesture = UITapGestureRecognizer(target: self, action: #selector(timeChipTapped))
-        timeChip.addGestureRecognizer(timeTapGesture)
-        timeChip.isUserInteractionEnabled = true
-        
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .none
-        timeFormatter.dateStyle = .none
-        timeFormatter.timeStyle = .short
-
+        timeChip = chip
     }
     
     private func updateDateChip() {
-        guard selectedDate != nil else { return }
-        configure()
-    }
-        
-    private func updateTimeChip() {
-        guard selectedTime != nil else { return }
-        configure()
+        guard let selectedDate = selectedDate else { return }
+        dateChip?.text = dateFormatter.string(from: selectedDate)
     }
 
+    private func updateTimeChip() {
+        guard let selectedTime = selectedTime else { return }
+        timeChip?.text = timeFormatter.string(from: selectedTime)
+    }
+    
+}
+
+// MARK: - @objc method
+
+extension DatePickerTableViewCell {
     @objc private func dateChipTapped() {
         dateChipTappedHandler?()
     }
@@ -115,12 +121,44 @@ class DatePickerTableViewCell: UITableViewCell {
     @objc private func timeChipTapped() {
         timeChipTappedHandler?()
     }
+    
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension DatePickerTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {
-        chipView.removeFromSuperview()
-        accessoryType = .disclosureIndicator
+        if chipView.tag == 1 {
+            dateChip?.removeFromSuperview()
+            dateChip = nil
+            timeChip?.removeFromSuperview()
+            timeChip = nil
+            accessoryType = .disclosureIndicator
+        } else if chipView.tag == 2 {
+            timeChip?.removeFromSuperview()
+            timeChip = nil
+            dateChip?.snp.remakeConstraints { make in
+                make.trailing.equalToSuperview().offset(-30)
+                make.top.equalToSuperview().offset(8)
+                make.bottom.equalToSuperview().offset(-8)
+            }
+            accessoryType = .none
+        }
     }
     
+    func resetDateAndTimeChipsIfNeeded() {
+        guard dateChip == nil, timeChip == nil else { return }
+
+        // 현재 날짜와 시간으로 설정
+        let now = Date()
+        selectedDate = now
+        selectedTime = now
+        
+        // 날짜와 시간 칩 다시 생성
+        configureTimeChip()
+        configureDateChip()
+        
+        // 액세서리 타입 업데이트
+        accessoryType = .none
+    }
 }

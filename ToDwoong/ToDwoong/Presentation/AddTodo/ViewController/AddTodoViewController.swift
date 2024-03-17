@@ -266,6 +266,8 @@ extension AddTodoViewController: UITableViewDelegate {
                                                                for: indexPath) as? DatePickerTableViewCell else {
                     return UITableViewCell()
                 }
+                cell.selectedDate = self.selectedDueDate
+                cell.selectedTime = self.selectedDueTime
                 cell.dateChipTappedHandler = { [weak self] in
                     self?.goDatePickerViewController()
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
@@ -347,6 +349,10 @@ extension AddTodoViewController: UITableViewDelegate {
         view.endEditing(true)
         if indexPath.section == 0 {
             switch indexPath.row {
+            case 0:
+                guard let cell = tableView.cellForRow(at: indexPath) as? DatePickerTableViewCell else { return }
+                cell.resetDateAndTimeChipsIfNeeded()
+                tableView.deselectRow(at: indexPath, animated: true)
             case 1:
                 goToGroupSelectController()
             case 2:
@@ -510,6 +516,7 @@ extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
 
 extension AddTodoViewController: DatePickerModalDelegate {
     func didSelectDate(_ date: Date) {
+        print(date)
         selectedDueDate = date
         
         if let datePickerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? DatePickerTableViewCell {
