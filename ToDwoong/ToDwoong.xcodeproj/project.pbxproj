@@ -22,6 +22,7 @@
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
+		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
 		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
 		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
@@ -98,6 +99,7 @@
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
+		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
 		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
+				2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -631,6 +634,7 @@
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
+				2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */,
 				2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */,

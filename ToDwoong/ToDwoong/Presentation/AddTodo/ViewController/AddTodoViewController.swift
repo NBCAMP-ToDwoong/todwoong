@@ -19,9 +19,9 @@ class AddTodoViewController: UIViewController {
     var selectedDueDate: Date? = Date()
     var selectedDueTime: Date? = Date()
     var selectedGroup: Category?
+    var selectedTimesAlarm: [String] = ["5분 전"]
+    var selectedPlaceAlarm: String?
     var selectedPlace: String?
-    var selectedTimes: [String] = ["5분 전"]
-    var selectedLocation: String?
     
     // MARK: - UI Properties
     
@@ -102,27 +102,23 @@ class AddTodoViewController: UIViewController {
         setupTableView()
         setupTapGesture()
         
-        // UI 컴포넌트를 뷰에 추가
         view.addSubview(titleLabel)
         view.addSubview(saveButton)
         view.addSubview(closeButton)
-
-        // titleLabel의 제약 조건 설정
+        
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.centerX.equalToSuperview()
         }
-
-        // closeButton의 제약 조건 설정
+        
         closeButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
-            make.leading.equalToSuperview().offset(16) // leading에 대한 제약 조건 유지
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.leading.equalToSuperview().offset(16)
         }
 
-        // saveButton의 제약 조건 설정
         saveButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
-            make.trailing.equalToSuperview().offset(-16) // trailing에 대한 제약 조건 유지
+            make.centerY.equalTo(titleLabel.snp.centerY)
+            make.trailing.equalToSuperview().offset(-16)
         }
     }
     
@@ -317,10 +313,10 @@ extension AddTodoViewController: UITableViewDelegate {
                                                                for: indexPath) as? TimeAlarmTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.configure(with: selectedTimes)
+                cell.configure(with: selectedTimesAlarm)
                 cell.onDeleteButtonTapped = { [weak self] deletedTime in
                     guard let self = self else { return }
-                    self.selectedTimes.removeAll { $0 == deletedTime }
+                    self.selectedTimesAlarm.removeAll { $0 == deletedTime }
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
                 return cell
@@ -333,7 +329,7 @@ extension AddTodoViewController: UITableViewDelegate {
                     if isOn {
                         self?.goPlaceAlarmViewController()
                     } else {
-                        self?.selectedLocation = nil
+                        self?.selectedPlaceAlarm = nil
                     }
                 }
                 return cell
@@ -421,10 +417,19 @@ extension AddTodoViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 && indexPath.row == 2 {
+            print(selectedPlace)
+            if let location = selectedPlace, !location.isEmpty {
+                return 80
+            }
+            return 50
+        }
+        
         if indexPath.section == 1 && indexPath.row == 0 {
-            let rowCount = CGFloat((selectedTimes.count + 2) / 3)
+            let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
             return 50 + rowCount * (30 + 10)
         }
+
         return 50
     }
 }
@@ -443,6 +448,7 @@ extension AddTodoViewController: AddTodoLocationPickerDelegate {
         self.selectedPlace = address
         if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
             cell.configure(with: selectedPlace)
+            tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
         }
     }
     
@@ -466,14 +472,14 @@ extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
 
 extension AddTodoViewController: AddTodoTimeAlarmSelectControllerDelegate {
     func timesSelected(_ times: [String]) {
-        selectedTimes = times
+        selectedTimesAlarm = times
         let indexPath = IndexPath(row: 0, section: 1)
         tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     private func goTimeAlarmViewController() {
         let timeAlarmViewController = AddTodoTimeAlarmViewController()
-        timeAlarmViewController.selectedTimes = selectedTimes
+        timeAlarmViewController.selectedTimes = selectedTimesAlarm
         timeAlarmViewController.delegate = self
         present(timeAlarmViewController, animated: true, completion: nil)
     }
@@ -481,7 +487,7 @@ extension AddTodoViewController: AddTodoTimeAlarmSelectControllerDelegate {
 
 extension AddTodoViewController: AddTodoPlaceAlarmSelectControllerDelegate {
     func locationSelected(_ location: [String]) {
-        guard let selectedLocation = location.first else {
+        guard let selectedLocationAlarm = location.first else {
             return
         }
         
@@ -489,7 +495,7 @@ extension AddTodoViewController: AddTodoPlaceAlarmSelectControllerDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? PlaceAlarmTableViewCell else {
             return
         }
-        cell.locationLabel.text = selectedLocation
+        cell.locationLabel.text = selectedPlaceAlarm
     }
     
     private func goPlaceAlarmViewController() {
