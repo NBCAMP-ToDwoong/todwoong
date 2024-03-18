@@ -1,91 +1,128 @@
 //
-//  CoreDataManager.swift
+//  CoreDataManager2.swift
 //  ToDwoong
 //
-//  Created by t2023-m0041 on 2/28/24.
+//  Created by yen on 3/17/24.
 //
 
 import CoreData
-import UIKit
+import Foundation
 
-final class CoreDataManager {
+final class CoreDataManager: CoreDataManging {
     
-    // MARK: Singleton
+    static var shared: CoreDataManager = CoreDataManager()
+    private init() { }
     
-    static let shared = CoreDataManager()
-    private var persistentContainer: NSPersistentContainer? {
-        (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer
-    }
-    var context: NSManagedObjectContext {
-        guard let persistentContainer = self.persistentContainer else {
-            fatalError("Persistent container is nil")
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Model")
+        let description = NSPersistentStoreDescription()
+        description.shouldMigrateStoreAutomatically = true
+        description.shouldInferMappingModelAutomatically = true
+        container.persistentStoreDescriptions = [description]
+        
+        container.loadPersistentStores { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("해결되지 않음 \(error), \(error.userInfo)")
+            }
         }
+        return container
+    }()
+
+    
+    var context: NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
-    private init() {}
-    
-    // MARK: fetchRequest
-    
-    private let todoRequest = Todo.fetchRequest()
-    private let categoryRequest = Category.fetchRequest()
-    
-    // MARK: Todo Methods
-    
-    func createTodo(title: String,
-                    place: String?,
-                    dueDate: Date?, dueTime: Date?,
-                    isCompleted: Bool,
-                    timeAlarm: Bool, placeAlarm: Bool,
-                    category: Category?,
-                    fixed: Bool = false
-    ) {
-        let newTodo = Todo(context: context)
-        newTodo.id = UUID()
-        newTodo.title = title
-        newTodo.place = place
-        newTodo.dueDate = dueDate
-        newTodo.dueTime = dueTime
-        newTodo.isCompleted = isCompleted
-        newTodo.timeAlarm = timeAlarm
-        newTodo.placeAlarm = placeAlarm
-        newTodo.category = category
-        newTodo.fixed = fixed
-        saveContext()
-    }
-    
-    func readTodos() -> [Todo] {
+    func saveContext() {
         do {
-            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            let dueDateSortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
-            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
-            fetchRequest.sortDescriptors = [dueDateSortDescriptor, dueTimeSortDescriptor]
-            
-            let todos = try context.fetch(fetchRequest)
-            return todos
+            try context.save()
         } catch {
-            print("투두 불러오기 실패")
-            return []
+            context.rollback()
+            print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
     
-    func updateTodo(todo: Todo, 
-                    newTitle: String, newPlace: String?,
-                    newDate: Date?, newTime: Date?,
-                    newCompleted: Bool,
-                    newTimeAlarm: Bool, newPlaceAlarm: Bool,
-                    newCategory: Category?
-    ) {
-        todo.title = newTitle
-        todo.place = newPlace
-        todo.dueDate = newDate
-        todo.dueTime = newTime
-        todo.isCompleted = newCompleted
-        todo.timeAlarm = newTimeAlarm
-        todo.placeAlarm = newPlaceAlarm
-        todo.category = newCategory
+    // MARK: - Todo
+    
+    func createTodo(todo: TodoType) {
+        let data = Todo(context: context)
+        
+        data.id = UUID()
+        data.title = todo.title
+        data.isCompleted = todo.isCompleted
+        data.dueTime = todo.dueTime
+        data.timeAlarm = todo.timeAlarm
+        data.placeName = todo.placeName
         
         saveContext()
+    }
+    
+    func readTodo(id: UUID) -> Todo? {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+
+        do {
+            let todos = try context.fetch(fetchRequest)
+            return todos.first
+        } catch {
+            print("Id로 투두를 가져오는 중 오류 발생 \(id): \(error)")
+            return nil
+        }
+    }
+    
+    func readTodos() -> [TodoDTO] {
+        let allTodos = readAllTodo()
+        
+        let todoDTO = allTodos.map { todo in
+            TodoDTO(id: todo.id!,
+                    title: todo.title ?? "",
+                    isCompleted: todo.isCompleted,
+                    dueTime: todo.dueTime,
+                    placeName: todo.placeName,
+                    group: todo.group)
+        }
+        
+        print(todoDTO)
+        
+        return todoDTO
+    }
+    
+    func updateTodo(info: TodoUpdateInfo) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let todoToUpdate = results.first {
+                
+                if let newTitle = info.newTitle {
+                    todoToUpdate.title = newTitle
+                }
+                if let newIsCompleted = info.newIsCompleted {
+                    todoToUpdate.isCompleted = newIsCompleted
+                }
+                if let newDueTime = info.newDueTime {
+                    todoToUpdate.dueTime = newDueTime
+                }
+                if let newTimeAlarm = info.newTimeAlarm {
+                    todoToUpdate.timeAlarm = newTimeAlarm
+                }
+                if let newPlaceName = info.newPlaceName {
+                    todoToUpdate.placeName = newPlaceName
+                }
+                if let newGroup = info.newGroup {
+                    todoToUpdate.group = newGroup
+                }
+                if let newPlaceAlarm = info.newPlaceAlarm {
+                    todoToUpdate.placeAlarm = newPlaceAlarm
+                }
+                
+                try context.save()
+            }
+        } catch let error {
+            print("투두 업데이트 실패: \(error.localizedDescription)")
+        }
     }
     
     func deleteTodo(todo: Todo) {
@@ -94,15 +131,29 @@ final class CoreDataManager {
         saveContext()
     }
     
-    // MARK: Category Methods
+    private func readAllTodo() -> [Todo] {
+        do {
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
+            fetchRequest.sortDescriptors = [dueTimeSortDescriptor]
+            let todos = try context.fetch(fetchRequest)
+            
+            return todos
+        } catch {
+            print("투두 목록 불러오기 실패")
+            return []
+        }
+    }
     
-    func createCategory(title: String, color: String) {
-        let newCategory = Category(context: context)
-        newCategory.id = UUID()
-        newCategory.title = title
-        newCategory.color = color
+    // MARK: - Group
+    
+    func createGroup(title: String, color: String) {
+        let newGroup = Group(context: context)
+        newGroup.id = UUID()
+        newGroup.title = title
+        newGroup.color = color
         
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Category")
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Group")
         fetchRequest.resultType = .dictionaryResultType
         let calculateDesc = NSExpressionDescription()
         calculateDesc.name = "maxIndexNumber"
@@ -110,56 +161,89 @@ final class CoreDataManager {
                                                 arguments: [NSExpression(forKeyPath: "indexNumber")])
         calculateDesc.expressionResultType = .integer64AttributeType
         fetchRequest.propertiesToFetch = [calculateDesc]
-
+        
         do {
             let results = try context.fetch(fetchRequest)
             if let maxIndexNumberDict = results.first as? [String: Int64],
                let maxIndexNumber = maxIndexNumberDict["maxIndexNumber"] {
-                newCategory.indexNumber = Int32(maxIndexNumber + 1)
+                newGroup.indexNumber = Int32(maxIndexNumber + 1)
             } else {
-                newCategory.indexNumber = 0
+                newGroup.indexNumber = 0
             }
         } catch let error as NSError {
             print("Could not fetch maxIndexNumber: \(error), \(error.userInfo)")
-            newCategory.indexNumber = 0
+            newGroup.indexNumber = 0
         }
         
         saveContext()
     }
     
-    func readCategories() -> [Category] {
+    func readGroups() -> [Group] {
         do {
-            let fetchRequest: NSFetchRequest<Category> = Category.fetchRequest()
+            let fetchRequest: NSFetchRequest<Group> = Group.fetchRequest()
             let sortDescriptor = NSSortDescriptor(key: "indexNumber", ascending: true)
             fetchRequest.sortDescriptors = [sortDescriptor]
             
-            let categories = try context.fetch(fetchRequest)
-            return categories
+            let groups = try context.fetch(fetchRequest)
+            return groups
         } catch {
-            print("카테고리 불러오기 실패")
+            print("groups 불러오기 실패")
             return []
         }
     }
     
-    func updateCategory(category: Category, newTitle: String, newColor: String) {
-        category.title = newTitle
-        category.color = newColor
+    func updateGroup(info: GroupUpdateInfo) {
+        let fetchRequest: NSFetchRequest<Group> = Group.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let groupToUpdate = results.first {
+                
+                if let newTitle = info.newTitle {
+                    groupToUpdate.title = newTitle
+                }
+                if let newColor = info.newColor {
+                    groupToUpdate.color = newColor
+                }
+                if let newIndexNumber = info.newIndexNumber {
+                    groupToUpdate.indexNumber = newIndexNumber
+                }
+                
+                try context.save()
+            }
+        } catch let error {
+            print("그룹 업데이트 실패: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteGroup(group: Group) {
+        context.delete(group)
         
         saveContext()
     }
     
-    func deleteCategory(category: Category) {
-        context.delete(category)
-        
-        saveContext()
+    // MARK: - AllDelete Method
+    
+    func deleteAllEntity(entityName: String) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try context.execute(deleteRequest)
+            saveContext()
+        } catch let error as NSError {
+            print("\(entityName) 전체 삭제 오류: \(error), \(error.userInfo)")
+        }
     }
     
-    // MARK: Filter Todo
+    // MARK: - Filter Method
     
-    func filterTodoByCategory(category: Category) -> [Todo] {
+    func filterTodoByGroup(group: Group) -> [Todo] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "category == %@", category)
+            fetchRequest.predicate = NSPredicate(format: "group == %@", group)
             let filteredTodos = try context.fetch(fetchRequest)
             return filteredTodos
         } catch {
@@ -188,17 +272,6 @@ final class CoreDataManager {
         } catch {
             print("Error fetching todos for date: \(error)")
             return []
-        }
-    }
-    
-    // Overlap Logic
-    
-    func saveContext() {
-        do {
-            try context.save()
-        } catch {
-            context.rollback()
-            print("오류가 발생하였습니다. \(error.localizedDescription)")
         }
     }
 }

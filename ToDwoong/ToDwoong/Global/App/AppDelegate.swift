@@ -5,7 +5,6 @@
 //  Created by yen on 2/23/24.
 //
 
-import CoreData
 import UIKit
 
 @main
