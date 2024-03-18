@@ -8,17 +8,17 @@
 import Foundation
 
 protocol TodoManaging {
-    func createTodo(todo: TodoType)
+    func createTodo(todo: Todo)
     func readTodo(id: UUID) -> Todo?
     func readTodos() -> [TodoDTO]
-    func updateTodo(info: TodoUpdateInfo)
+    func updateTodo(info: TodoUpdateDTO)
     func deleteTodo(todo: Todo)
 }
 
 protocol GroupManaging {
     func createGroup(title: String, color: String)
     func readGroups() -> [Group]
-    func updateGroup(info: GroupUpdateInfo)
+    func updateGroup(info: GroupUpdateDTO)
     func deleteGroup(group: Group)
 }
 

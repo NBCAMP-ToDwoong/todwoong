@@ -12,17 +12,18 @@ class TodoType {
     var title: String
     var isCompleted: Bool
     var dueTime: Date?
-    var timeAlarm: [Double]?
     var placeName: String?
+    var timeAlarm: [Int]?
+    
     weak var group: GroupType?
     weak var placeAlarm: PlaceAlarmType?
-
-    init(id: UUID, 
+    
+    init(id: UUID,
          title: String,
          isCompleted: Bool,
          dueTime: Date? = nil,
-         timeAlarm: [Double]? = nil,
          placeName: String? = nil,
+         timeAlarm: [Int]? = nil,
          group: GroupType? = nil,
          placeAlarm: PlaceAlarmType? = nil
     ) {
@@ -30,9 +31,9 @@ class TodoType {
         self.title = title
         self.isCompleted = isCompleted
         self.dueTime = dueTime
-        self.timeAlarm = timeAlarm
         self.placeName = placeName
         self.group = group
+        self.timeAlarm = timeAlarm
         self.placeAlarm = placeAlarm
     }
 }
@@ -44,7 +45,7 @@ class GroupType {
     var indexNumber: Int32?
     weak var todo: TodoType?
 
-    init(id: UUID, 
+    init(id: UUID,
          title: String,
          color: String? = nil,
          indexNumber: Int32? = nil,
@@ -64,7 +65,7 @@ class PlaceAlarmType {
     var longitude: Double
     weak var todo: TodoType?
 
-    init(distance: Int32, 
+    init(distance: Int32,
          latitude: Double,
          longitude: Double,
          todo: TodoType? = nil
@@ -85,20 +86,19 @@ struct TodoDTO {
     var group: Group?
 }
 
-struct TodoUpdateInfo {
+struct TodoUpdateDTO {
     var id: UUID
-    var newTitle: String?
-    var newIsCompleted: Bool?
-    var newDueTime: Date?
-    var newTimeAlarm: [Double]?
-    var newPlaceName: String?
-    var newGroup: Group?
-    var newPlaceAlarm: PlaceAlarm?
+    var title: String?
+    var isCompleted: Bool?
+    var dueTime: Date?
+    var placeName: String?
+    var timeAlarm: [Int]?
+    var group: Group?
+    var placeAlarm: PlaceAlarm?
 }
 
-struct GroupUpdateInfo {
+struct GroupUpdateDTO {
     var id: UUID
-    var newTitle: String?
-    var newColor: String?
-    var newIndexNumber: Int32?
+    var title: String?
+    var color: String?
 }

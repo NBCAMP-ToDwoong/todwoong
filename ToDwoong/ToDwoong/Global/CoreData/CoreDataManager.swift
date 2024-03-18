@@ -27,7 +27,7 @@ final class CoreDataManager: CoreDataManging {
         }
         return container
     }()
-
+    
     
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
@@ -42,17 +42,16 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    // MARK: - Todo
-    
-    func createTodo(todo: TodoType) {
-        let data = Todo(context: context)
-        
-        data.id = UUID()
-        data.title = todo.title
-        data.isCompleted = todo.isCompleted
-        data.dueTime = todo.dueTime
-        data.timeAlarm = todo.timeAlarm
-        data.placeName = todo.placeName
+    func createTodo(todo: Todo) {
+        let newTodo = Todo(context: context)
+        newTodo.id = UUID()
+        newTodo.title = todo.title
+        newTodo.isCompleted = todo.isCompleted
+        newTodo.dueTime = todo.dueTime
+        newTodo.placeName = todo.placeName
+        newTodo.group = todo.group
+        newTodo.timeAlarm = todo.timeAlarm
+        newTodo.placeAlarm = todo.placeAlarm
         
         saveContext()
     }
@@ -71,50 +70,54 @@ final class CoreDataManager: CoreDataManging {
     }
     
     func readTodos() -> [TodoDTO] {
-        let allTodos = readAllTodo()
-        
-        let todoDTO = allTodos.map { todo in
-            TodoDTO(id: todo.id!,
-                    title: todo.title ?? "",
-                    isCompleted: todo.isCompleted,
-                    dueTime: todo.dueTime,
-                    placeName: todo.placeName,
-                    group: todo.group)
+        do {
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
+            fetchRequest.sortDescriptors = [dueTimeSortDescriptor]
+            
+            let todos = try context.fetch(fetchRequest)
+            let data = todos.compactMap { todo -> TodoDTO? in
+                guard let id = todo.id, let title = todo.title else { return nil }
+                return TodoDTO(id: id,
+                               title: title,
+                               isCompleted: todo.isCompleted,
+                               dueTime: todo.dueTime,
+                               placeName: todo.placeName,
+                               group: todo.group)
+            }
+            return data
+        } catch {
+            print("투두목록 불러오기 실패")
+            return []
         }
-        
-        print(todoDTO)
-        
-        return todoDTO
     }
     
-    func updateTodo(info: TodoUpdateInfo) {
+    func updateTodo(info: TodoUpdateDTO) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
         
         do {
             let results = try context.fetch(fetchRequest)
-            
             if let todoToUpdate = results.first {
-                
-                if let newTitle = info.newTitle {
+                if let newTitle = info.title {
                     todoToUpdate.title = newTitle
                 }
-                if let newIsCompleted = info.newIsCompleted {
+                if let newIsCompleted = info.isCompleted {
                     todoToUpdate.isCompleted = newIsCompleted
                 }
-                if let newDueTime = info.newDueTime {
+                if let newDueTime = info.dueTime {
                     todoToUpdate.dueTime = newDueTime
                 }
-                if let newTimeAlarm = info.newTimeAlarm {
-                    todoToUpdate.timeAlarm = newTimeAlarm
-                }
-                if let newPlaceName = info.newPlaceName {
+                if let newPlaceName = info.placeName {
                     todoToUpdate.placeName = newPlaceName
                 }
-                if let newGroup = info.newGroup {
+                if let newGroup = info.group {
                     todoToUpdate.group = newGroup
                 }
-                if let newPlaceAlarm = info.newPlaceAlarm {
+                if let newTimeAlarm = info.timeAlarm {
+                    todoToUpdate.timeAlarm = newTimeAlarm
+                }
+                if let newPlaceAlarm = info.placeAlarm {
                     todoToUpdate.placeAlarm = newPlaceAlarm
                 }
                 
@@ -131,27 +134,11 @@ final class CoreDataManager: CoreDataManging {
         saveContext()
     }
     
-    private func readAllTodo() -> [Todo] {
-        do {
-            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
-            fetchRequest.sortDescriptors = [dueTimeSortDescriptor]
-            let todos = try context.fetch(fetchRequest)
-            
-            return todos
-        } catch {
-            print("투두 목록 불러오기 실패")
-            return []
-        }
-    }
-    
-    // MARK: - Group
-    
     func createGroup(title: String, color: String) {
-        let newGroup = Group(context: context)
-        newGroup.id = UUID()
-        newGroup.title = title
-        newGroup.color = color
+        let newCategory = Group(context: context)
+        newCategory.id = UUID()
+        newCategory.title = title
+        newCategory.color = color
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Group")
         fetchRequest.resultType = .dictionaryResultType
@@ -161,22 +148,23 @@ final class CoreDataManager: CoreDataManging {
                                                 arguments: [NSExpression(forKeyPath: "indexNumber")])
         calculateDesc.expressionResultType = .integer64AttributeType
         fetchRequest.propertiesToFetch = [calculateDesc]
-        
+
         do {
             let results = try context.fetch(fetchRequest)
             if let maxIndexNumberDict = results.first as? [String: Int64],
                let maxIndexNumber = maxIndexNumberDict["maxIndexNumber"] {
-                newGroup.indexNumber = Int32(maxIndexNumber + 1)
+                newCategory.indexNumber = Int32(maxIndexNumber + 1)
             } else {
-                newGroup.indexNumber = 0
+                newCategory.indexNumber = 0
             }
         } catch let error as NSError {
             print("Could not fetch maxIndexNumber: \(error), \(error.userInfo)")
-            newGroup.indexNumber = 0
+            newCategory.indexNumber = 0
         }
         
         saveContext()
     }
+    
     
     func readGroups() -> [Group] {
         do {
@@ -187,28 +175,23 @@ final class CoreDataManager: CoreDataManging {
             let groups = try context.fetch(fetchRequest)
             return groups
         } catch {
-            print("groups 불러오기 실패")
+            print("그룹 불러오기 실패")
             return []
         }
     }
     
-    func updateGroup(info: GroupUpdateInfo) {
+    func updateGroup(info: GroupUpdateDTO) {
         let fetchRequest: NSFetchRequest<Group> = Group.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
         
         do {
             let results = try context.fetch(fetchRequest)
-            
             if let groupToUpdate = results.first {
-                
-                if let newTitle = info.newTitle {
+                if let newTitle = info.title {
                     groupToUpdate.title = newTitle
                 }
-                if let newColor = info.newColor {
+                if let newColor = info.color {
                     groupToUpdate.color = newColor
-                }
-                if let newIndexNumber = info.newIndexNumber {
-                    groupToUpdate.indexNumber = newIndexNumber
                 }
                 
                 try context.save()
@@ -224,26 +207,12 @@ final class CoreDataManager: CoreDataManging {
         saveContext()
     }
     
-    // MARK: - AllDelete Method
+    // MARK: Filter Todo
     
-    func deleteAllEntity(entityName: String) {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-        do {
-            try context.execute(deleteRequest)
-            saveContext()
-        } catch let error as NSError {
-            print("\(entityName) 전체 삭제 오류: \(error), \(error.userInfo)")
-        }
-    }
-    
-    // MARK: - Filter Method
-    
-    func filterTodoByGroup(group: Group) -> [Todo] {
+    func filterTodoByCategory(category: Category) -> [Todo] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "group == %@", group)
+            fetchRequest.predicate = NSPredicate(format: "category == %@", category)
             let filteredTodos = try context.fetch(fetchRequest)
             return filteredTodos
         } catch {
