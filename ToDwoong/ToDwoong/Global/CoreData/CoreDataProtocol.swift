@@ -12,7 +12,7 @@ protocol TodoManaging {
     func readTodo(id: UUID) -> Todo?
     func readTodos() -> [TodoDTO]
     func updateTodo(info: TodoUpdateDTO)
-    func deleteTodo(todo: Todo)
+    func deleteTodo(todo: TodoDTO)
 }
 
 protocol GroupManaging {

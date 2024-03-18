@@ -42,6 +42,8 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
+    // MARK: - TODO CRUD
+    
     func createTodo(todo: Todo) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
@@ -128,17 +130,32 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    func deleteTodo(todo: Todo) {
-        context.delete(todo)
+    func deleteTodo(todo: TodoDTO) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", todo.id as CVarArg)
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let todoToDelete = results.first {
+                context.delete(todoToDelete)
+                saveContext()
+            } else {
+                print("삭제할 Todo를 찾을 수 없습니다.")
+            }
+        } catch let error {
+            print("투두 삭제 실패: \(error.localizedDescription)")
+        }
         
         saveContext()
     }
     
+    // MARK: - Group CRUD
+    
     func createGroup(title: String, color: String) {
-        let newCategory = Group(context: context)
-        newCategory.id = UUID()
-        newCategory.title = title
-        newCategory.color = color
+        let newGroup = Group(context: context)
+        newGroup.id = UUID()
+        newGroup.title = title
+        newGroup.color = color
         
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Group")
         fetchRequest.resultType = .dictionaryResultType
@@ -153,13 +170,13 @@ final class CoreDataManager: CoreDataManging {
             let results = try context.fetch(fetchRequest)
             if let maxIndexNumberDict = results.first as? [String: Int64],
                let maxIndexNumber = maxIndexNumberDict["maxIndexNumber"] {
-                newCategory.indexNumber = Int32(maxIndexNumber + 1)
+                newGroup.indexNumber = Int32(maxIndexNumber + 1)
             } else {
-                newCategory.indexNumber = 0
+                newGroup.indexNumber = 0
             }
         } catch let error as NSError {
             print("Could not fetch maxIndexNumber: \(error), \(error.userInfo)")
-            newCategory.indexNumber = 0
+            newGroup.indexNumber = 0
         }
         
         saveContext()
@@ -209,10 +226,10 @@ final class CoreDataManager: CoreDataManging {
     
     // MARK: Filter Todo
     
-    func filterTodoByCategory(category: Category) -> [Todo] {
+    func filterTodoByGroup(group: Group) -> [Todo] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "category == %@", category)
+            fetchRequest.predicate = NSPredicate(format: "group == %@", group)
             let filteredTodos = try context.fetch(fetchRequest)
             return filteredTodos
         } catch {
