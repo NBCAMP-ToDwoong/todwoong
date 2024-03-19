@@ -32,7 +32,7 @@ class LocationTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.text = "위치"
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(18)
             make.leading.equalToSuperview().offset(30)
             make.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
@@ -42,7 +42,7 @@ class LocationTableViewCell: UITableViewCell {
         chipView?.removeFromSuperview()
         chipView = nil
         hasLocationChip = false
-        
+
         if let place = selectedPlace, !place.isEmpty {
             let newChipView = InfoChipView(text: place, color: TDStyle.color.lightGray, showDeleteButton: true)
             hasLocationChip = true
@@ -50,17 +50,17 @@ class LocationTableViewCell: UITableViewCell {
             contentView.addSubview(newChipView)
             chipView = newChipView
             chipView?.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(4)
-                make.leading.equalTo(titleLabel.snp.leading)
-                make.trailing.lessThanOrEqualToSuperview().offset(-30)
+                make.top.equalTo(titleLabel.snp.bottom).offset(6)
+                make.trailing.equalToSuperview().offset(-30)
                 make.height.equalTo(30)
             }
-            
+
             accessoryType = .none
         } else {
             accessoryType = .disclosureIndicator
         }
     }
+
 }
 
 extension LocationTableViewCell: InfoChipViewDelegate {
