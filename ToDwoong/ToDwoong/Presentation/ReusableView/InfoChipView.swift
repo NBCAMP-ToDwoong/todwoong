@@ -42,9 +42,10 @@ class InfoChipView: UIView {
     }
 
     private func setupTextLabel(text: String) {
+        addSubview(textLabel)
         textLabel.text = text
         textLabel.textColor = .black
-        addSubview(textLabel)
+        textLabel.font = TDStyle.font.body(style: .regular)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
         textLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10).isActive = true
         textLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true

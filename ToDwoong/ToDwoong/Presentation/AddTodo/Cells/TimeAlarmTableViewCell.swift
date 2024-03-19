@@ -33,6 +33,7 @@ class TimeAlarmTableViewCell: UITableViewCell {
     private func setupTitleLabel() {
         contentView.addSubview(titleLabel)
         titleLabel.text = "시간 알람"
+        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
             make.top.equalToSuperview().offset(15)

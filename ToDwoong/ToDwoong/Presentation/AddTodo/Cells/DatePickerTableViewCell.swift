@@ -15,7 +15,7 @@ class DatePickerTableViewCell: UITableViewCell {
     // MARK: - UI Properties
     
     static let identifier = "DatePickerCell"
-    private let dateLabel = UILabel()
+    private let titleLabel = UILabel()
     private let dateFormatter = DateFormatter()
     private let timeFormatter = DateFormatter()
     
@@ -72,9 +72,10 @@ class DatePickerTableViewCell: UITableViewCell {
     }
     
     private func configureDateLabel() {
-        dateLabel.text = "날짜"
-        contentView.addSubview(dateLabel)
-        dateLabel.snp.makeConstraints { make in
+        contentView.addSubview(titleLabel)
+        titleLabel.text = "날짜"
+        titleLabel.font = TDStyle.font.body(style: .regular)
+        titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
             make.centerY.equalToSuperview()
         }

@@ -37,6 +37,7 @@ class LocationTableViewCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(titleLabel)
         titleLabel.text = "위치"
+        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(18)
             make.leading.equalToSuperview().offset(30)

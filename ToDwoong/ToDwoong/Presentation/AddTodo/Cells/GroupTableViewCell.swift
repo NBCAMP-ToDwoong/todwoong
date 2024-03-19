@@ -32,6 +32,7 @@ class GroupTableViewCell: UITableViewCell {
     private func setupTitleLabel() {
         addSubview(titleLabel)
         titleLabel.text = "그룹"
+        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
             make.centerY.equalToSuperview()

@@ -42,8 +42,8 @@ class AddTodoViewController: UIViewController {
         button.setTitle("저장", for: .normal)
         button.tintColor = TDStyle.color.mainTheme
         button.setTitleColor(TDStyle.color.mainTheme, for: .normal)
+        button.titleLabel?.font = TDStyle.font.body(style: .bold)
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        
         return button
     }()
     
@@ -51,6 +51,7 @@ class AddTodoViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = TDStyle.color.mainTheme
+        button.titleLabel?.font = TDStyle.font.body(style: .bold)
         button.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
         
         return button
@@ -77,7 +78,6 @@ class AddTodoViewController: UIViewController {
     private func loadTodoToEdit() {
         titleLabel = UILabel()
         titleLabel.textAlignment = .center
-        titleLabel.textColor = TDStyle.color.mainTheme
         
         if todoToEdit != nil {
             guard let todo = todoToEdit else { return }
