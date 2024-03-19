@@ -10,7 +10,10 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class AddTodoTimePickerController: UIViewController {
+class TimePickerModal: UIViewController {
+    
+    // MARK: - UI Properties
+    
     var selectedTime: Date?
     weak var delegate: TimePickerModalDelegate?
     private let datePicker = UIDatePicker()
@@ -19,7 +22,7 @@ class AddTodoTimePickerController: UIViewController {
         var config = UIButton.Configuration.plain()
         
         config.title = "시간 선택"
-        config.baseForegroundColor = TDStyle.color.mainDarkTheme
+        config.baseForegroundColor = .black
         config.baseBackgroundColor = .clear
         
         let attributes: [NSAttributedString.Key: Any] = [
@@ -33,12 +36,12 @@ class AddTodoTimePickerController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "저장", method: #selector(saveTime), color: .systemBlue)
+        createNotificationButton(title: "저장", method: #selector(saveTime), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
                                           method: Selector,
-                                          color: UIColor? = TDStyle.color.primaryLabel
+                                          color: UIColor? = TDStyle.color.mainDarkTheme
     ) -> UIButton {
         var config = UIButton.Configuration.plain()
         
@@ -69,7 +72,11 @@ class AddTodoTimePickerController: UIViewController {
         if let selectedTime = selectedTime {
             datePicker.setDate(selectedTime, animated: false)
         }
+        datePicker.locale = Locale(identifier: "ko_KR")
+        
     }
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,7 +113,8 @@ class AddTodoTimePickerController: UIViewController {
     
     private func configureModalStyle() {
         if let presentationController = presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium()]
+            presentationController.detents = [.medium(), .large()]
+            presentationController.prefersGrabberVisible = true
         }
     }
     
@@ -114,7 +122,7 @@ class AddTodoTimePickerController: UIViewController {
 
 // MARK: - @objc method
 
-extension AddTodoTimePickerController {
+extension TimePickerModal {
     @objc private func saveTime() {
         delegate?.didSelectTime(datePicker.date)
         dismiss(animated: true, completion: nil)

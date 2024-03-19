@@ -15,15 +15,15 @@ protocol LocationPickerDelegate: AnyObject {
     func didPickLocation(_ address: String)
 }
 
-protocol GroupSelectControllerDelegate: AnyObject {
-    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup category: Category)
+protocol GroupSelectModalDelegate: AnyObject {
+    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup category: Category)
 }
 
-protocol TimeAlarmSelectControllerDelegate: AnyObject {
+protocol TimeAlarmModalDelegate: AnyObject {
     func timesSelected(_ times: [String])
 }
 
-protocol PlaceAlarmSelectControllerDelegate: AnyObject {
+protocol PlaceAlarmModalDelegate: AnyObject {
     func locationSelected(_ location: [String])
 }
 

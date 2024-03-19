@@ -9,11 +9,11 @@ import UIKit
 
 import TodwoongDesign
 
-final class AddTodoTimeAlarmViewController: UIViewController {
+final class TimeAlarmModal: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: TimeAlarmSelectControllerDelegate?
+    weak var delegate: TimeAlarmModalDelegate?
     
     // FIXME: 직접설정이 없어서 주석처리 추후 변경
 //    let timeList = ["직접 설정",
@@ -106,7 +106,7 @@ final class AddTodoTimeAlarmViewController: UIViewController {
 
 // MARK: - @objc Method
 
-extension AddTodoTimeAlarmViewController {
+extension TimeAlarmModal {
     @objc
     func saveTimes() {
         delegate?.timesSelected(selectedTimes)
@@ -116,7 +116,7 @@ extension AddTodoTimeAlarmViewController {
 
 // MARK: - UI Method
 
-extension AddTodoTimeAlarmViewController {
+extension TimeAlarmModal {
     private func setUI() {
         [timeNotificationButton, tableView, saveButton].forEach { view.addSubview($0) }
         view.backgroundColor = .white
@@ -148,7 +148,7 @@ extension AddTodoTimeAlarmViewController {
 
 // MARK: - UITableViewDataSource
 
-extension AddTodoTimeAlarmViewController: UITableViewDataSource {
+extension TimeAlarmModal: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return timeList.count
     }
@@ -162,7 +162,7 @@ extension AddTodoTimeAlarmViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension AddTodoTimeAlarmViewController: UITableViewDelegate {
+extension TimeAlarmModal: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         

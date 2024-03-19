@@ -10,7 +10,10 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class AddTodoDatePickerController: UIViewController {
+class DatePickerModal: UIViewController {
+    
+    // MARK: - UI Properties
+    
     var selectedDate: Date?
     weak var delegate: DatePickerModalDelegate?
     private let datePicker = UIDatePicker()
@@ -19,7 +22,7 @@ class AddTodoDatePickerController: UIViewController {
         var config = UIButton.Configuration.plain()
         
         config.title = "날짜 선택"
-        config.baseForegroundColor = TDStyle.color.mainDarkTheme
+        config.baseForegroundColor = .black
         config.baseBackgroundColor = .clear
         
         let attributes: [NSAttributedString.Key: Any] = [
@@ -33,12 +36,12 @@ class AddTodoDatePickerController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "저장", method: #selector(saveDate), color: .systemBlue)
+        createNotificationButton(title: "저장", method: #selector(saveDate), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
                                           method: Selector,
-                                          color: UIColor? = TDStyle.color.primaryLabel
+                                          color: UIColor? = TDStyle.color.mainDarkTheme
     ) -> UIButton {
         var config = UIButton.Configuration.plain()
         
@@ -69,7 +72,11 @@ class AddTodoDatePickerController: UIViewController {
         if let selectedDate = selectedDate {
             datePicker.setDate(selectedDate, animated: false)
         }
+        datePicker.tintColor = TDStyle.color.mainDarkTheme
+        datePicker.locale = Locale(identifier: "ko_KR")
     }
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,14 +106,15 @@ class AddTodoDatePickerController: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.top.equalTo(separatorLine.snp.bottom).offset(20)
+            make.top.equalTo(separatorLine.snp.bottom).offset(10)
             make.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
     private func configureModalStyle() {
         if let presentationController = presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium()]
+            presentationController.detents = [.medium(), .large()]
+            presentationController.prefersGrabberVisible = true
         }
     }
     
@@ -114,7 +122,7 @@ class AddTodoDatePickerController: UIViewController {
 
 // MARK: - @objc method
 
-extension AddTodoDatePickerController {
+extension DatePickerModal {
     @objc private func saveDate() {
         delegate?.didSelectDate(datePicker.date)
         dismiss(animated: true, completion: nil)

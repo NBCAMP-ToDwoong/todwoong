@@ -11,6 +11,9 @@ import SnapKit
 import TodwoongDesign
 
 class TimeAlarmTableViewCell: UITableViewCell {
+    
+    // MARK: - UI Properties
+    
     static let identifier = "TimeAlarmTableViewCell"
     private let titleLabel = UILabel()
     private let chipStackView = UIStackView()
@@ -87,6 +90,8 @@ class TimeAlarmTableViewCell: UITableViewCell {
         return stackView
     }
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension TimeAlarmTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {

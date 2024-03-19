@@ -189,4 +189,5 @@ extension DatePickerTableViewCell: InfoChipViewDelegate {
         
         accessoryType = .none
     }
+    
 }

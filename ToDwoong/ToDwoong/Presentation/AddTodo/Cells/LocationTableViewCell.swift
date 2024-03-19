@@ -11,11 +11,17 @@ import SnapKit
 import TodwoongDesign
 
 class LocationTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
+    var hasLocationChip: Bool = false
+    
+    // MARK: - UI Properties
+    
     static let identifier = "LocationCell"
     
     let titleLabel = UILabel()
     var chipView: InfoChipView?
-    var hasLocationChip: Bool = false
     
     public var onDeleteButtonTapped: (() -> Void)?
     
@@ -62,6 +68,8 @@ class LocationTableViewCell: UITableViewCell {
     }
 
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension LocationTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {

@@ -97,7 +97,11 @@ class AddTodoViewController: UIViewController {
                     selectedDueTime = calendar.date(from: DateComponents(hour: timeComponents.hour,
                                                                          minute: timeComponents.minute))
                 }
+            } else {
+                selectedDueDate = nil
+                selectedDueTime = nil
             }
+
             selectedGroup = todo.category
             selectedPlace = todo.place
             // FIXME: 코어데이터 수정 후 작업
@@ -152,23 +156,24 @@ class AddTodoViewController: UIViewController {
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup
-        var selectedDateTime: Date? = selectedDueDate
         
-        if let dueDate = selectedDueDate, let dueTime = selectedDueTime {
+        var selectedDateTime: Date? = selectedDueDate
+        if let dueDate = selectedDueDate {
             let calendar = Calendar.current
-            var selectedDateTime: Date? = nil
-            
-            if let dueDate = selectedDueDate {
-                var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
-                
-                // 시간 부분을 명시적으로 0으로 설정
+            var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
+            if let dueTime = selectedDueTime {
+                let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: dueTime)
+                dateComponents.hour = timeComponents.hour
+                dateComponents.minute = timeComponents.minute
+                dateComponents.second = timeComponents.second
+            } else {
                 dateComponents.hour = 0
                 dateComponents.minute = 0
                 dateComponents.second = 0
-                
-                selectedDateTime = calendar.date(from: dateComponents)
             }
+            let selectedDateTime = calendar.date(from: dateComponents)
         }
+        
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
@@ -230,6 +235,7 @@ class AddTodoViewController: UIViewController {
         tableView.register(TimeAlarmTableViewCell.self, forCellReuseIdentifier: TimeAlarmTableViewCell.identifier)
         tableView.register(PlaceAlarmTableViewCell.self, forCellReuseIdentifier: PlaceAlarmTableViewCell.identifier)
         tableView.tableFooterView = UIView()
+        tableView.isScrollEnabled = false
         tableView.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom).offset(8)
             make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -245,6 +251,7 @@ class AddTodoViewController: UIViewController {
         }
         
         tableView.delegate = self
+        tableView.dataSource = self
     }
     
 }
@@ -269,7 +276,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension AddTodoViewController: UITableViewDelegate {
+extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -497,15 +504,15 @@ extension AddTodoViewController: LocationPickerDelegate {
 
 // MARK: - GroupSelectControllerDelegate
 
-extension AddTodoViewController: GroupSelectControllerDelegate {
-    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
+extension AddTodoViewController: GroupSelectModalDelegate {
+    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Category) {
         self.selectedGroup = group
         let indexPath = IndexPath(row: 1, section: 0)
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     private func goToGroupSelectController() {
-        let groupSelectController = AddTodoGroupSelectController()
+        let groupSelectController = GroupSelectModal()
         groupSelectController.delegate = self
         groupSelectController.selectedCategory = self.selectedGroup
         present(groupSelectController, animated: true, completion: nil)
@@ -515,7 +522,7 @@ extension AddTodoViewController: GroupSelectControllerDelegate {
 
 // MARK: - TimeAlarmSelectControllerDelegate
 
-extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
+extension AddTodoViewController: TimeAlarmModalDelegate {
     func timesSelected(_ times: [String]) {
         selectedTimesAlarm = times
         let indexPath = IndexPath(row: 0, section: 1)
@@ -523,7 +530,7 @@ extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
     }
     
     private func goTimeAlarmViewController() {
-        let timeAlarmViewController = AddTodoTimeAlarmViewController()
+        let timeAlarmViewController = TimeAlarmModal()
         timeAlarmViewController.selectedTimes = selectedTimesAlarm
         timeAlarmViewController.delegate = self
         present(timeAlarmViewController, animated: true, completion: nil)
@@ -532,7 +539,7 @@ extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
 
 // MARK: - PlaceAlarmSelectControllerDelegate
 
-extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
+extension AddTodoViewController: PlaceAlarmModalDelegate {
     func locationSelected(_ location: [String]) {
         guard location.first != nil else {
             return
@@ -546,7 +553,7 @@ extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
     }
     
     private func goPlaceAlarmViewController() {
-        let placeAlarmViewController = AddTodoPlaceAlarmViewController()
+        let placeAlarmViewController = PlaceAlarmModal()
         placeAlarmViewController.delegate = self
         present(placeAlarmViewController, animated: true, completion: nil)
     }
@@ -565,7 +572,7 @@ extension AddTodoViewController: DatePickerModalDelegate {
     }
     
     private func goDatePickerViewController() {
-        let datePickerViewController = AddTodoDatePickerController()
+        let datePickerViewController = DatePickerModal()
         datePickerViewController.selectedDate = selectedDueDate
         datePickerViewController.delegate = self
         present(datePickerViewController, animated: true, completion: nil)
@@ -584,7 +591,7 @@ extension AddTodoViewController: TimePickerModalDelegate {
     }
     
     private func goTimePickerViewController() {
-        let timePickerViewController = AddTodoTimePickerController()
+        let timePickerViewController = TimePickerModal()
         timePickerViewController.selectedTime = selectedDueTime
         timePickerViewController.delegate = self
         present(timePickerViewController, animated: true, completion: nil)

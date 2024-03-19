@@ -9,7 +9,7 @@ import UIKit
 
 import TodwoongDesign
 
-final class AddTodoPlaceAlarmViewController: UIViewController {
+final class PlaceAlarmModal: UIViewController {
     
     // MARK: - Properties
     
@@ -17,7 +17,7 @@ final class AddTodoPlaceAlarmViewController: UIViewController {
                         "1km", "2km", "3km", "4km", "5km"]
     var selectedLocation: [String] = []
     
-    weak var delegate: PlaceAlarmSelectControllerDelegate?
+    weak var delegate: PlaceAlarmModalDelegate?
     
     // MARK: - UI Properties
     
@@ -25,21 +25,21 @@ final class AddTodoPlaceAlarmViewController: UIViewController {
         var config = UIButton.Configuration.plain()
         
         config.title = "장소 알람"
-        config.baseForegroundColor = TDStyle.color.mainDarkTheme
+        config.baseForegroundColor = .black
         config.baseBackgroundColor = .clear
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: TDStyle.font.body(style: .bold)
         ]
         config.attributedTitle = AttributedString("장소 알람", attributes: AttributeContainer(attributes))
-        
+         
         let button = UIButton(configuration: config, primaryAction: nil)
         
         return button
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "저장", method: #selector(saveLocation), color: .systemBlue)
+        createNotificationButton(title: "저장", method: #selector(saveLocation), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
@@ -84,7 +84,7 @@ final class AddTodoPlaceAlarmViewController: UIViewController {
 
 // MARK: - @objc Method
 
-extension AddTodoPlaceAlarmViewController {
+extension PlaceAlarmModal {
     @objc
     func saveLocation() {
         delegate?.locationSelected(selectedLocation)
@@ -94,7 +94,7 @@ extension AddTodoPlaceAlarmViewController {
 
 // MARK: - UI Method
 
-extension AddTodoPlaceAlarmViewController {
+extension PlaceAlarmModal {
     private func setUI() {
         [placeNotificationButton, tableView, saveButton].forEach { view.addSubview($0) }
         view.backgroundColor = .white
@@ -126,7 +126,7 @@ extension AddTodoPlaceAlarmViewController {
 
 // MARK: - UITableViewDataSource
 
-extension AddTodoPlaceAlarmViewController: UITableViewDataSource {
+extension PlaceAlarmModal: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return locationList.count
     }
@@ -140,7 +140,7 @@ extension AddTodoPlaceAlarmViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension AddTodoPlaceAlarmViewController: UITableViewDelegate {
+extension PlaceAlarmModal: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             guard let cell = tableView.cellForRow(at: indexPath) else { return }
             let selectedLocationString = locationList[indexPath.row]

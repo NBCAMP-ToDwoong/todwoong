@@ -59,6 +59,7 @@ class AddTodoView: UIView {
     }()
     
     // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -69,6 +70,7 @@ class AddTodoView: UIView {
     }
     
     // MARK: - Setup Layout
+    
     private func setupLayout() {
         backgroundColor = TDStyle.color.lightGray
         

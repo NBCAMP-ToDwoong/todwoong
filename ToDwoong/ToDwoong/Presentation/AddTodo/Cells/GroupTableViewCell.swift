@@ -10,6 +10,9 @@ import SnapKit
 import TodwoongDesign
 
 class GroupTableViewCell: UITableViewCell {
+    
+    // MARK: - UI Properties
+    
     static let identifier = "GroupTableViewCell"
     
     private let titleLabel = UILabel()
@@ -54,6 +57,8 @@ class GroupTableViewCell: UITableViewCell {
         }
     }
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension GroupTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {
