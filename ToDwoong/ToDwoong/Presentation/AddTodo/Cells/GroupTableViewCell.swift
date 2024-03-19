@@ -10,6 +10,9 @@ import SnapKit
 import TodwoongDesign
 
 class GroupTableViewCell: UITableViewCell {
+    
+    // MARK: - UI Properties
+    
     static let identifier = "GroupTableViewCell"
     
     private let titleLabel = UILabel()
@@ -29,6 +32,7 @@ class GroupTableViewCell: UITableViewCell {
     private func setupTitleLabel() {
         addSubview(titleLabel)
         titleLabel.text = "그룹"
+        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
             make.centerY.equalToSuperview()
@@ -54,6 +58,8 @@ class GroupTableViewCell: UITableViewCell {
         }
     }
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension GroupTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {

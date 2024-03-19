@@ -11,6 +11,13 @@ import SnapKit
 import TodwoongDesign
 
 class LocationTableViewCell: UITableViewCell {
+    
+    // MARK: - Properties
+    
+    var hasLocationChip: Bool = false
+    
+    // MARK: - UI Properties
+    
     static let identifier = "LocationCell"
     
     let titleLabel = UILabel()
@@ -30,8 +37,9 @@ class LocationTableViewCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(titleLabel)
         titleLabel.text = "위치"
+        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(12)
+            make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(30)
             make.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
@@ -40,31 +48,29 @@ class LocationTableViewCell: UITableViewCell {
     func configure(with selectedPlace: String?) {
         chipView?.removeFromSuperview()
         chipView = nil
-        
+        hasLocationChip = false
+
         if let place = selectedPlace, !place.isEmpty {
             let newChipView = InfoChipView(text: place, color: TDStyle.color.lightGray, showDeleteButton: true)
+            hasLocationChip = true
             newChipView.delegate = self
             contentView.addSubview(newChipView)
             chipView = newChipView
-            
             chipView?.snp.makeConstraints { make in
-                make.centerY.equalTo(titleLabel.snp.centerY)
+                make.top.equalTo(titleLabel.snp.bottom).offset(6)
                 make.trailing.equalToSuperview().offset(-30)
                 make.height.equalTo(30)
             }
+
             accessoryType = .none
         } else {
             accessoryType = .disclosureIndicator
         }
-        titleLabel.snp.remakeConstraints { make in
-            make.top.equalToSuperview().offset(14)
-            make.leading.equalToSuperview().offset(30)
-            if chipView == nil {
-                make.trailing.equalToSuperview().offset(-16)
-            }
-        }
     }
+
 }
+
+// MARK: - InfoChipViewDelegate
 
 extension LocationTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {

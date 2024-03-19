@@ -12,7 +12,6 @@
 		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
 		1B1886D42BA49A1E00353519 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 7F90103C2BA2256F008B778B /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
-		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
@@ -22,22 +21,23 @@
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
+		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
 		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
 		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
 		2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */; };
-		2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */; };
+		2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */; };
 		2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */; };
-		2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */; };
+		2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */; };
 		2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */; };
-		2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */; };
-		2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */; };
+		2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* DatePickerModal.swift */; };
+		2E822D192BA444A5001ED00F /* TimePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D182BA444A5001ED00F /* TimePickerModal.swift */; };
 		2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */; };
 		2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */; };
 		2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */; };
 		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
 		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
-		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
+		2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
 		7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CC2BA4334E00455100 /* AddGroupButton.swift */; };
 		7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CE2BA433FA00455100 /* GroupTableView.swift */; };
@@ -86,7 +86,6 @@
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoAlarmViewController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		1BA08A5B2B9854D6001D3698 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1BA08A5D2B985506001D3698 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -98,22 +97,23 @@
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
+		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
 		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
 		2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimeAlarmViewController.swift; sourceTree = "<group>"; };
+		2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmModal.swift; sourceTree = "<group>"; };
 		2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoPlaceAlarmViewController.swift; sourceTree = "<group>"; };
+		2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmModal.swift; sourceTree = "<group>"; };
 		2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoDatePickerController.swift; sourceTree = "<group>"; };
-		2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimePickerController.swift; sourceTree = "<group>"; };
+		2E822D162BA4355D001ED00F /* DatePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModal.swift; sourceTree = "<group>"; };
+		2E822D182BA444A5001ED00F /* TimePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerModal.swift; sourceTree = "<group>"; };
 		2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
 		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
-		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
+		2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSelectModal.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		7F7253CC2BA4334E00455100 /* AddGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupButton.swift; sourceTree = "<group>"; };
 		7F7253CE2BA433FA00455100 /* GroupTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableView.swift; sourceTree = "<group>"; };
@@ -195,7 +195,8 @@
 		1BA63ACE2B8E8D07008F49CE /* AddTodo */ = {
 			isa = PBXGroup;
 			children = (
-				2EF9C4DD2B9497D7005F8B76 /* View */,
+				2E1CE20A2BA95760000E522C /* Modals */,
+				2EF9C4DD2B9497D7005F8B76 /* Views */,
 				2EA0630B2B906769007C9373 /* ViewController */,
 				2EF9C4D82B92996F005F8B76 /* Cells */,
 			);
@@ -329,17 +330,23 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		2E1CE20A2BA95760000E522C /* Modals */ = {
+			isa = PBXGroup;
+			children = (
+				2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */,
+				2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */,
+				2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */,
+				2E822D162BA4355D001ED00F /* DatePickerModal.swift */,
+				2E822D182BA444A5001ED00F /* TimePickerModal.swift */,
+			);
+			path = Modals;
+			sourceTree = "<group>";
+		};
 		2EA0630B2B906769007C9373 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */,
 				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
-				2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */,
 				2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */,
-				2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */,
-				2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */,
-				2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */,
-				2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -364,12 +371,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2EF9C4DD2B9497D7005F8B76 /* View */ = {
+		2EF9C4DD2B9497D7005F8B76 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
+				2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2EF9C5032B96845A005F8B76 /* Protocols */ = {
@@ -631,12 +639,12 @@
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
-				2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */,
+				2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */,
+				2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
-				2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */,
-				2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */,
+				2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */,
+				2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
-				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
@@ -644,7 +652,7 @@
 				7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */,
 				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
-				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
+				2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */,
 				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
@@ -658,7 +666,7 @@
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
-				2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */,
+				2E822D192BA444A5001ED00F /* TimePickerModal.swift in Sources */,
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
