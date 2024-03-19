@@ -83,13 +83,26 @@ class AddTodoViewController: UIViewController {
             guard let todo = todoToEdit else { return }
             
             selectedTitle = todo.title!
-            selectedDueDate = todo.dueDate
-            selectedDueTime = todo.dueTime
+            if let dueDate = todo.dueDate {
+                let calendar = Calendar.current
+                let dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
+                selectedDueDate = calendar.date(from: DateComponents(year: dateComponents.year,
+                                                                     month: dateComponents.month,
+                                                                     day: dateComponents.day))
+                
+                let timeComponents = calendar.dateComponents([.hour, .minute], from: dueDate)
+                if let hour = timeComponents.hour, let minute = timeComponents.minute, hour == 0 && minute == 0 {
+                    selectedDueTime = nil
+                } else {
+                    selectedDueTime = calendar.date(from: DateComponents(hour: timeComponents.hour,
+                                                                         minute: timeComponents.minute))
+                }
+            }
             selectedGroup = todo.category
             selectedPlace = todo.place
             // FIXME: 코어데이터 수정 후 작업
-//            selectedPlaceAlarm =
-//            selectedTimesAlarm =
+            //            selectedPlaceAlarm =
+            //            selectedTimesAlarm =
             
             titleTextField.text = selectedTitle
             
@@ -118,7 +131,7 @@ class AddTodoViewController: UIViewController {
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.leading.equalToSuperview().offset(16)
         }
-
+        
         saveButton.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.trailing.equalToSuperview().offset(-16)
@@ -139,13 +152,33 @@ class AddTodoViewController: UIViewController {
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup
-        
+        var selectedDateTime: Date? = selectedDueDate
+
+           if let dueDate = selectedDueDate, let dueTime = selectedDueTime {
+               let calendar = Calendar.current
+               var selectedDateTime: Date? = nil
+
+               if let dueDate = selectedDueDate {
+                   var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
+                   
+                   // 시간 부분을 명시적으로 0으로 설정
+                   dateComponents.hour = 0
+                   dateComponents.minute = 0
+                   dateComponents.second = 0
+
+                   selectedDateTime = calendar.date(from: dateComponents)
+               }
+           }
+        print("Selected Title: \(selectedTitle)")
+        print("Selected Place: \(selectedPlace)")
+        print("Selected SelectedDateTime: \(selectedDateTime)")
+        print("Selected Group: \(selectedGroup)")
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
                                               newPlace: place,
-                                              newDate: selectedDueDate,
-                                              newTime: selectedDueTime,
+                                              newDate: selectedDateTime, // 추후 하나로 합침
+                                              newTime: selectedDateTime,
                                               newCompleted: todo.isCompleted,
                                               newTimeAlarm: timeAlarm,
                                               newPlaceAlarm: placeAlarm,
@@ -154,8 +187,8 @@ class AddTodoViewController: UIViewController {
         } else {
             CoreDataManager.shared.createTodo(title: title,
                                               place: place,
-                                              dueDate: selectedDueDate,
-                                              dueTime: selectedDueTime,
+                                              dueDate: selectedDateTime, // 추후 하나로 합침
+                                              dueTime: selectedDateTime,
                                               isCompleted: false,
                                               timeAlarm: timeAlarm,
                                               placeAlarm: placeAlarm,
@@ -268,6 +301,12 @@ extension AddTodoViewController: UITableViewDelegate {
                 }
                 cell.selectedDate = self.selectedDueDate
                 cell.selectedTime = self.selectedDueTime
+                cell.onDateChanged = { [weak self] newDate in
+                    self?.selectedDueDate = newDate
+                }
+                cell.onTimeChanged = { [weak self] newTime in
+                    self?.selectedDueTime = newTime
+                }
                 cell.dateChipTappedHandler = { [weak self] in
                     self?.goDatePickerViewController()
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
@@ -278,13 +317,13 @@ extension AddTodoViewController: UITableViewDelegate {
                 }
                 cell.dateChipDeleteHandler = { [weak self] in
                     self?.selectedDueDate = nil
+                    self?.selectedDueTime = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 cell.timeChipDeleteHandler = { [weak self] in
                     self?.selectedDueTime = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
-                cell.accessoryType = .none
                 return cell
             case 1:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier,
@@ -350,9 +389,9 @@ extension AddTodoViewController: UITableViewDelegate {
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                guard let cell = tableView.cellForRow(at: indexPath) as? DatePickerTableViewCell else { return }
-                cell.resetDateAndTimeChipsIfNeeded()
                 tableView.deselectRow(at: indexPath, animated: true)
+                guard let cell = tableView.cellForRow(at: indexPath) as? DatePickerTableViewCell else { return }
+                cell.resetChipsNeeded()
             case 1:
                 goToGroupSelectController()
             case 2:
@@ -428,16 +467,16 @@ extension AddTodoViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 {
             if let location = selectedPlace, !location.isEmpty {
-                return 80
+                return 85
             }
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
             let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
-            return 50 + rowCount * (30 + 10)
+            return 60 + rowCount * (30 + 10)
         }
-
-        return 50
+        
+        return 60
     }
 }
 
