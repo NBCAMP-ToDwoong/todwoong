@@ -216,7 +216,7 @@ class AddTodoViewController: UIViewController {
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
             make.left.right.equalTo(view).inset(14)
-            make.height.equalTo(50)
+            make.height.equalTo(44)
         }
         titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
     }
@@ -469,16 +469,16 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 {
             if let location = selectedPlace, !location.isEmpty {
-                return 85
+                return 80
             }
         }
         
         if indexPath.section == 1 && indexPath.row == 0 {
             let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
-            return 60 + rowCount * (30 + 10)
+            return 44 + rowCount * (30 + 10)
         }
         
-        return 60
+        return 44
     }
 }
 
