@@ -153,26 +153,22 @@ class AddTodoViewController: UIViewController {
         let placeAlarm = false
         let category = selectedGroup
         var selectedDateTime: Date? = selectedDueDate
-
-           if let dueDate = selectedDueDate, let dueTime = selectedDueTime {
-               let calendar = Calendar.current
-               var selectedDateTime: Date? = nil
-
-               if let dueDate = selectedDueDate {
-                   var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
-                   
-                   // 시간 부분을 명시적으로 0으로 설정
-                   dateComponents.hour = 0
-                   dateComponents.minute = 0
-                   dateComponents.second = 0
-
-                   selectedDateTime = calendar.date(from: dateComponents)
-               }
-           }
-        print("Selected Title: \(selectedTitle)")
-        print("Selected Place: \(selectedPlace)")
-        print("Selected SelectedDateTime: \(selectedDateTime)")
-        print("Selected Group: \(selectedGroup)")
+        
+        if let dueDate = selectedDueDate, let dueTime = selectedDueTime {
+            let calendar = Calendar.current
+            var selectedDateTime: Date? = nil
+            
+            if let dueDate = selectedDueDate {
+                var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
+                
+                // 시간 부분을 명시적으로 0으로 설정
+                dateComponents.hour = 0
+                dateComponents.minute = 0
+                dateComponents.second = 0
+                
+                selectedDateTime = calendar.date(from: dateComponents)
+            }
+        }
         if let todo = todoToEdit {
             CoreDataManager.shared.updateTodo(todo: todo,
                                               newTitle: title,
@@ -248,7 +244,6 @@ class AddTodoViewController: UIViewController {
             tableView.insetsContentViewsToSafeArea = false
         }
         
-        tableView.dataSource = self
         tableView.delegate = self
     }
     
@@ -480,8 +475,7 @@ extension AddTodoViewController: UITableViewDelegate {
     }
 }
 
-extension AddTodoViewController: UITableViewDataSource {}
-
+// MARK: - LocationPickerDelegate
 
 extension AddTodoViewController: LocationPickerDelegate {
     func goLocationPickerViewController() {
@@ -501,6 +495,8 @@ extension AddTodoViewController: LocationPickerDelegate {
     
 }
 
+// MARK: - GroupSelectControllerDelegate
+
 extension AddTodoViewController: GroupSelectControllerDelegate {
     func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
         self.selectedGroup = group
@@ -517,6 +513,8 @@ extension AddTodoViewController: GroupSelectControllerDelegate {
     
 }
 
+// MARK: - TimeAlarmSelectControllerDelegate
+
 extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
     func timesSelected(_ times: [String]) {
         selectedTimesAlarm = times
@@ -531,6 +529,8 @@ extension AddTodoViewController: TimeAlarmSelectControllerDelegate {
         present(timeAlarmViewController, animated: true, completion: nil)
     }
 }
+
+// MARK: - PlaceAlarmSelectControllerDelegate
 
 extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
     func locationSelected(_ location: [String]) {
@@ -553,6 +553,8 @@ extension AddTodoViewController: PlaceAlarmSelectControllerDelegate {
     
 }
 
+// MARK: - DatePickerModalDelegate
+
 extension AddTodoViewController: DatePickerModalDelegate {
     func didSelectDate(_ date: Date) {
         selectedDueDate = date
@@ -569,6 +571,8 @@ extension AddTodoViewController: DatePickerModalDelegate {
         present(datePickerViewController, animated: true, completion: nil)
     }
 }
+
+// MARK: - TimePickerModalDelegate
 
 extension AddTodoViewController: TimePickerModalDelegate {
     func didSelectTime(_ date: Date) {
