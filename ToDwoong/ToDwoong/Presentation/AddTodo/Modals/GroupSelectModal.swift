@@ -158,7 +158,7 @@ extension GroupSelectModal {
         
         addGroupButton.snp.makeConstraints { make in
             make.top.equalTo(separatorLine.snp.bottom).offset(4)
-            make.left.left.equalToSuperview().inset(5)
+            make.left.right.equalToSuperview().inset(5)
             make.height.equalTo(36)
         }
         
