@@ -61,19 +61,47 @@ final class CoreDataManager: CoreDataManging {
     func readTodo(id: UUID) -> TodoType? {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
-
+        
         do {
             let todos = try context.fetch(fetchRequest)
             guard let todo = todos.first else { return nil }
             
-            let data = TodoType(id: todo.id,
-                                title: todo.title,
+            var group: GroupType? = nil
+            if let groupID = todo.group?.id,
+               let title = todo.group?.title {
+                group = GroupType(id: groupID,
+                                  title: title,
+                                  color: todo.group?.color,
+                                  indexNumber: todo.group?.indexNumber,
+                                  todo: nil)
+            }
+            
+            var placeAlarm: PlaceAlarmType? = nil
+            if let alarmID = todo.placeAlarm?.id,
+               let distance = todo.placeAlarm?.distance,
+               let latitude = todo.placeAlarm?.latitude,
+               let longitude = todo.placeAlarm?.longitude {
+                placeAlarm = PlaceAlarmType(id: alarmID,
+                                            distance: distance,
+                                            latitude: latitude,
+                                            longitude: longitude,
+                                            todo: nil)
+            }
+            
+            var data: TodoType? = nil
+            if let id = todo.id, let title = todo.title {
+                data = TodoType(id: id,
+                                title: title,
                                 isCompleted: todo.isCompleted,
                                 dueTime: todo.dueTime,
                                 placeName: todo.placeName,
                                 timeAlarm: todo.timeAlarm,
-                                group: todo.group,
-                                placeAlarm: todo.placeAlarm)
+                                group: group,
+                                placeAlarm: placeAlarm)
+                
+                group?.todo = data
+                placeAlarm?.todo = data
+            }
             
             return data
         } catch {
