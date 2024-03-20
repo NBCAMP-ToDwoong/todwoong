@@ -89,17 +89,11 @@ extension TodoDetailViewController: UITableViewDataSource {
             let todo = self.todos[indexPath.row]
             todo.isCompleted.toggle()
             let todoEntity = CoreDataManager.shared.readTodos().first { $0.id == todo.id }
-            CoreDataManager.shared.updateTodo(todo: todoEntity!,
-                                              newTitle: todo.title,
-                                              newPlace: todo.place ?? "",
-                                              newDate: todo.dueDate,
-                                              newTime: todo.dueTime,
-                                              newCompleted: todo.isCompleted,
-                                              newTimeAlarm: todo.timeAlarm,
-                                              newPlaceAlarm: todo.placeAlarm,
-                                              newCategory: todoEntity?.category)
+            todoEntity?.isCompleted = todo.isCompleted
+            CoreDataManager.shared.saveContext()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             
-            cell.checkButton.isSelected = self.todos[indexPath.row].isCompleted
+            cell.checkButton.isSelected = todo.isCompleted
         }
         
         return cell

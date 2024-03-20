@@ -131,6 +131,7 @@ extension AddGroupViewController {
             if let title = self.addGroupView.groupTextField.text {
                 CoreDataManager.shared.createCategory(title: title,
                                                       color: self.selectedColor)
+                NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
                 self.dismiss(animated: true)
             }
         }
@@ -176,11 +177,11 @@ extension AddGroupViewController {
         if let category = editCategory {
             addGroupView.groupTextField.text = category.title
             
-            if category.color == TDStyle.color.mainTheme.toHex() {
+            if UIColor(hex: category.color!) == TDStyle.color.mainTheme {
                 addGroupView.palleteButtonAction(sender: addGroupView.palleteButton)
             } else {
                 for button in buttons {
-                    if category.color == button.tintColor.toHex() {
+                    if UIColor(hex: category.color!) == button.tintColor {
                         addGroupView.palleteButtonAction(sender: button)
                     }
                 }
@@ -197,6 +198,7 @@ extension AddGroupViewController {
                                                       newTitle: title,
                                                       newColor: self.selectedColor)
 
+                NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
                 self.dismiss(animated: true)
             }
         }
