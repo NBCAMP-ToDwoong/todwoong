@@ -88,6 +88,11 @@ final class GroupSelectModal: UIViewController {
         setTableView()
         setAddGroupButton()
         configureModalStyle()
+        setNotifications()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func configureModalStyle() {
@@ -128,6 +133,11 @@ extension GroupSelectModal {
     
     @objc func closeModal() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func groupDataUpdated() {
+        groupList = CoreDataManager.shared.readCategories()
+        tableView.reloadData()
     }
 }
 
@@ -177,6 +187,14 @@ extension GroupSelectModal {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "groupTableViewCellIdentifier")
+    }
+    
+    private func setNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(groupDataUpdated),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
     }
 }
 
