@@ -11,7 +11,7 @@ protocol TodoManaging {
     func createTodo(todo: Todo)
     func readTodo(id: UUID) -> Todo?
     func readTodos() -> [TodoDTO]
-    func updateTodo(info: TodoUpdateDTO)
+    func updateTodo(info: TodoType)
     func deleteTodo(todo: TodoDTO)
 }
 

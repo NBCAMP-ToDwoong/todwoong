@@ -60,16 +60,19 @@ class GroupType {
 }
 
 class PlaceAlarmType {
+    var id: UUID
     var distance: Int32
     var latitude: Double
     var longitude: Double
     weak var todo: TodoType?
 
-    init(distance: Int32,
+    init(id: UUID,
+         distance: Int32,
          latitude: Double,
          longitude: Double,
          todo: TodoType? = nil
     ) {
+        self.id = id
         self.distance = distance
         self.latitude = latitude
         self.longitude = longitude

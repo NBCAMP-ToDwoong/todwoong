@@ -94,37 +94,48 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    func updateTodo(info: TodoUpdateDTO) {
+    
+    func updateTodo(info: TodoType) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
         
         do {
             let results = try context.fetch(fetchRequest)
-            if let todoToUpdate = results.first {
-                if let newTitle = info.title {
-                    todoToUpdate.title = newTitle
-                }
-                if let newIsCompleted = info.isCompleted {
-                    todoToUpdate.isCompleted = newIsCompleted
-                }
-                if let newDueTime = info.dueTime {
-                    todoToUpdate.dueTime = newDueTime
-                }
-                if let newPlaceName = info.placeName {
-                    todoToUpdate.placeName = newPlaceName
-                }
-                if let newGroup = info.group {
-                    todoToUpdate.group = newGroup
-                }
-                if let newTimeAlarm = info.timeAlarm {
-                    todoToUpdate.timeAlarm = newTimeAlarm
-                }
-                if let newPlaceAlarm = info.placeAlarm {
-                    todoToUpdate.placeAlarm = newPlaceAlarm
-                }
-                
-                try context.save()
+            
+            guard let todoToUpdate = results.first else {
+                print("해당 ID를 가진 Todo를 찾을 수 없습니다.")
+                return
             }
+            
+            todoToUpdate.title = info.title
+            todoToUpdate.isCompleted = info.isCompleted
+            todoToUpdate.dueTime = info.dueTime
+            todoToUpdate.placeName = info.placeName
+            todoToUpdate.timeAlarm = info.timeAlarm
+            
+            if let groupInfo = info.group {
+                guard let existingGroup = findGroupById(groupInfo.id) else {
+                    print("해당 ID를 가진 Group을 찾을 수 없습니다.")
+                    return
+                }
+                existingGroup.title = groupInfo.title
+                existingGroup.color = groupInfo.color ?? existingGroup.color
+                existingGroup.indexNumber = Int32(groupInfo.indexNumber ?? Int32(existingGroup.indexNumber))
+                todoToUpdate.group = existingGroup
+            }
+            
+            if let placeAlarmInfo = info.placeAlarm {
+                guard let existingPlaceAlarm = findPlaceAlarmById(placeAlarmInfo.id) else {
+                    print("해당 ID를 가진 PlaceAlarm을 찾을 수 없습니다.")
+                    return
+                }
+                existingPlaceAlarm.distance = Int32(placeAlarmInfo.distance)
+                existingPlaceAlarm.latitude = placeAlarmInfo.latitude
+                existingPlaceAlarm.longitude = placeAlarmInfo.longitude
+                todoToUpdate.placeAlarm = existingPlaceAlarm
+            }
+            
+            try context.save()
         } catch let error {
             print("투두 업데이트 실패: \(error.localizedDescription)")
         }
@@ -259,5 +270,19 @@ final class CoreDataManager: CoreDataManging {
             print("Error fetching todos for date: \(error)")
             return []
         }
+    }
+    
+    // FIXME: 제네릭 사용하여 공통 메서드 만들 수 있을 듯 - findById
+    
+    private func findGroupById(_ id: UUID) -> Group? {
+        let request: NSFetchRequest<Group> = Group.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try? context.fetch(request).first
+    }
+
+    private func findPlaceAlarmById(_ id: UUID) -> PlaceAlarm? {
+        let request: NSFetchRequest<PlaceAlarm> = PlaceAlarm.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        return try? context.fetch(request).first
     }
 }
