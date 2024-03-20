@@ -58,13 +58,24 @@ final class CoreDataManager: CoreDataManging {
         saveContext()
     }
     
-    func readTodo(id: UUID) -> Todo? {
+    func readTodo(id: UUID) -> TodoType? {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
 
         do {
             let todos = try context.fetch(fetchRequest)
-            return todos.first
+            guard let todo = todos.first else { return nil }
+            
+            let data = TodoType(id: todo.id,
+                                title: todo.title,
+                                isCompleted: todo.isCompleted,
+                                dueTime: todo.dueTime,
+                                placeName: todo.placeName,
+                                timeAlarm: todo.timeAlarm,
+                                group: todo.group,
+                                placeAlarm: todo.placeAlarm)
+            
+            return data
         } catch {
             print("Id로 투두를 가져오는 중 오류 발생 \(id): \(error)")
             return nil
@@ -94,7 +105,6 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    
     func updateTodo(info: TodoType) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
@@ -108,7 +118,6 @@ final class CoreDataManager: CoreDataManging {
             }
             
             todoToUpdate.title = info.title
-            todoToUpdate.isCompleted = info.isCompleted
             todoToUpdate.dueTime = info.dueTime
             todoToUpdate.placeName = info.placeName
             todoToUpdate.timeAlarm = info.timeAlarm
@@ -137,9 +146,30 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
+    func updateIsCompleted(id: UUID, status: Bool) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            guard let todoToUpdate = results.first else {
+                print("해당 ID를 가진 Todo를 찾을 수 없습니다.")
+                return
+            }
+            
+            todoToUpdate.isCompleted = status
+            
+            try context.save()
+        } catch let error {
+            print("투두 완료 여부 업데이트 실패: \(error.localizedDescription)")
+        }
+    }
+    
     func deleteTodo(todo: TodoDTO) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", todo.id as CVarArg)
+        
         do {
             let results = try context.fetch(fetchRequest)
             
@@ -229,43 +259,6 @@ final class CoreDataManager: CoreDataManging {
         context.delete(group)
         
         saveContext()
-    }
-    
-    // MARK: Filter Todo
-    
-    func filterTodoByGroup(group: Group) -> [Todo] {
-        do {
-            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "group == %@", group)
-            let filteredTodos = try context.fetch(fetchRequest)
-            return filteredTodos
-        } catch {
-            print("투두 필터링 실패: \(error.localizedDescription)")
-            return []
-        }
-    }
-    
-    func filterTodoByDuedate(_ date: Date) -> [Todo] {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
-
-        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-        let dueDatePredicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)",
-                                           startOfDay as NSDate,
-                                           endOfDay as NSDate)
-        fetchRequest.predicate = dueDatePredicate
-
-        let sortDescriptor = NSSortDescriptor(key: "dueDate", ascending: true)
-        fetchRequest.sortDescriptors = [sortDescriptor]
-
-        do {
-            let todos = try context.fetch(fetchRequest)
-            return todos
-        } catch {
-            print("Error fetching todos for date: \(error)")
-            return []
-        }
     }
     
     // FIXME: 제네릭 사용하여 공통 메서드 만들 수 있을 듯 - findById
