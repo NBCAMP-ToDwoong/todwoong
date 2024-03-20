@@ -196,6 +196,7 @@ extension GroupSelectModal: UITableViewDataSource {
         let category = groupList[indexPath.row]
         let isSelected = category == selectedCategory
         cell.configure(with: category, isSelected: isSelected)
+        updateSaveButtonAction()
         
         return cell
     }

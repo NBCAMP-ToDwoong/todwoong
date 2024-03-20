@@ -40,7 +40,7 @@ class LocationTableViewCell: UITableViewCell {
         titleLabel.font = TDStyle.font.body(style: .regular)
 
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(12)
             make.leading.equalToSuperview().offset(30)
             make.trailing.lessThanOrEqualToSuperview().offset(-30)
         }
@@ -52,11 +52,11 @@ class LocationTableViewCell: UITableViewCell {
         hasLocationChip = false
 
         if let place = selectedPlace, !place.isEmpty {
-            let maxCharacters = 18
+            let maxCharacters = 15
             let trimmedPlace: String
             if place.count > maxCharacters {
-                let endIndex = place.index(place.startIndex, offsetBy: maxCharacters - 3)
-                trimmedPlace = place[..<endIndex] + "..."
+                let endIndex = place.index(place.startIndex, offsetBy: maxCharacters)
+                trimmedPlace = place[..<endIndex] + ".."
             } else {
                 trimmedPlace = place
             }
