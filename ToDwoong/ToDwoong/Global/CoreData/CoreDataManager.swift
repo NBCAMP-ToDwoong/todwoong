@@ -113,26 +113,22 @@ final class CoreDataManager: CoreDataManging {
             todoToUpdate.placeName = info.placeName
             todoToUpdate.timeAlarm = info.timeAlarm
             
-            if let groupInfo = info.group {
-                guard let existingGroup = findGroupById(groupInfo.id) else {
-                    print("해당 ID를 가진 Group을 찾을 수 없습니다.")
-                    return
-                }
+            if let groupInfo = info.group, let existingGroup = findGroupById(groupInfo.id) {
                 existingGroup.title = groupInfo.title
                 existingGroup.color = groupInfo.color ?? existingGroup.color
                 existingGroup.indexNumber = Int32(groupInfo.indexNumber ?? Int32(existingGroup.indexNumber))
                 todoToUpdate.group = existingGroup
+            } else {
+                print("해당 ID를 가진 Group을 찾을 수 없습니다.")
             }
             
-            if let placeAlarmInfo = info.placeAlarm {
-                guard let existingPlaceAlarm = findPlaceAlarmById(placeAlarmInfo.id) else {
-                    print("해당 ID를 가진 PlaceAlarm을 찾을 수 없습니다.")
-                    return
-                }
+            if let placeAlarmInfo = info.placeAlarm, let existingPlaceAlarm = findPlaceAlarmById(placeAlarmInfo.id) {
                 existingPlaceAlarm.distance = Int32(placeAlarmInfo.distance)
                 existingPlaceAlarm.latitude = placeAlarmInfo.latitude
                 existingPlaceAlarm.longitude = placeAlarmInfo.longitude
                 todoToUpdate.placeAlarm = existingPlaceAlarm
+            } else {
+                print("해당 ID를 가진 PlaceAlarm을 찾을 수 없습니다.")
             }
             
             try context.save()
