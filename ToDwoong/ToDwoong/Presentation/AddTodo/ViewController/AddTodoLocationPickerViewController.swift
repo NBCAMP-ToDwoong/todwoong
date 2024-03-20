@@ -24,7 +24,7 @@ final class AddTodoLocationPickerViewController: UIViewController {
     private var isMapCenteredByUser = false
     
     // MARK: - UI Properties
-    weak var delegate: AddTodoLocationPickerDelegate?
+    weak var delegate: LocationPickerDelegate?
     
     private var locationPickerView: AddTodoLocationPickerView {
         return view as? AddTodoLocationPickerView ?? AddTodoLocationPickerView()
@@ -201,7 +201,7 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
 }
 
 // MARK: - AddTodoLocationPickerViewDelegate
-extension AddTodoLocationPickerViewController: AddTodoLocationPickerViewDelegate {
+extension AddTodoLocationPickerViewController: LocationPickerViewDelegate {
     func didTapConfirmAddress(_ address: String) {
         let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
         

@@ -37,6 +37,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNotifications()
+        
         customMapView.mapView.delegate = self
         setLocationManager()
         setNavigationBar()
@@ -69,6 +71,10 @@ class MapViewController: UIViewController {
             zoomToTodo(todo) {}
             initialTodo = nil
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Setting Method
@@ -156,6 +162,9 @@ class MapViewController: UIViewController {
     
     private func loadCategoriesAndCategoryChips() {
         categories = CoreDataManager.shared.readCategories()
+        if customMapView.groupChipsView.groupStackView.arrangedSubviews.isEmpty == false {
+            customMapView.groupChipsView.groupStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        }
         categories.forEach { category in
             customMapView.addCategoryChip(category: category.toCategoryModel(),
                                           action: #selector(categoryChipTapped(_:)), target: self)
@@ -172,7 +181,19 @@ class MapViewController: UIViewController {
         categoryChipTapped(chipButton)
     }
     
+    private func setNotifications() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdatedGroup(_:)),
+            name: .GroupDataUpdatedNotification,
+            object: nil)
+    }
+    
     // MARK: - Objc Func
+    
+    @objc private func dataUpdatedGroup(_ notification: Notification) {
+        loadCategoriesAndCategoryChips()
+    }
     
     @objc func categoryChipTapped(_ sender: TDCustomButton) {
         let indexNumber = sender.tag

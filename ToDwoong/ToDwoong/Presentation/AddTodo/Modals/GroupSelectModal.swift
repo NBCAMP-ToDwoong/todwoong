@@ -1,5 +1,5 @@
 //
-//  AddTodoGroupSelectController.swift
+//  GroupSelectModal.swift
 //  ToDwoong
 //
 //  Created by mirae on 3/5/24.
@@ -10,11 +10,11 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-final class AddTodoGroupSelectController: UIViewController {
+final class GroupSelectModal: UIViewController {
     
     // MARK: - Properties
     
-    weak var delegate: AddTodoGroupSelectControllerDelegate?
+    weak var delegate: GroupSelectModalDelegate?
     var groupList: [Category] = []
     var selectedCategory: Category?
     
@@ -24,7 +24,7 @@ final class AddTodoGroupSelectController: UIViewController {
         var config = UIButton.Configuration.plain()
         
         config.title = "그룹"
-        config.baseForegroundColor = TDStyle.color.mainDarkTheme
+        config.baseForegroundColor = .black
         config.baseBackgroundColor = .clear
         
         let attributes: [NSAttributedString.Key: Any] = [
@@ -38,7 +38,7 @@ final class AddTodoGroupSelectController: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "저장", method: #selector(saveGroup), color: .systemBlue)
+        createNotificationButton(title: "저장", method: #selector(saveGroup), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
@@ -79,12 +79,20 @@ final class AddTodoGroupSelectController: UIViewController {
         setUI()
         setLayout()
         setTableView()
+        configureModalStyle()
+    }
+    
+    private func configureModalStyle() {
+        if let presentationController = presentationController as? UISheetPresentationController {
+            presentationController.detents = [.medium(), .large()]
+            presentationController.prefersGrabberVisible = true
+        }
     }
 }
 
 // MARK: - @objc Method
 
-extension AddTodoGroupSelectController {
+extension GroupSelectModal {
     @objc
     func saveGroup() {
         if let selectedCategory = selectedCategory {
@@ -96,7 +104,7 @@ extension AddTodoGroupSelectController {
 
 // MARK: - UI Method
 
-extension AddTodoGroupSelectController {
+extension GroupSelectModal {
     private func setUI() {
         [timeNotificationButton, tableView, saveButton].forEach { view.addSubview($0) }
         view.backgroundColor = .white
@@ -128,7 +136,7 @@ extension AddTodoGroupSelectController {
 
 // MARK: - UITableViewDataSource
 
-extension AddTodoGroupSelectController: UITableViewDataSource {
+extension GroupSelectModal: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupList.count
     }
@@ -138,7 +146,6 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
         let group = groupList[indexPath.row]
         cell.textLabel?.text = group.title
         
-        // 선택된 카테고리와 현재 셀의 카테고리가 일치하는 경우 체크마크 설정
         if let selectedCategory = selectedCategory, selectedCategory == group {
             cell.accessoryType = .checkmark
         } else {
@@ -151,7 +158,7 @@ extension AddTodoGroupSelectController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension AddTodoGroupSelectController: UITableViewDelegate {
+extension GroupSelectModal: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         for row in 0..<tableView.numberOfRows(inSection: indexPath.section) {
             if let cell = tableView.cellForRow(at: IndexPath(row: row, section: indexPath.section)) {
@@ -161,6 +168,7 @@ extension AddTodoGroupSelectController: UITableViewDelegate {
         
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .checkmark
+            cell.tintColor = TDStyle.color.mainDarkTheme
             selectedCategory = groupList[indexPath.row]
         }
         

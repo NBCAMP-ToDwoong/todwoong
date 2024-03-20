@@ -29,6 +29,10 @@ final class GroupListViewController: UIViewController {
         setNotificationObserver()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - UI Methods
     
     private func setNavigationBar() {
@@ -156,18 +160,19 @@ extension GroupListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completion) in
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
             self.deleteCategory(at: indexPath)
+            NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
             completion(true)
         }
-        deleteAction.image = UIImage(systemName: "trash")
         
-        let editAction = UIContextualAction(style: .normal, title: "Edit") { (action, view, completion) in
+        let editAction = UIContextualAction(style: .normal, title: "편집") { (action, view, completion) in
             self.editCategory(at: indexPath)
             completion(true)
         }
-        editAction.image = UIImage(systemName: "gear")
-        editAction.backgroundColor = UIColor.orange
+        
+        deleteAction.backgroundColor = .systemRed
+        editAction.backgroundColor = .systemBlue
         
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return configuration
