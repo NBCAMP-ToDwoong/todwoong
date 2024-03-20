@@ -38,10 +38,11 @@ class LocationTableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         titleLabel.text = "위치"
         titleLabel.font = TDStyle.font.body(style: .regular)
+
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(10)
             make.leading.equalToSuperview().offset(30)
-            make.trailing.lessThanOrEqualToSuperview().offset(-16)
+            make.trailing.lessThanOrEqualToSuperview().offset(-30)
         }
     }
     
@@ -51,19 +52,37 @@ class LocationTableViewCell: UITableViewCell {
         hasLocationChip = false
 
         if let place = selectedPlace, !place.isEmpty {
-            let newChipView = InfoChipView(text: place, color: TDStyle.color.lightGray, showDeleteButton: true)
+            let maxCharacters = 18
+            let trimmedPlace: String
+            if place.count > maxCharacters {
+                let endIndex = place.index(place.startIndex, offsetBy: maxCharacters - 3)
+                trimmedPlace = place[..<endIndex] + "..."
+            } else {
+                trimmedPlace = place
+            }
+            
+            let newChipView = InfoChipView(text: trimmedPlace, color: TDStyle.color.lightGray, showDeleteButton: true)
             hasLocationChip = true
             newChipView.delegate = self
             contentView.addSubview(newChipView)
             chipView = newChipView
             chipView?.snp.makeConstraints { make in
-                make.top.equalTo(titleLabel.snp.bottom).offset(6)
+                make.centerY.equalTo(titleLabel.snp.centerY)
                 make.trailing.equalToSuperview().offset(-30)
                 make.height.equalTo(30)
             }
 
+            if let chipView = chipView {
+                titleLabel.snp.makeConstraints { make in
+                    make.trailing.lessThanOrEqualTo(chipView.snp.leading).offset(-10).priority(.high)
+                }
+            }
+
             accessoryType = .none
         } else {
+            titleLabel.snp.makeConstraints { make in
+                make.trailing.lessThanOrEqualToSuperview().offset(-30)
+            }
             accessoryType = .disclosureIndicator
         }
     }
