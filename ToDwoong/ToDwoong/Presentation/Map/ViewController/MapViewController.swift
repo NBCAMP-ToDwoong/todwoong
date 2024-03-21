@@ -20,6 +20,7 @@ class MapViewController: UIViewController {
     
     // MARK: - UI Properties
     
+    var todoDetailViewController = TodoDetailViewController()
     let mapView = MKMapView()
     let locationManager = CLLocationManager()
     
@@ -122,9 +123,22 @@ extension MapViewController: MKMapViewDelegate {
     // 핀 클릭 시 확대
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view.annotation else { return }
-        let region = MKCoordinateRegion(center: annotation.coordinate,
+        
+        let offset = -0.005
+        let newCenterLatitude = annotation.coordinate.latitude + offset
+        let newCenter = CLLocationCoordinate2D(latitude: newCenterLatitude, longitude: annotation.coordinate.longitude)
+        
+        let region = MKCoordinateRegion(center: newCenter,
                                         latitudinalMeters: regionRadius,
                                         longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
+        
+        
+        if let sheet = todoDetailViewController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(todoDetailViewController, animated: true, completion: nil)
     }
+
 }
