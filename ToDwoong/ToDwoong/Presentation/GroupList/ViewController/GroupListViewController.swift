@@ -16,7 +16,7 @@ final class GroupListViewController: UIViewController {
     
     private let groupListView = GroupListView()
     private var isEditingMode = false
-    private var categories: [Category] = []
+    private var groups: [Group] = []
     
     // MARK: - Lifecycle
     
@@ -24,7 +24,7 @@ final class GroupListViewController: UIViewController {
         super.viewDidLoad()
         setNavigationBar()
         setGroupListView()
-        loadCategories()
+        fetchGroup()
         setTableViewDelegate()
         setNotificationObserver()
     }
@@ -73,9 +73,8 @@ final class GroupListViewController: UIViewController {
     
     // MARK: - Data Methods
     
-    private func loadCategories() {
-        categories = CoreDataManager.shared.readCategories()
-        groupListView.groupTableView.reloadData()
+    private func fetchGroup() {
+        groups = CoreDataManager.shared.readGroups()
     }
     
     // MARK: - Delegate Methods
@@ -100,7 +99,7 @@ final class GroupListViewController: UIViewController {
     }
     
     @objc func dataUpdated(_ notification: Notification) {
-        loadCategories()
+        fetchGroup()
     }
     
     // MARK: - Action Methods
@@ -126,7 +125,7 @@ final class GroupListViewController: UIViewController {
 
 extension GroupListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,7 +135,7 @@ extension GroupListViewController: UITableViewDataSource {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
             
-            let category = categories[indexPath.row]
+            let category = groups[indexPath.row]
             cell.titleLabel.text = category.title
             
             return cell
@@ -147,8 +146,8 @@ extension GroupListViewController: UITableViewDataSource {
             fatalError("셀을 가져오는데 실패하였습니다.")
         }
         
-        let category = categories[indexPath.row]
-        cell.configureWithCategory(category)
+        let category = groups[indexPath.row]
+        cell.configureWithGroup(category)
         
         return cell
     }
@@ -185,10 +184,10 @@ extension GroupListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        let movedCategory = categories.remove(at: sourceIndexPath.row)
-        categories.insert(movedCategory, at: destinationIndexPath.row)
+        let movedCategory = groups.remove(at: sourceIndexPath.row)
+        groups.insert(movedCategory, at: destinationIndexPath.row)
         
-        for (index, category) in categories.enumerated() {
+        for (index, category) in groups.enumerated() {
             category.indexNumber = Int32(index)
         }
         
@@ -201,16 +200,16 @@ extension GroupListViewController: UITableViewDelegate {
     }
     
     private func deleteCategory(at indexPath: IndexPath) {
-        let categoryToDelete = categories[indexPath.row]
-        CoreDataManager.shared.deleteCategory(category: categoryToDelete)
-        categories.remove(at: indexPath.row)
-        groupListView.groupTableView.deleteRows(at: [indexPath], with: .automatic)
+        let groupToDelete = groups[indexPath.row]
+        CoreDataManager.shared.deleteGroup(group: groupToDelete)
+        fetchGroup()
+        groupListView.groupTableView.reloadData()
     }
     
     private func editCategory(at indexPath: IndexPath) {
-        let category = categories[indexPath.row]
+        let group = groups[indexPath.row]
         let addGroupViewController = AddGroupViewController()
-        addGroupViewController.editModeOn(category: category)
+        addGroupViewController.editModeOn(group: group)
         addGroupViewController.modalPresentationStyle = .fullScreen
         present(addGroupViewController, animated: true)
     }
