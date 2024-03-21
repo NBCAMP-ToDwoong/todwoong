@@ -1,5 +1,5 @@
 //
-//  AddTodoTimePickerController.swift
+//  DatePickerModal.swift
 //  ToDwoong
 //
 //  Created by mirae on 3/15/24.
@@ -10,25 +10,25 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-class TimePickerModal: UIViewController {
+class DatePickerModal: UIViewController {
     
     // MARK: - UI Properties
     
-    var selectedTime: Date?
-    weak var delegate: TimePickerModalDelegate?
+    var selectedDate: Date?
+    weak var delegate: DatePickerModalDelegate?
     private let datePicker = UIDatePicker()
     
     private lazy var timeNotificationButton: UIButton = {
         var config = UIButton.Configuration.plain()
         
-        config.title = "시간 선택"
+        config.title = "날짜 선택"
         config.baseForegroundColor = .black
         config.baseBackgroundColor = .clear
         
         let attributes: [NSAttributedString.Key: Any] = [
             .font: TDStyle.font.body(style: .bold)
         ]
-        config.attributedTitle = AttributedString("시간 선택", attributes: AttributeContainer(attributes))
+        config.attributedTitle = AttributedString("날짜 선택", attributes: AttributeContainer(attributes))
         
         let button = UIButton(configuration: config, primaryAction: nil)
         
@@ -36,7 +36,7 @@ class TimePickerModal: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "저장", method: #selector(saveTime), color: TDStyle.color.mainDarkTheme)
+        createNotificationButton(title: "저장", method: #selector(saveDate), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
@@ -67,13 +67,13 @@ class TimePickerModal: UIViewController {
     }()
     
     private func setupDatePicker() {
-        datePicker.datePickerMode = .time
-        datePicker.preferredDatePickerStyle = .wheels
-        if let selectedTime = selectedTime {
-            datePicker.setDate(selectedTime, animated: false)
+        datePicker.datePickerMode = .dateAndTime
+        datePicker.preferredDatePickerStyle = .inline
+        if let selectedDate = selectedDate {
+            datePicker.setDate(selectedDate, animated: false)
         }
+        datePicker.tintColor = TDStyle.color.mainDarkTheme
         datePicker.locale = Locale(identifier: "ko_KR")
-        
     }
     
     // MARK: - Life Cycle
@@ -106,14 +106,14 @@ class TimePickerModal: UIViewController {
         }
         
         datePicker.snp.makeConstraints { make in
-            make.top.equalTo(separatorLine.snp.bottom).offset(20)
+            make.top.equalTo(separatorLine.snp.bottom).offset(10)
             make.left.right.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
     private func configureModalStyle() {
         if let presentationController = presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium(), .large()]
+            presentationController.detents = [.large()]
             presentationController.prefersGrabberVisible = true
         }
     }
@@ -122,9 +122,9 @@ class TimePickerModal: UIViewController {
 
 // MARK: - @objc method
 
-extension TimePickerModal {
-    @objc private func saveTime() {
-        delegate?.didSelectTime(datePicker.date)
+extension DatePickerModal {
+    @objc private func saveDate() {
+        delegate?.didSelectDate(datePicker.date)
         dismiss(animated: true, completion: nil)
     }
     
