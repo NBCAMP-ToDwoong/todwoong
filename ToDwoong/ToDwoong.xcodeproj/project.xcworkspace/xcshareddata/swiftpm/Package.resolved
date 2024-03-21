@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git",
       "state" : {
-        "revision" : "04e060be42e29d2e3fbcd48af6edae6262c6dcac",
-        "version" : "1.1.1"
+        "revision" : "8e03b502518ae0b6aa7753c050738129381383b0",
+        "version" : "1.1.2"
       }
     }
   ],
