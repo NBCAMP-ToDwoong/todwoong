@@ -31,7 +31,6 @@
 		2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */; };
 		2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */; };
 		2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* DatePickerModal.swift */; };
-		2E822D192BA444A5001ED00F /* TimePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D182BA444A5001ED00F /* TimePickerModal.swift */; };
 		2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */; };
 		2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */; };
 		2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */; };
@@ -107,7 +106,6 @@
 		2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmModal.swift; sourceTree = "<group>"; };
 		2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmTableViewCell.swift; sourceTree = "<group>"; };
 		2E822D162BA4355D001ED00F /* DatePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModal.swift; sourceTree = "<group>"; };
-		2E822D182BA444A5001ED00F /* TimePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimePickerModal.swift; sourceTree = "<group>"; };
 		2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
@@ -337,7 +335,6 @@
 				2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */,
 				2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */,
 				2E822D162BA4355D001ED00F /* DatePickerModal.swift */,
-				2E822D182BA444A5001ED00F /* TimePickerModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -666,7 +663,6 @@
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
-				2E822D192BA444A5001ED00F /* TimePickerModal.swift in Sources */,
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,

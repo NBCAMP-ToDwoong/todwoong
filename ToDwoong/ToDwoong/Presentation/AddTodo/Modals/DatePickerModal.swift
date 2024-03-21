@@ -67,7 +67,7 @@ class DatePickerModal: UIViewController {
     }()
     
     private func setupDatePicker() {
-        datePicker.datePickerMode = .date
+        datePicker.datePickerMode = .dateAndTime
         datePicker.preferredDatePickerStyle = .inline
         if let selectedDate = selectedDate {
             datePicker.setDate(selectedDate, animated: false)
@@ -113,7 +113,7 @@ class DatePickerModal: UIViewController {
     
     private func configureModalStyle() {
         if let presentationController = presentationController as? UISheetPresentationController {
-            presentationController.detents = [.medium(), .large()]
+            presentationController.detents = [.large()]
             presentationController.prefersGrabberVisible = true
         }
     }
