@@ -22,6 +22,7 @@
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
 		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
+		2E1CE20C2BAC4283000E522C /* TimePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE20B2BAC4283000E522C /* TimePickerModal.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
 		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
 		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
@@ -30,7 +31,6 @@
 		2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */; };
 		2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */; };
 		2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */; };
-		2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* DatePickerModal.swift */; };
 		2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */; };
 		2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */; };
 		2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */; };
@@ -97,6 +97,7 @@
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
 		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
+		2E1CE20B2BAC4283000E522C /* TimePickerModal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimePickerModal.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
 		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmTableViewCell.swift; sourceTree = "<group>"; };
 		2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmModal.swift; sourceTree = "<group>"; };
 		2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D162BA4355D001ED00F /* DatePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModal.swift; sourceTree = "<group>"; };
 		2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
@@ -331,10 +331,10 @@
 		2E1CE20A2BA95760000E522C /* Modals */ = {
 			isa = PBXGroup;
 			children = (
+				2E1CE20B2BAC4283000E522C /* TimePickerModal.swift */,
 				2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */,
 				2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */,
 				2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */,
-				2E822D162BA4355D001ED00F /* DatePickerModal.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -624,6 +624,7 @@
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
 				1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */,
 				E0EACB692B907EF800BBEB0B /* GroupCollectionViewCell.swift in Sources */,
+				2E1CE20C2BAC4283000E522C /* TimePickerModal.swift in Sources */,
 				2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */,
 				E0F4CFD72B9ACBC700DF94D4 /* PreferencesViewController.swift in Sources */,
 				2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */,
@@ -640,7 +641,6 @@
 				2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */,
-				2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
