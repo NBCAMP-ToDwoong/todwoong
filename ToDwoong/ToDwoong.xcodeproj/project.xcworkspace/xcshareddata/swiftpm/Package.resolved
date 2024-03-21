@@ -1,4 +1,5 @@
 {
+  "originHash" : "e4d7aa98e3267c21c1f2b106c37448bb1ed723a08488ba5357231ece41570670",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -12,7 +13,7 @@
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "http://github.com/SnapKit/SnapKit.git",
+      "location" : "http://github.com/SnapKit/SnapKit",
       "state" : {
         "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
         "version" : "5.7.1"
@@ -23,10 +24,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/NBCAMP-ToDwoong/TodwoongDesign",
       "state" : {
-        "revision" : "c0aba2f59b8fab02376bdc402dfcec765525d8fc",
-        "version" : "1.1.0"
+        "revision" : "04e060be42e29d2e3fbcd48af6edae6262c6dcac",
+        "version" : "1.1.1"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
