@@ -55,6 +55,9 @@
 		7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316462B957227004ED878 /* GroupListTableViewCell.swift */; };
 		7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */; };
 		7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3164A2B957275004ED878 /* GroupListView.swift */; };
+		E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */; };
+		E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */; };
+		E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 		E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoListView.swift */; };
@@ -132,6 +135,7 @@
 		7FE316462B957227004ED878 /* GroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTableViewCell.swift; sourceTree = "<group>"; };
 		7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedViewCell.swift; sourceTree = "<group>"; };
 		7FE3164A2B957275004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E0EACB662B907EC700BBEB0B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 			children = (
 				E0EACB662B907EC700BBEB0B /* TodoListView.swift */,
 				E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */,
+				E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -643,6 +648,7 @@
 				2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
+				E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */,
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
@@ -656,10 +662,10 @@
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
 				E0F4CFDF2B9AD54D00DF94D4 /* PreferencesModel.swift in Sources */,
-				1B5BCB4D2BA70AC300A7962D /* CoreDataModel.swift in Sources */,
 				7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */,
 				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
+				E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */,
 				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
@@ -679,8 +685,8 @@
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
-				1B5BCB4B2BA705B500A7962D /* CoreDataManager.swift in Sources */,
 				2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */,
+				E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */,
 				2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
