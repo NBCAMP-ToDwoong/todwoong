@@ -53,10 +53,10 @@ class InfoChipView: UIView {
 
     private func setupDeleteButton() {
         let button = UIButton()
+        addSubview(button)
         button.setImage(UIImage(systemName: "multiply"), for: .normal)
         button.tintColor = .black
         button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
-        addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 0).isActive = true
         button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -0).isActive = true
