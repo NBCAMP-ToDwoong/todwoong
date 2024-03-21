@@ -16,9 +16,17 @@ final class CalendarViewController: UIViewController {
     
     // MARK: - Properties
     
-    lazy var todoList: [Todo] = []
+    private var todoList: [TodoDTO] {
+        if let date = selectedDueDate {
+            return allTodoList.filter { $0.dueTime == date }
+        }
+        else {
+            return allTodoList
+        }
+    }
     private var eventDates: [Date]?
     private var selectedDueDate: Date?
+    private var allTodoList = CoreDataManager.shared.readTodos()
     
     // MARK: - UI Properties
     
@@ -46,7 +54,10 @@ extension CalendarViewController {
     func loadData() {
         selectedDueDate = Date()
         fetchTodosAndSetEventDates()
-        fetchTodos(for: selectedDueDate)
+    }
+    
+    private func todoDataFetch() {
+        allTodoList = CoreDataManager.shared.readTodos()
     }
     
     func setViews() {
@@ -95,7 +106,7 @@ extension CalendarViewController {
         tableView = UITableView()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
+        tableView.register(TodoListTableViewCell.self, forCellReuseIdentifier: TodoListTableViewCell.identifier)
         tableView.layer.masksToBounds = true
         
         let emptyStateView = UIView()
@@ -180,7 +191,6 @@ extension CalendarViewController {
         let today = Date()
         calendar.select(today)
         selectedDueDate = today
-        fetchTodos(for: today)
     }
 }
 
@@ -194,7 +204,6 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource {
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         selectedDueDate = date
-        fetchTodos(for: selectedDueDate)
     }
 }
 
@@ -209,24 +218,32 @@ extension CalendarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TDTableViewCell.identifier,
-                                                       for: indexPath) as? TDTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TodoListTableViewCell.identifier,
+                                                       for: indexPath) as? TodoListTableViewCell else {
             fatalError("Unable to dequeue TDTableViewCell")
         }
         
-        let todo = todoList[indexPath.row]
-        let todoModel = convertTodoData(todo: todo)!
+        var todo = todoList[indexPath.row]
         
-        cell.configure(data: todoModel, iconImage: UIImage(named: "AddTodoMapPin")!)
-        cell.checkButton.isSelected = todo.isCompleted
-        
-        cell.onCheckButtonTapped = { [weak tableView] in
-            let isCompleted = !todo.isCompleted
-            todo.isCompleted = isCompleted
-            CoreDataManager.shared.saveContext()
+        cell.tdCellView.onCheckButtonTapped = {
+            todo.isCompleted = !todo.isCompleted
+            CoreDataManager.shared.updateIsCompleted(id: todo.id, status: todo.isCompleted)
+            self.todoDataFetch()
             NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-            tableView?.reloadRows(at: [indexPath], with: .automatic)
+            tableView.reloadRows(at: [indexPath], with: .none)
         }
+        
+        cell.tdCellView.onLocationButtonTapped = { [weak self] in
+            guard let self = self else { return }
+            let mapViewController = MapViewController()
+            
+            // FIXME: mapViewController 수정 이후 FIX
+            
+//            self.navigationController?.pushViewController(mapViewController, animated: true)
+          }
+          
+        cell.configure(todo: todo)
+        
         
         return cell
     }
@@ -240,13 +257,16 @@ extension CalendarViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
                                             title: "편집") { [weak self] (action, view, completionHandler) in
-            guard let self = self else { return }
-            let todoToEdit = self.todoList[indexPath.row]
-            let addTodoVC = AddTodoViewController()
-            addTodoVC.todoToEdit = todoToEdit
-            addTodoVC.modalPresentationStyle = .fullScreen
-            self.present(addTodoVC, animated: true)
-            completionHandler(true)
+            
+            // FIXME: - 투두 추가 구현 이후 수정
+            
+//            guard let self = self else { return }
+//            let todoToEdit = self.todoList[indexPath.row]
+//            let addTodoVC = AddTodoViewController()
+//            addTodoVC.todoToEdit = todoToEdit
+//            addTodoVC.modalPresentationStyle = .fullScreen
+//            self.present(addTodoVC, animated: true)
+//            completionHandler(true)
         }
         editAction.backgroundColor = .systemBlue
         
@@ -256,12 +276,10 @@ extension CalendarViewController: UITableViewDelegate {
             
             let todoToDelete = self.todoList[indexPath.row]
             CoreDataManager.shared.deleteTodo(todo: todoToDelete)
-            self.todoList.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            todoDataFetch()
             NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-            
-            completionHandler(true)
             self.fetchTodosAndSetEventDates()
+            tableView.reloadData()
         }
         deleteAction.backgroundColor = .systemRed
         
@@ -274,18 +292,13 @@ extension CalendarViewController: UITableViewDelegate {
 // MARK: - CoreData Methods
 
 extension CalendarViewController {
-    private func fetchTodos(for date: Date?) {
-        guard let selectedDate = date else { return }
-        self.todoList = CoreDataManager.shared.filterTodoByDuedate(selectedDate)
-        tableView.reloadData()
-    }
     
     private func fetchTodosAndSetEventDates() {
-        let todos = CoreDataManager.shared.readTodos()
+        let todos = self.allTodoList
         var uniqueDates = Set<Date>()
         
         for todo in todos {
-            if let dueDate = todo.dueDate {
+            if let dueDate = todo.dueTime {
                 let dateWithoutTime = Calendar.current.startOfDay(for: dueDate)
                 uniqueDates.insert(dateWithoutTime)
             }
@@ -295,69 +308,12 @@ extension CalendarViewController {
         calendar.reloadData()
     }
     
-    private func convertTodoData(todo: Todo) -> TodoModel? {
-        guard let id = todo.id, let title = todo.title else {
-            return nil
-        }
-        
-        let dueDate = todo.dueDate
-        let dueTime = todo.dueTime
-        let isCompleted = todo.isCompleted
-        let place = todo.place
-        let placeAlarm = todo.placeAlarm
-        let timeAlarm = todo.timeAlarm
-        let fixed = todo.fixed
-        var category: CategoryModel?
-        
-        if let todoCategory = todo.category {
-            category = CategoryModel(id: todoCategory.id ?? UUID(),
-                                     title: todoCategory.title ?? "",
-                                     color: todoCategory.color,
-                                     indexNumber: todoCategory.indexNumber,
-                                     todo: nil)
-        }
-        
-        return TodoModel(id: id,
-                         title: title,
-                         dueDate: dueDate,
-                         dueTime: dueTime,
-                         place: place,
-                         isCompleted: isCompleted,
-                         fixed: fixed,
-                         timeAlarm: timeAlarm,
-                         placeAlarm: placeAlarm,
-                         category: category)
-    }
-    
-    private func convertTodoDatas(todos: [Todo]) -> [TodoModel] {
-        let convertedTodos = todos.compactMap { convertTodoData(todo: $0) }
-        return convertedTodos
-    }
-    
-    func updateTodoInCoreData(todoId: UUID, isCompleted: Bool, completion: @escaping () -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", todoId as CVarArg)
-        
-        do {
-            let fetchedTodos = try managedContext.fetch(fetchRequest)
-            if let fetchedTodo = fetchedTodos.first {
-                fetchedTodo.isCompleted = isCompleted
-                try managedContext.save()
-                completion()
-            }
-        } catch let error as NSError {
-            print("Could not fetch or update. \(error), \(error.userInfo)")
-        }
-    }
-    
     private func updateEventDatesAfterDeletion() {
         let todos = CoreDataManager.shared.readTodos()
         var uniqueDates = Set<Date>()
         
         for todo in todos {
-            if let dueDate = todo.dueDate {
+            if let dueDate = todo.dueTime {
                 let dateWithoutTime = Calendar.current.startOfDay(for: dueDate)
                 uniqueDates.insert(dateWithoutTime)
             }
@@ -401,7 +357,6 @@ extension CalendarViewController {
     
     @objc private func dataUpdated(_ notification: Notification) {
         fetchTodosAndSetEventDates()
-        fetchTodos(for: selectedDueDate)
         tableView.reloadData()
     }
 }
