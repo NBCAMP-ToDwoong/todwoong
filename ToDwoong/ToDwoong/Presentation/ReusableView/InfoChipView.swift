@@ -58,9 +58,11 @@ class InfoChipView: UIView {
         button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 10).isActive = true
-        button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10).isActive = true
+        button.leadingAnchor.constraint(equalTo: textLabel.trailingAnchor, constant: 0).isActive = true
+        button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -0).isActive = true
         button.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 20).isActive = true
         self.deleteButton = button
     }
 
