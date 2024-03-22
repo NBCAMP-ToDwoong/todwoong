@@ -193,14 +193,13 @@ extension AddGroupViewController {
             guard let group = self.editGroup else { return }
             
             if let title = self.addGroupView.groupTextField.text {
-                
-                //FIXME: - CoreDataManager 수정 이후 변경사항 적용 현재는 업데이트 메서드가 별개의 type으로 인자를 받음
-                
-//                CoreDataManager.shared.updateCategory(category: group,
-//                                                      newTitle: title,
-//                                                      newColor: self.selectedColor)
+
+                CoreDataManager.shared.updateGroup(group: group,
+                                                   newTitle: title,
+                                                   newColor: self.selectedColor)
 
                 NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
                 self.dismiss(animated: true)
             }
         }

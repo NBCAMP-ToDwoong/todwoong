@@ -261,25 +261,11 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    func updateGroup(info: GroupUpdateDTO) {
-        let fetchRequest: NSFetchRequest<Group> = Group.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
+    func updateGroup(group: Group, newTitle: String, newColor: String) {
+        group.title = newTitle
+        group.color = newColor
         
-        do {
-            let results = try context.fetch(fetchRequest)
-            if let groupToUpdate = results.first {
-                if let newTitle = info.title {
-                    groupToUpdate.title = newTitle
-                }
-                if let newColor = info.color {
-                    groupToUpdate.color = newColor
-                }
-                
-                try context.save()
-            }
-        } catch let error {
-            print("그룹 업데이트 실패: \(error.localizedDescription)")
-        }
+        saveContext()
     }
     
     func deleteGroup(group: Group) {
