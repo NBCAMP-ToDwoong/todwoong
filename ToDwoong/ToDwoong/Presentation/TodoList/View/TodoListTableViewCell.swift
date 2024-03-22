@@ -35,8 +35,7 @@ class TodoListTableViewCell: UITableViewCell {
     public override func prepareForReuse() {
         super.prepareForReuse()
         
-        //FIXME: 접근제어자 수정 이후 구현
-//        tdCellView.resetData()
+        tdCellView.resetData()
     }
 }
 
