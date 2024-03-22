@@ -75,6 +75,7 @@ final class GroupListViewController: UIViewController {
     
     private func fetchGroup() {
         groups = CoreDataManager.shared.readGroups()
+        groupListView.groupTableView.reloadData()
     }
     
     // MARK: - Delegate Methods
