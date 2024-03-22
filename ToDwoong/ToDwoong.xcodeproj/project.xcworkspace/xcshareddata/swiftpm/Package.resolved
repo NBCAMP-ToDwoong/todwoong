@@ -1,4 +1,5 @@
 {
+  "originHash" : "733ae35cc01d81242f3e8341223fd4e7dc8eb43ea4a01c4344ff0e987168daa5",
   "pins" : [
     {
       "identity" : "fscalendar",
@@ -12,7 +13,7 @@
     {
       "identity" : "snapkit",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
       "state" : {
         "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
         "version" : "5.7.1"
@@ -28,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
