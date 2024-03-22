@@ -44,16 +44,21 @@ final class CoreDataManager: CoreDataManging {
     
     // MARK: - TODO CRUD
     
-    func createTodo(todo: Todo) {
+    func createTodo(
+        title: String, dueTime: Date?,
+        placeName: String?, group: Group?,
+        timeAlarm: [Int]?, placeAlarm: PlaceAlarm?
+    ) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
-        newTodo.title = todo.title
-        newTodo.isCompleted = todo.isCompleted
-        newTodo.dueTime = todo.dueTime
-        newTodo.placeName = todo.placeName
-        newTodo.group = todo.group
-        newTodo.timeAlarm = todo.timeAlarm
-        newTodo.placeAlarm = todo.placeAlarm
+        newTodo.title = title
+        newTodo.isCompleted = false
+        
+        newTodo.dueTime = dueTime
+        newTodo.placeName = placeName
+        newTodo.group = group
+        newTodo.timeAlarm = timeAlarm
+        newTodo.placeAlarm = placeAlarm
         
         saveContext()
     }

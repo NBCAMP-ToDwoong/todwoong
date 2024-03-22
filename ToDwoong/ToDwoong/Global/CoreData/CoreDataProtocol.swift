@@ -8,7 +8,7 @@
 import Foundation
 
 protocol TodoManaging {
-    func createTodo(todo: Todo)
+    func createTodo(title: String, dueTime: Date?, placeName: String?, group: Group?, timeAlarm: [Int]?, placeAlarm: PlaceAlarm?)
     func readTodo(id: UUID) -> TodoType?
     func readTodos() -> [TodoDTO]
     func updateTodo(info: TodoType)

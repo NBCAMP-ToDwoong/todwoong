@@ -57,6 +57,8 @@
 		E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */; };
 		E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */; };
 		E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */; };
+		E044AC1F2BAD583000D18EC9 /* Todo+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1D2BAD583000D18EC9 /* Todo+CoreDataClass.swift */; };
+		E044AC202BAD583000D18EC9 /* Todo+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1E2BAD583000D18EC9 /* Todo+CoreDataProperties.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 		E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoListView.swift */; };
@@ -134,6 +136,8 @@
 		7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedViewCell.swift; sourceTree = "<group>"; };
 		7FE3164A2B957275004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
 		E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
+		E044AC1D2BAD583000D18EC9 /* Todo+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Todo+CoreDataClass.swift"; sourceTree = "<group>"; };
+		E044AC1E2BAD583000D18EC9 /* Todo+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Todo+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E0EACB662B907EC700BBEB0B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -418,6 +422,8 @@
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				E044AC1D2BAD583000D18EC9 /* Todo+CoreDataClass.swift */,
+				E044AC1E2BAD583000D18EC9 /* Todo+CoreDataProperties.swift */,
 				7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */,
 				7FDE108B2B8ED89000821D8A /* PrevCoreDataManager.swift */,
 				1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */,
@@ -651,9 +657,11 @@
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
 				2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */,
 				2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */,
+				E044AC202BAD583000D18EC9 /* Todo+CoreDataProperties.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */,
 				2E822D172BA4355D001ED00F /* DatePickerModal.swift in Sources */,
+				E044AC1F2BAD583000D18EC9 /* Todo+CoreDataClass.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
