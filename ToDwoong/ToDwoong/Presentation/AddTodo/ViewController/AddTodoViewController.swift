@@ -467,12 +467,6 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 2 {
-            if let location = selectedPlace, !location.isEmpty {
-                return 80
-            }
-        }
-        
         if indexPath.section == 1 && indexPath.row == 0 {
             let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
             return 44 + rowCount * (30 + 10)
