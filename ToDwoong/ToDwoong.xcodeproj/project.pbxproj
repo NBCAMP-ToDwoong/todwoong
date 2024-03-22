@@ -9,20 +9,21 @@
 /* Begin PBXBuildFile section */
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
-		1B529D232BABC75100AEA3D5 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B529D222BABC75100AEA3D5 /* FSCalendar */; };
-		1B529D272BABC79400AEA3D5 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B529D262BABC79400AEA3D5 /* SnapKit */; };
+		1B4E99402BAD71910087BE95 /* ToDwoongModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
+		1B704D342BADDB5000513E2C /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B704D332BADDB5000513E2C /* TodwoongDesign */; };
+		1B704D372BADDB7E00513E2C /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B704D362BADDB7E00513E2C /* FSCalendar */; };
+		1B704D3A2BADDB8E00513E2C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B704D392BADDB8E00513E2C /* SnapKit */; };
+		1B704D3B2BADDB9300513E2C /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B704D332BADDB5000513E2C /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
-		1BA08A5C2B9854D6001D3698 /* MapViewController2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController2.swift */; };
+		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
 		1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACC2B88ACB00097694E /* AppDelegate.swift */; };
 		1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FACE2B88ACB00097694E /* SceneDelegate.swift */; };
 		1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* TodoListViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
-		1BF9500C2BAC114100CF85D6 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF9500B2BAC114100CF85D6 /* TodwoongDesign */; };
-		1BF9500D2BAC114700CF85D6 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1BF9500B2BAC114100CF85D6 /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		1BF9500F2BAC115F00CF85D6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF9500E2BAC115F00CF85D6 /* MapViewController.swift */; };
+		1BF3535F2BA737E800E4B812 /* CoreDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */; };
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
 		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
@@ -47,14 +48,14 @@
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
-		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
-		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
-		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316442B9571F6004ED878 /* GroupListViewController.swift */; };
 		7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316462B957227004ED878 /* GroupListTableViewCell.swift */; };
 		7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */; };
 		7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3164A2B957275004ED878 /* GroupListView.swift */; };
+		E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */; };
+		E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */; };
+		E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 		E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoListView.swift */; };
@@ -76,7 +77,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1BF9500D2BAC114700CF85D6 /* TodwoongDesign in Embed Frameworks */,
+				1B704D3B2BADDB9300513E2C /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,9 +87,12 @@
 /* Begin PBXFileReference section */
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
+		1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		1BA08A5B2B9854D6001D3698 /* MapViewController2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController2.swift; sourceTree = "<group>"; };
+		1BA08A5B2B9854D6001D3698 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1BA08A5D2B985506001D3698 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		1BD2FAC92B88ACB00097694E /* ToDwoong.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDwoong.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BD2FACC2B88ACB00097694E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -97,7 +101,7 @@
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		1BF9500E2BAC115F00CF85D6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataProtocol.swift; sourceTree = "<group>"; };
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
 		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
@@ -122,14 +126,12 @@
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
-		7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoAndCategory+Extension.swift"; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
-		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7FE316442B9571F6004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		7FE316462B957227004ED878 /* GroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTableViewCell.swift; sourceTree = "<group>"; };
 		7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedViewCell.swift; sourceTree = "<group>"; };
 		7FE3164A2B957275004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
+		E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E0EACB662B907EC700BBEB0B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -149,9 +151,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B529D272BABC79400AEA3D5 /* SnapKit in Frameworks */,
-				1BF9500C2BAC114100CF85D6 /* TodwoongDesign in Frameworks */,
-				1B529D232BABC75100AEA3D5 /* FSCalendar in Frameworks */,
+				1B704D3A2BADDB8E00513E2C /* SnapKit in Frameworks */,
+				1B704D342BADDB5000513E2C /* TodwoongDesign in Frameworks */,
+				1B704D372BADDB7E00513E2C /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,8 +171,7 @@
 		1BA08A592B9854BE001D3698 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				1BA08A5B2B9854D6001D3698 /* MapViewController2.swift */,
-				1BF9500E2BAC115F00CF85D6 /* MapViewController.swift */,
+				1BA08A5B2B9854D6001D3698 /* MapViewController.swift */,
 				7F89A4A12B987510002442CD /* TodoDetailViewController.swift */,
 			);
 			path = ViewController;
@@ -407,7 +408,6 @@
 				7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */,
 				7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */,
 				1BA08A122B96F686001D3698 /* UIColor+Extension.swift */,
-				7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */,
 				1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */,
 			);
 			path = Extensions;
@@ -416,8 +416,10 @@
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */,
-				7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */,
+				1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */,
+				1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */,
+				1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */,
+				1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -473,6 +475,7 @@
 			children = (
 				E0EACB662B907EC700BBEB0B /* TodoListView.swift */,
 				E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */,
+				E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -537,9 +540,9 @@
 			);
 			name = ToDwoong;
 			packageProductDependencies = (
-				1B529D222BABC75100AEA3D5 /* FSCalendar */,
-				1B529D262BABC79400AEA3D5 /* SnapKit */,
-				1BF9500B2BAC114100CF85D6 /* TodwoongDesign */,
+				1B704D332BADDB5000513E2C /* TodwoongDesign */,
+				1B704D362BADDB7E00513E2C /* FSCalendar */,
+				1B704D392BADDB8E00513E2C /* SnapKit */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -570,9 +573,9 @@
 			);
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
-				1B529D212BABC75100AEA3D5 /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				1B529D252BABC79400AEA3D5 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1BF9500A2BAC114100CF85D6 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				1B704D322BADDB5000513E2C /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				1B704D352BADDB7E00513E2C /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B704D382BADDB8D00513E2C /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -625,6 +628,7 @@
 				E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */,
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
 				2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */,
+				1B4E99402BAD71910087BE95 /* ToDwoongModel.xcdatamodeld in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
@@ -639,6 +643,7 @@
 				2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
+				E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */,
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
@@ -655,18 +660,18 @@
 				7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */,
 				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
+				E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */,
 				2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */,
-				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
 				2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */,
-				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
-				1BA08A5C2B9854D6001D3698 /* MapViewController2.swift in Sources */,
+				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
+				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
 				2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */,
 				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
-				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
 				7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */,
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
+				1BF3535F2BA737E800E4B812 /* CoreDataProtocol.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
 				2E822D192BA444A5001ED00F /* TimePickerModal.swift in Sources */,
@@ -674,7 +679,7 @@
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
 				2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */,
-				1BF9500F2BAC115F00CF85D6 /* MapViewController.swift in Sources */,
+				E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */,
 				2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -913,23 +918,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1B529D212BABC75100AEA3D5 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.8.4;
-			};
-		};
-		1B529D252BABC79400AEA3D5 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
-		1BF9500A2BAC114100CF85D6 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+		1B704D322BADDB5000513E2C /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
 			requirement = {
@@ -937,34 +926,50 @@
 				minimumVersion = 1.1.2;
 			};
 		};
+		1B704D352BADDB7E00513E2C /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
+		1B704D382BADDB8D00513E2C /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1B529D222BABC75100AEA3D5 /* FSCalendar */ = {
+		1B704D332BADDB5000513E2C /* TodwoongDesign */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B529D212BABC75100AEA3D5 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			package = 1B704D322BADDB5000513E2C /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			productName = TodwoongDesign;
+		};
+		1B704D362BADDB7E00513E2C /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B704D352BADDB7E00513E2C /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
 		};
-		1B529D262BABC79400AEA3D5 /* SnapKit */ = {
+		1B704D392BADDB8E00513E2C /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B529D252BABC79400AEA3D5 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			package = 1B704D382BADDB8D00513E2C /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		1BF9500B2BAC114100CF85D6 /* TodwoongDesign */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1BF9500A2BAC114100CF85D6 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
-			productName = TodwoongDesign;
 		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */ = {
+		1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7FDE10882B8ED61100821D8A /* Model.xcdatamodel */,
+				1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */,
 			);
-			currentVersion = 7FDE10882B8ED61100821D8A /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			currentVersion = 1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */;
+			path = ToDwoongModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

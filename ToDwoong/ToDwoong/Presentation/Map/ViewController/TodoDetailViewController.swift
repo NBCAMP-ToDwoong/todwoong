@@ -41,17 +41,17 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Setting Method
     
     func loadTodosForSelectedCategory() {
-        if let index = selectedCategoryIndex {
-            if index == -1 {
-                todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
-            } else {
-                todos = CoreDataManager.shared.readTodos().filter
-                { $0.category?.indexNumber == Int32(index) }.map
-                { $0.toTodoModel() }
-            }
-        } else {
-            todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
-        }
+//        if let index = selectedCategoryIndex {
+//            if index == -1 {
+//                todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
+//            } else {
+//                todos = CoreDataManager.shared.readTodos().filter
+//                { $0.category?.indexNumber == Int32(index) }.map
+//                { $0.toTodoModel() }
+//            }
+//        } else {
+//            todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
+//        }
             
         if todos.isEmpty {
             detailView.emptyImageView.isHidden = false
@@ -89,7 +89,7 @@ extension TodoDetailViewController: UITableViewDataSource {
             let todo = self.todos[indexPath.row]
             todo.isCompleted.toggle()
             let todoEntity = CoreDataManager.shared.readTodos().first { $0.id == todo.id }
-            todoEntity?.isCompleted = todo.isCompleted
+//            todoEntity?.isCompleted = todo.isCompleted
             CoreDataManager.shared.saveContext()
             NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             
@@ -108,11 +108,11 @@ extension TodoDetailViewController: UITableViewDelegate {
         let selectedTodo = todos[indexPath.row]
         
         if let mapViewController = presentingViewController as? MapViewController {
-            mapViewController.zoomToTodo(selectedTodo) {
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
-                }
-            }
+//            mapViewController.zoomToTodo(selectedTodo) {
+//                DispatchQueue.main.async {
+//                    self.dismiss(animated: true, completion: nil)
+//                }
+//            }
         }
     }
 }

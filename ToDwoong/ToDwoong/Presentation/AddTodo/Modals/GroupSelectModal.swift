@@ -15,8 +15,8 @@ final class GroupSelectModal: UIViewController {
     // MARK: - Properties
     
     weak var delegate: GroupSelectModalDelegate?
-    var groupList: [Category] = []
-    var selectedCategory: Category?
+    var groupList: [Group] = []
+    var selectedCategory: Group?
     
     // MARK: - UI Properties
     
@@ -75,7 +75,7 @@ final class GroupSelectModal: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        groupList = CoreDataManager.shared.readCategories()
+        groupList = CoreDataManager.shared.readGroups()
         setUI()
         setLayout()
         setTableView()

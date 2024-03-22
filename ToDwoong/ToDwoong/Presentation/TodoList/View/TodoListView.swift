@@ -48,7 +48,7 @@ final class TodoListView: UIView {
     
     lazy var todoTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
+        tableView.register(TodoListTableViewCell.self, forCellReuseIdentifier: TodoListTableViewCell.identifier)
         tableView.backgroundColor = .clear
         
         return tableView

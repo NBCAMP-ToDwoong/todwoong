@@ -16,7 +16,7 @@ protocol LocationPickerDelegate: AnyObject {
 }
 
 protocol GroupSelectModalDelegate: AnyObject {
-    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup category: Category)
+    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Group)
 }
 
 protocol TimeAlarmModalDelegate: AnyObject {
