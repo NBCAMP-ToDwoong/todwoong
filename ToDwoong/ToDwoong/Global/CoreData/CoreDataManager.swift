@@ -14,20 +14,14 @@ final class CoreDataManager: CoreDataManging {
     private init() { }
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Model")
-        let description = NSPersistentStoreDescription()
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = true
-        container.persistentStoreDescriptions = [description]
-        
-        container.loadPersistentStores { (storeDescription, error) in
+        let container = NSPersistentContainer(name: "ToDwoongModel")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                fatalError("해결되지 않음 \(error), \(error.userInfo)")
+                fatalError("Unresolved error \(error), \(error.userInfo)")
             }
-        }
+        })
         return container
     }()
-    
     
     var context: NSManagedObjectContext {
         return persistentContainer.viewContext
@@ -44,16 +38,21 @@ final class CoreDataManager: CoreDataManging {
     
     // MARK: - TODO CRUD
     
-    func createTodo(todo: Todo) {
+    func createTodo(
+        title: String, dueTime: Date?,
+        placeName: String?, group: Group?,
+        timeAlarm: [Int]?, placeAlarm: PlaceAlarm?
+    ) {
         let newTodo = Todo(context: context)
         newTodo.id = UUID()
-        newTodo.title = todo.title
-        newTodo.isCompleted = todo.isCompleted
-        newTodo.dueTime = todo.dueTime
-        newTodo.placeName = todo.placeName
-        newTodo.group = todo.group
-        newTodo.timeAlarm = todo.timeAlarm
-        newTodo.placeAlarm = todo.placeAlarm
+        newTodo.title = title
+        newTodo.isCompleted = false
+        
+        newTodo.dueTime = dueTime
+        newTodo.placeName = placeName
+        newTodo.group = group
+        newTodo.timeAlarm = timeAlarm
+        newTodo.placeAlarm = placeAlarm
         
         saveContext()
     }
@@ -262,28 +261,22 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
-    func updateGroup(info: GroupUpdateDTO) {
-        let fetchRequest: NSFetchRequest<Group> = Group.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
+    func updateGroup(group: Group, newTitle: String, newColor: String) {
+        group.title = newTitle
+        group.color = newColor
         
-        do {
-            let results = try context.fetch(fetchRequest)
-            if let groupToUpdate = results.first {
-                if let newTitle = info.title {
-                    groupToUpdate.title = newTitle
-                }
-                if let newColor = info.color {
-                    groupToUpdate.color = newColor
-                }
-                
-                try context.save()
-            }
-        } catch let error {
-            print("그룹 업데이트 실패: \(error.localizedDescription)")
-        }
+        saveContext()
     }
     
     func deleteGroup(group: Group) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "group == %@", group as CVarArg)
+        do {
+            let todoInGroup = try context.fetch(fetchRequest)
+            todoInGroup.forEach { context.delete($0) }
+        } catch {
+            print("투두 삭제 실패")
+        }
         context.delete(group)
         
         saveContext()

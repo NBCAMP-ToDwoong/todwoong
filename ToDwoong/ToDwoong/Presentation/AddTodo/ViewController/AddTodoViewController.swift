@@ -18,7 +18,7 @@ class AddTodoViewController: UIViewController {
     var selectedTitle: String = ""
     var selectedDueDate: Date? = Date()
     var selectedDueTime: Date? = Date()
-    var selectedGroup: Category?
+    var selectedGroup: Group?
     var selectedTimesAlarm: [String] = ["5분 전"]
     var selectedPlaceAlarm: String?
     var selectedPlace: String?
@@ -83,7 +83,7 @@ class AddTodoViewController: UIViewController {
             guard let todo = todoToEdit else { return }
             
             selectedTitle = todo.title!
-            if let dueDate = todo.dueDate {
+            if let dueDate = todo.dueTime {
                 let calendar = Calendar.current
                 let dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
                 selectedDueDate = calendar.date(from: DateComponents(year: dateComponents.year,
@@ -102,8 +102,8 @@ class AddTodoViewController: UIViewController {
                 selectedDueTime = nil
             }
 
-            selectedGroup = todo.category
-            selectedPlace = todo.place
+            selectedGroup = todo.group
+            selectedPlace = todo.placeName
             // FIXME: 코어데이터 수정 후 작업
             //            selectedPlaceAlarm =
             //            selectedTimesAlarm =
@@ -175,25 +175,12 @@ class AddTodoViewController: UIViewController {
         }
         
         if let todo = todoToEdit {
-            CoreDataManager.shared.updateTodo(todo: todo,
-                                              newTitle: title,
-                                              newPlace: place,
-                                              newDate: selectedDateTime, // 추후 하나로 합침
-                                              newTime: selectedDateTime,
-                                              newCompleted: todo.isCompleted,
-                                              newTimeAlarm: timeAlarm,
-                                              newPlaceAlarm: placeAlarm,
-                                              newCategory: category)
+            guard let id = todo.id else { return }
+            let todoType = CoreDataManager.shared.readTodo(id: id)
+            CoreDataManager.shared.updateTodo(info: todoType!)
             print("투두 항목이 업데이트되었습니다.")
         } else {
-            CoreDataManager.shared.createTodo(title: title,
-                                              place: place,
-                                              dueDate: selectedDateTime, // 추후 하나로 합침
-                                              dueTime: selectedDateTime,
-                                              isCompleted: false,
-                                              timeAlarm: timeAlarm,
-                                              placeAlarm: placeAlarm,
-                                              category: category)
+//            CoreDataManager.shared.createTodo(todo: <#T##Todo#>)
             print("새 투두 항목이 생성되었습니다.")
         }
         
@@ -505,7 +492,7 @@ extension AddTodoViewController: LocationPickerDelegate {
 // MARK: - GroupSelectControllerDelegate
 
 extension AddTodoViewController: GroupSelectModalDelegate {
-    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Category) {
+    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Group) {
         self.selectedGroup = group
         let indexPath = IndexPath(row: 1, section: 0)
         tableView.reloadRows(at: [indexPath], with: .automatic)

@@ -44,7 +44,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
 // MARK: - Configure Method
 
 extension GroupCollectionViewCell {
-    func configure(data: Category) {
+    func configure(data: Group) {
         
         guard let title = data.title else { return }
         

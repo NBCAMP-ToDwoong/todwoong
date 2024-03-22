@@ -119,15 +119,15 @@ class MapViewController: UIViewController {
     }
 
     private func loadTodosAndPins() {
-        todos = CoreDataManager.shared.readTodos()
-        for todo in todos {
-            if let place = todo.place, let categoryColor = todo.category?.color {
-                addPinForPlace(place,
-                               colorName: categoryColor,
-                               category: todo.category?.title ?? "",
-                               todo: todo.toTodoModel())
-            }
-        }
+//        todos = CoreDataManager.shared.readTodos()
+//        for todo in todos {
+//            if let place = todo.place, let categoryColor = todo.category?.color {
+//                addPinForPlace(place,
+//                               colorName: categoryColor,
+//                               category: todo.category?.title ?? "",
+//                               todo: todo.toTodoModel())
+//            }
+//        }
     }
 
     func addPinForPlace(_ place: String, colorName: String, category: String, todo: TodoModel) {
@@ -161,14 +161,14 @@ class MapViewController: UIViewController {
 
     
     private func loadCategoriesAndCategoryChips() {
-        categories = CoreDataManager.shared.readCategories()
-        if customMapView.groupChipsView.groupStackView.arrangedSubviews.isEmpty == false {
-            customMapView.groupChipsView.groupStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        }
-        categories.forEach { category in
-            customMapView.addCategoryChip(category: category.toCategoryModel(),
-                                          action: #selector(categoryChipTapped(_:)), target: self)
-        }
+//        categories = CoreDataManager.shared.readCategories()
+//        if customMapView.groupChipsView.groupStackView.arrangedSubviews.isEmpty == false {
+//            customMapView.groupChipsView.groupStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+//        }
+//        categories.forEach { category in
+//            customMapView.addCategoryChip(category: category.toCategoryModel(),
+//                                          action: #selector(categoryChipTapped(_:)), target: self)
+//        }
     }
     
     private func selectCategory(_ category: CategoryModel) {
@@ -242,7 +242,7 @@ class MapViewController: UIViewController {
 
         let detailVC = TodoDetailViewController()
         detailVC.selectedCategoryTitle = "전체"
-        detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
+//        detailVC.todos = CoreDataManager.shared.readTodos().map { $0.toTodoModel() }
         detailVC.modalPresentationStyle = .pageSheet
         
         if let sheet = detailVC.sheetPresentationController {
@@ -307,32 +307,32 @@ extension MapViewController: CLLocationManagerDelegate {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let coordinate = view.annotation?.coordinate {
-            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
-            mapView.setRegion(region, animated: true)
-        }
-        
-        let detailVC = TodoDetailViewController()
-        detailVC.modalPresentationStyle = .pageSheet
-        
-        if let todoAnnotation = view.annotation as? TodoAnnotation {
-            let filteredTodos
-            = CoreDataManager.shared.readTodos()
-                .filter { $0.category?.title == todoAnnotation.category }
-                .map { $0.toTodoModel() }
-            detailVC.todos = filteredTodos
-            if let index = categories.firstIndex(where: { $0.title == todoAnnotation.category }) {
-                detailVC.selectedCategoryIndex = index
-            }
-        }
-        
-        if let sheet = detailVC.sheetPresentationController {
-            sheet.prefersGrabberVisible = true
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-        }
-        
-        present(detailVC, animated: true, completion: nil)
+//        if let coordinate = view.annotation?.coordinate {
+//            let region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 300, longitudinalMeters: 300)
+//            mapView.setRegion(region, animated: true)
+//        }
+//        
+//        let detailVC = TodoDetailViewController()
+//        detailVC.modalPresentationStyle = .pageSheet
+//        
+//        if let todoAnnotation = view.annotation as? TodoAnnotation {
+//            let filteredTodos
+//            = CoreDataManager.shared.readTodos()
+//                .filter { $0.category?.title == todoAnnotation.category }
+//                .map { $0.toTodoModel() }
+//            detailVC.todos = filteredTodos
+//            if let index = categories.firstIndex(where: { $0.title == todoAnnotation.category }) {
+//                detailVC.selectedCategoryIndex = index
+//            }
+//        }
+//        
+//        if let sheet = detailVC.sheetPresentationController {
+//            sheet.prefersGrabberVisible = true
+//            sheet.detents = [.medium(), .large()]
+//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//        }
+//        
+//        present(detailVC, animated: true, completion: nil)
     }
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
