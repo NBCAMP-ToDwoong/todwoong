@@ -17,8 +17,12 @@ final class CalendarViewController: UIViewController {
     // MARK: - Properties
     
     private var todoList: [TodoDTO] {
-        if let date = selectedDueDate {
-            return allTodoList.filter { $0.dueTime == date }
+        if let selectedDate = selectedDueDate {
+            let filteredTodoList = allTodoList.filter {
+                guard let todoDate = $0.dueTime else { return false }
+                return Calendar.current.isDate(todoDate, equalTo: selectedDate, toGranularity: .day)
+            }
+            return filteredTodoList
         }
         else {
             return allTodoList
@@ -294,6 +298,8 @@ extension CalendarViewController: UITableViewDelegate {
 extension CalendarViewController {
     
     private func fetchTodosAndSetEventDates() {
+        todoDataFetch()
+        
         let todos = self.allTodoList
         var uniqueDates = Set<Date>()
         
