@@ -163,6 +163,7 @@ extension GroupListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
             self.deleteCategory(at: indexPath)
             NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             completion(true)
         }
         

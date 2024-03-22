@@ -283,6 +283,14 @@ final class CoreDataManager: CoreDataManging {
     }
     
     func deleteGroup(group: Group) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "group == %@", group as CVarArg)
+        do {
+            let todoInGroup = try context.fetch(fetchRequest)
+            todoInGroup.forEach { context.delete($0) }
+        } catch {
+            print("투두 삭제 실패")
+        }
         context.delete(group)
         
         saveContext()
