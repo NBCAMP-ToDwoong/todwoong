@@ -17,8 +17,7 @@ class AddTodoViewController: UIViewController {
     var todoToEdit: Todo?
     var selectedTitle: String = ""
     var selectedDueDate: Date? = Date()
-    var selectedDueTime: Date? = Date()
-    var selectedGroup: Group?
+    var selectedGroup: Category?
     var selectedTimesAlarm: [String] = ["5분 전"]
     var selectedPlaceAlarm: String?
     var selectedPlace: String?
@@ -156,23 +155,7 @@ class AddTodoViewController: UIViewController {
         let timeAlarm = false
         let placeAlarm = false
         let category = selectedGroup
-        
-        var selectedDateTime: Date? = selectedDueDate
-        if let dueDate = selectedDueDate {
-            let calendar = Calendar.current
-            var dateComponents = calendar.dateComponents([.year, .month, .day], from: dueDate)
-            if let dueTime = selectedDueTime {
-                let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: dueTime)
-                dateComponents.hour = timeComponents.hour
-                dateComponents.minute = timeComponents.minute
-                dateComponents.second = timeComponents.second
-            } else {
-                dateComponents.hour = 0
-                dateComponents.minute = 0
-                dateComponents.second = 0
-            }
-            let selectedDateTime = calendar.date(from: dateComponents)
-        }
+        let dueDate = selectedDueDate
         
         if let todo = todoToEdit {
             guard let id = todo.id else { return }
@@ -289,28 +272,15 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                     return UITableViewCell()
                 }
                 cell.selectedDate = self.selectedDueDate
-                cell.selectedTime = self.selectedDueTime
                 cell.onDateChanged = { [weak self] newDate in
                     self?.selectedDueDate = newDate
-                }
-                cell.onTimeChanged = { [weak self] newTime in
-                    self?.selectedDueTime = newTime
                 }
                 cell.dateChipTappedHandler = { [weak self] in
                     self?.goDatePickerViewController()
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
-                cell.timeChipTappedHandler = { [weak self] in
-                    self?.goTimePickerViewController()
-                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                }
                 cell.dateChipDeleteHandler = { [weak self] in
                     self?.selectedDueDate = nil
-                    self?.selectedDueTime = nil
-                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                }
-                cell.timeChipDeleteHandler = { [weak self] in
-                    self?.selectedDueTime = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 return cell
@@ -454,12 +424,6 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 && indexPath.row == 2 {
-            if let location = selectedPlace, !location.isEmpty {
-                return 80
-            }
-        }
-        
         if indexPath.section == 1 && indexPath.row == 0 {
             let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
             return 44 + rowCount * (30 + 10)
@@ -563,24 +527,5 @@ extension AddTodoViewController: DatePickerModalDelegate {
         datePickerViewController.selectedDate = selectedDueDate
         datePickerViewController.delegate = self
         present(datePickerViewController, animated: true, completion: nil)
-    }
-}
-
-// MARK: - TimePickerModalDelegate
-
-extension AddTodoViewController: TimePickerModalDelegate {
-    func didSelectTime(_ date: Date) {
-        selectedDueTime = date
-        
-        if let datePickerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? DatePickerTableViewCell {
-            datePickerCell.selectedTime = selectedDueTime
-        }
-    }
-    
-    private func goTimePickerViewController() {
-        let timePickerViewController = TimePickerModal()
-        timePickerViewController.selectedTime = selectedDueTime
-        timePickerViewController.delegate = self
-        present(timePickerViewController, animated: true, completion: nil)
     }
 }
