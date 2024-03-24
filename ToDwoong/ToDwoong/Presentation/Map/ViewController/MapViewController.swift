@@ -16,8 +16,8 @@ class MapViewController: UIViewController {
     // MARK: - Properties
     
     private let regionRadius: CLLocationDistance = 1000 // 지도 확대/축소를 위한 범위 설정
-    private var allTodoList: [TodoType] = []
-    private var groups: [Group] = []
+    private var allTodoList: [TodoType] = [] 
+    private var groupList: [Group] = []
     private var pins: [ColoredAnnotation] = []
     
     // MARK: - UI Properties
@@ -26,10 +26,24 @@ class MapViewController: UIViewController {
     private let mapView = MapView()
     private let locationManager = CLLocationManager()
     
+    
+    
+    private var selectedGroup: Int?
+    lazy var buttonAction: ((UIButton) -> Void) = { button in
+        self.selectedGroup = button.tag
+        self.mapView.allGroupButton.alpha = 0.3
+        
+        self.mapView.groupCollectionView.reloadData()
+    }
+    
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.groupCollectionView.dataSource = self
+        mapView.groupCollectionView.delegate = self
         
         fetchData()
         
@@ -44,15 +58,16 @@ class MapViewController: UIViewController {
     
     private func fetchData() {
         allTodoList = CoreDataManager.shared.readAllTodos()
-        groups = CoreDataManager.shared.readGroups()
+        groupList = CoreDataManager.shared.readGroups()
     }
 }
 
-// MARK: -  Setting Method
+// MARK: - Setting Method
 
 extension MapViewController {
     private func setAction() {
         mapView.groupListButton.addTarget(self, action: #selector(groupListButtonTapped), for: .touchUpInside)
+        mapView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
     }
     
     private func setUI() {
@@ -111,6 +126,15 @@ extension MapViewController {
     }
     
     @objc
+    private func allGroupButtonTapped(sender: UIButton) {
+        testOpenTodoListModal()
+        selectedGroup = nil
+        mapView.allGroupButton.alpha = 1
+        mapView.groupCollectionView.reloadData()
+//        mapView.todoTableView.reloadData()
+    }
+    
+    @objc
     private func centerToUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: location,
@@ -162,8 +186,8 @@ extension MapViewController {
 //                                               latitude: 35.1795,
 //                                               longitude: 129.0756,
 //                                               pinColor: TDStyle.color.mainTheme)
-//                    
-//                    
+//
+//
 //                    mapView.mapView.addAnnotation(pin)
 //                    pins.append(pin)
                 }
@@ -175,7 +199,7 @@ extension MapViewController {
         mapView.mapView.showAnnotations(pins, animated: true)
     }
     
-    private func createAnnotation(title: String, 
+    private func createAnnotation(title: String,
                                   latitude: Double,
                                   longitude: Double,
                                   pinColor: UIColor?) -> ColoredAnnotation {
@@ -205,6 +229,10 @@ extension MapViewController: MKMapViewDelegate {
                                         longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
         
+        testOpenTodoListModal()
+    }
+    
+    func testOpenTodoListModal() {
         if let sheet = todoDetailViewController.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
@@ -250,4 +278,49 @@ extension MapViewController: MKMapViewDelegate {
         return resizedImage
     }
 
+}
+
+extension MapViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return groupList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GroupCollectionViewCell.identifier,
+                                                            for: indexPath) as? GroupCollectionViewCell else
+        { return UICollectionViewCell() }
+        
+        cell.configure(data: groupList[indexPath.row])
+        cell.groupButton.tag = indexPath.row
+        cell.buttonAction = buttonAction
+        
+        if selectedGroup != cell.groupButton.tag {
+            cell.groupButton.alpha = 0.3
+        } else {
+            cell.groupButton.alpha = 1
+        }
+        
+        return cell
+    }
+}
+
+extension MapViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        guard let buttonText = groupList[indexPath.row].title else { return CGSize() }
+        let buttonSize = buttonText.size(withAttributes:
+                                            [NSAttributedString.Key.font : TDStyle.font.body(style: .regular)])
+        let buttonWidth = buttonSize.width
+        let buttonHeight = buttonSize.height
+        
+        return CGSize(width: buttonWidth + 24, height: buttonHeight + 10)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 8
+    }
 }
