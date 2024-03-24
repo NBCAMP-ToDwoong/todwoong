@@ -48,8 +48,10 @@ class GroupChipsView: UIView {
     }()
     
     lazy var allGroupButton: TDCustomButton = {
-        let button = TDCustomButton(frame: .zero, type: .chip,
-                                    title: "전체", backgroundColor: TDStyle.color.mainTheme)
+        let button = TDCustomButton(frame: .zero, 
+                                    type: .chip,
+                                    title: "전체", 
+                                    backgroundColor: TDStyle.color.mainTheme)
         return button
     }()
     

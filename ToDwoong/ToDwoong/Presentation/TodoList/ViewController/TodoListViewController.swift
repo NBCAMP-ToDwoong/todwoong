@@ -63,7 +63,7 @@ class TodoListViewController: UIViewController {
 
 extension TodoListViewController {
     
-    @objc private func categoryListButtonTapped() {
+    @objc private func groupListButtonTapped() {
         self.navigationController?.pushViewController(GroupListViewController(), animated: true)
     }
     
@@ -89,7 +89,7 @@ extension TodoListViewController {
 
 extension TodoListViewController {
     private func setAction() {
-        todoView.groupListButton.addTarget(self, action: #selector(categoryListButtonTapped), for: .touchUpInside)
+        todoView.groupListButton.addTarget(self, action: #selector(groupListButtonTapped), for: .touchUpInside)
         todoView.allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
     }
     

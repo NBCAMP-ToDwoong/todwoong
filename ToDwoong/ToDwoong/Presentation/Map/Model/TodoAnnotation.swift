@@ -32,3 +32,7 @@ class TodoAnnotation: NSObject, MKAnnotation {
         super.init()
     }
 }
+
+class ColoredAnnotation: MKPointAnnotation {
+    var pinColor: UIColor?
+}

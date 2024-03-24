@@ -132,6 +132,55 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
+    func readAllTodos() -> [TodoType] {
+        do {
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
+            fetchRequest.sortDescriptors = [dueTimeSortDescriptor]
+            
+            let todos = try context.fetch(fetchRequest)
+            let data = todos.compactMap { todo -> TodoType? in
+                guard let id = todo.id, let title = todo.title else { return nil }
+                let groupData: GroupType?
+                let placeAlarmData: PlaceAlarmType?
+                
+                if let group = todo.group,
+                   let id = group.id,
+                   let title = group.title {
+                    groupData = GroupType(id: id,
+                                          title: title,
+                                          color: group.color,
+                                          indexNumber: group.indexNumber)
+                } else {
+                    groupData = nil
+                }
+
+                if let placeAlarm = todo.placeAlarm,
+                   let id = placeAlarm.id {
+                    placeAlarmData = PlaceAlarmType(id: id,
+                                                     distance: placeAlarm.distance,
+                                                     latitude: placeAlarm.latitude,
+                                                     longitude: placeAlarm.longitude)
+                } else {
+                    placeAlarmData = nil
+                }
+                
+                return TodoType(id: id,
+                                title: title,
+                                isCompleted: todo.isCompleted, 
+                                dueTime: todo.dueTime,
+                                placeName: todo.placeName,
+                                timeAlarm: todo.timeAlarm,
+                                group: groupData,
+                                placeAlarm: placeAlarmData)
+            }
+            return data
+        } catch {
+            print("투두목록 불러오기 실패")
+            return []
+        }
+    }
+    
     func updateTodo(info: TodoType) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", info.id as CVarArg)
