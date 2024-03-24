@@ -437,7 +437,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
 extension AddTodoViewController: LocationPickerDelegate {
     func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
         self.selectedPlaceName = address
-        let placeAlarm = PlaceAlarm() // 여기서 PlaceAlarm의 초기화 방식을 가정하고 있습니다. 실제 구현에 맞게 조정해야 합니다.
+        let placeAlarm = PlaceAlarm()
         placeAlarm.latitude = latitude
         placeAlarm.longitude = longitude
         self.selectedPlaceAlarm = placeAlarm
