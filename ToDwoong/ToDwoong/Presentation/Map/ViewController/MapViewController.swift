@@ -20,45 +20,41 @@ class MapViewController: UIViewController {
     // MARK: - Properties
     
     private let regionRadius: CLLocationDistance = 1000 // 지도 확대/축소를 위한 범위 설정
-    private var allTodoList: [TodoType] = [] 
-    private var groupList: [Group] = []
-    private var pins: [ColoredAnnotation] = []
+    private lazy var allTodoList: [TodoType] = [] {
+        didSet { addPinsToMap() }
+    }
+    private lazy var groupList: [Group] = []
+    private lazy var pins: [ColoredAnnotation] = []
+    private var selectedGroup: Int?
     
     // MARK: - UI Properties
     
-    private var todoDetailViewController = TodoDetailViewController()
+    private var todoDetailViewController: TodoDetailViewController?
     private let mapView = MapView()
     private let locationManager = CLLocationManager()
     
-    
-    
-    private var selectedGroup: Int?
     lazy var buttonAction: ((UIButton) -> Void) = { button in
         self.selectedGroup = button.tag
         self.mapView.allGroupButton.alpha = 0.3
         
         self.mapView.groupCollectionView.reloadData()
+        self.openTodoListModal()
+//        print(button.titleLabel?.text!)
+        self.openTodoListModal(name: button.titleLabel?.text!)
     }
-    
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.groupCollectionView.dataSource = self
-        mapView.groupCollectionView.delegate = self
-        todoDetailViewController.delegate = self
-        
         fetchData()
-        
         setNavigationItem()
         setUI()
         setAction()
         
         setMapSetting()
         setLocationManager()
-        addPinsToMap()
     }
     
     private func fetchData() {
@@ -77,6 +73,9 @@ extension MapViewController {
     
     private func setUI() {
         view.backgroundColor = .white
+        
+        mapView.groupCollectionView.dataSource = self
+        mapView.groupCollectionView.delegate = self
         
         view.addSubview(mapView)
         mapView.snp.makeConstraints { make in
@@ -132,11 +131,10 @@ extension MapViewController {
     
     @objc
     private func allGroupButtonTapped(sender: UIButton) {
-        testOpenTodoListModal()
+        openTodoListModal()
         selectedGroup = nil
         mapView.allGroupButton.alpha = 1
         mapView.groupCollectionView.reloadData()
-//        mapView.todoTableView.reloadData()
     }
     
     @objc
@@ -174,7 +172,7 @@ extension MapViewController {
                     let pin = createAnnotation(title: todo.title,
                                                latitude: 37.5665,
                                                longitude: 126.9780,
-                                               pinColor: TDStyle.color.mainTheme)
+                                               pinColor: TDStyle.color.mainDarkTheme)
                     
                     mapView.mapView.addAnnotation(pin)
                     pins.append(pin)
@@ -182,25 +180,14 @@ extension MapViewController {
                     let pin = createAnnotation(title: todo.title,
                                                latitude: 36.3504,
                                                longitude: 127.3845,
-                                               pinColor: TDStyle.color.mainTheme)
+                                               pinColor: TDStyle.color.mainDarkTheme)
                     
                     mapView.mapView.addAnnotation(pin)
                     pins.append(pin)
-                } else {
-//                    let pin = createAnnotation(title: todo.title,
-//                                               latitude: 35.1795,
-//                                               longitude: 129.0756,
-//                                               pinColor: TDStyle.color.mainTheme)
-//
-//
-//                    mapView.mapView.addAnnotation(pin)
-//                    pins.append(pin)
                 }
-                
             }
         }
         
-        // 모든 핀이 보이도록 지도 범위 조정
         mapView.mapView.showAnnotations(pins, animated: true)
     }
     
@@ -234,16 +221,65 @@ extension MapViewController: MKMapViewDelegate {
                                         longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
         
-        testOpenTodoListModal()
+        openTodoListModal()
     }
     
-    func testOpenTodoListModal() {
-        if let sheet = todoDetailViewController.sheetPresentationController {
+    func openTodoListModal(name: String? = nil) {
+        // FIXME: 추가로직 완료 후 마무리 예정
+        
+        if let groupIndex = selectedGroup {
+            allTodoList = CoreDataManager.shared.readAllTodos().filter {
+                $0.group?.title == groupList[groupIndex].title
+            }
+        } else {
+            allTodoList = CoreDataManager.shared.readAllTodos()
+        }
+//        if name == nil {
+//            allTodoList = CoreDataManager.shared.readAllTodos()
+//        } else {
+//            let groupTitle = name!
+//            print(groupTitle)
+//            allTodoList = CoreDataManager.shared.readAllTodos().filter { $0.group?.title == groupTitle }
+//        }
+//        
+        print(allTodoList)
+        
+        var data: [TodoDTO] = []
+        for todo in allTodoList {
+            data.append(TodoDTO(id: todo.id,
+                                title: todo.title,
+                                isCompleted: todo.isCompleted,
+                                dueTime: todo.dueTime,
+                                placeName: todo.placeName,
+                                group: convertGroupTypeToGroup(groupType: todo.group)))
+        }
+                
+        todoDetailViewController = TodoDetailViewController(todos: data)
+        todoDetailViewController!.delegate = self
+        if let sheet = todoDetailViewController?.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
         }
-        present(todoDetailViewController, animated: true, completion: nil)
+        present(todoDetailViewController!, animated: true, completion: nil)
     }
+    
+    // GroupType을 Group으로 변환하는 함수 예시
+    func convertGroupTypeToGroup(groupType: GroupType?) -> Group? {
+        guard let groupType = groupType else {
+            return nil // nil을 반환하거나 다른 처리를 수행할 수 있습니다.
+        }
+        
+        // GroupType의 속성을 사용하여 Group 인스턴스를 생성합니다.
+        let group = Group()
+        group.id = groupType.id
+        group.title = groupType.title
+        group.color = groupType.color
+        group.indexNumber = Int32(groupType.indexNumber ?? 0)
+//        group.todo = groupType.todo
+        
+        return group
+    }
+
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let coloredAnnotation = annotation as? ColoredAnnotation else {
