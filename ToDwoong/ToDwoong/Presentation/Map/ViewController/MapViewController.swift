@@ -38,8 +38,6 @@ class MapViewController: UIViewController {
         self.mapView.allGroupButton.alpha = 0.3
         
         self.mapView.groupCollectionView.reloadData()
-        self.openTodoListModal()
-//        print(button.titleLabel?.text!)
         self.openTodoListModal(name: button.titleLabel?.text!)
     }
     
@@ -221,7 +219,14 @@ extension MapViewController: MKMapViewDelegate {
                                         longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
         
-        openTodoListModal()
+        // FIXME: 추가로직 완료 후 마무리 예정
+        todoDetailViewController = TodoDetailViewController(todos: [])
+        todoDetailViewController!.delegate = self
+        if let sheet = todoDetailViewController?.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(todoDetailViewController!, animated: true, completion: nil)
     }
     
     func openTodoListModal(name: String? = nil) {
@@ -263,13 +268,11 @@ extension MapViewController: MKMapViewDelegate {
         present(todoDetailViewController!, animated: true, completion: nil)
     }
     
-    // GroupType을 Group으로 변환하는 함수 예시
     func convertGroupTypeToGroup(groupType: GroupType?) -> Group? {
         guard let groupType = groupType else {
-            return nil // nil을 반환하거나 다른 처리를 수행할 수 있습니다.
+            return nil
         }
         
-        // GroupType의 속성을 사용하여 Group 인스턴스를 생성합니다.
         let group = Group()
         group.id = groupType.id
         group.title = groupType.title
@@ -279,7 +282,6 @@ extension MapViewController: MKMapViewDelegate {
         
         return group
     }
-
 
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard let coloredAnnotation = annotation as? ColoredAnnotation else {
