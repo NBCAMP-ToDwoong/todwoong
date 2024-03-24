@@ -19,7 +19,7 @@ class TodoDetailViewController: UIViewController {
     private let dataManager = CoreDataManager.shared
     var detailView: TodoDetailView!
     var selectedCategoryTitle: String?
-    var selectedCategoryIndex: Int? 
+    var selectedCategoryIndex: Int?
     
     // MARK: - Data Storage
     
@@ -57,7 +57,7 @@ class TodoDetailViewController: UIViewController {
         } else {
             todos = CoreDataManager.shared.readTodos().map { $0 }
         }
-            
+        
         if todos.isEmpty {
             detailView.emptyImageView.isHidden = false
             detailView.emptyLabel.isHidden = false
@@ -65,7 +65,7 @@ class TodoDetailViewController: UIViewController {
             detailView.emptyImageView.isHidden = true
             detailView.emptyLabel.isHidden = true
         }
-            
+        
         detailView.tableView.reloadData()
     }
 }
@@ -107,5 +107,37 @@ extension TodoDetailViewController: UITableViewDelegate {
         if let placeAlarm = todo?.placeAlarm {
             delegate?.didSelectLocation(latitude: placeAlarm.latitude, longitude: placeAlarm.longitude)
         }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal,
+                                            title: "편집",
+                                            handler: {(action, view, completionHandler) in
+            
+        //FIXME: 투두추가 화면 구현 이후 수정
+        //            let addTodoViewViewController = AddTodoViewController()
+        //            let todo = self.todoList[indexPath.row]
+        //
+        //            self.present(addTodoViewViewController, animated: true)
+        })
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completionHandler) in
+            if indexPath.row < self.todos.count {
+                self.dataManager.deleteTodo(todo: self.todos[indexPath.row])
+                self.todoDataFetch()
+                
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+                tableView.reloadData()
+            }
+        }
+        
+        editAction.backgroundColor = .systemBlue
+        deleteAction.backgroundColor = .systemRed
+        
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        
+        return swipeActions
     }
 }
