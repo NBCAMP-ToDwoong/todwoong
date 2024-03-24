@@ -16,7 +16,8 @@ final class GroupSelectModal: UIViewController {
     
     weak var delegate: GroupSelectModalDelegate?
     var groupList: [Group] = []
-    var selectedCategory: Group?
+    var selectedGroup: Group?
+    let addGroupButton = AddGroupButton(type: .system)
     
     // MARK: - UI Properties
     
@@ -102,7 +103,7 @@ final class GroupSelectModal: UIViewController {
     }
     
     private func updateSaveButtonAction() {
-        if selectedCategory != nil {
+        if selectedGroup != nil {
             saveButton.setTitle("저장", for: .normal)
             saveButton.removeTarget(nil, action: nil, for: .allEvents)
             saveButton.addTarget(self, action: #selector(saveGroup), for: .touchUpInside)
@@ -118,8 +119,8 @@ final class GroupSelectModal: UIViewController {
 
 extension GroupSelectModal {
     @objc func saveGroup() {
-        if let selectedCategory = selectedCategory {
-            delegate?.groupSelectController(self, didSelectGroup: selectedCategory)
+        if let selectedGroup = selectedGroup {
+            delegate?.groupSelectController(self, didSelectGroup: selectedGroup)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -135,7 +136,7 @@ extension GroupSelectModal {
     }
     
     @objc func groupDataUpdated() {
-        groupList = CoreDataManager.shared.readCategories()
+        groupList = CoreDataManager.shared.readGroups()
         tableView.reloadData()
     }
 }
@@ -210,9 +211,9 @@ extension GroupSelectModal: UITableViewDataSource {
             fatalError("Unable to dequeue a CategoryTableViewCell.")
         }
         
-        let category = groupList[indexPath.row]
-        let isSelected = category == selectedCategory
-        cell.configure(with: category, isSelected: isSelected)
+        let group = groupList[indexPath.row]
+        let isSelected = group == selectedGroup
+        cell.configure(with: group, isSelected: isSelected)
         updateSaveButtonAction()
         
         return cell
@@ -233,7 +234,7 @@ extension GroupSelectModal: UITableViewDelegate {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .checkmark
             cell.tintColor = TDStyle.color.mainDarkTheme
-            selectedCategory = groupList[indexPath.row]
+            selectedGroup = groupList[indexPath.row]
             updateSaveButtonAction()
         }
         
@@ -281,9 +282,9 @@ class GroupSelectModalTableViewCell: UITableViewCell {
         textLabel?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
     
-    func configure(with category: Category, isSelected: Bool) {
-        textLabel?.text = category.title
-        if let colorString = category.color {
+    func configure(with group: Group, isSelected: Bool) {
+        textLabel?.text = group.title
+        if let colorString = group.color {
             let color = UIColor(hex: colorString)
             let imageSize = CGSize(width: 30, height: 30)
             let roundedImage = UIImage.roundedImage(color: color, size: imageSize)
