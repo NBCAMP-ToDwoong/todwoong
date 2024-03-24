@@ -12,6 +12,9 @@ import UIKit
 final class AddTodoLocationPickerViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var selectedLatitude: Double?
+    var selectedLongitude: Double?
     var addressString: String = ""
     var selectedPlace: String? {
         didSet {
@@ -24,6 +27,7 @@ final class AddTodoLocationPickerViewController: UIViewController {
     private var isMapCenteredByUser = false
     
     // MARK: - UI Properties
+    
     weak var delegate: LocationPickerDelegate?
     
     private var locationPickerView: AddTodoLocationPickerView {
@@ -32,13 +36,21 @@ final class AddTodoLocationPickerViewController: UIViewController {
     
     override func loadView() {
         let locationPickerView = AddTodoLocationPickerView()
-        locationPickerView.delegate = self
         locationPickerView.mapView.delegate = self
-        locationPickerView.searchBar.delegate = self
+        locationPickerView.onSaveTapped = { [weak self] in
+            guard let self = self,
+                  let latitude = self.selectedLatitude,
+                  let longitude = self.selectedLongitude,
+                  let address = self.addressString.isEmpty
+                    ? self.locationPickerView.addressLabel.text : self.addressString else { return }
+            self.delegate?.didPickLocation(address, latitude: latitude, longitude: longitude)
+            self.dismiss(animated: true, completion: nil)
+        }
         view = locationPickerView
     }
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegates()
@@ -48,7 +60,6 @@ final class AddTodoLocationPickerViewController: UIViewController {
     }
     
     private func setDelegates() {
-        locationPickerView.searchBar.delegate = self
         locationManager.delegate = self
     }
     
@@ -93,6 +104,10 @@ final class AddTodoLocationPickerViewController: UIViewController {
             }
             
             let placemark = mapItem.placemark
+            let latitude = placemark.coordinate.latitude
+            let longitude = placemark.coordinate.longitude
+            
+            print("검색결과 Latitude: \(latitude), Longitude: \(longitude)")
             
             DispatchQueue.main.async {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
@@ -114,6 +129,9 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
         }
         
         let center = mapView.centerCoordinate
+        selectedLatitude = center.latitude
+        selectedLongitude = center.longitude
+        print("지도 중앙의 위도: \(center.latitude), 경도: \(center.longitude)")
         fetchAddressFromCoordinates(center)
     }
     
@@ -187,6 +205,7 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
 }
 
 // MARK: - UISearchBarDelegate
+
 extension AddTodoLocationPickerViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -197,15 +216,5 @@ extension AddTodoLocationPickerViewController: UISearchBarDelegate {
         }
         
         setLocation(searchTerm)
-    }
-}
-
-// MARK: - AddTodoLocationPickerViewDelegate
-extension AddTodoLocationPickerViewController: LocationPickerViewDelegate {
-    func didTapConfirmAddress(_ address: String) {
-        let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
-        
-        delegate?.didPickLocation(firstLineOfAddress)
-        dismiss(animated: true, completion: nil)
     }
 }

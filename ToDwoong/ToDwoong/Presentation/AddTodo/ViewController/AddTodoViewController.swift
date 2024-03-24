@@ -435,19 +435,20 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - LocationPickerDelegate
 
 extension AddTodoViewController: LocationPickerDelegate {
+    func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
+        self.selectedPlaceName = address
+        print("AddTodoViewController : 위치명 - \(address) 위도 - \(latitude) 경도 - \(longitude)")
+        if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
+            cell.configure(with: selectedPlaceName)
+            tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+        }
+    }
+    
     func goLocationPickerViewController() {
         let locationPickerVC = AddTodoLocationPickerViewController()
         locationPickerVC.delegate = self
         locationPickerVC.selectedPlace = selectedPlaceName
         present(locationPickerVC, animated: true, completion: nil)
-    }
-    
-    func didPickLocation(_ address: String) {
-        self.selectedPlaceName = address
-        if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
-            cell.configure(with: selectedPlaceName)
-            tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-        }
     }
     
 }
