@@ -11,6 +11,10 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
+protocol TodoDetailViewControllerDelegate: AnyObject {
+    func didSelectLocation(latitude: Double, longitude: Double)
+}
+
 class MapViewController: UIViewController {
     
     // MARK: - Properties
@@ -44,6 +48,7 @@ class MapViewController: UIViewController {
         
         mapView.groupCollectionView.dataSource = self
         mapView.groupCollectionView.delegate = self
+        todoDetailViewController.delegate = self
         
         fetchData()
         
@@ -322,5 +327,16 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 8
+    }
+}
+
+extension MapViewController: TodoDetailViewControllerDelegate {
+    func didSelectLocation(latitude: Double, longitude: Double) {
+        navigationController?.dismiss(animated: true)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude,
+                                                                       longitude: longitude),
+                                        latitudinalMeters: regionRadius,
+                                        longitudinalMeters: regionRadius)
+        mapView.mapView.setRegion(region, animated: true)
     }
 }

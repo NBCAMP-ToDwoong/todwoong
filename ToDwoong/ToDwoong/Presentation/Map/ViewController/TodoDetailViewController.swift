@@ -14,6 +14,8 @@ class TodoDetailViewController: UIViewController {
     
     // MARK: - Properties
     
+    weak var delegate: TodoDetailViewControllerDelegate?
+    
     private let dataManager = CoreDataManager.shared
     var detailView: TodoDetailView!
     var selectedCategoryTitle: String?
@@ -68,7 +70,7 @@ class TodoDetailViewController: UIViewController {
     }
 }
 
-extension TodoDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension TodoDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos.count
     }
@@ -79,13 +81,31 @@ extension TodoDetailViewController: UITableViewDataSource, UITableViewDelegate {
             for: indexPath) as? TodoListTableViewCell else
         { return UITableViewCell() }
         
-        let todo = todos[indexPath.row]
+        var todo = todos[indexPath.row]
         cell.configure(todo: todo)
+        
+        cell.tdCellView.onCheckButtonTapped = {
+            todo.isCompleted = !todo.isCompleted
+            self.dataManager.updateIsCompleted(id: todo.id, status: todo.isCompleted)
+            self.todoDataFetch()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
         
         return cell
     }
+    private func todoDataFetch() {
+        todos = dataManager.readTodos()
+    }
+    
+}
+
+extension TodoDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Handle row selection if needed
+        let todo = dataManager.readTodo(id: todos[indexPath.row].id)
+        if let placeAlarm = todo?.placeAlarm {
+            delegate?.didSelectLocation(latitude: placeAlarm.latitude, longitude: placeAlarm.longitude)
+        }
     }
 }
