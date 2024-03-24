@@ -168,6 +168,14 @@
 			path = TabBar;
 			sourceTree = "<group>";
 		};
+		1B704D3C2BB008C200513E2C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1BA08A592B9854BE001D3698 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				1BA08A5D2B985506001D3698 /* MapView.swift */,
-				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
 				7F89A4A52B995868002442CD /* TodoDetailView.swift */,
 			);
 			path = View;
@@ -228,6 +235,7 @@
 		1BA63AD12B8E8D20008F49CE /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				1B704D3C2BB008C200513E2C /* Model */,
 				1BA08A5A2B9854C6001D3698 /* View */,
 				1BA08A592B9854BE001D3698 /* ViewController */,
 			);
