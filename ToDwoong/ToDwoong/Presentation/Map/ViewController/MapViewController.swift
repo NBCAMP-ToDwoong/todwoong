@@ -45,7 +45,6 @@ class MapViewController: UIViewController {
     
     private func updateMapAnnotations() {
         DispatchQueue.main.async {
-            self.mapView.mapView.removeAnnotations(self.mapView.mapView.annotations)
             self.addPinsToMap(todos: self.allTodoList)
         }
     }
