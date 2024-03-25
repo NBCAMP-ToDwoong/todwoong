@@ -5,6 +5,7 @@
 //  Created by mirae on 3/13/24.
 //
 
+import CoreLocation
 import UIKit
 
 import SnapKit
@@ -142,15 +143,6 @@ class AddTodoViewController: UIViewController {
                 todo: nil
             )
         }
-        print("""
-              저장될 투두 정보:
-              제목: \(title)
-              완료 여부: \(todoToEdit?.isCompleted ?? false)
-              마감 시간: \(selectedDueDate ?? Date())
-              장소명: \(selectedPlaceName ?? "")
-              알람 시간: \(selectedTimesAlarm ?? [])
-              장소 알람: \(selectedPlaceAlarm)
-              """)
 
         if let todo = todoToEdit {
             let todoToUpdate = TodoType(
@@ -461,13 +453,44 @@ extension AddTodoViewController: LocationPickerDelegate {
     }
     
     func goLocationPickerViewController() {
-        let locationPickerVC = AddTodoLocationPickerViewController()
-        locationPickerVC.delegate = self
-        locationPickerVC.selectedPlace = selectedPlaceName
-        locationPickerVC.modalPresentationStyle = .fullScreen
-        present(locationPickerVC, animated: true, completion: nil)
+        let locationManager = CLLocationManager()
+        let status = locationManager.authorizationStatus
+
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            // 위치 권한이 허용되었을 때
+            let locationPickerVC = AddTodoLocationPickerViewController()
+            locationPickerVC.delegate = self
+            locationPickerVC.selectedPlace = selectedPlaceName
+            locationPickerVC.modalPresentationStyle = .fullScreen
+            present(locationPickerVC, animated: true, completion: nil)
+
+        case .denied, .restricted:
+            // 사용자가 위치 권한을 거부했거나 제한된 경우
+            showAlertForLocationPermission()
+
+        case .notDetermined:
+            // 위치 권한 요청이 아직 결정되지 않았을 경우
+            locationManager.requestWhenInUseAuthorization()
+
+        @unknown default:
+            // 미래의 새로운 상태를 대비한 처리
+            print("Unknown authorization status")
+        }
     }
     
+    func showAlertForLocationPermission() {
+        let alert = UIAlertController(title: "위치 권한 필요",
+                                      message: "이 기능을 사용하기 위해서는 위치 권한이 필요합니다. 설정에서 위치 권한을 허용해주세요.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }))
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 // MARK: - GroupSelectControllerDelegate
