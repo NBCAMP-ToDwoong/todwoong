@@ -56,6 +56,7 @@ class LocationSearchViewController: UITableViewController, UISearchResultsUpdati
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             searchCompleter.queryFragment = searchText
         }
+        searchController.searchBar.tintColor = TDStyle.color.mainDarkTheme
     }
     
     func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {

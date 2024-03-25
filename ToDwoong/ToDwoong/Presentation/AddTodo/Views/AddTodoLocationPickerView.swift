@@ -19,7 +19,7 @@ final class AddTodoLocationPickerView: UIView {
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchButton: UIButton = {
         let button = UIButton(type: .system)
-        button.tintColor = TDStyle.color.mainTheme
+        button.tintColor = TDStyle.color.mainDarkTheme
         return button
     }()
     
@@ -43,7 +43,7 @@ final class AddTodoLocationPickerView: UIView {
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "multiply"), for: .normal)
-        button.tintColor = TDStyle.color.mainTheme
+        button.tintColor = TDStyle.color.mainDarkTheme
         return button
     }()
     
