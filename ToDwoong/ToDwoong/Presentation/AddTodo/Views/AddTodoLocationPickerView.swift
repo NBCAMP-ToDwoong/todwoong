@@ -15,6 +15,13 @@ final class AddTodoLocationPickerView: UIView {
     
     // MARK: - UI Properties
     
+    private var addressContainerView: UIStackView!
+    
+    var onSaveTapped: (() -> Void)?
+    var onCloseTapped: (() -> Void)?
+    var onSearchTapped: (() -> Void)?
+    var onCenterLocationTapped: (() -> Void)?
+    
     let mapView = MKMapView()
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchButton: UIButton = {
@@ -60,13 +67,6 @@ final class AddTodoLocationPickerView: UIView {
         button.tintColor = TDStyle.color.mainDarkTheme
         return button
     }()
-    
-    var onSaveTapped: (() -> Void)?
-    var onCloseTapped: (() -> Void)?
-    var onSearchTapped: (() -> Void)?
-    var onCenterLocationTapped: (() -> Void)?
-    
-    private var addressContainerView: UIStackView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

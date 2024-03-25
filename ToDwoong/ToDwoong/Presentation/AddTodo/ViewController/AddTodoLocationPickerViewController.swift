@@ -131,7 +131,6 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
         let center = mapView.centerCoordinate
         selectedLatitude = center.latitude
         selectedLongitude = center.longitude
-        print("지도 중앙의 위도: \(center.latitude), 경도: \(center.longitude)")
         fetchAddressFromCoordinates(center)
     }
     
