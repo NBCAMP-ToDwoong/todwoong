@@ -17,6 +17,7 @@ class AddTodoViewController: UIViewController {
     var todoToEdit: TodoDTO?
     var selectedTitle: String = ""
     var selectedDueDate: Date? = Date()
+    var selectedDueTime: Date? = Date()
     var selectedGroup: Group?
     var selectedTimesAlarm: [Int]? = [5]
     var selectedPlaceAlarm: PlaceAlarm?
