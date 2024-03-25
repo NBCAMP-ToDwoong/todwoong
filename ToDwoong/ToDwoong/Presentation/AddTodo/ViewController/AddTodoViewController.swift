@@ -5,12 +5,12 @@
 //  Created by mirae on 3/13/24.
 //
 
+import CoreData
 import CoreLocation
 import UIKit
 
 import SnapKit
 import TodwoongDesign
-import CoreData
 
 class AddTodoViewController: UIViewController {
     
@@ -189,6 +189,7 @@ class AddTodoViewController: UIViewController {
         titleTextField.layer.cornerRadius = 10
         titleTextField.layer.masksToBounds = true
         titleTextField.layer.borderWidth = 0
+        titleTextField.tintColor = TDStyle.color.mainDarkTheme
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: titleTextField.frame.height))
         titleTextField.leftView = paddingView
