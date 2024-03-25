@@ -19,6 +19,7 @@ final class AddTodoLocationPickerView: UIView {
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchButton: UIButton = {
         let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
         button.tintColor = TDStyle.color.mainTheme
         return button
     }()
@@ -41,6 +42,7 @@ final class AddTodoLocationPickerView: UIView {
     }()
     
     var onSaveTapped: (() -> Void)?
+    var onSearchTapped: (() -> Void)?
     
     private var addressContainerView: UIStackView!
     
@@ -136,5 +138,9 @@ extension AddTodoLocationPickerView {
 extension AddTodoLocationPickerView {
     @objc private func didTapConfirmAddressButton() {
         onSaveTapped?()
+    }
+    
+    @objc private func didTapSearchButton() {
+        onSearchTapped?()
     }
 }

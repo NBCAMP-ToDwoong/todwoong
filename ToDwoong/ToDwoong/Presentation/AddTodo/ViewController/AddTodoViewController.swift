@@ -21,6 +21,8 @@ class AddTodoViewController: UIViewController {
     var selectedTimesAlarm: [Int]? = [5]
     var selectedPlaceAlarm: PlaceAlarm?
     var selectedPlaceName: String?
+    var selectedLatitude: Double?
+    var selectedLongitude: Double?
     
     // MARK: - UI Properties
     
@@ -437,7 +439,8 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
 extension AddTodoViewController: LocationPickerDelegate {
     func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
         self.selectedPlaceName = address
-        let placeAlarm = PlaceAlarm()
+        let placeAlarm = PlaceAlarm(context: CoreDataManager.shared.context)
+        placeAlarm.id = UUID()
         placeAlarm.latitude = latitude
         placeAlarm.longitude = longitude
         self.selectedPlaceAlarm = placeAlarm
@@ -452,6 +455,7 @@ extension AddTodoViewController: LocationPickerDelegate {
         let locationPickerVC = AddTodoLocationPickerViewController()
         locationPickerVC.delegate = self
         locationPickerVC.selectedPlace = selectedPlaceName
+        locationPickerVC.modalPresentationStyle = .fullScreen
         present(locationPickerVC, animated: true, completion: nil)
     }
     

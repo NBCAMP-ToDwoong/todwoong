@@ -27,6 +27,7 @@
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
 		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
 		2E1CE20E2BAC45DA000E522C /* DatePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */; };
+		2E6CA50A2BB0BD9300ABA3FC /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
 		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
 		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
@@ -104,6 +105,7 @@
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
 		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
 		2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModal.swift; sourceTree = "<group>"; };
+		2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
 		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 			children = (
 				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
 				2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */,
+				2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
 				2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
+				2E6CA50A2BB0BD9300ABA3FC /* LocationSearchViewController.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,

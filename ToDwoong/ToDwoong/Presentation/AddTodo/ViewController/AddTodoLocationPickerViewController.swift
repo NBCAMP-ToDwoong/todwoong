@@ -37,6 +37,9 @@ final class AddTodoLocationPickerViewController: UIViewController {
     override func loadView() {
         let locationPickerView = AddTodoLocationPickerView()
         locationPickerView.mapView.delegate = self
+        locationPickerView.onSearchTapped = { [weak self] in
+            self?.presentSearchResultsController()
+        }
         locationPickerView.onSaveTapped = { [weak self] in
             guard let self = self,
                   let latitude = self.selectedLatitude,
@@ -204,17 +207,26 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - UISearchBarDelegate
+// MARK: - SearchResultsViewControllerDelegate
 
-extension AddTodoLocationPickerViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
-        
-        DispatchQueue.main.async {
-            self.locationPickerView.addressLabel.text = ""
-        }
-        
-        setLocation(searchTerm)
+extension AddTodoLocationPickerViewController: SearchResultsViewControllerDelegate {
+    func didSelectSearchResult(_ mapItem: MKMapItem) {
+        print("선택된 결과:")
+    }
+    
+    func didSelectSearchResult(_ result: MKLocalSearchCompletion) {
+        print("선택된 결과: \(result)")
+    }
+    
+    func didSelectSearchResult(_ result: String) {
+        // 검색 결과 선택을 처리합니다.
+        print("선택된 결과: \(result)")
+    }
+    
+    private func presentSearchResultsController() {
+        let searchViewController = LocationSearchViewController()
+        let navigationController = UINavigationController(rootViewController: searchViewController)
+        navigationController.modalPresentationStyle = .fullScreen // 풀스크린 모달 스타일 설정
+        present(navigationController, animated: true, completion: nil)
     }
 }
