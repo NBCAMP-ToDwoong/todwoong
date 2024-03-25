@@ -22,7 +22,7 @@ class MapViewController: UIViewController {
     private let regionRadius: CLLocationDistance = 1000 // 지도 확대/축소를 위한 범위 설정
     private lazy var allTodoList: [TodoType] = [] {
         didSet {
-            addPinsToMap()
+            updateMapAnnotations()
         }
     }
     private lazy var groupList: [Group] = []
@@ -31,16 +31,23 @@ class MapViewController: UIViewController {
     
     // MARK: - UI Properties
     
-//    private var todoDetailViewController: TodoDetailViewController?
     private let mapView = MapView()
     private let locationManager = CLLocationManager()
     
-    lazy var buttonAction: ((UIButton) -> Void) = { button in
-        self.selectedGroup = button.tag
-        self.mapView.allGroupButton.alpha = 0.3
-        
-        self.mapView.groupCollectionView.reloadData()
-        self.openTodoListModal(name: button.titleLabel?.text!)
+    lazy var buttonAction: ((UIButton) -> Void) = { [weak self] button in
+        guard let self = self else { return }
+        selectedGroup = button.tag
+        mapView.allGroupButton.alpha = 0.3
+        openTodoListModal(name: button.titleLabel?.text!)
+        updateMapAnnotations()
+        mapView.groupCollectionView.reloadData()
+    }
+    
+    private func updateMapAnnotations() {
+        DispatchQueue.main.async {
+            self.mapView.mapView.removeAnnotations(self.mapView.mapView.annotations)
+            self.addPinsToMap(todos: self.allTodoList)
+        }
     }
     
     // MARK: - Life Cycle
@@ -129,15 +136,24 @@ extension MapViewController {
         self.navigationController?.pushViewController(GroupListViewController(), animated: true)
     }
     
-    @objc
+    @objc // 전체 버튼
     private func allGroupButtonTapped(sender: UIButton) {
-        openTodoListModal()
+        allTodoList = CoreDataManager.shared.readAllTodos()
+        
+        let todoDetailViewController = TodoDetailViewController(todos: allTodoList)
+        todoDetailViewController.delegate = self
+        if let sheet = todoDetailViewController.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+        }
+        present(todoDetailViewController, animated: true, completion: nil)
+        
         selectedGroup = nil
         mapView.allGroupButton.alpha = 1
         mapView.groupCollectionView.reloadData()
     }
     
-    @objc
+    @objc // 내 위치
     private func centerToUserLocation() {
         if let location = locationManager.location?.coordinate {
             let region = MKCoordinateRegion(center: location,
@@ -151,12 +167,9 @@ extension MapViewController {
 // MARK: - MapView Pin
 
 extension MapViewController {
-    private func addPinsToMap() {
-        // FIXME: 저장 데이터 완료되면 재작업 (현재 임시)
-        // TODO: - 핀 컬러 그룹에 따라 변경되도록, 그룹이 없으면 메인테마 사용
-        // TODO: - 위치정보가 없는 투두는 보여주지 않음
-        
-        for todo in allTodoList {
+    private func addPinsToMap(todos: [TodoType]) {
+        self.pins = []
+        for todo in todos {
             if let latitude = todo.placeAlarm?.latitude,
                let longitude = todo.placeAlarm?.longitude {
                 print(latitude, longitude)
@@ -169,7 +182,7 @@ extension MapViewController {
                     mapView.mapView.addAnnotation(pin)
                     pins.append(pin)
                 }
-            } 
+            }
         }
         
         mapView.mapView.showAnnotations(pins, animated: true)
@@ -216,7 +229,6 @@ extension MapViewController: MKMapViewDelegate {
         present(todoDetailViewController, animated: true, completion: nil)
     }
     
-    // TODO: 버튼 누르면 열리게
     func openTodoListModal(name: String? = nil) {
         if let groupIndex = selectedGroup {
             let todos = CoreDataManager.shared.readAllTodos()

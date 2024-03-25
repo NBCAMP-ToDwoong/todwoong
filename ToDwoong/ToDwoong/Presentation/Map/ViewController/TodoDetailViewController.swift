@@ -24,8 +24,6 @@ class TodoDetailViewController: UIViewController {
     
     var todoList: [TodoType] = [] {
         didSet {
-            print("test", self.todoList.first?.group?.title, self.todoList.first?.title)
-            
             DispatchQueue.main.async {
                 self.detailView.tableView.reloadData()
             }
@@ -66,15 +64,12 @@ class TodoDetailViewController: UIViewController {
     func loadTodosForSelectedCategory() {
         var filteredTodos: [TodoType] = []
         
-        // 선택된 카테고리 타이틀을 기준으로 필터링
         if let selectedTitle = self.selectedCategoryTitle {
             filteredTodos = self.todoList.filter { $0.group?.title == selectedTitle }
         } else {
-            // 선택된 카테고리 타이틀이 없다면 전체 목록을 유지
             filteredTodos = self.todoList
         }
 
-        // 필터링된 목록으로 todoList 업데이트
         self.todoList = filteredTodos
         
         if self.todoList.isEmpty {
