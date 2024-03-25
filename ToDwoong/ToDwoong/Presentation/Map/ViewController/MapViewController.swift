@@ -131,10 +131,10 @@ extension MapViewController {
     
     @objc
     private func allGroupButtonTapped(sender: UIButton) {
+        openTodoListModal()
         selectedGroup = nil
         mapView.allGroupButton.alpha = 1
         mapView.groupCollectionView.reloadData()
-        openTodoListModal()
     }
     
     @objc
@@ -152,7 +152,6 @@ extension MapViewController {
 
 extension MapViewController {
     private func addPinsToMap() {
-        
         // FIXME: 저장 데이터 완료되면 재작업 (현재 임시)
         // TODO: - 핀 컬러 그룹에 따라 변경되도록, 그룹이 없으면 메인테마 사용
         // TODO: - 위치정보가 없는 투두는 보여주지 않음
@@ -207,6 +206,9 @@ extension MapViewController: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
         
         // FIXME: 추가로직 완료 후 마무리 예정
+        
+        print("Selected Todo ID: \(annotation.title!)")
+        
         let todoDetailViewController = TodoDetailViewController(todos: [])
         todoDetailViewController.delegate = self
         if let sheet = todoDetailViewController.sheetPresentationController {
@@ -219,7 +221,6 @@ extension MapViewController: MKMapViewDelegate {
     // TODO: 버튼 누르면 열리게
     func openTodoListModal(name: String? = nil) {
         if let groupIndex = selectedGroup {
-            print(groupIndex)
             let todos = CoreDataManager.shared.readAllTodos()
             allTodoList = todos.filter {
                 $0.group?.title == groupList[groupIndex].title!
@@ -248,36 +249,6 @@ extension MapViewController: MKMapViewDelegate {
 //        group.todo = groupType.todo
         
         return group
-    }
-
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let coloredAnnotation = annotation as? ColoredAnnotation else {
-            return nil
-        }
-
-        let reuseId = "customPin"
-        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId)
-        
-        if pinView == nil {
-            pinView = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView?.canShowCallout = true
-        } else {
-            pinView?.annotation = annotation
-        }
-        
-        if let customImage = UIImage(named: "AddTodoMapPin")?.withRenderingMode(.alwaysTemplate) {
-            let resizedImage = resizeImage(image: customImage, targetSize: CGSize(width: 26, height: 26))
-            let coloredAndResizedImage = resizedImage.withTintColor(
-                coloredAnnotation.pinColor ?? TDStyle.color.mainTheme)
-            pinView?.image = coloredAndResizedImage
-            
-            pinView?.layer.shadowColor = UIColor.black.cgColor
-            pinView?.layer.shadowOpacity = 0.8
-            pinView?.layer.shadowOffset = CGSize(width: 0, height: 1)
-            pinView?.layer.shadowRadius = 2
-        }
-
-        return pinView
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
