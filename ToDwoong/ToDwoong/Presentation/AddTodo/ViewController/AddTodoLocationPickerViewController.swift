@@ -62,6 +62,9 @@ final class AddTodoLocationPickerViewController: UIViewController {
             self.delegate?.didPickLocation(address, latitude: latitude, longitude: longitude)
             self.dismiss(animated: true, completion: nil)
         }
+        locationPickerView.onCloseTapped = { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
         view = locationPickerView
     }
     
