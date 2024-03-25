@@ -19,16 +19,23 @@ class TodoDetailViewController: UIViewController {
     private let dataManager = CoreDataManager.shared
     var detailView: TodoDetailView!
     var selectedCategoryTitle: String?
-    var selectedCategoryIndex: Int?
     
     // MARK: - Data Storage
     
-    var todos: [TodoDTO]
+    var todoList: [TodoType] = [] {
+        didSet {
+            print("test", self.todoList.first?.group?.title, self.todoList.first?.title)
+            
+            DispatchQueue.main.async {
+                self.detailView.tableView.reloadData()
+            }
+        }
+    }
     
     // MARK: - Initializer
     
-    init(todos: [TodoDTO]) {
-        self.todos = todos
+    init(todos: [TodoType]) {
+        self.todoList = todos
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,19 +64,20 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Setting Method
     
     func loadTodosForSelectedCategory() {
-        if let index = selectedCategoryIndex {
-            if index == -1 {
-                todos = CoreDataManager.shared.readTodos().map { $0 }
-            } else {
-                todos = CoreDataManager.shared.readTodos().filter
-                { $0.group?.indexNumber == Int32(index) }.map
-                { $0 }
-            }
-        } else {
-            todos = CoreDataManager.shared.readTodos().map { $0 }
-        }
+        var filteredTodos: [TodoType] = []
         
-        if todos.isEmpty {
+        // 선택된 카테고리 타이틀을 기준으로 필터링
+        if let selectedTitle = self.selectedCategoryTitle {
+            filteredTodos = self.todoList.filter { $0.group?.title == selectedTitle }
+        } else {
+            // 선택된 카테고리 타이틀이 없다면 전체 목록을 유지
+            filteredTodos = self.todoList
+        }
+
+        // 필터링된 목록으로 todoList 업데이트
+        self.todoList = filteredTodos
+        
+        if self.todoList.isEmpty {
             detailView.emptyImageView.isHidden = false
             detailView.emptyLabel.isHidden = false
         } else {
@@ -77,13 +85,15 @@ class TodoDetailViewController: UIViewController {
             detailView.emptyLabel.isHidden = true
         }
         
-        detailView.tableView.reloadData()
+        DispatchQueue.main.async {
+            self.detailView.tableView.reloadData()
+        }
     }
 }
 
 extension TodoDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todos.count
+        return todoList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -92,29 +102,26 @@ extension TodoDetailViewController: UITableViewDataSource {
             for: indexPath) as? TodoListTableViewCell else
         { return UITableViewCell() }
         
-        var todo = todos[indexPath.row]
-        cell.configure(todo: todo)
+        let todo = todoList[indexPath.row]
+        
+        let configureData = dataManager.readTodoToDTO(id: todo.id)
+        cell.configure(todo: configureData!)
         
         cell.tdCellView.onCheckButtonTapped = {
             todo.isCompleted = !todo.isCompleted
             self.dataManager.updateIsCompleted(id: todo.id, status: todo.isCompleted)
-            self.todoDataFetch()
             NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             tableView.reloadRows(at: [indexPath], with: .none)
         }
         
         return cell
     }
-    private func todoDataFetch() {
-        todos = dataManager.readTodos()
-    }
-    
 }
 
 extension TodoDetailViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let todo = dataManager.readTodo(id: todos[indexPath.row].id)
+        let todo = dataManager.readTodo(id: todoList[indexPath.row].id)
         if let placeAlarm = todo?.placeAlarm {
             delegate?.didSelectLocation(latitude: placeAlarm.latitude, longitude: placeAlarm.longitude)
         }
@@ -127,7 +134,7 @@ extension TodoDetailViewController: UITableViewDelegate {
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
             
-        //FIXME: 투두추가 화면 구현 이후 수정
+        // FIXME: 투두추가 화면 구현 이후 수정
         //            let addTodoViewViewController = AddTodoViewController()
         //            let todo = self.todoList[indexPath.row]
         //
@@ -135,9 +142,8 @@ extension TodoDetailViewController: UITableViewDelegate {
         })
 
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completionHandler) in
-            if indexPath.row < self.todos.count {
-                self.dataManager.deleteTodo(todo: self.todos[indexPath.row])
-                self.todoDataFetch()
+            if indexPath.row < self.todoList.count {
+                self.dataManager.deleteTodoByID(id: self.todoList[indexPath.row].id)
                 
                 NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
                 tableView.reloadData()

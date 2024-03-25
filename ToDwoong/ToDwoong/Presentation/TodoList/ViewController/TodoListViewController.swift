@@ -52,10 +52,6 @@ class TodoListViewController: UIViewController {
         setDelegates()
         setAction()
         setNotifications()
-        
-//        dataManager.createTodo(title: "학교", dueTime: Date(), placeName: nil, group: CoreDataManager.shared.readGroups().first, timeAlarm: nil, placeAlarm: nil)
-//        dataManager.createTodo(title: "서울시청", dueTime: Date(), placeName: "서울시청", group: nil, timeAlarm: nil, placeAlarm: nil)
-                
     }
     
     deinit {

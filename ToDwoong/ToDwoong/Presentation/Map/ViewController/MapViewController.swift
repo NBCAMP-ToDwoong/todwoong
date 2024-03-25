@@ -21,7 +21,9 @@ class MapViewController: UIViewController {
     
     private let regionRadius: CLLocationDistance = 1000 // 지도 확대/축소를 위한 범위 설정
     private lazy var allTodoList: [TodoType] = [] {
-        didSet { addPinsToMap() }
+        didSet {
+            addPinsToMap()
+        }
     }
     private lazy var groupList: [Group] = []
     private lazy var pins: [ColoredAnnotation] = []
@@ -29,7 +31,7 @@ class MapViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private var todoDetailViewController: TodoDetailViewController?
+//    private var todoDetailViewController: TodoDetailViewController?
     private let mapView = MapView()
     private let locationManager = CLLocationManager()
     
@@ -129,10 +131,10 @@ extension MapViewController {
     
     @objc
     private func allGroupButtonTapped(sender: UIButton) {
-        openTodoListModal()
         selectedGroup = nil
         mapView.allGroupButton.alpha = 1
         mapView.groupCollectionView.reloadData()
+        openTodoListModal()
     }
     
     @objc
@@ -158,32 +160,17 @@ extension MapViewController {
         for todo in allTodoList {
             if let latitude = todo.placeAlarm?.latitude,
                let longitude = todo.placeAlarm?.longitude {
-                let pin = createAnnotation(title: todo.title,
-                                           latitude: latitude,
-                                           longitude: longitude,
-                                           pinColor: TDStyle.color.mainTheme)
-                
-                mapView.mapView.addAnnotation(pin)
-                pins.append(pin)
-            } else {
-                if todo.title == "학교"{
+                print(latitude, longitude)
+                if let color = todo.group?.color {
                     let pin = createAnnotation(title: todo.title,
-                                               latitude: 37.5665,
-                                               longitude: 126.9780,
-                                               pinColor: TDStyle.color.mainDarkTheme)
-                    
-                    mapView.mapView.addAnnotation(pin)
-                    pins.append(pin)
-                } else if todo.title == "서울시청"{
-                    let pin = createAnnotation(title: todo.title,
-                                               latitude: 36.3504,
-                                               longitude: 127.3845,
-                                               pinColor: TDStyle.color.mainDarkTheme)
+                                               latitude: latitude,
+                                               longitude: longitude,
+                                               pinColor: UIColor(hex: "\(color)"))
                     
                     mapView.mapView.addAnnotation(pin)
                     pins.append(pin)
                 }
-            }
+            } 
         }
         
         mapView.mapView.showAnnotations(pins, animated: true)
@@ -220,55 +207,32 @@ extension MapViewController: MKMapViewDelegate {
         mapView.setRegion(region, animated: true)
         
         // FIXME: 추가로직 완료 후 마무리 예정
-        todoDetailViewController = TodoDetailViewController(todos: [])
-        todoDetailViewController!.delegate = self
-        if let sheet = todoDetailViewController?.sheetPresentationController {
+        let todoDetailViewController = TodoDetailViewController(todos: [])
+        todoDetailViewController.delegate = self
+        if let sheet = todoDetailViewController.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
             sheet.prefersGrabberVisible = true
         }
-        present(todoDetailViewController!, animated: true, completion: nil)
+        present(todoDetailViewController, animated: true, completion: nil)
     }
     
+    // TODO: 버튼 누르면 열리게
     func openTodoListModal(name: String? = nil) {
-        // FIXME: 추가로직 완료 후 마무리 예정
-        
         if let groupIndex = selectedGroup {
-            allTodoList = CoreDataManager.shared.readAllTodos().filter {todo in
-                print("Todo group title:", todo.group?.title ?? "No group title available")
-                print("Group list title:", groupList[groupIndex].title!)
-                
-                return todo.group?.title == groupList[groupIndex].title!
+            print(groupIndex)
+            let todos = CoreDataManager.shared.readAllTodos()
+            allTodoList = todos.filter {
+                $0.group?.title == groupList[groupIndex].title!
             }
-        } else {
-            allTodoList = CoreDataManager.shared.readAllTodos()
+            
+            let todoDetailViewController = TodoDetailViewController(todos: allTodoList)
+            todoDetailViewController.delegate = self
+            if let sheet = todoDetailViewController.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
+            }
+            present(todoDetailViewController, animated: true, completion: nil)
         }
-//        if name == nil {
-//            allTodoList = CoreDataManager.shared.readAllTodos()
-//        } else {
-//            let groupTitle = name!
-//            print(groupTitle)
-//            allTodoList = CoreDataManager.shared.readAllTodos().filter { $0.group?.title == groupTitle }
-//        }
-
-        print(allTodoList)
-        
-        var data: [TodoDTO] = []
-        for todo in allTodoList {
-            data.append(TodoDTO(id: todo.id,
-                                title: todo.title,
-                                isCompleted: todo.isCompleted,
-                                dueTime: todo.dueTime,
-                                placeName: todo.placeName,
-                                group: convertGroupTypeToGroup(groupType: todo.group)))
-        }
-                
-        todoDetailViewController = TodoDetailViewController(todos: data)
-        todoDetailViewController!.delegate = self
-        if let sheet = todoDetailViewController?.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = true
-        }
-        present(todoDetailViewController!, animated: true, completion: nil)
     }
     
     func convertGroupTypeToGroup(groupType: GroupType?) -> Group? {
