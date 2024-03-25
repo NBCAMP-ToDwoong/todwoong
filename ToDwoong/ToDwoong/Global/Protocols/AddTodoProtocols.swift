@@ -7,12 +7,8 @@
 
 import UIKit
 
-protocol LocationPickerViewDelegate: AnyObject {
-    func didTapConfirmAddress(_ address: String)
-}
-
 protocol LocationPickerDelegate: AnyObject {
-    func didPickLocation(_ address: String)
+    func didPickLocation(_ address: String, latitude: Double, longitude: Double)
 }
 
 protocol GroupSelectModalDelegate: AnyObject {

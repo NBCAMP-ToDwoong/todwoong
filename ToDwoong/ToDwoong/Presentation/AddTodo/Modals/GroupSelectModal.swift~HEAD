@@ -15,8 +15,8 @@ final class GroupSelectModal: UIViewController {
     // MARK: - Properties
     
     weak var delegate: GroupSelectModalDelegate?
-    var groupList: [Group] = []
-    var selectedGroup: Group?
+    var groupList: [Category] = []
+    var selectedCategory: Category?
     let addGroupButton = AddGroupButton(type: .system)
     
     // MARK: - UI Properties
@@ -39,7 +39,7 @@ final class GroupSelectModal: UIViewController {
     }()
     
     private lazy var saveButton: UIButton = {
-        createNotificationButton(title: "닫기", method: #selector(closeModal), color: TDStyle.color.mainDarkTheme)
+        createNotificationButton(title: "저장", method: #selector(saveGroup), color: TDStyle.color.mainDarkTheme)
     }()
     
     private func createNotificationButton(title: String,
@@ -73,7 +73,7 @@ final class GroupSelectModal: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .white
         tableView.contentInset = UIEdgeInsets(top: -35, left: 0, bottom: 0, right: 0)
-        tableView.register(GroupSelectModalTableViewCell.self, forCellReuseIdentifier: "GroupSelectModalTableViewCell")
+        
         return tableView
     }()
     
@@ -82,17 +82,12 @@ final class GroupSelectModal: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        groupList = CoreDataManager.shared.readGroups()
+        groupList = CoreDataManager.shared.readCategories()
         setUI()
         setLayout()
         setTableView()
         setAddGroupButton()
         configureModalStyle()
-        setNotifications()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
     }
     
     private func configureModalStyle() {
@@ -101,26 +96,14 @@ final class GroupSelectModal: UIViewController {
             presentationController.prefersGrabberVisible = true
         }
     }
-    
-    private func updateSaveButtonAction() {
-        if selectedGroup != nil {
-            saveButton.setTitle("저장", for: .normal)
-            saveButton.removeTarget(nil, action: nil, for: .allEvents)
-            saveButton.addTarget(self, action: #selector(saveGroup), for: .touchUpInside)
-        } else {
-            saveButton.setTitle("닫기", for: .normal)
-            saveButton.removeTarget(nil, action: nil, for: .allEvents)
-            saveButton.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
-        }
-    }
 }
 
 // MARK: - @objc Method
 
 extension GroupSelectModal {
     @objc func saveGroup() {
-        if let selectedGroup = selectedGroup {
-            delegate?.groupSelectController(self, didSelectGroup: selectedGroup)
+        if let selectedCategory = selectedCategory {
+            delegate?.groupSelectController(self, didSelectGroup: selectedCategory)
             dismiss(animated: true, completion: nil)
         }
     }
@@ -129,15 +112,6 @@ extension GroupSelectModal {
         let addGroupViewController = AddGroupViewController()
         addGroupViewController.modalPresentationStyle = .fullScreen
         self.present(addGroupViewController, animated: true, completion: nil)
-    }
-    
-    @objc func closeModal() {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func groupDataUpdated() {
-        groupList = CoreDataManager.shared.readGroups()
-        tableView.reloadData()
     }
 }
 
@@ -168,15 +142,14 @@ extension GroupSelectModal {
         
         addGroupButton.snp.makeConstraints { make in
             make.top.equalTo(separatorLine.snp.bottom).offset(4)
-            make.left.right.equalToSuperview().inset(5)
-            make.height.equalTo(36)
+            make.height.equalTo(44)
         }
         
         tableView.snp.remakeConstraints { make in
             make.top.equalTo(addGroupButton.snp.bottom).offset(4)
             make.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
-        
+
     }
     
     private func setAddGroupButton() {
@@ -188,14 +161,6 @@ extension GroupSelectModal {
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "groupTableViewCellIdentifier")
     }
-    
-    private func setNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(groupDataUpdated),
-            name: .GroupDataUpdatedNotification,
-            object: nil)
-    }
 }
 
 // MARK: - UITableViewDataSource
@@ -206,19 +171,18 @@ extension GroupSelectModal: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupSelectModalTableViewCell",
-                                                       for: indexPath) as? GroupSelectModalTableViewCell else {
-            fatalError("Unable to dequeue a CategoryTableViewCell.")
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "groupTableViewCellIdentifier", for: indexPath)
         let group = groupList[indexPath.row]
-        let isSelected = group == selectedGroup
-        cell.configure(with: group, isSelected: isSelected)
-        updateSaveButtonAction()
+        cell.textLabel?.text = group.title
+        
+        if let selectedCategory = selectedCategory, selectedCategory == group {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
         
         return cell
     }
-    
 }
 
 // MARK: - UITableViewDelegate
@@ -234,8 +198,7 @@ extension GroupSelectModal: UITableViewDelegate {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .checkmark
             cell.tintColor = TDStyle.color.mainDarkTheme
-            selectedGroup = groupList[indexPath.row]
-            updateSaveButtonAction()
+            selectedCategory = groupList[indexPath.row]
         }
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -244,61 +207,10 @@ extension GroupSelectModal: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.accessoryType = .none
-            updateSaveButtonAction()
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 44
-    }
-}
-
-class GroupSelectModalTableViewCell: UITableViewCell {
-    let iconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupViews() {
-        addSubview(iconImageView)
-        iconImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15).isActive = true
-        iconImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        iconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        textLabel?.translatesAutoresizingMaskIntoConstraints = false
-        textLabel?.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 15).isActive = true
-        textLabel?.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    }
-    
-    func configure(with group: Group, isSelected: Bool) {
-        textLabel?.text = group.title
-        if let colorString = group.color {
-            let color = UIColor(hex: colorString)
-            let imageSize = CGSize(width: 30, height: 30)
-            let roundedImage = UIImage.roundedImage(color: color, size: imageSize)
-            iconImageView.image = roundedImage
-        }
-        accessoryType = isSelected ? .checkmark : .none
-    }
-    
-    private func createCircularImage(with color: UIColor, size: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: size)
-        return renderer.image { context in
-            context.cgContext.setFillColor(color.cgColor)
-            context.cgContext.addEllipse(in: CGRect(origin: .zero, size: size))
-            context.cgContext.drawPath(using: .fill)
-        }
     }
 }
