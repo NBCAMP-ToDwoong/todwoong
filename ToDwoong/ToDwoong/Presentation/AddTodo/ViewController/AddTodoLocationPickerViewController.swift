@@ -95,46 +95,21 @@ final class AddTodoLocationPickerViewController: UIViewController {
     }
     
     private func configureMapLocation() {
-        if let selectedPlace = selectedPlace, !selectedPlace.isEmpty {
-            setLocation(selectedPlace)
+        if let latitude = selectedLatitude, let longitude = selectedLongitude {
+            setLocation(latitude, longitude: longitude)
         } else {
             centerMapOnUserLocation()
         }
     }
     
-    func setLocation(_ address: String) {
+    func setLocation(_ latitude: Double, longitude: Double) {
+        let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         isMapCenteredByUser = true
-        
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = address
-        let search = MKLocalSearch(request: searchRequest)
-        
-        search.start { [weak self] (response, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Error searching for address: \(error)")
-                return
-            }
-            
-            guard let response = response, let mapItem = response.mapItems.first else {
-                print("No results found for address")
-                return
-            }
-            
-            let placemark = mapItem.placemark
-            let latitude = placemark.coordinate.latitude
-            let longitude = placemark.coordinate.longitude
-            
-            print("검색결과 Latitude: \(latitude), Longitude: \(longitude)")
-            
-            DispatchQueue.main.async {
-                let region = MKCoordinateRegion(center: placemark.coordinate,
-                                                latitudinalMeters: 500,
-                                                longitudinalMeters: 500)
-                self.locationPickerView.mapView.setRegion(region, animated: false)
-                self.updateAddressLabel(with: placemark)
-            }
+
+        DispatchQueue.main.async {
+            let region = MKCoordinateRegion(center: locationCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+            self.locationPickerView.mapView.setRegion(region, animated: true)
+            self.fetchAddressFromCoordinates(locationCoordinate)
         }
     }
 }

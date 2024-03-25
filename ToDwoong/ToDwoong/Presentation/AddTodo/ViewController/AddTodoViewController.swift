@@ -10,6 +10,7 @@ import UIKit
 
 import SnapKit
 import TodwoongDesign
+import CoreData
 
 class AddTodoViewController: UIViewController {
     
@@ -21,7 +22,7 @@ class AddTodoViewController: UIViewController {
     var selectedDueTime: Date? = Date()
     var selectedGroup: Group?
     var selectedTimesAlarm: [Int]? = [5]
-    var selectedPlaceAlarm: PlaceAlarm?
+    var selectedPlaceAlarm: PlaceAlarmType?
     var selectedPlaceName: String?
     var selectedLatitude: Double?
     var selectedLongitude: Double?
@@ -82,19 +83,21 @@ class AddTodoViewController: UIViewController {
         titleLabel = UILabel()
         titleLabel.textAlignment = .center
         
+        if let todoID = todoToEdit?.id {
+            if let todo = CoreDataManager.shared.readTodo(id: todoID) {
+                selectedTitle = todo.title
+                selectedDueDate = todo.dueTime
+                selectedPlaceName = todo.placeName
+                selectedPlaceAlarm = todo.placeAlarm
+                
+                titleTextField.text = selectedTitle
+                
+                tableView.reloadData()
+            }
+        }
         if todoToEdit != nil {
             guard let todo = todoToEdit else { return }
-            
-            selectedTitle = todo.title
-            selectedDueDate = todo.dueTime
             selectedGroup = todo.group
-            selectedPlaceName = todo.placeName
-            selectedPlaceAlarm = nil
-            selectedTimesAlarm = nil
-            
-            titleTextField.text = selectedTitle
-            
-            tableView.reloadData()
         }
     }
     
@@ -145,6 +148,11 @@ class AddTodoViewController: UIViewController {
             )
         }
 
+        var placeAlarm: PlaceAlarm? = nil
+        if let placeAlarmType = selectedPlaceAlarm {
+            placeAlarm = findOrCreatePlaceAlarm(from: placeAlarmType)
+        }
+
         if let todo = todoToEdit {
             let todoToUpdate = TodoType(
                 id: todo.id,
@@ -154,10 +162,10 @@ class AddTodoViewController: UIViewController {
                 placeName: selectedPlaceName,
                 timeAlarm: selectedTimesAlarm,
                 group: groupType,
-                placeAlarm: nil
+                placeAlarm: selectedPlaceAlarm
             )
             CoreDataManager.shared.updateTodo(info: todoToUpdate)
-            print("투두 항목이 업데이트되었습니다.")
+
         } else {
             CoreDataManager.shared.createTodo(
                 title: selectedTitle,
@@ -165,14 +173,14 @@ class AddTodoViewController: UIViewController {
                 placeName: selectedPlaceName,
                 group: selectedGroup,
                 timeAlarm: selectedTimesAlarm,
-                placeAlarm: selectedPlaceAlarm
+                placeAlarm: placeAlarm
             )
-            print("새 투두 항목이 생성되었습니다.")
         }
         
         NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
         dismiss(animated: true, completion: nil)
     }
+
     
     private func setupTitleTextField() {
         view.addSubview(titleTextField)
@@ -306,6 +314,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configure(with: selectedPlaceName)
                 cell.onDeleteButtonTapped = { [weak self] in
                     self?.selectedPlaceName = nil
+                    self?.selectedPlaceAlarm = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                 }
                 return cell
@@ -441,12 +450,8 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
 extension AddTodoViewController: LocationPickerDelegate {
     func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
         self.selectedPlaceName = address
-        let placeAlarm = PlaceAlarm(context: CoreDataManager.shared.context)
-        placeAlarm.id = UUID()
-        placeAlarm.latitude = latitude
-        placeAlarm.longitude = longitude
-        self.selectedPlaceAlarm = placeAlarm
-        print("AddTodoViewController : 위치명 - \(address) 위도 - \(latitude) 경도 - \(longitude)")
+        self.selectedPlaceAlarm = PlaceAlarmType(id: UUID(), distance: 0, latitude: latitude, longitude: longitude)
+        
         if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
             cell.configure(with: selectedPlaceName)
             tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
@@ -462,6 +467,8 @@ extension AddTodoViewController: LocationPickerDelegate {
             let locationPickerVC = AddTodoLocationPickerViewController()
             locationPickerVC.delegate = self
             locationPickerVC.selectedPlace = selectedPlaceName
+            locationPickerVC.selectedLatitude = selectedPlaceAlarm?.latitude
+            locationPickerVC.selectedLongitude = selectedPlaceAlarm?.longitude
             locationPickerVC.modalPresentationStyle = .fullScreen
             present(locationPickerVC, animated: true, completion: nil)
 
@@ -487,6 +494,23 @@ extension AddTodoViewController: LocationPickerDelegate {
             }
         }))
         present(alert, animated: true, completion: nil)
+    }
+    
+    func findOrCreatePlaceAlarm(from type: PlaceAlarmType?) -> PlaceAlarm? {
+        guard let type = type else { return nil }
+        
+        let fetchRequest: NSFetchRequest<PlaceAlarm> = PlaceAlarm.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", type.id as CVarArg)
+        if let results = try? CoreDataManager.shared.context.fetch(fetchRequest), !results.isEmpty {
+            return results.first
+        }
+        
+        let newPlaceAlarm = PlaceAlarm(context: CoreDataManager.shared.context)
+        newPlaceAlarm.id = type.id
+        newPlaceAlarm.latitude = type.latitude
+        newPlaceAlarm.longitude = type.longitude
+        newPlaceAlarm.distance = Int32(type.distance)
+        return newPlaceAlarm
     }
 }
 

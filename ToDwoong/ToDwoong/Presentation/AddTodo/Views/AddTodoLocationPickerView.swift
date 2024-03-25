@@ -138,7 +138,7 @@ extension AddTodoLocationPickerView {
         stackView.addArrangedSubview(buttonContainerView)
         
         confirmAddressButton.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20))
+            make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
             make.height.equalTo(44)
         }
         
