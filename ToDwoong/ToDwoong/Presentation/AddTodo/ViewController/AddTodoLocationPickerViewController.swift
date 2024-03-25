@@ -126,6 +126,8 @@ final class AddTodoLocationPickerViewController: UIViewController {
             let latitude = placemark.coordinate.latitude
             let longitude = placemark.coordinate.longitude
             
+            print("검색결과 Latitude: \(latitude), Longitude: \(longitude)")
+            
             DispatchQueue.main.async {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
                                                 latitudinalMeters: 500,

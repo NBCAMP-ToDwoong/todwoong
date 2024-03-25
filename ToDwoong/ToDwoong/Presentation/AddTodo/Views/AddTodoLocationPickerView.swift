@@ -78,7 +78,7 @@ extension AddTodoLocationPickerView {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        
+
         centerPinImageView.contentMode = .scaleAspectFit
         centerPinImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -86,7 +86,7 @@ extension AddTodoLocationPickerView {
             make.width.equalTo(30)
             make.height.equalTo(60)
         }
-        
+
         searchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
             make.right.equalToSuperview().inset(10)
