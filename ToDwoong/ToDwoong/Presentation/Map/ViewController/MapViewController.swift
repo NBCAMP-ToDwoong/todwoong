@@ -246,7 +246,6 @@ extension MapViewController: MKMapViewDelegate {
         group.title = groupType.title
         group.color = groupType.color
         group.indexNumber = Int32(groupType.indexNumber ?? 0)
-//        group.todo = groupType.todo
         
         return group
     }
