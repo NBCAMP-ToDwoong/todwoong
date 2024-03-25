@@ -15,8 +15,8 @@ class TodoType {
     var placeName: String?
     var timeAlarm: [Int]?
     
-    weak var group: GroupType?
-    weak var placeAlarm: PlaceAlarmType?
+    var group: GroupType?
+    var placeAlarm: PlaceAlarmType?
     
     init(id: UUID,
          title: String,

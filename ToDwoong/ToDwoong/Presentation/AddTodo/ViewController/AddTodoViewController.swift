@@ -5,10 +5,12 @@
 //  Created by mirae on 3/13/24.
 //
 
+import CoreLocation
 import UIKit
 
 import SnapKit
 import TodwoongDesign
+import CoreData
 
 class AddTodoViewController: UIViewController {
     
@@ -20,8 +22,10 @@ class AddTodoViewController: UIViewController {
     var selectedDueTime: Date? = Date()
     var selectedGroup: Group?
     var selectedTimesAlarm: [Int]? = [5]
-    var selectedPlaceAlarm: PlaceAlarm?
+    var selectedPlaceAlarm: PlaceAlarmType?
     var selectedPlaceName: String?
+    var selectedLatitude: Double?
+    var selectedLongitude: Double?
     
     // MARK: - UI Properties
     
@@ -79,19 +83,21 @@ class AddTodoViewController: UIViewController {
         titleLabel = UILabel()
         titleLabel.textAlignment = .center
         
+        if let todoID = todoToEdit?.id {
+            if let todo = CoreDataManager.shared.readTodo(id: todoID) {
+                selectedTitle = todo.title
+                selectedDueDate = todo.dueTime
+                selectedPlaceName = todo.placeName
+                selectedPlaceAlarm = todo.placeAlarm
+                
+                titleTextField.text = selectedTitle
+                
+                tableView.reloadData()
+            }
+        }
         if todoToEdit != nil {
             guard let todo = todoToEdit else { return }
-            
-            selectedTitle = todo.title
-            selectedDueDate = todo.dueTime
             selectedGroup = todo.group
-            selectedPlaceName = todo.placeName
-            selectedPlaceAlarm = nil
-            selectedTimesAlarm = nil
-            
-            titleTextField.text = selectedTitle
-            
-            tableView.reloadData()
         }
     }
     
@@ -141,7 +147,12 @@ class AddTodoViewController: UIViewController {
                 todo: nil
             )
         }
-        
+
+        var placeAlarm: PlaceAlarm? = nil
+        if let placeAlarmType = selectedPlaceAlarm {
+            placeAlarm = findOrCreatePlaceAlarm(from: placeAlarmType)
+        }
+
         if let todo = todoToEdit {
             let todoToUpdate = TodoType(
                 id: todo.id,
@@ -151,10 +162,10 @@ class AddTodoViewController: UIViewController {
                 placeName: selectedPlaceName,
                 timeAlarm: selectedTimesAlarm,
                 group: groupType,
-                placeAlarm: nil
+                placeAlarm: selectedPlaceAlarm
             )
             CoreDataManager.shared.updateTodo(info: todoToUpdate)
-            print("투두 항목이 업데이트되었습니다.")
+
         } else {
             CoreDataManager.shared.createTodo(
                 title: selectedTitle,
@@ -162,14 +173,14 @@ class AddTodoViewController: UIViewController {
                 placeName: selectedPlaceName,
                 group: selectedGroup,
                 timeAlarm: selectedTimesAlarm,
-                placeAlarm: selectedPlaceAlarm
+                placeAlarm: placeAlarm
             )
-            print("새 투두 항목이 생성되었습니다.")
         }
         
         NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
         dismiss(animated: true, completion: nil)
     }
+
     
     private func setupTitleTextField() {
         view.addSubview(titleTextField)
@@ -303,6 +314,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.configure(with: selectedPlaceName)
                 cell.onDeleteButtonTapped = { [weak self] in
                     self?.selectedPlaceName = nil
+                    self?.selectedPlaceAlarm = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                 }
                 return cell
@@ -397,7 +409,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
         let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
         if indexPath.row < numberOfRows - 1 {
             let border = CALayer()
-            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor // 밝은 그레이 색상과 50% 투명도
+            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
             border.frame = CGRect(x: 20, y: cell.frame.size.height - 1, width: cell.frame.size.width - 40, height: 1)
             cell.layer.addSublayer(border)
         }
@@ -438,11 +450,8 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
 extension AddTodoViewController: LocationPickerDelegate {
     func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
         self.selectedPlaceName = address
-        let placeAlarm = PlaceAlarm()
-        placeAlarm.latitude = latitude
-        placeAlarm.longitude = longitude
-        self.selectedPlaceAlarm = placeAlarm
-        print("AddTodoViewController : 위치명 - \(address) 위도 - \(latitude) 경도 - \(longitude)")
+        self.selectedPlaceAlarm = PlaceAlarmType(id: UUID(), distance: 0, latitude: latitude, longitude: longitude)
+        
         if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
             cell.configure(with: selectedPlaceName)
             tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
@@ -450,12 +459,59 @@ extension AddTodoViewController: LocationPickerDelegate {
     }
     
     func goLocationPickerViewController() {
-        let locationPickerVC = AddTodoLocationPickerViewController()
-        locationPickerVC.delegate = self
-        locationPickerVC.selectedPlace = selectedPlaceName
-        present(locationPickerVC, animated: true, completion: nil)
+        let locationManager = CLLocationManager()
+        let status = locationManager.authorizationStatus
+
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            let locationPickerVC = AddTodoLocationPickerViewController()
+            locationPickerVC.delegate = self
+            locationPickerVC.selectedPlace = selectedPlaceName
+            locationPickerVC.selectedLatitude = selectedPlaceAlarm?.latitude
+            locationPickerVC.selectedLongitude = selectedPlaceAlarm?.longitude
+            locationPickerVC.modalPresentationStyle = .fullScreen
+            present(locationPickerVC, animated: true, completion: nil)
+
+        case .denied, .restricted:
+            showAlertForLocationPermission()
+
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+
+        @unknown default:
+            print("Unknown authorization status")
+        }
     }
     
+    func showAlertForLocationPermission() {
+        let alert = UIAlertController(title: "위치 권한 필요",
+                                      message: "이 기능을 사용하기 위해서는 위치 권한이 필요합니다. 설정에서 위치 권한을 허용해주세요.",
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { _ in
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func findOrCreatePlaceAlarm(from type: PlaceAlarmType?) -> PlaceAlarm? {
+        guard let type = type else { return nil }
+        
+        let fetchRequest: NSFetchRequest<PlaceAlarm> = PlaceAlarm.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", type.id as CVarArg)
+        if let results = try? CoreDataManager.shared.context.fetch(fetchRequest), !results.isEmpty {
+            return results.first
+        }
+        
+        let newPlaceAlarm = PlaceAlarm(context: CoreDataManager.shared.context)
+        newPlaceAlarm.id = type.id
+        newPlaceAlarm.latitude = type.latitude
+        newPlaceAlarm.longitude = type.longitude
+        newPlaceAlarm.distance = Int32(type.distance)
+        return newPlaceAlarm
+    }
 }
 
 // MARK: - GroupSelectControllerDelegate
