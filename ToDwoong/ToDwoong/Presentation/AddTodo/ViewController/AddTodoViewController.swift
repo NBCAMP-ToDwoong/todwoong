@@ -459,7 +459,6 @@ extension AddTodoViewController: LocationPickerDelegate {
 
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
-            // 위치 권한이 허용되었을 때
             let locationPickerVC = AddTodoLocationPickerViewController()
             locationPickerVC.delegate = self
             locationPickerVC.selectedPlace = selectedPlaceName
@@ -467,15 +466,12 @@ extension AddTodoViewController: LocationPickerDelegate {
             present(locationPickerVC, animated: true, completion: nil)
 
         case .denied, .restricted:
-            // 사용자가 위치 권한을 거부했거나 제한된 경우
             showAlertForLocationPermission()
 
         case .notDetermined:
-            // 위치 권한 요청이 아직 결정되지 않았을 경우
             locationManager.requestWhenInUseAuthorization()
 
         @unknown default:
-            // 미래의 새로운 상태를 대비한 처리
             print("Unknown authorization status")
         }
     }
