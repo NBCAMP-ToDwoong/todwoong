@@ -205,11 +205,9 @@ extension MapViewController: MKMapViewDelegate {
                                         longitudinalMeters: regionRadius)
         mapView.setRegion(region, animated: true)
         
-        // FIXME: 추가로직 완료 후 마무리 예정
+        let data = allTodoList.filter { $0.title == annotation.title! }
         
-        print("Selected Todo ID: \(annotation.title!)")
-        
-        let todoDetailViewController = TodoDetailViewController(todos: [])
+        let todoDetailViewController = TodoDetailViewController(todos: data)
         todoDetailViewController.delegate = self
         if let sheet = todoDetailViewController.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
