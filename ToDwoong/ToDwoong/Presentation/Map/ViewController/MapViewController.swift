@@ -233,8 +233,11 @@ extension MapViewController: MKMapViewDelegate {
         // FIXME: 추가로직 완료 후 마무리 예정
         
         if let groupIndex = selectedGroup {
-            allTodoList = CoreDataManager.shared.readAllTodos().filter {
-                $0.group?.title == groupList[groupIndex].title
+            allTodoList = CoreDataManager.shared.readAllTodos().filter {todo in
+                print("Todo group title:", todo.group?.title ?? "No group title available")
+                print("Group list title:", groupList[groupIndex].title!)
+                
+                return todo.group?.title == groupList[groupIndex].title!
             }
         } else {
             allTodoList = CoreDataManager.shared.readAllTodos()
@@ -246,7 +249,7 @@ extension MapViewController: MKMapViewDelegate {
 //            print(groupTitle)
 //            allTodoList = CoreDataManager.shared.readAllTodos().filter { $0.group?.title == groupTitle }
 //        }
-//        
+
         print(allTodoList)
         
         var data: [TodoDTO] = []
