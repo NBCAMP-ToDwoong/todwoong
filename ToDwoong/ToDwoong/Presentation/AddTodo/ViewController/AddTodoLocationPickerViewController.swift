@@ -65,6 +65,9 @@ final class AddTodoLocationPickerViewController: UIViewController {
         locationPickerView.onCloseTapped = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }
+        locationPickerView.onCenterLocationTapped = { [weak self] in
+            self?.centerMapOnUserLocation()
+        }
         view = locationPickerView
     }
     
@@ -89,9 +92,12 @@ final class AddTodoLocationPickerViewController: UIViewController {
     }
     
     private func centerMapOnUserLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
+        guard let userLocation = locationManager.location?.coordinate else {
+            return
         }
+
+        let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 500, longitudinalMeters: 500)
+        locationPickerView.mapView.setRegion(region, animated: true)
     }
     
     private func configureMapLocation() {
