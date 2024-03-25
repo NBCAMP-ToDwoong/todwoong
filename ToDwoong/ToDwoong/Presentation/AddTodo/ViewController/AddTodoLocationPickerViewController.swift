@@ -43,9 +43,22 @@ final class AddTodoLocationPickerViewController: UIViewController {
         locationPickerView.onSaveTapped = { [weak self] in
             guard let self = self,
                   let latitude = self.selectedLatitude,
-                  let longitude = self.selectedLongitude,
-                  let address = self.addressString.isEmpty
-                    ? self.locationPickerView.addressLabel.text : self.addressString else { return }
+                  let longitude = self.selectedLongitude else { return }
+
+            var addressToSend: String?
+
+            if let addressLabel = self.locationPickerView.addressLabel.text {
+                let lines = addressLabel.split(separator: "\n")
+                addressToSend = lines.first.map { String($0) }
+            } else {
+                addressToSend = self.addressString.isEmpty ? nil : self.addressString
+            }
+
+            guard let address = addressToSend else {
+                print("주소가 없습니다.")
+                return
+            }
+
             self.delegate?.didPickLocation(address, latitude: latitude, longitude: longitude)
             self.dismiss(animated: true, completion: nil)
         }
@@ -109,8 +122,6 @@ final class AddTodoLocationPickerViewController: UIViewController {
             let placemark = mapItem.placemark
             let latitude = placemark.coordinate.latitude
             let longitude = placemark.coordinate.longitude
-            
-            print("검색결과 Latitude: \(latitude), Longitude: \(longitude)")
             
             DispatchQueue.main.async {
                 let region = MKCoordinateRegion(center: placemark.coordinate,
@@ -210,23 +221,19 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
 // MARK: - SearchResultsViewControllerDelegate
 
 extension AddTodoLocationPickerViewController: SearchResultsViewControllerDelegate {
-    func didSelectSearchResult(_ mapItem: MKMapItem) {
-        print("선택된 결과:")
+    func didSelectSearchResult(_ mapItem: MKMapItem, at coordinate: CLLocationCoordinate2D) {
+        locationPickerView.mapView.setRegion(MKCoordinateRegion(center: coordinate, 
+                                                                latitudinalMeters: 500,
+                                                                longitudinalMeters: 500
+                                                               ), animated: true)
     }
-    
-    func didSelectSearchResult(_ result: MKLocalSearchCompletion) {
-        print("선택된 결과: \(result)")
-    }
-    
-    func didSelectSearchResult(_ result: String) {
-        // 검색 결과 선택을 처리합니다.
-        print("선택된 결과: \(result)")
-    }
-    
+
     private func presentSearchResultsController() {
         let searchViewController = LocationSearchViewController()
+        searchViewController.delegate = self
+        
         let navigationController = UINavigationController(rootViewController: searchViewController)
-        navigationController.modalPresentationStyle = .fullScreen // 풀스크린 모달 스타일 설정
+        navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true, completion: nil)
     }
 }

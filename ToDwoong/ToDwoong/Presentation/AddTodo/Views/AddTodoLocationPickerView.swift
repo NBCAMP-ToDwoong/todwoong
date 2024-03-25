@@ -83,7 +83,7 @@ extension AddTodoLocationPickerView {
         searchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
             make.right.equalToSuperview().inset(10)
-            make.width.height.equalTo(50)
+            make.width.height.equalTo(30)
         }
         
         searchButtonImageView.snp.makeConstraints { make in

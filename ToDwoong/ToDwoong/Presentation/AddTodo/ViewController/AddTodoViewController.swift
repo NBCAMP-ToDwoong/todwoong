@@ -142,7 +142,16 @@ class AddTodoViewController: UIViewController {
                 todo: nil
             )
         }
-        
+        print("""
+              저장될 투두 정보:
+              제목: \(title)
+              완료 여부: \(todoToEdit?.isCompleted ?? false)
+              마감 시간: \(selectedDueDate ?? Date())
+              장소명: \(selectedPlaceName ?? "")
+              알람 시간: \(selectedTimesAlarm ?? [])
+              장소 알람: \(selectedPlaceAlarm)
+              """)
+
         if let todo = todoToEdit {
             let todoToUpdate = TodoType(
                 id: todo.id,
@@ -398,7 +407,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
         let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
         if indexPath.row < numberOfRows - 1 {
             let border = CALayer()
-            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor // 밝은 그레이 색상과 50% 투명도
+            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
             border.frame = CGRect(x: 20, y: cell.frame.size.height - 1, width: cell.frame.size.width - 40, height: 1)
             cell.layer.addSublayer(border)
         }
