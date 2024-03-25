@@ -15,6 +15,13 @@ final class AddTodoLocationPickerView: UIView {
     
     // MARK: - UI Properties
     
+    private var addressContainerView: UIStackView!
+    
+    var onSaveTapped: (() -> Void)?
+    var onCloseTapped: (() -> Void)?
+    var onSearchTapped: (() -> Void)?
+    var onCenterLocationTapped: (() -> Void)?
+    
     let mapView = MKMapView()
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchButton: UIButton = {
@@ -42,16 +49,24 @@ final class AddTodoLocationPickerView: UIView {
     
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "multiply"), for: .normal)
         button.tintColor = TDStyle.color.mainDarkTheme
         return button
     }()
     
-    var onSaveTapped: (() -> Void)?
-    var onCloseTapped: (() -> Void)?
-    var onSearchTapped: (() -> Void)?
+    let closeButtonImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "multiply")?.withRenderingMode(.alwaysTemplate)
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        return imageView
+    }()
     
-    private var addressContainerView: UIStackView!
+    let currentLocationButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "currentLocationIcon"), for: .normal)
+        button.tintColor = TDStyle.color.mainDarkTheme
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,7 +81,10 @@ final class AddTodoLocationPickerView: UIView {
     private func setUI() {
         [mapView, centerPinImageView, searchButton, closeButton].forEach { addSubview($0) }
         searchButton.addSubview(searchButtonImageView)
+        closeButton.addSubview(closeButtonImageView)
         setAddressContainerView()
+        addSubview(currentLocationButton)
+        bringSubviewToFront(currentLocationButton)
     }
     
 }
@@ -89,7 +107,7 @@ extension AddTodoLocationPickerView {
 
         searchButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
-            make.right.equalToSuperview().inset(10)
+            make.right.equalToSuperview().inset(16)
             make.width.height.equalTo(30)
         }
         
@@ -99,14 +117,25 @@ extension AddTodoLocationPickerView {
         
         closeButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
-            make.left.equalToSuperview().inset(10)
+            make.left.equalToSuperview().inset(16)
             make.width.height.equalTo(30)
         }
         
+        closeButtonImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
         addressContainerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5)
         }
+        
+        currentLocationButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(16)
+            make.bottom.equalTo(addressContainerView.snp.top).offset(-8)
+            make.width.height.equalTo(30)
+        }
+        
     }
 }
 
@@ -125,13 +154,15 @@ extension AddTodoLocationPickerView {
         addressContainerView = stackView
         
         addressLabel.snp.makeConstraints { make in
-            make.height.greaterThanOrEqualTo(70)
+            make.height.greaterThanOrEqualTo(80)
         }
         
         let confirmAddressButton = TDButton.full(title: "저장", backgroundColor: TDStyle.color.mainTheme)
+        confirmAddressButton.setTitleColor(UIColor.white, for: .normal)
         confirmAddressButton.addTarget(self, action: #selector(didTapConfirmAddressButton), for: .touchUpInside)
         searchButton.addTarget(self, action: #selector(didTapSearchButton), for: .touchUpInside)
         closeButton.addTarget(self, action: #selector(didTapCloseButton), for: .touchUpInside)
+        currentLocationButton.addTarget(self, action: #selector(didCurrentLocationButton), for: .touchUpInside)
         
         let buttonContainerView = UIView()
         buttonContainerView.addSubview(confirmAddressButton)
@@ -142,10 +173,10 @@ extension AddTodoLocationPickerView {
             make.height.equalTo(44)
         }
         
-        let whiteBackgroundView = UIView()
-        whiteBackgroundView.backgroundColor = .white
-        addSubview(whiteBackgroundView)
-        whiteBackgroundView.snp.makeConstraints { make in
+        let spacerView = UIView()
+        spacerView.backgroundColor = .white
+        addSubview(spacerView)
+        spacerView.snp.makeConstraints { make in
             make.top.equalTo(stackView.snp.bottom)
             make.left.right.equalToSuperview()
             make.bottom.equalToSuperview()
@@ -167,4 +198,9 @@ extension AddTodoLocationPickerView {
     @objc private func didTapCloseButton() {
         onCloseTapped?()
     }
+    
+    @objc private func didCurrentLocationButton() {
+        onCenterLocationTapped?()
+    }
+    
 }

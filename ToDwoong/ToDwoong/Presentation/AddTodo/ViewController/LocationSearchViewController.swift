@@ -11,33 +11,30 @@ import UIKit
 import SnapKit
 import TodwoongDesign
 
-protocol SearchResultsViewControllerDelegate: AnyObject {
-    func didSelectSearchResult(_ mapItem: MKMapItem, at coordinate: CLLocationCoordinate2D)
-}
-
-class LocationSearchViewController: UITableViewController, UISearchResultsUpdating, MKLocalSearchCompleterDelegate {
+class LocationSearchViewController: UITableViewController {
+    
+    // MARK: - UI Properties
+    
     weak var delegate: SearchResultsViewControllerDelegate?
     var searchCompleter = MKLocalSearchCompleter()
     var searchResults: [MKLocalSearchCompletion] = []
     
     let searchController = UISearchController(searchResultsController: nil)
     
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+        setupSearchCompleter()
+    }
+    
+    private func setupUI() {
         setupCloseButton()
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        
-        searchCompleter.delegate = self
-        let koreaCenter = CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)
-        let koreaRegion = MKCoordinateRegion(center: koreaCenter,
-                                             latitudinalMeters: 1000000,
-                                             longitudinalMeters: 1000000)
-        searchCompleter.region = koreaRegion
-        searchCompleter.resultTypes = [.address, .pointOfInterest]
     }
     
     private func setupCloseButton() {
@@ -47,29 +44,15 @@ class LocationSearchViewController: UITableViewController, UISearchResultsUpdati
         closeButton.tintColor = TDStyle.color.mainTheme
         navigationItem.rightBarButtonItem = closeButton
     }
-
-    @objc private func closeButtonTapped() {
-        dismiss(animated: true, completion: nil)
-    }
     
-    func updateSearchResults(for searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
-            searchCompleter.queryFragment = searchText
-        }
-        searchController.searchBar.tintColor = TDStyle.color.mainDarkTheme
-    }
-    
-    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
-        searchResults = completer.results
-        tableView.reloadData()
-    }
-    
-    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
-        print("Error: \(error.localizedDescription)")
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count
+    private func setupSearchCompleter() {
+        searchCompleter.delegate = self
+        let koreaCenter = CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)
+        let koreaRegion = MKCoordinateRegion(center: koreaCenter,
+                                             latitudinalMeters: 1000000,
+                                             longitudinalMeters: 1000000)
+        searchCompleter.region = koreaRegion
+        searchCompleter.resultTypes = [.address, .pointOfInterest]
     }
     
     func cleanUpAddress(_ address: String) -> String {
@@ -83,7 +66,43 @@ class LocationSearchViewController: UITableViewController, UISearchResultsUpdati
         
         return cleanedAddress
     }
+}
+
+// MARK: - @objc mothod
+
+extension LocationSearchViewController {
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension LocationSearchViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text, !searchText.isEmpty {
+            searchCompleter.queryFragment = searchText
+        }
+        searchController.searchBar.tintColor = TDStyle.color.mainDarkTheme
+    }
+}
+
+// MARK: - MKLocalSearchCompleterDelegate
+
+extension LocationSearchViewController: MKLocalSearchCompleterDelegate {
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        searchResults = completer.results
+        tableView.reloadData()
+    }
     
+    func completer(_ completer: MKLocalSearchCompleter, didFailWithError error: Error) {
+        print("Error: \(error.localizedDescription)")
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension LocationSearchViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         let completion = searchResults[indexPath.row]
@@ -115,6 +134,10 @@ class LocationSearchViewController: UITableViewController, UISearchResultsUpdati
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count
+    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let completion = searchResults[indexPath.row]
@@ -132,5 +155,4 @@ class LocationSearchViewController: UITableViewController, UISearchResultsUpdati
             self?.dismiss(animated: true, completion: nil)
         }
     }
-    
 }
