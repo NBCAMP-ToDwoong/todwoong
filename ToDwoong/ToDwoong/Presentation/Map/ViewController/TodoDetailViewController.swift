@@ -90,8 +90,8 @@ extension TodoDetailViewController: UITableViewDataSource {
         
         let todo = todoList[indexPath.row]
         
-        let configureData = dataManager.readTodoToDTO(id: todo.id)
-        cell.configure(todo: configureData!)
+        guard let configureData = dataManager.readTodoToDTO(id: todo.id) else { return cell }
+        cell.configure(todo: configureData)
         
         cell.tdCellView.onCheckButtonTapped = {
             todo.isCompleted = !todo.isCompleted
@@ -121,20 +121,25 @@ extension TodoDetailViewController: UITableViewDelegate {
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
             
-        // FIXME: 투두추가 화면 구현 이후 수정
-//            let addTodoViewViewController = AddTodoViewController()
-//            let todo = self.todoList[indexPath.row]
-//            
-//            self.present(addTodoViewViewController, animated: true)
+            let addTodoViewViewController = AddTodoViewController()
+            let todo = self.todoList[indexPath.row]
+            
+            self.present(addTodoViewViewController, animated: true)
         })
-
-        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completionHandler) in
-            if indexPath.row < self.todoList.count {
-                self.dataManager.deleteTodoByID(id: self.todoList[indexPath.row].id)
-                
-                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-                tableView.reloadData()
-            }
+        let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
+            
+            AlertController.presentDeleteAlert(on: self,
+                                               message: "이 투두가 영구히 삭제됩니다!",
+                                               cancelHandler: { completion(false) },
+                                               confirmHandler: {
+                if indexPath.row < self.todoList.count {
+                    self.dataManager.deleteTodoByID(id: self.todoList[indexPath.row].id)
+                    
+                    NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+                    self.detailView.tableView.reloadData()
+                    NotificationCenter.default.post(name: .todoDeleted, object: nil)
+                }
+            })
         }
         
         editAction.backgroundColor = .systemBlue

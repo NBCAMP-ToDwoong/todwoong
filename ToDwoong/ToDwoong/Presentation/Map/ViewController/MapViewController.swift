@@ -54,11 +54,21 @@ class MapViewController: UIViewController {
         
         setMapSetting()
         setLocationManager()
+        NotificationCenter.default.addObserver(self, 
+                                               selector: #selector(updatePinsAfterDeletion),
+                                               name: .todoDeleted,
+                                               object: nil)
     }
     
     private func fetchData() {
         allTodoList = CoreDataManager.shared.readAllTodos()
         groupList = CoreDataManager.shared.readGroups()
+    }
+    
+    @objc func updatePinsAfterDeletion() {
+        navigationController?.dismiss(animated: true)
+        fetchData()
+        updateMapAnnotations()
     }
 }
 

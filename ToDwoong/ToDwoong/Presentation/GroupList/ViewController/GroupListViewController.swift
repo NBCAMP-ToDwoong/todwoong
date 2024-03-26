@@ -168,7 +168,7 @@ extension GroupListViewController: UITableViewDelegate {
                 completion(false)
             },
                                                confirmHandler: {
-                self.deleteCategory(at: indexPath)
+                self.deleteGroup(at: indexPath)
                 NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
                 NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
                 completion(true)
