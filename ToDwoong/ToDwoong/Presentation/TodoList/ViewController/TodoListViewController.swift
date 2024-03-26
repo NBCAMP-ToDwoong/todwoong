@@ -229,8 +229,6 @@ extension TodoListViewController: UITableViewDelegate {
         let editAction = UIContextualAction(style: .normal,
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
-
-            //FIXME: 투두추가 화면 구현 이후 수정 > 236번줄 추가
             let addTodoViewViewController = AddTodoViewController()
             let todo = self.todoList[indexPath.row]
             addTodoViewViewController.todoToEdit = todo
@@ -239,12 +237,19 @@ extension TodoListViewController: UITableViewDelegate {
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
                                               handler: {(action, view, completionHandler) in
-            
-            self.dataManager.deleteTodo(todo: self.todoList[indexPath.row])
-            self.todoDataFetch()
-            
-            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-            tableView.reloadData()
+            AlertController.presentDeleteAlert(on: self,
+                                               message: "이 투두가 영구히 삭제됩니다!",
+                                               cancelHandler: {
+                completionHandler(false)
+            },
+                                               confirmHandler: {
+                self.dataManager.deleteTodo(todo: self.todoList[indexPath.row])
+                self.todoDataFetch()
+                
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+                tableView.reloadData()
+                completionHandler(true)
+            })
         })
         
         editAction.backgroundColor = .systemBlue

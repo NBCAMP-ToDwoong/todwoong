@@ -161,10 +161,18 @@ extension GroupListViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
-            self.deleteCategory(at: indexPath)
-            NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
-            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-            completion(true)
+            
+            AlertController.presentDeleteAlert(on: self,
+                                               message: "이 그룹과 그룹에 속한 모든 할 일 목록이 영구적으로 삭제됩니다!",
+                                               cancelHandler: {
+                completion(false)
+            },
+                                               confirmHandler: {
+                self.deleteCategory(at: indexPath)
+                NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+                completion(true)
+            })
         }
         
         let editAction = UIContextualAction(style: .normal, title: "편집") { (action, view, completion) in
