@@ -76,7 +76,6 @@ class MapViewController: UIViewController {
     @objc func updatePinsAfterDeletion() {
         navigationController?.dismiss(animated: true)
         fetchData()
-        updateMapAnnotations()
     }
 }
 
