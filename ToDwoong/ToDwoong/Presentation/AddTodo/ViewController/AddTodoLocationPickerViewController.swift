@@ -12,6 +12,9 @@ import UIKit
 final class AddTodoLocationPickerViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var selectedLatitude: Double?
+    var selectedLongitude: Double?
     var addressString: String = ""
     var selectedPlace: String? {
         didSet {
@@ -24,6 +27,7 @@ final class AddTodoLocationPickerViewController: UIViewController {
     private var isMapCenteredByUser = false
     
     // MARK: - UI Properties
+    
     weak var delegate: LocationPickerDelegate?
     
     private var locationPickerView: AddTodoLocationPickerView {
@@ -32,13 +36,43 @@ final class AddTodoLocationPickerViewController: UIViewController {
     
     override func loadView() {
         let locationPickerView = AddTodoLocationPickerView()
-        locationPickerView.delegate = self
         locationPickerView.mapView.delegate = self
-        locationPickerView.searchBar.delegate = self
+        locationPickerView.onSearchTapped = { [weak self] in
+            self?.presentSearchResultsController()
+        }
+        locationPickerView.onSaveTapped = { [weak self] in
+            guard let self = self,
+                  let latitude = self.selectedLatitude,
+                  let longitude = self.selectedLongitude else { return }
+
+            var addressToSend: String?
+
+            if let addressLabel = self.locationPickerView.addressLabel.text {
+                let lines = addressLabel.split(separator: "\n")
+                addressToSend = lines.first.map { String($0) }
+            } else {
+                addressToSend = self.addressString.isEmpty ? nil : self.addressString
+            }
+
+            guard let address = addressToSend else {
+                print("주소가 없습니다.")
+                return
+            }
+
+            self.delegate?.didPickLocation(address, latitude: latitude, longitude: longitude)
+            self.dismiss(animated: true, completion: nil)
+        }
+        locationPickerView.onCloseTapped = { [weak self] in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        locationPickerView.onCenterLocationTapped = { [weak self] in
+            self?.centerMapOnUserLocation()
+        }
         view = locationPickerView
     }
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setDelegates()
@@ -48,7 +82,6 @@ final class AddTodoLocationPickerViewController: UIViewController {
     }
     
     private func setDelegates() {
-        locationPickerView.searchBar.delegate = self
         locationManager.delegate = self
     }
     
@@ -59,48 +92,30 @@ final class AddTodoLocationPickerViewController: UIViewController {
     }
     
     private func centerMapOnUserLocation() {
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
+        guard let userLocation = locationManager.location?.coordinate else {
+            return
         }
+
+        let region = MKCoordinateRegion(center: userLocation, latitudinalMeters: 500, longitudinalMeters: 500)
+        locationPickerView.mapView.setRegion(region, animated: true)
     }
     
     private func configureMapLocation() {
-        if let selectedPlace = selectedPlace, !selectedPlace.isEmpty {
-            setLocation(selectedPlace)
+        if let latitude = selectedLatitude, let longitude = selectedLongitude {
+            setLocation(latitude, longitude: longitude)
         } else {
             centerMapOnUserLocation()
         }
     }
     
-    func setLocation(_ address: String) {
+    func setLocation(_ latitude: Double, longitude: Double) {
+        let locationCoordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         isMapCenteredByUser = true
-        
-        let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = address
-        let search = MKLocalSearch(request: searchRequest)
-        
-        search.start { [weak self] (response, error) in
-            guard let self = self else { return }
-            
-            if let error = error {
-                print("Error searching for address: \(error)")
-                return
-            }
-            
-            guard let response = response, let mapItem = response.mapItems.first else {
-                print("No results found for address")
-                return
-            }
-            
-            let placemark = mapItem.placemark
-            
-            DispatchQueue.main.async {
-                let region = MKCoordinateRegion(center: placemark.coordinate,
-                                                latitudinalMeters: 500,
-                                                longitudinalMeters: 500)
-                self.locationPickerView.mapView.setRegion(region, animated: false)
-                self.updateAddressLabel(with: placemark)
-            }
+
+        DispatchQueue.main.async {
+            let region = MKCoordinateRegion(center: locationCoordinate, latitudinalMeters: 500, longitudinalMeters: 500)
+            self.locationPickerView.mapView.setRegion(region, animated: true)
+            self.fetchAddressFromCoordinates(locationCoordinate)
         }
     }
 }
@@ -114,6 +129,8 @@ extension AddTodoLocationPickerViewController: MKMapViewDelegate {
         }
         
         let center = mapView.centerCoordinate
+        selectedLatitude = center.latitude
+        selectedLongitude = center.longitude
         fetchAddressFromCoordinates(center)
     }
     
@@ -186,26 +203,22 @@ extension AddTodoLocationPickerViewController: CLLocationManagerDelegate {
     }
 }
 
-// MARK: - UISearchBarDelegate
-extension AddTodoLocationPickerViewController: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
-        guard let searchTerm = searchBar.text, !searchTerm.isEmpty else { return }
-        
-        DispatchQueue.main.async {
-            self.locationPickerView.addressLabel.text = ""
-        }
-        
-        setLocation(searchTerm)
-    }
-}
+// MARK: - SearchResultsViewControllerDelegate
 
-// MARK: - AddTodoLocationPickerViewDelegate
-extension AddTodoLocationPickerViewController: LocationPickerViewDelegate {
-    func didTapConfirmAddress(_ address: String) {
-        let firstLineOfAddress = address.components(separatedBy: "\n").first ?? ""
+extension AddTodoLocationPickerViewController: SearchResultsViewControllerDelegate {
+    func didSelectSearchResult(_ mapItem: MKMapItem, at coordinate: CLLocationCoordinate2D) {
+        locationPickerView.mapView.setRegion(MKCoordinateRegion(center: coordinate, 
+                                                                latitudinalMeters: 500,
+                                                                longitudinalMeters: 500
+                                                               ), animated: true)
+    }
+
+    private func presentSearchResultsController() {
+        let searchViewController = LocationSearchViewController()
+        searchViewController.delegate = self
         
-        delegate?.didPickLocation(firstLineOfAddress)
-        dismiss(animated: true, completion: nil)
+        let navigationController = UINavigationController(rootViewController: searchViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true, completion: nil)
     }
 }

@@ -5,14 +5,15 @@
 //  Created by yen on 3/10/24.
 //
 
+import MapKit
 import UIKit
 
-protocol LocationPickerViewDelegate: AnyObject {
-    func didTapConfirmAddress(_ address: String)
+protocol LocationPickerDelegate: AnyObject {
+    func didPickLocation(_ address: String, latitude: Double, longitude: Double)
 }
 
-protocol LocationPickerDelegate: AnyObject {
-    func didPickLocation(_ address: String)
+protocol SearchResultsViewControllerDelegate: AnyObject {
+    func didSelectSearchResult(_ mapItem: MKMapItem, at coordinate: CLLocationCoordinate2D)
 }
 
 protocol GroupSelectModalDelegate: AnyObject {

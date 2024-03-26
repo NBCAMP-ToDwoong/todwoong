@@ -230,11 +230,11 @@ extension TodoListViewController: UITableViewDelegate {
                                             title: "편집",
                                             handler: {(action, view, completionHandler) in
 
-            //FIXME: 투두추가 화면 구현 이후 수정
-//            let addTodoViewViewController = AddTodoViewController()
-//            let todo = self.todoList[indexPath.row]
-//            
-//            self.present(addTodoViewViewController, animated: true)
+            //FIXME: 투두추가 화면 구현 이후 수정 > 236번줄 추가
+            let addTodoViewViewController = AddTodoViewController()
+            let todo = self.todoList[indexPath.row]
+            addTodoViewViewController.todoToEdit = todo
+            self.present(addTodoViewViewController, animated: true)
         })
         let deleteAction = UIContextualAction(style: .normal,
                                               title: "삭제",
