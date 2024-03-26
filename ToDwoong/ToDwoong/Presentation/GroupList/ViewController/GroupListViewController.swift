@@ -16,7 +16,7 @@ final class GroupListViewController: UIViewController {
     
     private let groupListView = GroupListView()
     private var isEditingMode = false
-    private var categories: [Category] = []
+    private var groups: [Group] = []
     
     // MARK: - Lifecycle
     
@@ -24,7 +24,7 @@ final class GroupListViewController: UIViewController {
         super.viewDidLoad()
         setNavigationBar()
         setGroupListView()
-        loadCategories()
+        fetchGroup()
         setTableViewDelegate()
         setNotificationObserver()
     }
@@ -68,13 +68,13 @@ final class GroupListViewController: UIViewController {
             make.edges.equalToSuperview()
         }
         groupListView.backgroundColor = TDStyle.color.lightGray
-        groupListView.addGroupButton.addTarget(self, action: #selector(addCategoryButtonTapped), for: .touchUpInside)
+        groupListView.addGroupButton.addTarget(self, action: #selector(addGroupButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Data Methods
     
-    private func loadCategories() {
-        categories = CoreDataManager.shared.readCategories()
+    private func fetchGroup() {
+        groups = CoreDataManager.shared.readGroups()
         groupListView.groupTableView.reloadData()
     }
     
@@ -100,7 +100,7 @@ final class GroupListViewController: UIViewController {
     }
     
     @objc func dataUpdated(_ notification: Notification) {
-        loadCategories()
+        fetchGroup()
     }
     
     // MARK: - Action Methods
@@ -115,7 +115,7 @@ final class GroupListViewController: UIViewController {
         navigationItem.rightBarButtonItem?.title = isEditingMode ? "완료" : "편집"
     }
     
-    @objc private func addCategoryButtonTapped() {
+    @objc private func addGroupButtonTapped() {
         let addGroupViewController = AddGroupViewController()
         addGroupViewController.modalPresentationStyle = .fullScreen
         present(addGroupViewController, animated: true)
@@ -126,7 +126,7 @@ final class GroupListViewController: UIViewController {
 
 extension GroupListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        return groups.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,8 +136,8 @@ extension GroupListViewController: UITableViewDataSource {
                 fatalError("셀을 가져오는데 실패하였습니다.")
             }
             
-            let category = categories[indexPath.row]
-            cell.titleLabel.text = category.title
+            let group = groups[indexPath.row]
+            cell.titleLabel.text = group.title
             
             return cell
         }
@@ -147,8 +147,8 @@ extension GroupListViewController: UITableViewDataSource {
             fatalError("셀을 가져오는데 실패하였습니다.")
         }
         
-        let category = categories[indexPath.row]
-        cell.configureWithCategory(category)
+        let group = groups[indexPath.row]
+        cell.configureWithGroup(group)
         
         return cell
     }
@@ -161,13 +161,22 @@ extension GroupListViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
     ) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completion) in
-            self.deleteCategory(at: indexPath)
-            NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
-            completion(true)
+            
+            AlertController.presentDeleteAlert(on: self,
+                                               message: "이 그룹과 그룹에 속한 모든 할 일 목록이 영구적으로 삭제됩니다!",
+                                               cancelHandler: {
+                completion(false)
+            },
+                                               confirmHandler: {
+                self.deleteGroup(at: indexPath)
+                NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+                completion(true)
+            })
         }
         
         let editAction = UIContextualAction(style: .normal, title: "편집") { (action, view, completion) in
-            self.editCategory(at: indexPath)
+            self.editGroup(at: indexPath)
             completion(true)
         }
         
@@ -185,11 +194,11 @@ extension GroupListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    moveRowAt sourceIndexPath: IndexPath,
                    to destinationIndexPath: IndexPath) {
-        let movedCategory = categories.remove(at: sourceIndexPath.row)
-        categories.insert(movedCategory, at: destinationIndexPath.row)
+        let movedGroup = groups.remove(at: sourceIndexPath.row)
+        groups.insert(movedGroup, at: destinationIndexPath.row)
         
-        for (index, category) in categories.enumerated() {
-            category.indexNumber = Int32(index)
+        for (index, group) in groups.enumerated() {
+            group.indexNumber = Int32(index)
         }
         
         let context = CoreDataManager.shared.context
@@ -200,17 +209,17 @@ extension GroupListViewController: UITableViewDelegate {
         }
     }
     
-    private func deleteCategory(at indexPath: IndexPath) {
-        let categoryToDelete = categories[indexPath.row]
-        CoreDataManager.shared.deleteCategory(category: categoryToDelete)
-        categories.remove(at: indexPath.row)
-        groupListView.groupTableView.deleteRows(at: [indexPath], with: .automatic)
+    private func deleteGroup(at indexPath: IndexPath) {
+        let groupToDelete = groups[indexPath.row]
+        CoreDataManager.shared.deleteGroup(group: groupToDelete)
+        fetchGroup()
+        groupListView.groupTableView.reloadData()
     }
     
-    private func editCategory(at indexPath: IndexPath) {
-        let category = categories[indexPath.row]
+    private func editGroup(at indexPath: IndexPath) {
+        let group = groups[indexPath.row]
         let addGroupViewController = AddGroupViewController()
-        addGroupViewController.editModeOn(category: category)
+        addGroupViewController.editModeOn(group: group)
         addGroupViewController.modalPresentationStyle = .fullScreen
         present(addGroupViewController, animated: true)
     }

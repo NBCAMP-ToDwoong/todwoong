@@ -53,14 +53,23 @@ class TodoDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = TDStyle.color.lightGray
-        tableView.backgroundColor = TDStyle.color.lightGray
+        
+        setUI()
         setTableView()
         setTodwoongUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Extensions
+
+extension TodoDetailView {
+    private func setUI() {
+        backgroundColor = TDStyle.color.lightGray
+        tableView.backgroundColor = TDStyle.color.lightGray
     }
     
     private func setTableView() {
