@@ -14,7 +14,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     var buttonAction: ((UIButton) -> Void) = { _ in }
-    static let identifier = "categoryCollectionViewCell"
+    static let identifier = "groupCollectionViewCell"
     
     // MARK: - UI Properties
     

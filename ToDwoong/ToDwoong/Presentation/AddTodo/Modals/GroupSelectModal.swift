@@ -208,7 +208,7 @@ extension GroupSelectModal: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "GroupSelectModalTableViewCell",
                                                        for: indexPath) as? GroupSelectModalTableViewCell else {
-            fatalError("Unable to dequeue a CategoryTableViewCell.")
+            fatalError("Unable to dequeue a GroupTableViewCell.")
         }
         
         let group = groupList[indexPath.row]

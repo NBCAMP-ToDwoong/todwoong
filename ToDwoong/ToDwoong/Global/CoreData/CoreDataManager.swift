@@ -109,6 +109,31 @@ final class CoreDataManager: CoreDataManging {
         }
     }
     
+    func readTodoToDTO(id: UUID) -> TodoDTO? {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
+        
+        do {
+            let todos = try context.fetch(fetchRequest)
+            guard let todo = todos.first else { return nil }
+            
+            var data: TodoDTO? = nil
+            if let id = todo.id, let title = todo.title {
+                data = TodoDTO(id: id,
+                               title: title,
+                               isCompleted: todo.isCompleted, 
+                               dueTime: todo.dueTime,
+                               placeName: todo.placeName,
+                               group: todo.group)
+            }
+            
+            return data
+        } catch {
+            print("Id로 투두를 가져오는 중 오류 발생 \(id): \(error)")
+            return nil
+        }
+    }
+    
     func readTodos() -> [TodoDTO] {
         do {
             let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
@@ -124,6 +149,55 @@ final class CoreDataManager: CoreDataManging {
                                dueTime: todo.dueTime,
                                placeName: todo.placeName,
                                group: todo.group)
+            }
+            return data
+        } catch {
+            print("투두목록 불러오기 실패")
+            return []
+        }
+    }
+    
+    func readAllTodos() -> [TodoType] {
+        do {
+            let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+            let dueTimeSortDescriptor = NSSortDescriptor(key: "dueTime", ascending: true)
+            fetchRequest.sortDescriptors = [dueTimeSortDescriptor]
+            
+            let todos = try context.fetch(fetchRequest)
+            let data = todos.compactMap { todo -> TodoType? in
+                guard let id = todo.id, let title = todo.title else { return nil }
+                let groupData: GroupType?
+                let placeAlarmData: PlaceAlarmType?
+                
+                if let group = todo.group,
+                   let id = group.id,
+                   let title = group.title {
+                    groupData = GroupType(id: id,
+                                          title: title,
+                                          color: group.color,
+                                          indexNumber: group.indexNumber)
+                } else {
+                    groupData = nil
+                }
+
+                if let placeAlarm = todo.placeAlarm,
+                   let id = placeAlarm.id {
+                    placeAlarmData = PlaceAlarmType(id: id,
+                                                     distance: placeAlarm.distance,
+                                                     latitude: placeAlarm.latitude,
+                                                     longitude: placeAlarm.longitude)
+                } else {
+                    placeAlarmData = nil
+                }
+                
+                return TodoType(id: id,
+                                title: title,
+                                isCompleted: todo.isCompleted, 
+                                dueTime: todo.dueTime,
+                                placeName: todo.placeName,
+                                timeAlarm: todo.timeAlarm,
+                                group: groupData,
+                                placeAlarm: placeAlarmData)
             }
             return data
         } catch {
@@ -196,6 +270,26 @@ final class CoreDataManager: CoreDataManging {
     func deleteTodo(todo: TodoDTO) {
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id == %@", todo.id as CVarArg)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            
+            if let todoToDelete = results.first {
+                context.delete(todoToDelete)
+                saveContext()
+            } else {
+                print("삭제할 Todo를 찾을 수 없습니다.")
+            }
+        } catch let error {
+            print("투두 삭제 실패: \(error.localizedDescription)")
+        }
+        
+        saveContext()
+    }
+    
+    func deleteTodoByID(id: UUID) {
+        let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id as CVarArg)
         
         do {
             let results = try context.fetch(fetchRequest)

@@ -43,7 +43,7 @@ class GroupType {
     var title: String
     var color: String?
     var indexNumber: Int32?
-    weak var todo: TodoType?
+    var todo: TodoType?
 
     init(id: UUID,
          title: String,
@@ -64,7 +64,7 @@ class PlaceAlarmType {
     var distance: Int32
     var latitude: Double
     var longitude: Double
-    weak var todo: TodoType?
+    var todo: TodoType?
 
     init(id: UUID,
          distance: Int32,
