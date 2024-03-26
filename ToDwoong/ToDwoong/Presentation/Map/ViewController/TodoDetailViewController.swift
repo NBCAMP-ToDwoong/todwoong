@@ -18,7 +18,7 @@ class TodoDetailViewController: UIViewController {
     
     private let dataManager = CoreDataManager.shared
     var detailView: TodoDetailView!
-    var selectedCategoryTitle: String?
+    var selectedGroupTitle: String?
     
     // MARK: - Data Storage
     
@@ -56,15 +56,15 @@ class TodoDetailViewController: UIViewController {
         detailView.tableView.dataSource = self
         detailView.tableView.delegate = self
         
-        loadTodosForSelectedCategory()
+        loadTodosForSelectedGroup()
     }
     
     // MARK: - Setting Method
     
-    func loadTodosForSelectedCategory() {
+    func loadTodosForSelectedGroup() {
         var filteredTodos: [TodoType] = []
         
-        if let selectedTitle = self.selectedCategoryTitle {
+        if let selectedTitle = self.selectedGroupTitle {
             filteredTodos = self.todoList.filter { $0.group?.title == selectedTitle }
         } else {
             filteredTodos = self.todoList

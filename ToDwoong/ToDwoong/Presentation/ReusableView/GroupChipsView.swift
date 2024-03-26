@@ -1,5 +1,5 @@
 //
-//  CategoryChipsView.swift
+//  GroupChipsView.swift
 //  ToDwoong
 //
 //  Created by t2023-m0041 on 3/14/24.
@@ -14,7 +14,7 @@ class GroupChipsView: UIView {
     
     // MARK: - Properties
     
-    var selectedCategoryButton: TDCustomButton?
+    var selectedGroupButton: TDCustomButton?
     var onAllGroupButtonTapped: (() -> Void)?
     
     // MARK: - UI Components
@@ -64,7 +64,7 @@ class GroupChipsView: UIView {
         allGroupButton.tag = -1
         allGroupButton.addTarget(self, action: #selector(allGroupButtonTapped), for: .touchUpInside)
         
-        selectCategoryButton(allGroupButton)
+        selectGroupButton(allGroupButton)
     }
     
     required init?(coder: NSCoder) {
@@ -108,11 +108,11 @@ class GroupChipsView: UIView {
     
     // MARK: - Public Methods
     
-    func addCategoryChip(category: CategoryModel, action: Selector, target: Any?) {
+    func addGroupChip(group: CategoryModel, action: Selector, target: Any?) {
         let chipButton = TDCustomButton(frame: .zero, type: .chip,
-                                        title: category.title,
-                                        backgroundColor: UIColor(hex: category.color ?? "#D1FADF"))
-        chipButton.tag = Int(category.indexNumber ?? 0)
+                                        title: group.title,
+                                        backgroundColor: UIColor(hex: group.color ?? "#D1FADF"))
+        chipButton.tag = Int(group.indexNumber ?? 0)
         chipButton.addTarget(target, action: action, for: .touchUpInside)
         chipButton.snp.makeConstraints { make in
             make.height.equalTo(30)
@@ -120,14 +120,14 @@ class GroupChipsView: UIView {
         groupStackView.addArrangedSubview(chipButton)
     }
     
-    func selectCategoryButton(_ button: TDCustomButton) {
-        if let previousSelectedButton = selectedCategoryButton {
+    func selectGroupButton(_ button: TDCustomButton) {
+        if let previousSelectedButton = selectedGroupButton {
             previousSelectedButton.alpha = 0.5
             previousSelectedButton.isSelected = false
         }
         
-        selectedCategoryButton = button
-        selectedCategoryButton?.isSelected = true
+        selectedGroupButton = button
+        selectedGroupButton?.isSelected = true
         
         if button == allGroupButton {
             allGroupButton.alpha = 1.0

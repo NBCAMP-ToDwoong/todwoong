@@ -15,19 +15,19 @@ class TodoAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var colorName: String
-    var category: String
-    var categoryIndexNumber: Int
+    var group: String
+    var groupIndexNumber: Int
     
     init(coordinate: CLLocationCoordinate2D,
          title: String,
          colorName: String,
-         category: String,
-         categoryIndexNumber: Int) {
+         group: String,
+         groupIndexNumber: Int) {
         self.coordinate = coordinate
         self.title = title
         self.colorName = colorName
-        self.category = category
-        self.categoryIndexNumber = categoryIndexNumber
+        self.group = group
+        self.groupIndexNumber = groupIndexNumber
         
         super.init()
     }

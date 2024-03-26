@@ -173,14 +173,14 @@ extension AddGroupViewController {
                        addGroupView.palleteButton4, addGroupView.palleteButton5,
                        addGroupView.palleteButton6, addGroupView.palleteButton7]
         
-        if let category = editGroup {
-            addGroupView.groupTextField.text = category.title
+        if let group = editGroup {
+            addGroupView.groupTextField.text = group.title
             
-            if UIColor(hex: category.color!) == TDStyle.color.mainTheme {
+            if UIColor(hex: group.color!) == TDStyle.color.mainTheme {
                 addGroupView.palleteButtonAction(sender: addGroupView.palleteButton)
             } else {
                 for button in buttons {
-                    if UIColor(hex: category.color!) == button.tintColor {
+                    if UIColor(hex: group.color!) == button.tintColor {
                         addGroupView.palleteButtonAction(sender: button)
                     }
                 }
