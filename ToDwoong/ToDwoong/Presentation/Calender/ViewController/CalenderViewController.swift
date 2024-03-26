@@ -262,16 +262,13 @@ extension CalendarViewController: UITableViewDelegate {
                    trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let editAction = UIContextualAction(style: .normal,
                                             title: "편집") { [weak self] (action, view, completionHandler) in
-            
-            // FIXME: - 투두 추가 구현 이후 수정
-            
-//            guard let self = self else { return }
-//            let todoToEdit = self.todoList[indexPath.row]
-//            let addTodoVC = AddTodoViewController()
-//            addTodoVC.todoToEdit = todoToEdit
-//            addTodoVC.modalPresentationStyle = .fullScreen
-//            self.present(addTodoVC, animated: true)
-//            completionHandler(true)
+            guard let self = self else { return }
+            let todoToEdit = self.todoList[indexPath.row]
+            let addTodoVC = AddTodoViewController()
+            addTodoVC.todoToEdit = todoToEdit
+            addTodoVC.modalPresentationStyle = .fullScreen
+            self.present(addTodoVC, animated: true)
+            completionHandler(true)
         }
         editAction.backgroundColor = .systemBlue
         
@@ -279,12 +276,21 @@ extension CalendarViewController: UITableViewDelegate {
                                               title: "삭제") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
             
-            let todoToDelete = self.todoList[indexPath.row]
-            CoreDataManager.shared.deleteTodo(todo: todoToDelete)
-            todoDataFetch()
-            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-            self.fetchTodosAndSetEventDates()
-            tableView.reloadData()
+            AlertController.presentDeleteAlert(on: self,
+                                               message: "이 투두가 영구히 삭제됩니다!",
+                                               cancelHandler: {
+                completionHandler(false)
+            },
+                                               confirmHandler: {
+                let todoToDelete = self.todoList[indexPath.row]
+                CoreDataManager.shared.deleteTodo(todo: todoToDelete)
+                self.todoDataFetch()
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification,
+                                                object: nil)
+                self.fetchTodosAndSetEventDates()
+                self.tableView.reloadData()
+                completionHandler(true)
+            })
         }
         deleteAction.backgroundColor = .systemRed
         
