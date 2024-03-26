@@ -21,7 +21,7 @@ final class AddGroupViewController: UIViewController {
     }()
     
     private var editMode = false
-    private var editCategory: Category?
+    private var editGroup: Group?
     
     // MARK: - UI Properties
     
@@ -129,8 +129,7 @@ extension AddGroupViewController {
         
         addGroupView.addButtonTapped = {
             if let title = self.addGroupView.groupTextField.text {
-                CoreDataManager.shared.createCategory(title: title,
-                                                      color: self.selectedColor)
+                CoreDataManager.shared.createGroup(title: title, color: self.selectedColor)
                 NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
                 self.dismiss(animated: true)
             }
@@ -155,9 +154,9 @@ extension AddGroupViewController {
 // MARK: - EditMode Method
 
 extension AddGroupViewController {
-    func editModeOn(category: Category) {
+    func editModeOn(group: Group) {
         editMode = true
-        editCategory = category
+        editGroup = group
     }
     
     private func checkEditMode() {
@@ -174,14 +173,14 @@ extension AddGroupViewController {
                        addGroupView.palleteButton4, addGroupView.palleteButton5,
                        addGroupView.palleteButton6, addGroupView.palleteButton7]
         
-        if let category = editCategory {
-            addGroupView.groupTextField.text = category.title
+        if let group = editGroup {
+            addGroupView.groupTextField.text = group.title
             
-            if UIColor(hex: category.color!) == TDStyle.color.mainTheme {
+            if UIColor(hex: group.color!) == TDStyle.color.mainTheme {
                 addGroupView.palleteButtonAction(sender: addGroupView.palleteButton)
             } else {
                 for button in buttons {
-                    if UIColor(hex: category.color!) == button.tintColor {
+                    if UIColor(hex: group.color!) == button.tintColor {
                         addGroupView.palleteButtonAction(sender: button)
                     }
                 }
@@ -191,14 +190,16 @@ extension AddGroupViewController {
         addGroupView.addButton.setTitle("편집", for: .normal)
         addGroupView.addButton.isEnabled = true
         addGroupView.addButtonTapped = {
-            guard let category = self.editCategory else { return }
+            guard let group = self.editGroup else { return }
             
             if let title = self.addGroupView.groupTextField.text {
-                CoreDataManager.shared.updateCategory(category: category,
-                                                      newTitle: title,
-                                                      newColor: self.selectedColor)
+
+                CoreDataManager.shared.updateGroup(group: group,
+                                                   newTitle: title,
+                                                   newColor: self.selectedColor)
 
                 NotificationCenter.default.post(name: .GroupDataUpdatedNotification, object: nil)
+                NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
                 self.dismiss(animated: true)
             }
         }
