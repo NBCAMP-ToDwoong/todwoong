@@ -16,11 +16,8 @@ final class AddTodoLocationPickerViewController: UIViewController {
     var selectedLatitude: Double?
     var selectedLongitude: Double?
     var addressString: String = ""
-    var selectedPlace: String? {
-        didSet {
-            configureMapLocation()
-        }
-    }
+    var selectedPlace: String?
+    
     private let locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
     
