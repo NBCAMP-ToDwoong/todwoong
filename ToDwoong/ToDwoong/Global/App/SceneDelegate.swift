@@ -57,6 +57,16 @@ extension SceneDelegate {
     }
     
     private func createGestureGuide() {
-        // FIXME: #120 스쿼시 이후 구현
+        let dataManager = CoreDataManager.shared
+        
+        dataManager.createTodo(title: "더블탭으로 완료해요!", dueTime: Date(),
+                               placeName: nil, group: nil, timeAlarm: nil, placeAlarm: nil)
+        dataManager.createTodo(title: "스와이프로 편집해요!", dueTime: Date(),
+                               placeName: nil, group: nil, timeAlarm: nil, placeAlarm: nil)
+        dataManager.createTodo(title: "위치를 탭하면 지도로 이동해요!", dueTime: Date(),
+                               placeName: nil, group: nil, timeAlarm: nil, placeAlarm: nil)
+        
+        // FIXME: - 위치 탭 시 지도로 이동 구현 이후 수정
+        
     }
 }
