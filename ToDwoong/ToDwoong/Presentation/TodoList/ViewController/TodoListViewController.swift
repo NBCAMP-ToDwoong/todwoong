@@ -28,6 +28,9 @@ class TodoListViewController: UIViewController {
     
     private var selectedGroup: Int?
     
+    private var lastSelectedIndexPath: IndexPath?
+    private var lastSelectedTimestamp: TimeInterval = 0
+    
     lazy var buttonAction: ((UIButton) -> Void) = { button in
         self.selectedGroup = button.tag
         self.todoView.allGroupButton.alpha = 0.3
@@ -76,12 +79,10 @@ extension TodoListViewController {
     
     @objc private func dataUpdated(_ notification: Notification) {
         todoDataFetch()
-        todoView.todoTableView.reloadData()
     }
     
     @objc private func dataUpdatedGroup(_ notification: Notification) {
         groupDataFetch()
-        todoView.groupCollectionView.reloadData()
     }
 }
 
@@ -247,7 +248,6 @@ extension TodoListViewController: UITableViewDelegate {
                 self.todoDataFetch()
                 
                 NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
-                tableView.reloadData()
                 completionHandler(true)
             })
         })
@@ -259,6 +259,23 @@ extension TodoListViewController: UITableViewDelegate {
         
         return swipeActions
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentTimestamp = Date().timeIntervalSince1970
+        
+        if lastSelectedIndexPath == indexPath && currentTimestamp - lastSelectedTimestamp < 0.4 {
+            var todo = todoList[indexPath.row]
+            todo.isCompleted = !todo.isCompleted
+            dataManager.updateIsCompleted(id: todo.id, status: todo.isCompleted)
+            
+            self.todoDataFetch()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+            
+            return
+        }
+        lastSelectedIndexPath = indexPath
+        lastSelectedTimestamp = currentTimestamp
+    }
 }
 
 // MARK: - Data Fetch Method
@@ -266,9 +283,11 @@ extension TodoListViewController: UITableViewDelegate {
 extension TodoListViewController {
     private func todoDataFetch() {
         allTodoList = dataManager.readTodos()
+        todoView.todoTableView.reloadData()
     }
     
     private func groupDataFetch() {
         groupList = dataManager.readGroups()
+        todoView.groupCollectionView.reloadData()
     }
 }
