@@ -18,20 +18,15 @@ class FloatingButton: UIView {
     
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
-        var config = UIButton.Configuration.filled()
+        var config = UIButton.Configuration.plain()
         
-        config.baseBackgroundColor = TDStyle.color.mainTheme
-        config.image = UIImage(systemName: "plus")
-        config.imagePadding = 10
-        config.cornerStyle = .fixed
-        config.background.cornerRadius = 30
-        config.baseForegroundColor = UIColor.white
-        
+        config.baseForegroundColor = TDStyle.color.mainTheme
         button.configuration = config
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
+
     
     // MARK: - Initialization
     
@@ -49,8 +44,14 @@ class FloatingButton: UIView {
     private func setupFloatingButton() {
         addSubview(button)
         button.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.centerX.centerY.equalToSuperview()
+            make.width.height.equalTo(60)
         }
+
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 45, weight: .light, scale: .large)
+        let symbolImage = UIImage(systemName: "plus.circle.fill", withConfiguration: symbolConfig)
+        button.setImage(symbolImage, for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
     }
     
 }
