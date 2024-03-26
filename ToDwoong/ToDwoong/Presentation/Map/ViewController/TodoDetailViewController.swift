@@ -122,7 +122,8 @@ extension TodoDetailViewController: UITableViewDelegate {
                                             handler: {(action, view, completionHandler) in
             
             let addTodoViewViewController = AddTodoViewController()
-            let todo = self.todoList[indexPath.row]
+            let todo = self.dataManager.readTodoToDTO(id: self.todoList[indexPath.row].id)
+            addTodoViewViewController.todoToEdit = todo
             
             self.present(addTodoViewViewController, animated: true)
         })
