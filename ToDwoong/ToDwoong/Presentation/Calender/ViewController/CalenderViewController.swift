@@ -32,6 +32,9 @@ final class CalendarViewController: UIViewController {
     private var selectedDueDate: Date?
     private var allTodoList = CoreDataManager.shared.readTodos()
     
+    private var lastSelectedIndexPath: IndexPath?
+    private var lastSelectedTimestamp: TimeInterval = 0
+    
     // MARK: - UI Properties
     
     private var calendar: FSCalendar!
@@ -62,6 +65,7 @@ extension CalendarViewController {
     
     private func todoDataFetch() {
         allTodoList = CoreDataManager.shared.readTodos()
+        tableView.reloadData()
     }
     
     func setViews() {
@@ -288,7 +292,6 @@ extension CalendarViewController: UITableViewDelegate {
                 NotificationCenter.default.post(name: .TodoDataUpdatedNotification,
                                                 object: nil)
                 self.fetchTodosAndSetEventDates()
-                self.tableView.reloadData()
                 completionHandler(true)
             })
         }
@@ -297,6 +300,23 @@ extension CalendarViewController: UITableViewDelegate {
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currentTimestamp = Date().timeIntervalSince1970
+        
+        if lastSelectedIndexPath == indexPath && currentTimestamp - lastSelectedTimestamp < 0.4 {
+            var todo = todoList[indexPath.row]
+            todo.isCompleted = !todo.isCompleted
+            CoreDataManager.shared.updateIsCompleted(id: todo.id, status: todo.isCompleted)
+            
+            self.todoDataFetch()
+            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
+            
+            return
+        }
+        lastSelectedIndexPath = indexPath
+        lastSelectedTimestamp = currentTimestamp
     }
 }
 
