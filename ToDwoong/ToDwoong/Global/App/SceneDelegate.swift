@@ -24,15 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            if UserDefaults.standard.object(forKey: "first") is Bool {
-                let rootViewController = UINavigationController(rootViewController: TabBarController())
-
-                self.window?.rootViewController = rootViewController
-            } else {
-                let rootViewController = UINavigationController(rootViewController: OnboardingViewController())
-
-                self.window?.rootViewController = rootViewController
-            }
+            self.firstAccessCheck()
         }
     }
 
@@ -45,5 +37,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) { }
 
     func sceneDidEnterBackground(_ scene: UIScene) { }
+}
 
+// MARK: - extension
+
+extension SceneDelegate {
+    private func firstAccessCheck() {
+        if UserDefaults.standard.object(forKey: "first") is Bool {
+            let rootViewController = UINavigationController(rootViewController: TabBarController())
+
+            self.window?.rootViewController = rootViewController
+        } else {
+            createGestureGuide()
+            
+            let rootViewController = UINavigationController(rootViewController: OnboardingViewController())
+            
+            self.window?.rootViewController = rootViewController
+        }
+    }
+    
+    private func createGestureGuide() {
+        // FIXME: #120 스쿼시 이후 구현
+    }
 }
