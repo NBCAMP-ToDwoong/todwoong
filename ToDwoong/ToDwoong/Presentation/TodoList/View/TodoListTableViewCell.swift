@@ -55,7 +55,7 @@ extension TodoListTableViewCell {
     
     private func setUI() {
         contentView.addSubview(tdCellView)
-        
+        selectionStyle = .none
         tdCellView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
