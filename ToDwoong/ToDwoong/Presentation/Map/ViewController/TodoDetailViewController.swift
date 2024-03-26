@@ -18,7 +18,6 @@ class TodoDetailViewController: UIViewController {
     
     private let dataManager = CoreDataManager.shared
     var detailView: TodoDetailView!
-    var selectedGroupTitle: String?
     
     // MARK: - Data Storage
     
@@ -62,16 +61,6 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Setting Method
     
     func loadTodosForSelectedGroup() {
-        var filteredTodos: [TodoType] = []
-        
-        if let selectedTitle = self.selectedGroupTitle {
-            filteredTodos = self.todoList.filter { $0.group?.title == selectedTitle }
-        } else {
-            filteredTodos = self.todoList
-        }
-
-        self.todoList = filteredTodos
-        
         if self.todoList.isEmpty {
             detailView.emptyImageView.isHidden = false
             detailView.emptyLabel.isHidden = false
@@ -130,10 +119,10 @@ extension TodoDetailViewController: UITableViewDelegate {
                                             handler: {(action, view, completionHandler) in
             
         // FIXME: 투두추가 화면 구현 이후 수정
-        //            let addTodoViewViewController = AddTodoViewController()
-        //            let todo = self.todoList[indexPath.row]
-        //
-        //            self.present(addTodoViewViewController, animated: true)
+//            let addTodoViewViewController = AddTodoViewController()
+//            let todo = self.todoList[indexPath.row]
+//            
+//            self.present(addTodoViewViewController, animated: true)
         })
 
         let deleteAction = UIContextualAction(style: .destructive, title: "삭제") { (action, view, completionHandler) in
