@@ -15,32 +15,21 @@ class TodoDetailViewController: UIViewController {
     // MARK: - Properties
     
     weak var delegate: TodoDetailViewControllerDelegate?
-    
-    private let dataManager = CoreDataManager.shared
-    var detailView: TodoDetailView!
-    
-    // MARK: - Data Storage
-    
     var todoList: [TodoType] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.detailView.tableView.reloadData()
-            }
-        }
+        didSet { reloadDetailViewTable() }
     }
     
-    // MARK: - Initializer
+    // MARK: - UI Properties
+    
+    private lazy var dataManager = CoreDataManager.shared
+    private var detailView: TodoDetailView!
+    
+    // MARK: - Lifecycle
     
     init(todos: [TodoType]) {
         self.todoList = todos
         super.init(nibName: nil, bundle: nil)
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Lifecycle
     
     override func loadView() {
         detailView = TodoDetailView()
@@ -49,16 +38,24 @@ class TodoDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setTableView()
+        loadTodosForSelectedGroup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - Setting Method
+
+extension TodoDetailViewController {
+    private func setTableView() {
         detailView.tableView.register(TodoListTableViewCell.self,
                                       forCellReuseIdentifier: TodoListTableViewCell.identifier)
         detailView.tableView.dataSource = self
         detailView.tableView.delegate = self
-        
-        loadTodosForSelectedGroup()
     }
-    
-    // MARK: - Setting Method
     
     func loadTodosForSelectedGroup() {
         if self.todoList.isEmpty {
@@ -68,12 +65,17 @@ class TodoDetailViewController: UIViewController {
             detailView.emptyImageView.isHidden = true
             detailView.emptyLabel.isHidden = true
         }
-        
+        reloadDetailViewTable()
+    }
+    
+    private func reloadDetailViewTable() {
         DispatchQueue.main.async {
             self.detailView.tableView.reloadData()
         }
     }
 }
+
+// MARK: - UITableViewDataSource
 
 extension TodoDetailViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -102,8 +104,9 @@ extension TodoDetailViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDelegate
+
 extension TodoDetailViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let todo = dataManager.readTodo(id: todoList[indexPath.row].id)
         if let placeAlarm = todo?.placeAlarm {

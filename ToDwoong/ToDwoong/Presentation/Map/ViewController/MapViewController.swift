@@ -21,9 +21,7 @@ class MapViewController: UIViewController {
     
     private let regionRadius: CLLocationDistance = 1000 // 지도 확대/축소를 위한 범위 설정
     private lazy var allTodoList: [TodoType] = [] {
-        didSet {
-            updateMapAnnotations()
-        }
+        didSet { updateMapAnnotations() }
     }
     private lazy var groupList: [Group] = []
     private lazy var pins: [ColoredAnnotation] = []
@@ -31,22 +29,17 @@ class MapViewController: UIViewController {
     
     // MARK: - UI Properties
     
-    private let mapView = MapView()
-    private let locationManager = CLLocationManager()
+    private lazy var dataManager = CoreDataManager.shared
+    private lazy var mapView = MapView()
+    private lazy var locationManager = CLLocationManager()
     
-    lazy var buttonAction: ((UIButton) -> Void) = { [weak self] button in
+    private lazy var buttonAction: ((UIButton) -> Void) = { [weak self] button in
         guard let self = self else { return }
         selectedGroup = button.tag
         mapView.allGroupButton.alpha = 0.3
         openTodoListModal(name: button.titleLabel?.text!)
         updateMapAnnotations()
         mapView.groupCollectionView.reloadData()
-    }
-    
-    private func updateMapAnnotations() {
-        DispatchQueue.main.async {
-            self.addPinsToMap(todos: self.allTodoList)
-        }
     }
     
     // MARK: - Life Cycle
@@ -125,9 +118,15 @@ extension MapViewController {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
         }
     }
+    
+    private func updateMapAnnotations() {
+        DispatchQueue.main.async {
+            self.addPinsToMap(todos: self.allTodoList)
+        }
+    }
 }
 
-    // MARK: - Objc Method
+// MARK: - Objc Method
 
 extension MapViewController {
     @objc
@@ -203,8 +202,7 @@ extension MapViewController {
 // MARK: - MKMapViewDelegate
 
 extension MapViewController: MKMapViewDelegate {
-    // 핀 클릭 시 확대
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) { // 핀 클릭 시 확대
         guard let annotation = view.annotation else { return }
         
         let offset = -0.005
@@ -228,7 +226,7 @@ extension MapViewController: MKMapViewDelegate {
         present(todoDetailViewController, animated: true, completion: nil)
     }
     
-    func openTodoListModal(name: String? = nil) {
+    private func openTodoListModal(name: String? = nil) {
         if let groupIndex = selectedGroup {
             let todos = CoreDataManager.shared.readAllTodos()
             allTodoList = todos.filter {
@@ -244,30 +242,9 @@ extension MapViewController: MKMapViewDelegate {
             present(todoDetailViewController, animated: true, completion: nil)
         }
     }
-    
-    func convertGroupTypeToGroup(groupType: GroupType?) -> Group? {
-        guard let groupType = groupType else {
-            return nil
-        }
-        
-        let group = Group()
-        group.id = groupType.id
-        group.title = groupType.title
-        group.color = groupType.color
-        group.indexNumber = Int32(groupType.indexNumber ?? 0)
-        
-        return group
-    }
-    
-    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: targetSize)
-        let resizedImage = renderer.image { _ in
-            image.draw(in: CGRect(origin: .zero, size: targetSize))
-        }
-        return resizedImage
-    }
-
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension MapViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -294,6 +271,8 @@ extension MapViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
 extension MapViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
@@ -313,6 +292,8 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
         return 8
     }
 }
+
+// MARK: - TodoDetailViewControllerDelegate
 
 extension MapViewController: TodoDetailViewControllerDelegate {
     func didSelectLocation(latitude: Double, longitude: Double) {
