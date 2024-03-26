@@ -74,7 +74,6 @@ class MapViewController: UIViewController {
     }
     
     @objc func updatePinsAfterDeletion() {
-        navigationController?.dismiss(animated: true)
         fetchData()
     }
 }
@@ -314,7 +313,6 @@ extension MapViewController: UICollectionViewDelegateFlowLayout {
 
 extension MapViewController: TodoDetailViewControllerDelegate {
     func didSelectLocation(latitude: Double, longitude: Double) {
-        navigationController?.dismiss(animated: true)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude,
                                                                        longitude: longitude),
                                         latitudinalMeters: regionRadius,
