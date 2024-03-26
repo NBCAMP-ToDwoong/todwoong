@@ -313,8 +313,7 @@
 		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				2E6CA5322BB264A400ABA3FC /* Aleat */,
-				7F4BD95D2BA2E9E100FC2C2C /* ReusableView */,
+				7F4BD95D2BA2E9E100FC2C2C /* Reusable */,
 				1B612E412B949BCE00DB0C1E /* TabBar */,
 				1BA63AD42B8E8D81008F49CE /* LaunchScreen */,
 				1BA63ACD2B8E8CF8008F49CE /* TodoList */,
@@ -354,14 +353,6 @@
 				2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */,
 			);
 			path = Modals;
-			sourceTree = "<group>";
-		};
-		2E6CA5322BB264A400ABA3FC /* Aleat */ = {
-			isa = PBXGroup;
-			children = (
-				2E6CA5332BB264C000ABA3FC /* AlertController.swift */,
-			);
-			name = Aleat;
 			sourceTree = "<group>";
 		};
 		2EA0630B2B906769007C9373 /* ViewController */ = {
@@ -412,14 +403,15 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		7F4BD95D2BA2E9E100FC2C2C /* ReusableView */ = {
+		7F4BD95D2BA2E9E100FC2C2C /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
+				2E6CA5332BB264C000ABA3FC /* AlertController.swift */,
 				2E822D082BA2F3AA001ED00F /* InfoChipView.swift */,
 				2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */,
 				2E6CA50B2BB196B600ABA3FC /* FloatingButton.swift */,
 			);
-			path = ReusableView;
+			path = Reusable;
 			sourceTree = "<group>";
 		};
 		7F6C81252B963ABA002E77C4 /* Extensions */ = {

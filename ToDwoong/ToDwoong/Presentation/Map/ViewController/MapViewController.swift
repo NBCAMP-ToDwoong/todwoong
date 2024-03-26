@@ -30,6 +30,7 @@ class MapViewController: UIViewController {
     // MARK: - UI Properties
     
     private lazy var dataManager = CoreDataManager.shared
+    private var floatingButton: FloatingButton!
     private lazy var mapView = MapView()
     private lazy var locationManager = CLLocationManager()
     
@@ -50,13 +51,20 @@ class MapViewController: UIViewController {
         fetchData()
         setNavigationItem()
         setUI()
+        setFloatingButton()
         setAction()
         
         setMapSetting()
         setLocationManager()
-        NotificationCenter.default.addObserver(self, 
+        
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(updatePinsAfterDeletion),
                                                name: .todoDeleted,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updatePinsAfterDeletion),
+                                               name: .TodoDataUpdatedNotification,
                                                object: nil)
     }
     
@@ -313,5 +321,24 @@ extension MapViewController: TodoDetailViewControllerDelegate {
                                         latitudinalMeters: regionRadius,
                                         longitudinalMeters: regionRadius)
         mapView.mapView.setRegion(region, animated: true)
+    }
+}
+
+extension MapViewController {
+    func setFloatingButton() {
+        floatingButton = FloatingButton()
+        view.addSubview(floatingButton)
+        
+        floatingButton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview().offset(-30)
+            make.width.height.equalTo(60)
+        }
+        
+        floatingButton.floatingButtonTapped = { [weak self] in
+            let addTodoVC = AddTodoViewController()
+            addTodoVC.modalPresentationStyle = .fullScreen
+            self?.present(addTodoVC, animated: true)
+        }
     }
 }

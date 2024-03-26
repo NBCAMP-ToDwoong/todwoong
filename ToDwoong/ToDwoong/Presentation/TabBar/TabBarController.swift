@@ -109,7 +109,7 @@ extension TabBarController {
 // MARK: - Floating Button Setting
 
 extension TabBarController {
-    private func setFloatingButton() {
+    func setFloatingButton() {
         floatingButton = FloatingButton()
         view.addSubview(floatingButton)
         
