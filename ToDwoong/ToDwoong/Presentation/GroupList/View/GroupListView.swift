@@ -41,7 +41,7 @@ final class GroupListView: UIView {
     private func setTableView() {
         addSubview(groupTableView)
         groupTableView.snp.makeConstraints { make in
-            make.top.equalTo(addGroupButton.snp.bottom).offset(5)
+            make.top.equalTo(addGroupButton.snp.bottom).offset(16).inset(20)
             make.leading.equalToSuperview().offset(0)
             make.trailing.equalToSuperview().offset(0)
             make.bottom.equalToSuperview().offset(-20)

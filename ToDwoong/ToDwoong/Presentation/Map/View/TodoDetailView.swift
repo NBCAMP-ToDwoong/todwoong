@@ -15,7 +15,7 @@ class TodoDetailView: UIView {
     // MARK: - UI Properties
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.backgroundColor = .white
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -75,10 +75,8 @@ extension TodoDetailView {
     private func setTableView() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(30)
-            make.bottom.equalToSuperview().offset(-10)
-            make.leading.equalToSuperview().offset(15)
-            make.trailing.equalToSuperview().offset(-15)
+            make.top.equalToSuperview().offset(8)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
