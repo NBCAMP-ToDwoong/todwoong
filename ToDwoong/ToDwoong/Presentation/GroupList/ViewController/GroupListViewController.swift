@@ -37,15 +37,7 @@ final class GroupListViewController: UIViewController {
     
     private func setNavigationBar() {
         title = "그룹"
-        
-        let leftBarButtonItem = UIBarButtonItem(
-            title: "< Back",
-            style: .plain,
-            target: self,
-            action: #selector(didTapBackButton)
-        )
-        navigationItem.leftBarButtonItem = leftBarButtonItem
-        
+
         let rightBarButtonItem = UIBarButtonItem(
             title: "편집",
             style: .plain,
@@ -105,10 +97,6 @@ final class GroupListViewController: UIViewController {
     }
     
     // MARK: - Action Methods
-    
-    @objc private func didTapBackButton() {
-        navigationController?.popViewController(animated: true)
-    }
     
     @objc private func didTapEditButton() {
         isEditingMode.toggle()
