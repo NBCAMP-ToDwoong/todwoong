@@ -62,17 +62,34 @@ final class MapViewController: UIViewController {
                                                name: .TodoDataUpdatedNotification,
                                                object: nil)
         
-        NotificationCenter.default.addObserver(self, 
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTableView),
                                                name: .TodoDataUpdatedNotification,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateGroupList),
+                                               name: .GroupDataUpdatedNotification,
                                                object: nil)
     }
     
     private func fetchData() {
-        allTodoList = CoreDataManager.shared.readAllTodos()
-        groupList = CoreDataManager.shared.readGroups() // 그룹 리스트 패치
+        getTodoList()
+        getGroupList()
     }
     
+    private func getTodoList() {
+        allTodoList = CoreDataManager.shared.readAllTodos()
+    }
+    
+    private func getGroupList() {
+        groupList = CoreDataManager.shared.readGroups()
+    }
+}
+
+// MARK: - Notification @objc Method
+
+extension MapViewController {
     @objc func updatePinsAfterDeletion() {
         fetchData()
     }
@@ -80,6 +97,11 @@ final class MapViewController: UIViewController {
     @objc func updateTableView() {
         fetchData()
         self.todoDetailViewController?.reloadDetailViewTable()
+    }
+    
+    @objc func updateGroupList() {
+        getGroupList()
+        mapView.groupCollectionView.reloadData()
     }
 }
 

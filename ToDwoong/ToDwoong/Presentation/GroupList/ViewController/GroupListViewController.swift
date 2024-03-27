@@ -54,11 +54,12 @@ final class GroupListViewController: UIViewController {
         )
         navigationItem.rightBarButtonItem = rightBarButtonItem
         
-        // 네비게이션 색상 설정
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.backgroundColor = .white
         navigationController?.navigationBar.standardAppearance = navigationBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        
+        navigationController?.navigationBar.tintColor = TDStyle.color.mainTheme
     }
     
     private func setGroupListView() {
