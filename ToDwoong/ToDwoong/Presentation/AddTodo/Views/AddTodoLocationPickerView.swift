@@ -16,6 +16,7 @@ final class AddTodoLocationPickerView: UIView {
     // MARK: - UI Properties
     
     private var addressContainerView: UIStackView!
+    private var topContainerView: UIView!
     
     var onSaveTapped: (() -> Void)?
     var onCloseTapped: (() -> Void)?
@@ -26,7 +27,7 @@ final class AddTodoLocationPickerView: UIView {
     let centerPinImageView = UIImageView(image: UIImage(named: "AddTodoMapPin"))
     let searchButton: UIButton = {
         let button = UIButton(type: .system)
-        button.tintColor = TDStyle.color.mainDarkTheme
+        button.tintColor = TDStyle.color.mainTheme
         return button
     }()
     
@@ -49,7 +50,7 @@ final class AddTodoLocationPickerView: UIView {
     
     let closeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.tintColor = TDStyle.color.mainDarkTheme
+        button.tintColor = TDStyle.color.mainTheme
         return button
     }()
     
@@ -64,8 +65,22 @@ final class AddTodoLocationPickerView: UIView {
     let currentLocationButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "currentLocationIcon"), for: .normal)
-        button.tintColor = TDStyle.color.mainDarkTheme
+        button.tintColor = TDStyle.color.mainTheme
         return button
+    }()
+    
+    let currentLocationView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 20
+        view.layer.masksToBounds = false
+        
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowRadius = 4
+
+        return view
     }()
     
     override init(frame: CGRect) {
@@ -79,12 +94,25 @@ final class AddTodoLocationPickerView: UIView {
     }
     
     private func setUI() {
-        [mapView, centerPinImageView, searchButton, closeButton].forEach { addSubview($0) }
+        addSubview(mapView)
+        mapView.addSubview(currentLocationView)
+        mapView.addSubview(centerPinImageView)
+        currentLocationView.addSubview(currentLocationButton)
+        
+        topContainerView = UIView()
+        topContainerView.backgroundColor = .white
+        addSubview(topContainerView)
+        
+        topContainerView.addSubview(closeButton)
+        topContainerView.addSubview(searchButton)
         searchButton.addSubview(searchButtonImageView)
         closeButton.addSubview(closeButtonImageView)
+        
         setAddressContainerView()
-        addSubview(currentLocationButton)
-        bringSubviewToFront(currentLocationButton)
+        
+        bringSubviewToFront(topContainerView)
+        
+        setConstraints()
     }
     
 }
@@ -96,47 +124,59 @@ extension AddTodoLocationPickerView {
         mapView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-
-        centerPinImageView.contentMode = .scaleAspectFit
-        centerPinImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-30)
-            make.width.equalTo(30)
-            make.height.equalTo(60)
+        
+        topContainerView.snp.makeConstraints { make in
+            make.top.left.right.equalToSuperview()
+            make.height.equalTo(88)
         }
-
+        
+        centerPinImageView.contentMode = .scaleAspectFit
+            centerPinImageView.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.centerY.equalToSuperview().offset(-30)
+                make.width.equalTo(30)
+                make.height.equalTo(60)
+            }
+        
+        closeButton.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(16)
+            make.bottom.equalTo(topContainerView.snp.bottom).inset(8)
+            make.size.equalTo(26)
+        }
+        
+        closeButtonImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         searchButton.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
             make.right.equalToSuperview().inset(16)
-            make.width.height.equalTo(30)
+            make.bottom.equalTo(topContainerView.snp.bottom).inset(8)
+            make.size.equalTo(30)
         }
         
         searchButtonImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        closeButton.snp.makeConstraints { make in
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
-            make.left.equalToSuperview().inset(16)
-            make.width.height.equalTo(30)
-        }
-        
-        closeButtonImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-
         addressContainerView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(5)
         }
         
-        currentLocationButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(16)
+        currentLocationView.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(16) // 오른쪽에서 16포인트 떨어진 곳에 위치
             make.bottom.equalTo(addressContainerView.snp.top).offset(-8)
-            make.width.height.equalTo(30)
+            make.width.height.equalTo(40) // currentLocationView의 크기를 80x80으로 설정
         }
         
+        currentLocationButton.snp.makeConstraints { make in
+            make.center.equalTo(currentLocationView.snp.center) // currentLocationView의 중앙에 위치
+            make.width.height.equalTo(30) // currentLocationButton의 크기를 30x30으로 설정
+        }
+        
+        mapView.bringSubviewToFront(currentLocationButton)
     }
+
 }
 
 // MARK: - setAddressContainerView

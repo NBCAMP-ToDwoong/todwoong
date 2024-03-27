@@ -83,7 +83,7 @@ extension LocationSearchViewController: UISearchResultsUpdating {
         if let searchText = searchController.searchBar.text, !searchText.isEmpty {
             searchCompleter.queryFragment = searchText
         }
-        searchController.searchBar.tintColor = TDStyle.color.mainDarkTheme
+        searchController.searchBar.tintColor = TDStyle.color.mainTheme
     }
 }
 
