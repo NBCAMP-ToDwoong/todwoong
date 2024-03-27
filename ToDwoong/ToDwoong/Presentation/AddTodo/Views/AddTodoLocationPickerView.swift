@@ -79,7 +79,7 @@ final class AddTodoLocationPickerView: UIView {
         view.layer.shadowOffset = CGSize(width: 0, height: 2)
         view.layer.shadowOpacity = 0.3
         view.layer.shadowRadius = 4
-
+        
         return view
     }()
     
@@ -131,16 +131,16 @@ extension AddTodoLocationPickerView {
         }
         
         centerPinImageView.contentMode = .scaleAspectFit
-            centerPinImageView.snp.makeConstraints { make in
-                make.centerX.equalToSuperview()
-                make.centerY.equalToSuperview().offset(-30)
-                make.width.equalTo(30)
-                make.height.equalTo(60)
-            }
+        centerPinImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-30)
+            make.width.equalTo(30)
+            make.height.equalTo(60)
+        }
         
         closeButton.snp.makeConstraints { make in
             make.left.equalToSuperview().inset(16)
-            make.bottom.equalTo(topContainerView.snp.bottom).inset(8)
+            make.bottom.equalTo(topContainerView.snp.bottom).inset(9)
             make.size.equalTo(26)
         }
         
@@ -164,19 +164,19 @@ extension AddTodoLocationPickerView {
         }
         
         currentLocationView.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(16) // 오른쪽에서 16포인트 떨어진 곳에 위치
+            make.right.equalToSuperview().inset(16)
             make.bottom.equalTo(addressContainerView.snp.top).offset(-8)
-            make.width.height.equalTo(40) // currentLocationView의 크기를 80x80으로 설정
+            make.width.height.equalTo(40)
         }
         
         currentLocationButton.snp.makeConstraints { make in
-            make.center.equalTo(currentLocationView.snp.center) // currentLocationView의 중앙에 위치
-            make.width.height.equalTo(30) // currentLocationButton의 크기를 30x30으로 설정
+            make.center.equalTo(currentLocationView.snp.center)
+            make.width.height.equalTo(30)
         }
         
         mapView.bringSubviewToFront(currentLocationButton)
     }
-
+    
 }
 
 // MARK: - setAddressContainerView
