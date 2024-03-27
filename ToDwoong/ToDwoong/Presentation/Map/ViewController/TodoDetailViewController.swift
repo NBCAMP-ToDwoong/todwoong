@@ -68,7 +68,7 @@ extension TodoDetailViewController {
         reloadDetailViewTable()
     }
     
-    private func reloadDetailViewTable() {
+    func reloadDetailViewTable() {
         DispatchQueue.main.async {
             self.detailView.tableView.reloadData()
         }

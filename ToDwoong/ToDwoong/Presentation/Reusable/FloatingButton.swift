@@ -20,13 +20,23 @@ class FloatingButton: UIView {
         let button = UIButton(type: .system)
         var config = UIButton.Configuration.plain()
         
-        config.baseForegroundColor = TDStyle.color.mainTheme
+        config.baseForegroundColor = .white
         button.configuration = config
-        button.clipsToBounds = true
+        
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.5
+        button.layer.shadowOffset = CGSize(width: 0, height: 0)
+        button.layer.shadowRadius = 2
+        
+        button.clipsToBounds = false
+        button.layer.masksToBounds = false
+        
+        button.backgroundColor = TDStyle.color.mainTheme
+        button.layer.cornerRadius = 30
+        
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return button
     }()
-
     
     // MARK: - Initialization
     
@@ -47,13 +57,12 @@ class FloatingButton: UIView {
             make.centerX.centerY.equalToSuperview()
             make.width.height.equalTo(60)
         }
-
-        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 45, weight: .light, scale: .large)
-        let symbolImage = UIImage(systemName: "plus.circle.fill", withConfiguration: symbolConfig)
+        
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        let symbolImage = UIImage(systemName: "plus", withConfiguration: symbolConfig)
         button.setImage(symbolImage, for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
     }
-    
 }
 
 // MARK: - @objc method
