@@ -140,7 +140,8 @@ extension MapViewController {
     
     private func updateMapAnnotations() {
         DispatchQueue.main.async {
-            self.addPinsToMap(todos: self.allTodoList)
+            self.mapView.mapView.removeAnnotations(self.mapView.mapView.annotations) // 기존 핀 제거
+            self.addPinsToMap(todos: self.allTodoList) // 새로운 핀 추가
         }
     }
 }
