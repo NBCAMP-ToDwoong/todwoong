@@ -166,7 +166,11 @@ extension MapViewController {
             guard let self = self else { return }
             
             self.mapView.mapView.removeAnnotations(self.mapView.mapView.annotations)
-            self.addPinsToMap(todos: self.allTodoList)
+            if self.pins.isEmpty {
+                self.centerToUserLocation()
+            } else {
+                self.addPinsToMap(todos: self.allTodoList)
+            }
         }
     }
 }
