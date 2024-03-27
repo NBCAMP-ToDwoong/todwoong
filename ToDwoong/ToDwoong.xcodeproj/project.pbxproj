@@ -7,15 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B0F51B32BB43FEA007A0EE6 /* MapViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */; };
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
-		1B2A01892BB45D3F005F7179 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B2A01882BB45D3F005F7179 /* TodwoongDesign */; };
-		1B2A018A2BB45D42005F7179 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B2A01882BB45D3F005F7179 /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		1B38654A2BB25EAF00E1FF9A /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3865492BB25EAF00E1FF9A /* FSCalendar */; };
-		1B38654D2BB25EC200E1FF9A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B38654C2BB25EC200E1FF9A /* SnapKit */; };
-		1B4E99402BAD71910087BE95 /* ToDwoongModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */; };
+		1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1B1886CE2BA495EB00353519 /* SnapKit */; };
+		1B4B14FA2BB4635800FCE783 /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B4B14F92BB4635800FCE783 /* TodwoongDesign */; };
+		1B4B14FB2BB4635F00FCE783 /* TodwoongDesign in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 1B4B14F92BB4635800FCE783 /* TodwoongDesign */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		1B612E432B949BDD00DB0C1E /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E422B949BDD00DB0C1E /* TabBarController.swift */; };
+		1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */; };
 		1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A122B96F686001D3698 /* UIColor+Extension.swift */; };
 		1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5B2B9854D6001D3698 /* MapViewController.swift */; };
 		1BA08A5E2B985506001D3698 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BA08A5D2B985506001D3698 /* MapView.swift */; };
@@ -24,41 +22,38 @@
 		1BD2FAD12B88ACB00097694E /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD02B88ACB00097694E /* TodoListViewController.swift */; };
 		1BD2FAD62B88ACB20097694E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BD2FAD52B88ACB20097694E /* Assets.xcassets */; };
 		1BEDA5742B8F03DE003355E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */; };
-		1BF3535F2BA737E800E4B812 /* CoreDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */; };
 		2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */; };
-		2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */; };
-		2E1CE20E2BAC45DA000E522C /* DatePickerModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */; };
-		2E6CA50A2BB0BD9300ABA3FC /* LocationSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */; };
-		2E6CA50C2BB196B600ABA3FC /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6CA50B2BB196B600ABA3FC /* FloatingButton.swift */; };
-		2E6CA5342BB264C000ABA3FC /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E6CA5332BB264C000ABA3FC /* AlertController.swift */; };
 		2E822D062BA2D6CE001ED00F /* AddTodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */; };
 		2E822D092BA2F3AA001ED00F /* InfoChipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D082BA2F3AA001ED00F /* InfoChipView.swift */; };
 		2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */; };
 		2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */; };
-		2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */; };
+		2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */; };
 		2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */; };
-		2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */; };
+		2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */; };
 		2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */; };
+		2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */; };
+		2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */; };
 		2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */; };
 		2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */; };
 		2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */; };
 		2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */; };
 		2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */; };
-		2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */; };
+		2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */; };
 		7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */; };
 		7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CC2BA4334E00455100 /* AddGroupButton.swift */; };
 		7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7253CE2BA433FA00455100 /* GroupTableView.swift */; };
 		7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A12B987510002442CD /* TodoDetailViewController.swift */; };
 		7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */; };
 		7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4A52B995868002442CD /* TodoDetailView.swift */; };
+		7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */; };
+		7F9010352BA22565008B778B /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 7F9010342BA22565008B778B /* FSCalendar */; };
 		7FB433D92B96DDEB00F0C978 /* TDColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */; };
+		7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */; };
+		7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */; };
 		7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316442B9571F6004ED878 /* GroupListViewController.swift */; };
 		7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316462B957227004ED878 /* GroupListTableViewCell.swift */; };
 		7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */; };
 		7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FE3164A2B957275004ED878 /* GroupListView.swift */; };
-		E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */; };
-		E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */; };
-		E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */; };
 		E0EACB582B8F7F8E00BBEB0B /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */; };
 		E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */; };
 		E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0EACB662B907EC700BBEB0B /* TodoListView.swift */; };
@@ -80,7 +75,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				1B2A018A2BB45D42005F7179 /* TodwoongDesign in Embed Frameworks */,
+				1B4B14FB2BB4635F00FCE783 /* TodwoongDesign in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,13 +83,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
-		1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
-		1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataModel.swift; sourceTree = "<group>"; };
 		1B612E422B949BDD00DB0C1E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoAlarmViewController.swift; sourceTree = "<group>"; };
 		1BA08A122B96F686001D3698 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		1BA08A5B2B9854D6001D3698 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		1BA08A5D2B985506001D3698 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -105,39 +97,37 @@
 		1BD2FAD52B88ACB20097694E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BD2FADA2B88ACB20097694E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BEDA5732B8F03DE003355E7 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataProtocol.swift; sourceTree = "<group>"; };
 		2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChipsView.swift; sourceTree = "<group>"; };
-		2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoView.swift; sourceTree = "<group>"; };
-		2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModal.swift; sourceTree = "<group>"; };
-		2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchViewController.swift; sourceTree = "<group>"; };
-		2E6CA50B2BB196B600ABA3FC /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
-		2E6CA5332BB264C000ABA3FC /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoViewController.swift; sourceTree = "<group>"; };
 		2E822D082BA2F3AA001ED00F /* InfoChipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoChipView.swift; sourceTree = "<group>"; };
 		2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponetsProtocols.swift; sourceTree = "<group>"; };
 		2E822D0C2BA32ADD001ED00F /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmModal.swift; sourceTree = "<group>"; };
+		2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimeAlarmViewController.swift; sourceTree = "<group>"; };
 		2E822D102BA40DFE001ED00F /* TimeAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeAlarmTableViewCell.swift; sourceTree = "<group>"; };
-		2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmModal.swift; sourceTree = "<group>"; };
+		2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoPlaceAlarmViewController.swift; sourceTree = "<group>"; };
 		2E822D142BA423F5001ED00F /* PlaceAlarmTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceAlarmTableViewCell.swift; sourceTree = "<group>"; };
+		2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoDatePickerController.swift; sourceTree = "<group>"; };
+		2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoTimePickerController.swift; sourceTree = "<group>"; };
 		2E822D1A2BA44682001ED00F /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		2EB91FC72BA466BF006E0B60 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		2EBF09382B984AE00023F0E0 /* CalenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderViewController.swift; sourceTree = "<group>"; };
 		2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerViewController.swift; sourceTree = "<group>"; };
 		2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoLocationPickerView.swift; sourceTree = "<group>"; };
-		2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSelectModal.swift; sourceTree = "<group>"; };
+		2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoGroupSelectController.swift; sourceTree = "<group>"; };
 		7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		7F7253CC2BA4334E00455100 /* AddGroupButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupButton.swift; sourceTree = "<group>"; };
 		7F7253CE2BA433FA00455100 /* GroupTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableView.swift; sourceTree = "<group>"; };
 		7F89A4A12B987510002442CD /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAnnotation.swift; sourceTree = "<group>"; };
 		7F89A4A52B995868002442CD /* TodoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailView.swift; sourceTree = "<group>"; };
+		7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoAndCategory+Extension.swift"; sourceTree = "<group>"; };
 		7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TDColor+Extension.swift"; sourceTree = "<group>"; };
+		7FDE10882B8ED61100821D8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		7FE316442B9571F6004ED878 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		7FE316462B957227004ED878 /* GroupListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListTableViewCell.swift; sourceTree = "<group>"; };
 		7FE316482B95724F004ED878 /* ContentSizedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentSizedViewCell.swift; sourceTree = "<group>"; };
 		7FE3164A2B957275004ED878 /* GroupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListView.swift; sourceTree = "<group>"; };
-		E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListTableViewCell.swift; sourceTree = "<group>"; };
 		E0EACB572B8F7F8E00BBEB0B /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingViewController.swift; path = ToDwoong/Presentation/LaunchScreen/ViewController/OnboardingViewController.swift; sourceTree = SOURCE_ROOT; };
 		E0EACB5A2B8F7FF200BBEB0B /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		E0EACB662B907EC700BBEB0B /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
@@ -157,9 +147,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B38654D2BB25EC200E1FF9A /* SnapKit in Frameworks */,
-				1B2A01892BB45D3F005F7179 /* TodwoongDesign in Frameworks */,
-				1B38654A2BB25EAF00E1FF9A /* FSCalendar in Frameworks */,
+				1B1886CF2BA495EB00353519 /* SnapKit in Frameworks */,
+				1B4B14FA2BB4635800FCE783 /* TodwoongDesign in Frameworks */,
+				7F9010352BA22565008B778B /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,14 +162,6 @@
 				1B612E422B949BDD00DB0C1E /* TabBarController.swift */,
 			);
 			path = TabBar;
-			sourceTree = "<group>";
-		};
-		1B704D3C2BB008C200513E2C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1BA08A592B9854BE001D3698 /* ViewController */ = {
@@ -195,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				1BA08A5D2B985506001D3698 /* MapView.swift */,
+				7F89A4A32B98F7E0002442CD /* TodoAnnotation.swift */,
 				7F89A4A52B995868002442CD /* TodoDetailView.swift */,
 			);
 			path = View;
@@ -212,8 +195,7 @@
 		1BA63ACE2B8E8D07008F49CE /* AddTodo */ = {
 			isa = PBXGroup;
 			children = (
-				2E1CE20A2BA95760000E522C /* Modals */,
-				2EF9C4DD2B9497D7005F8B76 /* Views */,
+				2EF9C4DD2B9497D7005F8B76 /* View */,
 				2EA0630B2B906769007C9373 /* ViewController */,
 				2EF9C4D82B92996F005F8B76 /* Cells */,
 			);
@@ -241,7 +223,6 @@
 		1BA63AD12B8E8D20008F49CE /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				1B704D3C2BB008C200513E2C /* Model */,
 				1BA08A5A2B9854C6001D3698 /* View */,
 				1BA08A592B9854BE001D3698 /* ViewController */,
 			);
@@ -317,7 +298,7 @@
 		1BD2FAE12B88AE3B0097694E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				7F4BD95D2BA2E9E100FC2C2C /* Reusable */,
+				7F4BD95D2BA2E9E100FC2C2C /* ReusableView */,
 				1B612E412B949BCE00DB0C1E /* TabBar */,
 				1BA63AD42B8E8D81008F49CE /* LaunchScreen */,
 				1BA63ACD2B8E8CF8008F49CE /* TodoList */,
@@ -348,23 +329,17 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
-		2E1CE20A2BA95760000E522C /* Modals */ = {
-			isa = PBXGroup;
-			children = (
-				2EF9C50C2B968A03005F8B76 /* GroupSelectModal.swift */,
-				2E822D0E2BA3325F001ED00F /* TimeAlarmModal.swift */,
-				2E822D122BA414AA001ED00F /* PlaceAlarmModal.swift */,
-				2E1CE20D2BAC45DA000E522C /* DatePickerModal.swift */,
-			);
-			path = Modals;
-			sourceTree = "<group>";
-		};
 		2EA0630B2B906769007C9373 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				1B612E542B95A6C800DB0C1E /* AddTodoAlarmViewController.swift */,
 				2EF9C4E22B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift */,
+				2EF9C50C2B968A03005F8B76 /* AddTodoGroupSelectController.swift */,
 				2E822D052BA2D6CE001ED00F /* AddTodoViewController.swift */,
-				2E6CA5092BB0BD9200ABA3FC /* LocationSearchViewController.swift */,
+				2E822D0E2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift */,
+				2E822D122BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift */,
+				2E822D162BA4355D001ED00F /* AddTodoDatePickerController.swift */,
+				2E822D182BA444A5001ED00F /* AddTodoTimePickerController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -389,13 +364,12 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		2EF9C4DD2B9497D7005F8B76 /* Views */ = {
+		2EF9C4DD2B9497D7005F8B76 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				2EF9C4EA2B957A83005F8B76 /* AddTodoLocationPickerView.swift */,
-				2E1CE2032BA6FEDF000E522C /* AddTodoView.swift */,
 			);
-			path = Views;
+			path = View;
 			sourceTree = "<group>";
 		};
 		2EF9C5032B96845A005F8B76 /* Protocols */ = {
@@ -403,20 +377,17 @@
 			children = (
 				1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */,
 				2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */,
-				1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		7F4BD95D2BA2E9E100FC2C2C /* Reusable */ = {
+		7F4BD95D2BA2E9E100FC2C2C /* ReusableView */ = {
 			isa = PBXGroup;
 			children = (
-				2E6CA5332BB264C000ABA3FC /* AlertController.swift */,
 				2E822D082BA2F3AA001ED00F /* InfoChipView.swift */,
 				2E1CE1FE2BA47EAB000E522C /* GroupChipsView.swift */,
-				2E6CA50B2BB196B600ABA3FC /* FloatingButton.swift */,
 			);
-			path = Reusable;
+			path = ReusableView;
 			sourceTree = "<group>";
 		};
 		7F6C81252B963ABA002E77C4 /* Extensions */ = {
@@ -425,6 +396,7 @@
 				7F6C81262B963AE8002E77C4 /* UIImage+Extension.swift */,
 				7FB433D82B96DDEB00F0C978 /* TDColor+Extension.swift */,
 				1BA08A122B96F686001D3698 /* UIColor+Extension.swift */,
+				7F89A4AD2B9C51C0002442CD /* TodoAndCategory+Extension.swift */,
 				1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */,
 			);
 			path = Extensions;
@@ -433,10 +405,8 @@
 		7FDE108A2B8ED7C100821D8A /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */,
-				1B5BCB4A2BA705B500A7962D /* CoreDataManager.swift */,
-				1B5BCB4C2BA70AC300A7962D /* CoreDataModel.swift */,
-				1BF3535E2BA737E800E4B812 /* CoreDataProtocol.swift */,
+				7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */,
+				7FDE108B2B8ED89000821D8A /* CoreDataManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -492,7 +462,6 @@
 			children = (
 				E0EACB662B907EC700BBEB0B /* TodoListView.swift */,
 				E0EACB682B907EF800BBEB0B /* GroupCollectionViewCell.swift */,
-				E044AC1B2BABE03100D18EC9 /* TodoListTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -557,9 +526,9 @@
 			);
 			name = ToDwoong;
 			packageProductDependencies = (
-				1B3865492BB25EAF00E1FF9A /* FSCalendar */,
-				1B38654C2BB25EC200E1FF9A /* SnapKit */,
-				1B2A01882BB45D3F005F7179 /* TodwoongDesign */,
+				7F9010342BA22565008B778B /* FSCalendar */,
+				1B1886CE2BA495EB00353519 /* SnapKit */,
+				1B4B14F92BB4635800FCE783 /* TodwoongDesign */,
 			);
 			productName = ToDwoong;
 			productReference = 1BD2FAC92B88ACB00097694E /* ToDwoong.app */;
@@ -590,9 +559,9 @@
 			);
 			mainGroup = 1BD2FAC02B88ACB00097694E;
 			packageReferences = (
-				1B3865482BB25EAF00E1FF9A /* XCRemoteSwiftPackageReference "FSCalendar" */,
-				1B38654B2BB25EC200E1FF9A /* XCRemoteSwiftPackageReference "SnapKit" */,
-				1B2A01872BB45D3F005F7179 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
+				7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */,
+				1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				1B4B14F82BB4635800FCE783 /* XCRemoteSwiftPackageReference "TodwoongDesign" */,
 			);
 			productRefGroup = 1BD2FACA2B88ACB00097694E /* Products */;
 			projectDirPath = "";
@@ -645,7 +614,6 @@
 				E0F4CFD32B9AA7BC00DF94D4 /* LaunchScreenViewController.swift in Sources */,
 				7F6C81272B963AE8002E77C4 /* UIImage+Extension.swift in Sources */,
 				2EBF09392B984AE00023F0E0 /* CalenderViewController.swift in Sources */,
-				1B4E99402BAD71910087BE95 /* ToDwoongModel.xcdatamodeld in Sources */,
 				7FE316452B9571F6004ED878 /* GroupListViewController.swift in Sources */,
 				7FE316492B95724F004ED878 /* ContentSizedViewCell.swift in Sources */,
 				1BA08A132B96F686001D3698 /* UIColor+Extension.swift in Sources */,
@@ -660,18 +628,15 @@
 				2E822D112BA40DFE001ED00F /* TimeAlarmTableViewCell.swift in Sources */,
 				E0EACB672B907EC700BBEB0B /* TodoListView.swift in Sources */,
 				1BD2FACD2B88ACB00097694E /* AppDelegate.swift in Sources */,
-				E044AC1C2BABE03100D18EC9 /* TodoListTableViewCell.swift in Sources */,
 				1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */,
 				7F7253CF2BA433FA00455100 /* GroupTableView.swift in Sources */,
 				7FE316472B957227004ED878 /* GroupListTableViewCell.swift in Sources */,
-				2E1CE2042BA6FEDF000E522C /* AddTodoView.swift in Sources */,
-				2E6CA50C2BB196B600ABA3FC /* FloatingButton.swift in Sources */,
-				2E822D132BA414AA001ED00F /* PlaceAlarmModal.swift in Sources */,
+				2E822D132BA414AA001ED00F /* AddTodoPlaceAlarmViewController.swift in Sources */,
 				E0EACB722B971D7400BBEB0B /* AddGroupView.swift in Sources */,
-				2E822D0F2BA3325F001ED00F /* TimeAlarmModal.swift in Sources */,
+				2E822D0F2BA3325F001ED00F /* AddTodoTimeAlarmViewController.swift in Sources */,
+				2E822D172BA4355D001ED00F /* AddTodoDatePickerController.swift in Sources */,
 				1BA08A5E2B985506001D3698 /* MapView.swift in Sources */,
-				2E6CA5342BB264C000ABA3FC /* AlertController.swift in Sources */,
-				2E6CA50A2BB0BD9300ABA3FC /* LocationSearchViewController.swift in Sources */,
+				1B612E552B95A6C800DB0C1E /* AddTodoAlarmViewController.swift in Sources */,
 				E0F4CFD92B9ACBDE00DF94D4 /* PreferencesView.swift in Sources */,
 				1BD2FACF2B88ACB00097694E /* SceneDelegate.swift in Sources */,
 				E0F4CFDD2B9ACD7E00DF94D4 /* PreferencesTableViewCell.swift in Sources */,
@@ -679,27 +644,25 @@
 				7F89A4A62B995868002442CD /* TodoDetailView.swift in Sources */,
 				1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */,
 				7F89A4A42B98F7E0002442CD /* TodoAnnotation.swift in Sources */,
-				E044AC192BABDF5D00D18EC9 /* CoreDataModel.swift in Sources */,
-				2EF9C50D2B968A03005F8B76 /* GroupSelectModal.swift in Sources */,
+				2EF9C50D2B968A03005F8B76 /* AddTodoGroupSelectController.swift in Sources */,
+				7F89A4AE2B9C51C0002442CD /* TodoAndCategory+Extension.swift in Sources */,
 				2EF9C4E32B94D1C3005F8B76 /* AddTodoLocationPickerViewController.swift in Sources */,
 				E0EACB6F2B971CE200BBEB0B /* AddGroupViewController.swift in Sources */,
 				2E822D0B2BA2F3F6001ED00F /* ComponetsProtocols.swift in Sources */,
-				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
+				7FDE108C2B8ED89000821D8A /* CoreDataManager.swift in Sources */,
 				1BA08A5C2B9854D6001D3698 /* MapViewController.swift in Sources */,
 				2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */,
 				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
+				7FDE10892B8ED61100821D8A /* Model.xcdatamodeld in Sources */,
 				7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */,
-				1B0F51B32BB43FEA007A0EE6 /* MapViewProtocols.swift in Sources */,
-				2E1CE20E2BAC45DA000E522C /* DatePickerModal.swift in Sources */,
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
-				1BF3535F2BA737E800E4B812 /* CoreDataProtocol.swift in Sources */,
 				2EF9C4EB2B957A83005F8B76 /* AddTodoLocationPickerView.swift in Sources */,
 				E0EACB5B2B8F7FF200BBEB0B /* OnboardingView.swift in Sources */,
+				2E822D192BA444A5001ED00F /* AddTodoTimePickerController.swift in Sources */,
 				7F89A4A22B987510002442CD /* TodoDetailViewController.swift in Sources */,
 				2EB91FC82BA466BF006E0B60 /* LocationTableViewCell.swift in Sources */,
 				2E822D0D2BA32ADD001ED00F /* GroupTableViewCell.swift in Sources */,
 				2E822D152BA423F5001ED00F /* PlaceAlarmTableViewCell.swift in Sources */,
-				E044AC1A2BABDF6000D18EC9 /* CoreDataManager.swift in Sources */,
 				2E1CE1FF2BA47EAB000E522C /* GroupChipsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,7 +799,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -856,7 +819,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.NBCAMP4.ToDwoong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -879,7 +842,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = P7S6PTG765;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -899,7 +862,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.NBCAMP4.ToDwoong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -938,7 +901,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		1B2A01872BB45D3F005F7179 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
+		1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "http://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		1B4B14F82BB4635800FCE783 /* XCRemoteSwiftPackageReference "TodwoongDesign" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/NBCAMP-ToDwoong/TodwoongDesign.git";
 			requirement = {
@@ -946,7 +917,7 @@
 				minimumVersion = 1.1.5;
 			};
 		};
-		1B3865482BB25EAF00E1FF9A /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+		7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
 			requirement = {
@@ -954,42 +925,34 @@
 				minimumVersion = 2.8.4;
 			};
 		};
-		1B38654B2BB25EC200E1FF9A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		1B2A01882BB45D3F005F7179 /* TodwoongDesign */ = {
+		1B1886CE2BA495EB00353519 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B2A01872BB45D3F005F7179 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
+			package = 1B1886CD2BA495EB00353519 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		1B4B14F92BB4635800FCE783 /* TodwoongDesign */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1B4B14F82BB4635800FCE783 /* XCRemoteSwiftPackageReference "TodwoongDesign" */;
 			productName = TodwoongDesign;
 		};
-		1B3865492BB25EAF00E1FF9A /* FSCalendar */ = {
+		7F9010342BA22565008B778B /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1B3865482BB25EAF00E1FF9A /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			package = 7F9010332BA22565008B778B /* XCRemoteSwiftPackageReference "FSCalendar" */;
 			productName = FSCalendar;
-		};
-		1B38654C2BB25EC200E1FF9A /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 1B38654B2BB25EC200E1FF9A /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		1B4E993E2BAD71910087BE95 /* ToDwoongModel.xcdatamodeld */ = {
+		7FDE10872B8ED61100821D8A /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */,
+				7FDE10882B8ED61100821D8A /* Model.xcdatamodel */,
 			);
-			currentVersion = 1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */;
-			path = ToDwoongModel.xcdatamodeld;
+			currentVersion = 7FDE10882B8ED61100821D8A /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

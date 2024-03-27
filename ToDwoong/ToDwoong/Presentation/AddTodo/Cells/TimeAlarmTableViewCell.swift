@@ -11,9 +11,6 @@ import SnapKit
 import TodwoongDesign
 
 class TimeAlarmTableViewCell: UITableViewCell {
-    
-    // MARK: - UI Properties
-    
     static let identifier = "TimeAlarmTableViewCell"
     private let titleLabel = UILabel()
     private let chipStackView = UIStackView()
@@ -33,7 +30,6 @@ class TimeAlarmTableViewCell: UITableViewCell {
     private func setupTitleLabel() {
         contentView.addSubview(titleLabel)
         titleLabel.text = "시간 알람"
-        titleLabel.font = TDStyle.font.body(style: .regular)
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(30)
             make.top.equalToSuperview().offset(15)
@@ -91,8 +87,6 @@ class TimeAlarmTableViewCell: UITableViewCell {
         return stackView
     }
 }
-
-// MARK: - InfoChipViewDelegate
 
 extension TimeAlarmTableViewCell: InfoChipViewDelegate {
     func didTapDeleteButton(in chipView: InfoChipView) {

@@ -14,7 +14,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     var buttonAction: ((UIButton) -> Void) = { _ in }
-    static let identifier = "groupCollectionViewCell"
+    static let identifier = "categoryCollectionViewCell"
     
     // MARK: - UI Properties
     
@@ -44,7 +44,7 @@ final class GroupCollectionViewCell: UICollectionViewCell {
 // MARK: - Configure Method
 
 extension GroupCollectionViewCell {
-    func configure(data: Group) {
+    func configure(data: Category) {
         
         guard let title = data.title else { return }
         

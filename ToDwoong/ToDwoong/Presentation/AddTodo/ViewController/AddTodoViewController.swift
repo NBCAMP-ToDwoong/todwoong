@@ -5,8 +5,6 @@
 //  Created by mirae on 3/13/24.
 //
 
-import CoreData
-import CoreLocation
 import UIKit
 
 import SnapKit
@@ -16,16 +14,14 @@ class AddTodoViewController: UIViewController {
     
     // MARK: - Properties
     
-    var todoToEdit: TodoDTO?
+    var todoToEdit: Todo?
     var selectedTitle: String = ""
     var selectedDueDate: Date? = Date()
     var selectedDueTime: Date? = Date()
-    var selectedGroup: Group?
-    var selectedTimesAlarm: [Int]? = [5]
-    var selectedPlaceAlarm: PlaceAlarmType?
-    var selectedPlaceName: String?
-    var selectedLatitude: Double?
-    var selectedLongitude: Double?
+    var selectedGroup: Category?
+    var selectedPlace: String?
+    var selectedTimes: [String] = ["5분 전"]
+    var selectedLocation: String?
     
     // MARK: - UI Properties
     
@@ -34,7 +30,7 @@ class AddTodoViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "할 일 추가"
+        label.text = "투두 추가"
         label.textAlignment = .center
         label.textColor = .black
         label.font = TDStyle.font.body(style: .bold)
@@ -46,8 +42,8 @@ class AddTodoViewController: UIViewController {
         button.setTitle("저장", for: .normal)
         button.tintColor = TDStyle.color.mainTheme
         button.setTitleColor(TDStyle.color.mainTheme, for: .normal)
-        button.titleLabel?.font = TDStyle.font.body(style: .bold)
         button.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        
         return button
     }()
     
@@ -55,7 +51,6 @@ class AddTodoViewController: UIViewController {
         let button = UIButton()
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.tintColor = TDStyle.color.mainTheme
-        button.titleLabel?.font = TDStyle.font.body(style: .bold)
         button.addTarget(self, action: #selector(closeModal), for: .touchUpInside)
         
         return button
@@ -65,39 +60,37 @@ class AddTodoViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         if todoToEdit != nil {
-            titleLabel.text = "할 일 수정"
+            titleLabel.text = "투두 수정"
         } else {
-            titleLabel.text = "할 일 추가"
+            titleLabel.text = "투두 추가"
         }
         loadTodoToEdit()
-        updateSaveButtonState()
     }
     
     private func loadTodoToEdit() {
         titleLabel = UILabel()
         titleLabel.textAlignment = .center
+        titleLabel.textColor = TDStyle.color.mainTheme
         
-        if let todoID = todoToEdit?.id {
-            if let todo = CoreDataManager.shared.readTodo(id: todoID) {
-                selectedTitle = todo.title
-                selectedDueDate = todo.dueTime
-                selectedPlaceName = todo.placeName
-                selectedPlaceAlarm = todo.placeAlarm
-                
-                titleTextField.text = selectedTitle
-                
-                tableView.reloadData()
-            }
-        }
         if todoToEdit != nil {
             guard let todo = todoToEdit else { return }
-            selectedGroup = todo.group
+            
+            selectedTitle = todo.title!
+            selectedDueDate = todo.dueDate
+            selectedDueTime = todo.dueTime
+            selectedGroup = todo.category
+            selectedPlace = todo.place
+            
+            titleTextField.text = selectedTitle
+            
+            tableView.reloadData()
         }
     }
     
@@ -109,69 +102,66 @@ class AddTodoViewController: UIViewController {
         setupTableView()
         setupTapGesture()
         
+        // UI 컴포넌트를 뷰에 추가
         view.addSubview(titleLabel)
         view.addSubview(saveButton)
         view.addSubview(closeButton)
-        
+
+        // titleLabel의 제약 조건 설정
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.centerX.equalToSuperview()
         }
-        
+
+        // closeButton의 제약 조건 설정
         closeButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
-            make.leading.equalToSuperview().offset(16)
+            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
+            make.leading.equalToSuperview().offset(16) // leading에 대한 제약 조건 유지
         }
-        
+
+        // saveButton의 제약 조건 설정
         saveButton.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
-            make.trailing.equalToSuperview().offset(-16)
+            make.centerY.equalTo(titleLabel.snp.centerY) // titleLabel의 centerY와 맞춤
+            make.trailing.equalToSuperview().offset(-16) // trailing에 대한 제약 조건 유지
         }
     }
     
+    // FIXME: - 추후 변경
     @objc func doneButtonTapped() {
         let title = selectedTitle
         guard !title.isEmpty else {
+            print("제목이 비어 있습니다.")
+            // 얼럿 뷰 표시
             return
         }
-        var groupType: GroupType? = nil
-        if let selectedGroup = selectedGroup {
-            groupType = GroupType(
-                id: selectedGroup.id!,
-                title: selectedGroup.title!,
-                color: selectedGroup.color,
-                indexNumber: selectedGroup.indexNumber,
-                todo: nil
-            )
-        }
-
-        var placeAlarm: PlaceAlarm? = nil
-        if let placeAlarmType = selectedPlaceAlarm {
-            placeAlarm = findOrCreatePlaceAlarm(from: placeAlarmType)
-        }
-
+        let place = selectedPlace
+        //let timeAlarm = selectedTimes ?? false 추후 수정
+        //let placeAlarm = selectedPlace ?? false 추후 수정
+        let timeAlarm = false
+        let placeAlarm = false
+        let category = selectedGroup
+        
         if let todo = todoToEdit {
-            let todoToUpdate = TodoType(
-                id: todo.id,
-                title: selectedTitle,
-                isCompleted: todo.isCompleted,
-                dueTime: selectedDueDate,
-                placeName: selectedPlaceName,
-                timeAlarm: selectedTimesAlarm,
-                group: groupType,
-                placeAlarm: selectedPlaceAlarm
-            )
-            CoreDataManager.shared.updateTodo(info: todoToUpdate)
-
+            CoreDataManager.shared.updateTodo(todo: todo,
+                                              newTitle: title,
+                                              newPlace: place,
+                                              newDate: selectedDueDate,
+                                              newTime: selectedDueTime,
+                                              newCompleted: todo.isCompleted,
+                                              newTimeAlarm: timeAlarm,
+                                              newPlaceAlarm: placeAlarm,
+                                              newCategory: category)
+            print("투두 항목이 업데이트되었습니다.")
         } else {
-            CoreDataManager.shared.createTodo(
-                title: selectedTitle,
-                dueTime: selectedDueDate,
-                placeName: selectedPlaceName,
-                group: selectedGroup,
-                timeAlarm: selectedTimesAlarm,
-                placeAlarm: placeAlarm
-            )
+            CoreDataManager.shared.createTodo(title: title,
+                                              place: place,
+                                              dueDate: selectedDueDate,
+                                              dueTime: selectedDueTime,
+                                              isCompleted: false,
+                                              timeAlarm: timeAlarm,
+                                              placeAlarm: placeAlarm,
+                                              category: category)
+            print("새 투두 항목이 생성되었습니다.")
         }
         
         NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
@@ -180,12 +170,11 @@ class AddTodoViewController: UIViewController {
     
     private func setupTitleTextField() {
         view.addSubview(titleTextField)
-        titleTextField.placeholder = "할 일을 입력해 주세요."
+        titleTextField.placeholder = "제목"
         titleTextField.backgroundColor = .white
         titleTextField.layer.cornerRadius = 10
         titleTextField.layer.masksToBounds = true
         titleTextField.layer.borderWidth = 0
-        titleTextField.tintColor = TDStyle.color.mainDarkTheme
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height: titleTextField.frame.height))
         titleTextField.leftView = paddingView
@@ -194,29 +183,13 @@ class AddTodoViewController: UIViewController {
         titleTextField.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(70)
             make.left.right.equalTo(view).inset(14)
-            make.height.equalTo(44)
+            make.height.equalTo(50)
         }
         titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
     }
     
-    private func updateSaveButtonState() {
-        let titleText = titleTextField.text ?? ""
-        let isEnabled = !titleText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-
-        saveButton.isEnabled = isEnabled
-        
-        if isEnabled {
-            saveButton.tintColor = TDStyle.color.mainTheme
-            saveButton.setTitleColor(TDStyle.color.mainTheme, for: .normal)
-        } else {
-            saveButton.tintColor = .systemGray3
-            saveButton.setTitleColor(.systemGray3, for: .normal)
-        }
-    }
-
     @objc private func titleTextFieldDidChange(_ textField: UITextField) {
         selectedTitle = textField.text ?? ""
-        updateSaveButtonState()
     }
     
     private func setupTableView() {
@@ -229,7 +202,6 @@ class AddTodoViewController: UIViewController {
         tableView.register(TimeAlarmTableViewCell.self, forCellReuseIdentifier: TimeAlarmTableViewCell.identifier)
         tableView.register(PlaceAlarmTableViewCell.self, forCellReuseIdentifier: PlaceAlarmTableViewCell.identifier)
         tableView.tableFooterView = UIView()
-        tableView.isScrollEnabled = false
         tableView.snp.makeConstraints { make in
             make.top.equalTo(titleTextField.snp.bottom).offset(8)
             make.left.right.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -244,8 +216,8 @@ class AddTodoViewController: UIViewController {
             tableView.insetsContentViewsToSafeArea = false
         }
         
-        tableView.delegate = self
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
 }
@@ -270,7 +242,7 @@ extension AddTodoViewController: UIGestureRecognizerDelegate {
     }
 }
 
-extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
+extension AddTodoViewController: UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -295,18 +267,23 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                                                                for: indexPath) as? DatePickerTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.selectedDate = self.selectedDueDate
-                cell.onDateChanged = { [weak self] newDate in
-                    self?.selectedDueDate = newDate
-                }
                 cell.dateChipTappedHandler = { [weak self] in
                     self?.goDatePickerViewController()
+                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
+                cell.timeChipTappedHandler = { [weak self] in
+                    self?.goTimePickerViewController()
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 cell.dateChipDeleteHandler = { [weak self] in
                     self?.selectedDueDate = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
+                cell.timeChipDeleteHandler = { [weak self] in
+                    self?.selectedDueTime = nil
+                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                }
+                cell.accessoryType = .none
                 return cell
             case 1:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.identifier,
@@ -324,10 +301,9 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                                                                for: indexPath) as? LocationTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.configure(with: selectedPlaceName)
+                cell.configure(with: selectedPlace)
                 cell.onDeleteButtonTapped = { [weak self] in
-                    self?.selectedPlaceName = nil
-                    self?.selectedPlaceAlarm = nil
+                    self?.selectedPlace = nil
                     self?.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                 }
                 return cell
@@ -341,12 +317,12 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                                                                for: indexPath) as? TimeAlarmTableViewCell else {
                     return UITableViewCell()
                 }
-//                cell.configure(with: selectedTimesAlarm)
-//                cell.onDeleteButtonTapped = { [weak self] deletedTime in
-//                    guard let self = self else { return }
-//                    self.selectedTimesAlarm.removeAll { $0 == deletedTime }
-//                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
-//                }
+                cell.configure(with: selectedTimes)
+                cell.onDeleteButtonTapped = { [weak self] deletedTime in
+                    guard let self = self else { return }
+                    self.selectedTimes.removeAll { $0 == deletedTime }
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
                 return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: PlaceAlarmTableViewCell.identifier,
@@ -357,7 +333,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
                     if isOn {
                         self?.goPlaceAlarmViewController()
                     } else {
-                        self?.selectedPlaceAlarm = nil
+                        self?.selectedLocation = nil
                     }
                 }
                 return cell
@@ -372,10 +348,6 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
         view.endEditing(true)
         if indexPath.section == 0 {
             switch indexPath.row {
-            case 0:
-                tableView.deselectRow(at: indexPath, animated: true)
-                guard let cell = tableView.cellForRow(at: indexPath) as? DatePickerTableViewCell else { return }
-                cell.resetChipsNeeded()
             case 1:
                 goToGroupSelectController()
             case 2:
@@ -422,7 +394,7 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
         let numberOfRows = tableView.numberOfRows(inSection: indexPath.section)
         if indexPath.row < numberOfRows - 1 {
             let border = CALayer()
-            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+            border.backgroundColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor // 밝은 그레이 색상과 50% 투명도
             border.frame = CGRect(x: 20, y: cell.frame.size.height - 1, width: cell.frame.size.width - 40, height: 1)
             cell.layer.addSublayer(border)
         }
@@ -449,124 +421,67 @@ extension AddTodoViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        if indexPath.section == 1 && indexPath.row == 0 {
-//            let rowCount = CGFloat((selectedTimesAlarm.count + 2) / 3)
-//            return 44 + rowCount * (30 + 10)
-//        }
-        
-        return 44
+        if indexPath.section == 1 && indexPath.row == 0 {
+            let rowCount = CGFloat((selectedTimes.count + 2) / 3)
+            return 50 + rowCount * (30 + 10)
+        }
+        return 50
     }
 }
 
-// MARK: - LocationPickerDelegate
+extension AddTodoViewController: UITableViewDataSource {}
 
-extension AddTodoViewController: LocationPickerDelegate {
-    func didPickLocation(_ address: String, latitude: Double, longitude: Double) {
-        self.selectedPlaceName = address
-        self.selectedPlaceAlarm = PlaceAlarmType(id: UUID(), distance: 0, latitude: latitude, longitude: longitude)
-        
-        if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
-            cell.configure(with: selectedPlaceName)
-            tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
-        }
-    }
-    
+
+extension AddTodoViewController: AddTodoLocationPickerDelegate {
     func goLocationPickerViewController() {
-        let locationManager = CLLocationManager()
-        let status = locationManager.authorizationStatus
-
-        switch status {
-        case .authorizedAlways, .authorizedWhenInUse:
-            let locationPickerVC = AddTodoLocationPickerViewController()
-            locationPickerVC.delegate = self
-            locationPickerVC.selectedPlace = selectedPlaceName
-            locationPickerVC.selectedLatitude = selectedPlaceAlarm?.latitude
-            locationPickerVC.selectedLongitude = selectedPlaceAlarm?.longitude
-            locationPickerVC.modalPresentationStyle = .fullScreen
-            present(locationPickerVC, animated: true, completion: nil)
-
-        case .denied, .restricted:
-            showAlertForLocationPermission()
-
-        case .notDetermined:
-            locationManager.requestWhenInUseAuthorization()
-
-        @unknown default:
-            print("Unknown authorization status")
+        let locationPickerVC = AddTodoLocationPickerViewController()
+        locationPickerVC.delegate = self
+        present(locationPickerVC, animated: true, completion: nil)
+    }
+    
+    func didPickLocation(_ address: String) {
+        self.selectedPlace = address
+        if let cell = tableView.cellForRow(at: IndexPath(row: 2, section: 0)) as? LocationTableViewCell {
+            cell.configure(with: selectedPlace)
         }
     }
     
-    func showAlertForLocationPermission() {
-        let alert = UIAlertController(title: "위치 권한 필요",
-                                      message: "이 기능을 사용하기 위해서는 위치 권한이 필요합니다. 설정에서 위치 권한을 허용해주세요.",
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        alert.addAction(UIAlertAction(title: "설정으로 이동", style: .default, handler: { _ in
-            if let url = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            }
-        }))
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func findOrCreatePlaceAlarm(from type: PlaceAlarmType?) -> PlaceAlarm? {
-        guard let type = type else { return nil }
-        
-        let fetchRequest: NSFetchRequest<PlaceAlarm> = PlaceAlarm.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", type.id as CVarArg)
-        if let results = try? CoreDataManager.shared.context.fetch(fetchRequest), !results.isEmpty {
-            return results.first
-        }
-        
-        let newPlaceAlarm = PlaceAlarm(context: CoreDataManager.shared.context)
-        newPlaceAlarm.id = type.id
-        newPlaceAlarm.latitude = type.latitude
-        newPlaceAlarm.longitude = type.longitude
-        newPlaceAlarm.distance = Int32(type.distance)
-        return newPlaceAlarm
-    }
 }
 
-// MARK: - GroupSelectControllerDelegate
-
-extension AddTodoViewController: GroupSelectModalDelegate {
-    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Group) {
+extension AddTodoViewController: AddTodoGroupSelectControllerDelegate {
+    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup group: Category) {
         self.selectedGroup = group
         let indexPath = IndexPath(row: 1, section: 0)
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
     
     private func goToGroupSelectController() {
-        let groupSelectController = GroupSelectModal()
+        let groupSelectController = AddTodoGroupSelectController()
         groupSelectController.delegate = self
-        groupSelectController.selectedGroup = self.selectedGroup
+        groupSelectController.selectedCategory = self.selectedGroup
         present(groupSelectController, animated: true, completion: nil)
     }
     
 }
 
-// MARK: - TimeAlarmSelectControllerDelegate
-
-extension AddTodoViewController: TimeAlarmModalDelegate {
+extension AddTodoViewController: AddTodoTimeAlarmSelectControllerDelegate {
     func timesSelected(_ times: [String]) {
-//        selectedTimesAlarm = times
-//        let indexPath = IndexPath(row: 0, section: 1)
-//        tableView.reloadRows(at: [indexPath], with: .none)
+        selectedTimes = times
+        let indexPath = IndexPath(row: 0, section: 1)
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
     private func goTimeAlarmViewController() {
-//        let timeAlarmViewController = TimeAlarmModal()
-//        timeAlarmViewController.selectedTimes = selectedTimesAlarm
-//        timeAlarmViewController.delegate = self
-//        present(timeAlarmViewController, animated: true, completion: nil)
+        let timeAlarmViewController = AddTodoTimeAlarmViewController()
+        timeAlarmViewController.selectedTimes = selectedTimes
+        timeAlarmViewController.delegate = self
+        present(timeAlarmViewController, animated: true, completion: nil)
     }
 }
 
-// MARK: - PlaceAlarmSelectControllerDelegate
-
-extension AddTodoViewController: PlaceAlarmModalDelegate {
+extension AddTodoViewController: AddTodoPlaceAlarmSelectControllerDelegate {
     func locationSelected(_ location: [String]) {
-        guard location.first != nil else {
+        guard let selectedLocation = location.first else {
             return
         }
         
@@ -574,18 +489,16 @@ extension AddTodoViewController: PlaceAlarmModalDelegate {
         guard let cell = tableView.cellForRow(at: indexPath) as? PlaceAlarmTableViewCell else {
             return
         }
-        //cell.locationLabel.text = selectedPlaceAlarm
+        cell.locationLabel.text = selectedLocation
     }
     
     private func goPlaceAlarmViewController() {
-        let placeAlarmViewController = PlaceAlarmModal()
+        let placeAlarmViewController = AddTodoPlaceAlarmViewController()
         placeAlarmViewController.delegate = self
         present(placeAlarmViewController, animated: true, completion: nil)
     }
     
 }
-
-// MARK: - DatePickerModalDelegate
 
 extension AddTodoViewController: DatePickerModalDelegate {
     func didSelectDate(_ date: Date) {
@@ -597,9 +510,24 @@ extension AddTodoViewController: DatePickerModalDelegate {
     }
     
     private func goDatePickerViewController() {
-        let datePickerViewController = DatePickerModal()
-        datePickerViewController.selectedDate = selectedDueDate
+        let datePickerViewController = AddTodoDatePickerController()
         datePickerViewController.delegate = self
         present(datePickerViewController, animated: true, completion: nil)
+    }
+}
+
+extension AddTodoViewController: TimePickerModalDelegate {
+    func didSelectTime(_ date: Date) {
+        selectedDueTime = date
+        
+        if let datePickerCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? DatePickerTableViewCell {
+            datePickerCell.selectedTime = selectedDueTime
+        }
+    }
+    
+    private func goTimePickerViewController() {
+        let timePickerViewController = AddTodoTimePickerController()
+        timePickerViewController.delegate = self
+        present(timePickerViewController, animated: true, completion: nil)
     }
 }

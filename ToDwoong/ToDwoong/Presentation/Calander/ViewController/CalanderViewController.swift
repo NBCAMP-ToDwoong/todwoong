@@ -32,9 +32,19 @@ final class CalendarViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         loadData()
-        setNotifications()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(dataUpdated(_:)),
+            name: .TodoDataUpdatedNotification,
+            object: nil)
     }
-        
+    
+    @objc func dataUpdated(_ notification: Notification) {
+        fetchTodosAndSetEventDates()
+        fetchTodos(for: selectedDueDate)
+        tableView.reloadData()
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -57,13 +67,7 @@ extension CalendarViewController {
         configureTableView()
         selectTodayDate()
     }
-    private func setNotifications() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(dataUpdated(_:)),
-            name: .TodoDataUpdatedNotification,
-            object: nil)
-    }
+    
     private func configureCalendar() {
         calendar = FSCalendar()
         calendar.placeholderType = .none
@@ -224,7 +228,6 @@ extension CalendarViewController: UITableViewDataSource {
             let isCompleted = !todo.isCompleted
             todo.isCompleted = isCompleted
             CoreDataManager.shared.saveContext()
-            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             tableView?.reloadRows(at: [indexPath], with: .automatic)
         }
         
@@ -258,7 +261,6 @@ extension CalendarViewController: UITableViewDelegate {
             CoreDataManager.shared.deleteTodo(todo: todoToDelete)
             self.todoList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-            NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
             
             completionHandler(true)
             self.fetchTodosAndSetEventDates()
@@ -397,11 +399,5 @@ extension CalendarViewController {
                                                     value: 1,
                                                     to: self.calendar.currentPage) else { return }
         self.calendar.setCurrentPage(nextMonth, animated: true)
-    }
-    
-    @objc private func dataUpdated(_ notification: Notification) {
-        fetchTodosAndSetEventDates()
-        fetchTodos(for: selectedDueDate)
-        tableView.reloadData()
     }
 }

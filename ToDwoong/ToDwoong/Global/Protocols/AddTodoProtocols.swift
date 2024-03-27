@@ -5,26 +5,25 @@
 //  Created by yen on 3/10/24.
 //
 
-import MapKit
 import UIKit
 
-protocol LocationPickerDelegate: AnyObject {
-    func didPickLocation(_ address: String, latitude: Double, longitude: Double)
+protocol AddTodoLocationPickerViewDelegate: AnyObject {
+    func didTapConfirmAddress(_ address: String)
 }
 
-protocol SearchResultsViewControllerDelegate: AnyObject {
-    func didSelectSearchResult(_ mapItem: MKMapItem, at coordinate: CLLocationCoordinate2D)
+protocol AddTodoLocationPickerDelegate: AnyObject {
+    func didPickLocation(_ address: String)
 }
 
-protocol GroupSelectModalDelegate: AnyObject {
-    func groupSelectController(_ controller: GroupSelectModal, didSelectGroup group: Group)
+protocol AddTodoGroupSelectControllerDelegate: AnyObject {
+    func groupSelectController(_ controller: AddTodoGroupSelectController, didSelectGroup category: Category)
 }
 
-protocol TimeAlarmModalDelegate: AnyObject {
+protocol AddTodoTimeAlarmSelectControllerDelegate: AnyObject {
     func timesSelected(_ times: [String])
 }
 
-protocol PlaceAlarmModalDelegate: AnyObject {
+protocol AddTodoPlaceAlarmSelectControllerDelegate: AnyObject {
     func locationSelected(_ location: [String])
 }
 

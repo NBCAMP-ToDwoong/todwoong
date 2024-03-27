@@ -66,14 +66,14 @@ final class NormalGroupListTableViewCell: UITableViewCell {
         }
     }
     
-    func configureWithGroup(_ group: Group) {
-        if let colorString = group.color {
+    func configureWithCategory(_ category: Category) {
+        if let colorString = category.color {
             let color = UIColor(hex: colorString)
             let imageSize = CGSize(width: 30, height: 30)
             let roundedImage = UIImage.roundedImage(color: color, size: imageSize)
             iconImageView.image = roundedImage
         }
-        titleLabel.text = group.title
+        titleLabel.text = category.title
     }
 }
 

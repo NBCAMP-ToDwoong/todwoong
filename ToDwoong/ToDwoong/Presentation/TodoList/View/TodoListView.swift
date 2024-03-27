@@ -47,8 +47,8 @@ final class TodoListView: UIView {
     }()
     
     lazy var todoTableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.register(TodoListTableViewCell.self, forCellReuseIdentifier: TodoListTableViewCell.identifier)
+        let tableView = UITableView()
+        tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.backgroundColor = .clear
         
         return tableView
@@ -124,7 +124,9 @@ extension TodoListView {
             make.trailing.leading.bottom.equalToSuperview()
         }
         todoTableView.snp.makeConstraints{ make in
-            make.edges.equalToSuperview()
+            make.top.leading.equalToSuperview().offset(16)
+            make.trailing.equalToSuperview().offset(-16)
+            make.bottom.equalToSuperview()
         }
         emptyImageView.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()

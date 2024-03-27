@@ -15,7 +15,7 @@ class TodoDetailView: UIView {
     // MARK: - UI Properties
     
     lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
+        let tableView = UITableView()
         tableView.backgroundColor = .white
         tableView.register(TDTableViewCell.self, forCellReuseIdentifier: TDTableViewCell.identifier)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,8 +53,8 @@ class TodoDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        setUI()
+        backgroundColor = TDStyle.color.lightGray
+        tableView.backgroundColor = TDStyle.color.lightGray
         setTableView()
         setTodwoongUI()
     }
@@ -62,21 +62,14 @@ class TodoDetailView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-// MARK: - Extensions
-
-extension TodoDetailView {
-    private func setUI() {
-        backgroundColor = TDStyle.color.lightGray
-        tableView.backgroundColor = TDStyle.color.lightGray
-    }
     
     private func setTableView() {
         addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.top.equalToSuperview().offset(30)
+            make.bottom.equalToSuperview().offset(-10)
+            make.leading.equalToSuperview().offset(15)
+            make.trailing.equalToSuperview().offset(-15)
         }
     }
     

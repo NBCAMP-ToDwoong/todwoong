@@ -29,23 +29,4 @@ extension UIImage {
             context.cgContext.drawPath(using: .fillStroke)
         }
     }
-    
-    func withTintColor(_ color: UIColor) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
-        color.set()
-        
-        let context = UIGraphicsGetCurrentContext()
-        context?.translateBy(x: 0, y: self.size.height)
-        context?.scaleBy(x: 1.0, y: -1.0)
-        context?.setBlendMode(.normal)
-        
-        let rect = CGRect(origin: .zero, size: self.size)
-        context?.clip(to: rect, mask: self.cgImage!)
-        context?.fill(rect)
-        
-        let tintedImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return tintedImage ?? self
-    }
 }
