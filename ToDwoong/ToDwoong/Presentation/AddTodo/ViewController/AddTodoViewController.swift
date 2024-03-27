@@ -34,7 +34,7 @@ class AddTodoViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "투두 추가"
+        label.text = "할 일 추가"
         label.textAlignment = .center
         label.textColor = .black
         label.font = TDStyle.font.body(style: .bold)
@@ -65,18 +65,18 @@ class AddTodoViewController: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setView()
         if todoToEdit != nil {
-            titleLabel.text = "투두 수정"
+            titleLabel.text = "할 일 수정"
         } else {
-            titleLabel.text = "투두 추가"
+            titleLabel.text = "할 일 추가"
         }
         loadTodoToEdit()
+        updateSaveButtonState()
     }
     
     private func loadTodoToEdit() {
@@ -129,12 +129,9 @@ class AddTodoViewController: UIViewController {
         }
     }
     
-    // FIXME: - 추후 변경
     @objc func doneButtonTapped() {
         let title = selectedTitle
         guard !title.isEmpty else {
-            print("제목이 비어 있습니다.")
-            // 얼럿 뷰 표시
             return
         }
         var groupType: GroupType? = nil
@@ -180,11 +177,10 @@ class AddTodoViewController: UIViewController {
         NotificationCenter.default.post(name: .TodoDataUpdatedNotification, object: nil)
         dismiss(animated: true, completion: nil)
     }
-
     
     private func setupTitleTextField() {
         view.addSubview(titleTextField)
-        titleTextField.placeholder = "제목"
+        titleTextField.placeholder = "할 일을 입력해 주세요."
         titleTextField.backgroundColor = .white
         titleTextField.layer.cornerRadius = 10
         titleTextField.layer.masksToBounds = true
@@ -203,8 +199,24 @@ class AddTodoViewController: UIViewController {
         titleTextField.addTarget(self, action: #selector(titleTextFieldDidChange(_:)), for: .editingChanged)
     }
     
+    private func updateSaveButtonState() {
+        let titleText = titleTextField.text ?? ""
+        let isEnabled = !titleText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+
+        saveButton.isEnabled = isEnabled
+        
+        if isEnabled {
+            saveButton.tintColor = TDStyle.color.mainTheme
+            saveButton.setTitleColor(TDStyle.color.mainTheme, for: .normal)
+        } else {
+            saveButton.tintColor = .systemGray3
+            saveButton.setTitleColor(.systemGray3, for: .normal)
+        }
+    }
+
     @objc private func titleTextFieldDidChange(_ textField: UITextField) {
         selectedTitle = textField.text ?? ""
+        updateSaveButtonState()
     }
     
     private func setupTableView() {
