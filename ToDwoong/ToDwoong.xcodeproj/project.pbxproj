@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B0F51B32BB43FEA007A0EE6 /* MapViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */; };
 		1B0FAB652B9DDF950030B31D /* AddTodoProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */; };
 		1B0FAB702B9E45C80030B31D /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */; };
 		1B3865472BB25EAA00E1FF9A /* TodwoongDesign in Frameworks */ = {isa = PBXBuildFile; productRef = 1B3865462BB25EAA00E1FF9A /* TodwoongDesign */; };
@@ -87,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTodoProtocols.swift; sourceTree = "<group>"; };
 		1B0FAB6F2B9E45C80030B31D /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
 		1B4E993F2BAD71910087BE95 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 			children = (
 				1B0FAB642B9DDF950030B31D /* AddTodoProtocols.swift */,
 				2E822D0A2BA2F3F6001ED00F /* ComponetsProtocols.swift */,
+				1B0F51B22BB43FEA007A0EE6 /* MapViewProtocols.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				2E822D1B2BA44682001ED00F /* DatePickerTableViewCell.swift in Sources */,
 				E0F4CFD52B9AB34B00DF94D4 /* LaunchScreenView.swift in Sources */,
 				7F7253CD2BA4334E00455100 /* AddGroupButton.swift in Sources */,
+				1B0F51B32BB43FEA007A0EE6 /* MapViewProtocols.swift in Sources */,
 				2E1CE20E2BAC45DA000E522C /* DatePickerModal.swift in Sources */,
 				7FE3164B2B957275004ED878 /* GroupListView.swift in Sources */,
 				1BF3535F2BA737E800E4B812 /* CoreDataProtocol.swift in Sources */,
