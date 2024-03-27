@@ -121,7 +121,7 @@ final class CoreDataManager: CoreDataManging {
             if let id = todo.id, let title = todo.title {
                 data = TodoDTO(id: id,
                                title: title,
-                               isCompleted: todo.isCompleted, 
+                               isCompleted: todo.isCompleted,
                                dueTime: todo.dueTime,
                                placeName: todo.placeName,
                                group: todo.group)
@@ -192,7 +192,7 @@ final class CoreDataManager: CoreDataManging {
                 
                 return TodoType(id: id,
                                 title: title,
-                                isCompleted: todo.isCompleted, 
+                                isCompleted: todo.isCompleted,
                                 dueTime: todo.dueTime,
                                 placeName: todo.placeName,
                                 timeAlarm: todo.timeAlarm,
@@ -223,22 +223,30 @@ final class CoreDataManager: CoreDataManging {
             todoToUpdate.placeName = info.placeName
             todoToUpdate.timeAlarm = info.timeAlarm
             
-            if let groupInfo = info.group, let existingGroup = findGroupById(groupInfo.id) {
-                existingGroup.title = groupInfo.title
-                existingGroup.color = groupInfo.color ?? existingGroup.color
-                existingGroup.indexNumber = Int32(groupInfo.indexNumber ?? Int32(existingGroup.indexNumber))
-                todoToUpdate.group = existingGroup
+            if let groupInfo = info.group {
+                if let existingGroup = findGroupById(groupInfo.id) {
+                    existingGroup.title = groupInfo.title
+                    existingGroup.color = groupInfo.color ?? existingGroup.color
+                    existingGroup.indexNumber = Int32(groupInfo.indexNumber ?? Int32(Int(existingGroup.indexNumber)))
+                    todoToUpdate.group = existingGroup
+                } else {
+                    print("해당 ID를 가진 Group을 찾을 수 없습니다.")
+                }
             } else {
-                print("해당 ID를 가진 Group을 찾을 수 없습니다.")
+                todoToUpdate.group = nil
             }
             
-            if let placeAlarmInfo = info.placeAlarm, let existingPlaceAlarm = findPlaceAlarmById(placeAlarmInfo.id) {
-                existingPlaceAlarm.distance = Int32(placeAlarmInfo.distance)
-                existingPlaceAlarm.latitude = placeAlarmInfo.latitude
-                existingPlaceAlarm.longitude = placeAlarmInfo.longitude
-                todoToUpdate.placeAlarm = existingPlaceAlarm
+            if let placeAlarmInfo = info.placeAlarm {
+                if let existingPlaceAlarm = findPlaceAlarmById(placeAlarmInfo.id) {
+                    existingPlaceAlarm.distance = Int32(placeAlarmInfo.distance)
+                    existingPlaceAlarm.latitude = placeAlarmInfo.latitude
+                    existingPlaceAlarm.longitude = placeAlarmInfo.longitude
+                    todoToUpdate.placeAlarm = existingPlaceAlarm
+                } else {
+                    print("해당 ID를 가진 PlaceAlarm을 찾을 수 없습니다.")
+                }
             } else {
-                print("해당 ID를 가진 PlaceAlarm을 찾을 수 없습니다.")
+                todoToUpdate.placeAlarm = nil
             }
             
             try context.save()
