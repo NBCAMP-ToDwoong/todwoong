@@ -111,7 +111,7 @@ extension CalendarViewController {
     }
     
     private func configureTableView() {
-        tableView = UITableView()
+        tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(TodoListTableViewCell.self, forCellReuseIdentifier: TodoListTableViewCell.identifier)
@@ -146,10 +146,8 @@ extension CalendarViewController {
         
         containerView.addSubview(tableView)
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(containerView.snp.top).offset(16)
-            make.left.equalTo(containerView.snp.left).offset(16)
-            make.right.equalTo(containerView.snp.right).offset(-16)
-            make.bottom.equalTo(containerView.snp.bottom)
+            make.top.equalTo(containerView.snp.top)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         tableView.backgroundView = emptyStateView
